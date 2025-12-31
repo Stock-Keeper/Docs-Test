@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="indigo">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock-Keeper UI Prototype V2 Opus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Theme Controller -->
+    <div class="theme-controller">
+        <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="dark">🌙 Dark</button>
+            <button class="mode-btn" data-mode="light">☀️ Light</button>
+        </div>
+        <div class="theme-buttons">
+            <button class="theme-btn active" data-theme="indigo">
+                <span class="color-dot" style="background: linear-gradient(135deg, #667eea, #764ba2);"></span>
+                Indigo
+            </button>
+            <button class="theme-btn" data-theme="ocean">
+                <span class="color-dot" style="background: linear-gradient(135deg, #3b8bba, #48b1bf);"></span>
+                Ocean
+            </button>
+            <button class="theme-btn" data-theme="sage">
+                <span class="color-dot" style="background: linear-gradient(135deg, #38a169, #48bb78);"></span>
+                Forest
+            </button>
+            <button class="theme-btn" data-theme="copper">
+                <span class="color-dot" style="background: linear-gradient(135deg, #e07b7b, #f0a67a);"></span>
+                Coral
+            </button>
+            <button class="theme-btn" data-theme="slate">
+                <span class="color-dot" style="background: linear-gradient(135deg, #b57edc, #d291bc);"></span>
+                Berry
+            </button>
+        </div>
+    </div>
+
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span>📶</span>
+                <span>📡</span>
+                <span>🔋</span>
+            </div>
+        </div>
+
+        <!-- Screen 1: 로그인/회원가입 -->
+        <div id="screen-login" class="screen active">
+            <div class="login-container">
+                <div class="logo-section">
+                    <div class="app-logo">
+                        <span class="logo-icon">📊</span>
+                    </div>
+                    <h1 class="app-name">Stock-Keeper</h1>
+                    <p class="app-tagline">스마트한 포트폴리오 관리의 시작</p>
+                </div>
+                <div class="login-content">
+                    <div class="feature-highlights">
+                        <div class="feature-item">
+                            <span class="feature-icon">💼</span>
+                            <span>포트폴리오 관리</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📈</span>
+                            <span>실시간 시세 확인</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">⚖️</span>
+                            <span>리밸런싱 분석</span>
+                        </div>
+                    </div>
+                    <button class="google-login-btn" onclick="navigateTo('screen-profile')">
+                        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google"
+                            class="google-icon">
+                        <span>Google로 시작하기</span>
+                    </button>
+                    <p class="login-hint">기존 사용자는 <a href="#"
+                            onclick="navigateTo('screen-home'); return false;">로그인하기</a></p>
+                </div>
+                <div class="login-footer">
+                    <p class="terms">계속 진행 시 <a href="#">이용약관</a> 및 <a href="#">개인정보처리방침</a>에 동의합니다</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: 프로필 입력 -->
+        <div id="screen-profile" class="screen">
+            <header class="header">
+                <button class="back-btn" onclick="navigateTo('screen-login')">←</button>
+                <h2>프로필 설정</h2>
+                <div class="header-spacer"></div>
+            </header>
+            <div class="profile-container">
+                <div class="profile-photo-section">
+                    <div class="profile-photo-placeholder">
+                        <span class="photo-icon">📷</span>
+                        <span class="photo-label">사진 추가</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nickname">닉네임</label>
+                    <input type="text" id="nickname" placeholder="사용할 닉네임을 입력하세요" value="투자왕김철수">
+                    <span class="input-hint">2~10자 이내로 입력해주세요</span>
+                </div>
+                <div class="form-group">
+                    <label>투자 성향 <span class="optional">(선택)</span></label>
+                    <div class="chip-group">
+                        <span class="chip selected">안정형</span>
+                        <span class="chip">중립형</span>
+                        <span class="chip">공격형</span>
+                    </div>
+                </div>
+                <button class="primary-btn" onclick="navigateTo('screen-home')">시작하기</button>
+            </div>
+        </div>
+
+        <!-- Screen 3: 포트폴리오 목록 (홈) -->
+        <div id="screen-home" class="screen">
+            <header class="header home-header">
+                <div class="user-greeting">
+                    <div class="user-avatar">김</div>
+                    <div class="greeting-text">
+                        <span class="greeting">안녕하세요 👋</span>
+                        <span class="username">투자왕김철수 님</span>
+                    </div>
+                </div>
+                <button class="icon-btn" onclick="navigateTo('screen-settings')">⚙️</button>
+            </header>
+
+            <div class="home-summary">
+                <div class="summary-card">
+                    <span class="summary-label">총 평가금액</span>
+                    <span class="summary-value">₩45,230,500</span>
+                    <div class="summary-change positive">
+                        <span>+₩2,340,200</span>
+                        <span>(+5.47%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-section">
+                <div class="section-header">
+                    <h3>내 포트폴리오</h3>
+                    <span class="portfolio-count">3개</span>
+                </div>
+
+                <div class="portfolio-list">
+                    <div class="portfolio-card" onclick="navigateTo('screen-detail')">
+                        <div class="portfolio-card-header">
+                            <div class="portfolio-color" style="background: var(--gradient-primary);"></div>
+                            <div class="portfolio-info">
+                                <h4>메인 포트폴리오</h4>
+                                <span class="portfolio-stocks">5종목</span>
+                            </div>
+                            <span class="portfolio-arrow">›</span>
+                        </div>
+                        <div class="portfolio-card-body">
+                            <div class="portfolio-value">
+                                <span class="value-label">평가금액</span>
+                                <span class="value-amount">₩32,450,000</span>
+                            </div>
+                            <div class="portfolio-return positive">
+                                <span>+7.23%</span>
+                            </div>
+                        </div>
+                        <div class="rebalance-badge">리밸런싱 필요</div>
+                    </div>
+
+                    <div class="portfolio-card" onclick="navigateTo('screen-detail')">
+                        <div class="portfolio-card-header">
+                            <div class="portfolio-color" style="background: linear-gradient(135deg, #6B9080, #4A6F5A);">
+                            </div>
+                            <div class="portfolio-info">
+                                <h4>성장주 투자</h4>
+                                <span class="portfolio-stocks">3종목</span>
+                            </div>
+                            <span class="portfolio-arrow">›</span>
+                        </div>
+                        <div class="portfolio-card-body">
+                            <div class="portfolio-value">
+                                <span class="value-label">평가금액</span>
+                                <span class="value-amount">₩8,780,500</span>
+                            </div>
+                            <div class="portfolio-return positive">
+                                <span>+12.45%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" onclick="navigateTo('screen-detail')">
+                        <div class="portfolio-card-header">
+                            <div class="portfolio-color" style="background: linear-gradient(135deg, #5C8EAD, #3D6B8C);">
+                            </div>
+                            <div class="portfolio-info">
+                                <h4>배당주 모음</h4>
+                                <span class="portfolio-stocks">4종목</span>
+                            </div>
+                            <span class="portfolio-arrow">›</span>
+                        </div>
+                        <div class="portfolio-card-body">
+                            <div class="portfolio-value">
+                                <span class="value-label">평가금액</span>
+                                <span class="value-amount">₩4,000,000</span>
+                            </div>
+                            <div class="portfolio-return negative">
+                                <span>-2.31%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="fab" onclick="showModal('add-portfolio-modal')">
+                <span>+</span>
+            </button>
+        </div>
+
+        <!-- Screen 4: 포트폴리오 상세 -->
+        <div id="screen-detail" class="screen">
+            <header class="header">
+                <button class="back-btn" onclick="navigateTo('screen-home')">←</button>
+                <h2>메인 포트폴리오</h2>
+                <button class="icon-btn">✏️</button>
+            </header>
+
+            <div class="detail-summary">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="item-label">총 평가금액</span>
+                        <span class="item-value large">₩32,450,000</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="item-label">총 매입금액</span>
+                        <span class="item-value">₩30,250,000</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="item-label">수익금</span>
+                        <span class="item-value positive">+₩2,200,000</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="item-label">수익률</span>
+                        <span class="item-value positive">+7.27%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stocks-section">
+                <div class="section-header">
+                    <h3>보유 종목</h3>
+                    <span class="stock-count">5종목</span>
+                </div>
+
+                <div class="stocks-table">
+                    <div class="stock-row header-row">
+                        <span class="col-name">종목명</span>
+                        <span class="col-ratio">비율</span>
+                        <span class="col-value">평가금액</span>
+                    </div>
+
+                    <div class="stock-row" onclick="showStockDetail('삼성전자')">
+                        <div class="col-name">
+                            <span class="stock-name">삼성전자</span>
+                            <span class="stock-code">005930</span>
+                        </div>
+                        <div class="col-ratio">
+                            <div class="ratio-bar">
+                                <div class="ratio-current" style="width: 35%;"></div>
+                                <div class="ratio-target" style="left: 30%;"></div>
+                            </div>
+                            <span class="ratio-text">35% <span class="ratio-target-text">(목표 30%)</span></span>
+                        </div>
+                        <div class="col-value">
+                            <span class="value-main">₩11,357,500</span>
+                            <span class="value-change positive">+5.2%</span>
+                        </div>
+                    </div>
+
+                    <div class="stock-row">
+                        <div class="col-name">
+                            <span class="stock-name">SK하이닉스</span>
+                            <span class="stock-code">000660</span>
+                        </div>
+                        <div class="col-ratio">
+                            <div class="ratio-bar">
+                                <div class="ratio-current" style="width: 25%;"></div>
+                                <div class="ratio-target" style="left: 25%;"></div>
+                            </div>
+                            <span class="ratio-text">25% <span class="ratio-target-text">(목표 25%)</span></span>
+                        </div>
+                        <div class="col-value">
+                            <span class="value-main">₩8,112,500</span>
+                            <span class="value-change positive">+8.1%</span>
+                        </div>
+                    </div>
+
+                    <div class="stock-row">
+                        <div class="col-name">
+                            <span class="stock-name">NAVER</span>
+                            <span class="stock-code">035420</span>
+                        </div>
+                        <div class="col-ratio">
+                            <div class="ratio-bar">
+                                <div class="ratio-current" style="width: 20%;"></div>
+                                <div class="ratio-target" style="left: 20%;"></div>
+                            </div>
+                            <span class="ratio-text">20% <span class="ratio-target-text">(목표 20%)</span></span>
+                        </div>
+                        <div class="col-value">
+                            <span class="value-main">₩6,490,000</span>
+                            <span class="value-change positive">+3.7%</span>
+                        </div>
+                    </div>
+
+                    <div class="stock-row">
+                        <div class="col-name">
+                            <span class="stock-name">카카오</span>
+                            <span class="stock-code">035720</span>
+                        </div>
+                        <div class="col-ratio">
+                            <div class="ratio-bar">
+                                <div class="ratio-current" style="width: 12%;"></div>
+                                <div class="ratio-target" style="left: 15%;"></div>
+                            </div>
+                            <span class="ratio-text">12% <span class="ratio-target-text">(목표 15%)</span></span>
+                        </div>
+                        <div class="col-value">
+                            <span class="value-main">₩3,894,000</span>
+                            <span class="value-change negative">-4.3%</span>
+                        </div>
+                    </div>
+
+                    <div class="stock-row">
+                        <div class="col-name">
+                            <span class="stock-name">LG에너지솔루션</span>
+                            <span class="stock-code">373220</span>
+                        </div>
+                        <div class="col-ratio">
+                            <div class="ratio-bar">
+                                <div class="ratio-current" style="width: 8%;"></div>
+                                <div class="ratio-target" style="left: 10%;"></div>
+                            </div>
+                            <span class="ratio-text">8% <span class="ratio-target-text">(목표 10%)</span></span>
+                        </div>
+                        <div class="col-value">
+                            <span class="value-main">₩2,596,000</span>
+                            <span class="value-change positive">+12.5%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-actions">
+                <button class="action-btn secondary" onclick="navigateTo('screen-search')">
+                    <span class="action-icon">+</span>
+                    <span>종목 추가</span>
+                </button>
+                <button class="action-btn primary" onclick="navigateTo('screen-rebalance')">
+                    <span class="action-icon">⚖️</span>
+                    <span>리밸런싱 분석</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Screen 5: 종목 검색/추가 -->
+        <div id="screen-search" class="screen">
+            <header class="header">
+                <button class="back-btn" onclick="navigateTo('screen-detail')">←</button>
+                <h2>종목 추가</h2>
+                <div class="header-spacer"></div>
+            </header>
+
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="종목명 또는 종목코드 검색" value="현대">
+                </div>
+            </div>
+
+            <div class="search-results">
+                <div class="result-item" onclick="showModal('stock-add-modal')">
+                    <div class="result-info">
+                        <span class="result-name">현대자동차</span>
+                        <span class="result-code">005380</span>
+                    </div>
+                    <div class="result-price">
+                        <span class="price">₩186,500</span>
+                        <span class="change positive">+1.24%</span>
+                    </div>
+                </div>
+                <div class="result-item" onclick="showModal('stock-add-modal')">
+                    <div class="result-info">
+                        <span class="result-name">현대모비스</span>
+                        <span class="result-code">012330</span>
+                    </div>
+                    <div class="result-price">
+                        <span class="price">₩252,000</span>
+                        <span class="change negative">-0.79%</span>
+                    </div>
+                </div>
+                <div class="result-item" onclick="showModal('stock-add-modal')">
+                    <div class="result-info">
+                        <span class="result-name">현대건설</span>
+                        <span class="result-code">000720</span>
+                    </div>
+                    <div class="result-price">
+                        <span class="price">₩31,450</span>
+                        <span class="change positive">+2.11%</span>
+                    </div>
+                </div>
+                <div class="result-item" onclick="showModal('stock-add-modal')">
+                    <div class="result-info">
+                        <span class="result-name">현대제철</span>
+                        <span class="result-code">004020</span>
+                    </div>
+                    <div class="result-price">
+                        <span class="price">₩33,800</span>
+                        <span class="change positive">+0.45%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 6: 리밸런싱 분석 -->
+        <div id="screen-rebalance" class="screen">
+            <header class="header">
+                <button class="back-btn" onclick="navigateTo('screen-detail')">←</button>
+                <h2>리밸런싱 분석</h2>
+                <button class="icon-btn" onclick="showModal('threshold-modal')">⚙️</button>
+            </header>
+
+            <div class="rebalance-chart">
+                <div class="chart-legend">
+                    <span class="legend-item"><span class="dot current"></span> 현재 비율</span>
+                    <span class="legend-item"><span class="dot target"></span> 목표 비율</span>
+                </div>
+                <div class="chart-container">
+                    <div class="bar-chart">
+                        <div class="chart-bar">
+                            <div class="bar-label">삼성전자</div>
+                            <div class="bar-container">
+                                <div class="bar current" style="width: 70%;"></div>
+                                <div class="bar target" style="width: 60%;"></div>
+                            </div>
+                            <div class="bar-values">
+                                <span class="val-current">35%</span>
+                                <span class="val-target">30%</span>
+                            </div>
+                        </div>
+                        <div class="chart-bar">
+                            <div class="bar-label">SK하이닉스</div>
+                            <div class="bar-container">
+                                <div class="bar current" style="width: 50%;"></div>
+                                <div class="bar target" style="width: 50%;"></div>
+                            </div>
+                            <div class="bar-values">
+                                <span class="val-current">25%</span>
+                                <span class="val-target">25%</span>
+                            </div>
+                        </div>
+                        <div class="chart-bar">
+                            <div class="bar-label">NAVER</div>
+                            <div class="bar-container">
+                                <div class="bar current" style="width: 40%;"></div>
+                                <div class="bar target" style="width: 40%;"></div>
+                            </div>
+                            <div class="bar-values">
+                                <span class="val-current">20%</span>
+                                <span class="val-target">20%</span>
+                            </div>
+                        </div>
+                        <div class="chart-bar">
+                            <div class="bar-label">카카오</div>
+                            <div class="bar-container">
+                                <div class="bar current" style="width: 24%;"></div>
+                                <div class="bar target" style="width: 30%;"></div>
+                            </div>
+                            <div class="bar-values">
+                                <span class="val-current">12%</span>
+                                <span class="val-target">15%</span>
+                            </div>
+                        </div>
+                        <div class="chart-bar">
+                            <div class="bar-label">LG에너지</div>
+                            <div class="bar-container">
+                                <div class="bar current" style="width: 16%;"></div>
+                                <div class="bar target" style="width: 20%;"></div>
+                            </div>
+                            <div class="bar-values">
+                                <span class="val-current">8%</span>
+                                <span class="val-target">10%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rebalance-suggestions">
+                <div class="section-header">
+                    <h3>리밸런싱 제안</h3>
+                    <span class="threshold-info">임계값: ±5%</span>
+                </div>
+
+                <div class="suggestion-list">
+                    <div class="suggestion-card sell">
+                        <div class="suggestion-header">
+                            <span class="suggestion-type">매도</span>
+                            <span class="suggestion-stock">삼성전자</span>
+                        </div>
+                        <div class="suggestion-detail">
+                            <div class="detail-row">
+                                <span class="detail-label">현재 비율</span>
+                                <span class="detail-value">35%</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">목표 비율</span>
+                                <span class="detail-value">30%</span>
+                            </div>
+                            <div class="detail-row highlight">
+                                <span class="detail-label">권장 수량</span>
+                                <span class="detail-value">-8주</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">예상 금액</span>
+                                <span class="detail-value">₩596,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="suggestion-card buy">
+                        <div class="suggestion-header">
+                            <span class="suggestion-type">매수</span>
+                            <span class="suggestion-stock">카카오</span>
+                        </div>
+                        <div class="suggestion-detail">
+                            <div class="detail-row">
+                                <span class="detail-label">현재 비율</span>
+                                <span class="detail-value">12%</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">목표 비율</span>
+                                <span class="detail-value">15%</span>
+                            </div>
+                            <div class="detail-row highlight">
+                                <span class="detail-label">권장 수량</span>
+                                <span class="detail-value">+20주</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">예상 금액</span>
+                                <span class="detail-value">₩974,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="suggestion-card buy">
+                        <div class="suggestion-header">
+                            <span class="suggestion-type">매수</span>
+                            <span class="suggestion-stock">LG에너지솔루션</span>
+                        </div>
+                        <div class="suggestion-detail">
+                            <div class="detail-row">
+                                <span class="detail-label">현재 비율</span>
+                                <span class="detail-value">8%</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">목표 비율</span>
+                                <span class="detail-value">10%</span>
+                            </div>
+                            <div class="detail-row highlight">
+                                <span class="detail-label">권장 수량</span>
+                                <span class="detail-value">+2주</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">예상 금액</span>
+                                <span class="detail-value">₩648,500</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 7: 설정 -->
+        <div id="screen-settings" class="screen">
+            <header class="header">
+                <button class="back-btn" onclick="navigateTo('screen-home')">←</button>
+                <h2>설정</h2>
+                <div class="header-spacer"></div>
+            </header>
+
+            <div class="settings-container">
+                <div class="settings-group">
+                    <h3 class="settings-group-title">프로필</h3>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-avatar">김</div>
+                            <div class="settings-profile-info">
+                                <span class="settings-name">투자왕김철수</span>
+                                <span class="settings-email">investor@email.com</span>
+                            </div>
+                        </div>
+                        <span class="settings-arrow">›</span>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3 class="settings-group-title">알림 설정</h3>
+                    <div class="settings-item">
+                        <span class="settings-label">알림 받기</span>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-label">알림 주기</span>
+                        <span class="settings-value">매일</span>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-label">알림 시간</span>
+                        <span class="settings-value">16:00</span>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3 class="settings-group-title">앱 정보</h3>
+                    <div class="settings-item">
+                        <span class="settings-label">버전</span>
+                        <span class="settings-value">2.0.0 Opus</span>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-label">이용약관</span>
+                        <span class="settings-arrow">›</span>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-label">개인정보처리방침</span>
+                        <span class="settings-arrow">›</span>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-label">오픈소스 라이선스</span>
+                        <span class="settings-arrow">›</span>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <button class="logout-btn">로그아웃</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="stock-add-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>현대자동차</h3>
+                    <button class="modal-close" onclick="hideModal('stock-add-modal')">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="stock-modal-price">
+                        <span class="current-price">₩186,500</span>
+                        <span class="price-change positive">+1.24%</span>
+                    </div>
+                    <div class="form-group">
+                        <label>보유 수량</label>
+                        <div class="number-input">
+                            <button class="num-btn">-</button>
+                            <input type="number" value="10">
+                            <button class="num-btn">+</button>
+                        </div>
+                        <span class="estimated">예상 금액: ₩1,865,000</span>
+                    </div>
+                    <div class="form-group">
+                        <label>목표 비율</label>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="100" value="10" class="ratio-slider">
+                            <span class="slider-value">10%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn secondary" onclick="hideModal('stock-add-modal')">취소</button>
+                    <button class="modal-btn primary"
+                        onclick="hideModal('stock-add-modal'); navigateTo('screen-detail');">추가</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="threshold-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>임계값 설정</h3>
+                    <button class="modal-close" onclick="hideModal('threshold-modal')">×</button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-description">목표 비율 대비 이 값을 초과하면 리밸런싱을 권장합니다</p>
+                    <div class="threshold-options">
+                        <label class="radio-option">
+                            <input type="radio" name="threshold" value="3">
+                            <span class="radio-label">±3%</span>
+                            <span class="radio-desc">민감하게 관리</span>
+                        </label>
+                        <label class="radio-option selected">
+                            <input type="radio" name="threshold" value="5" checked>
+                            <span class="radio-label">±5%</span>
+                            <span class="radio-desc">권장</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="threshold" value="10">
+                            <span class="radio-label">±10%</span>
+                            <span class="radio-desc">느슨하게 관리</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn primary full-width" onclick="hideModal('threshold-modal')">저장</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="add-portfolio-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>새 포트폴리오</h3>
+                    <button class="modal-close" onclick="hideModal('add-portfolio-modal')">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>포트폴리오 이름</label>
+                        <input type="text" placeholder="예: 장기 투자용">
+                    </div>
+                    <div class="form-group">
+                        <label>설명 <span class="optional">(선택)</span></label>
+                        <textarea placeholder="포트폴리오 설명을 입력하세요"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>색상</label>
+                        <div class="color-picker">
+                            <span class="color-option selected" style="background: var(--gradient-primary);"></span>
+                            <span class="color-option"
+                                style="background: linear-gradient(135deg, #6B9080, #4A6F5A);"></span>
+                            <span class="color-option"
+                                style="background: linear-gradient(135deg, #5C8EAD, #3D6B8C);"></span>
+                            <span class="color-option"
+                                style="background: linear-gradient(135deg, #B87D5B, #8B5A3C);"></span>
+                            <span class="color-option"
+                                style="background: linear-gradient(135deg, #6B7A8F, #4A5568);"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn secondary" onclick="hideModal('add-portfolio-modal')">취소</button>
+                    <button class="modal-btn primary" onclick="hideModal('add-portfolio-modal')">생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="screen-navigator">
+        <h4>화면 네비게이터</h4>
+        <div class="nav-buttons">
+            <button onclick="navigateTo('screen-login')">1. 로그인</button>
+            <button onclick="navigateTo('screen-profile')">2. 프로필</button>
+            <button onclick="navigateTo('screen-home')">3. 홈</button>
+            <button onclick="navigateTo('screen-detail')">4. 상세</button>
+            <button onclick="navigateTo('screen-search')">5. 검색</button>
+            <button onclick="navigateTo('screen-rebalance')">6. 리밸런싱</button>
+            <button onclick="navigateTo('screen-settings')">7. 설정</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
