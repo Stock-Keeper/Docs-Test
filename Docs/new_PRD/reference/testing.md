@@ -1,250 +1,244 @@
-# 테스트 전략
+# Stock-Keeper - 테스트 전략
 
-## 요약 ⚡
-
-- Phase 1: 단위/통합 테스트 (JUnit, Jest) + 수동 QA
-- 테스트 커버리지 목표: 백엔드 70%, 프론트엔드 60%
-- CI/CD: GitHub Actions로 테스트 자동화
-- 비기능 테스트: 부하테스트, 보안테스트
-- [P2] E2E 테스트 (Detox/Appium)
+> Stock-Keeper 프로젝트의 전반적인 테스트 전략, 테스트 유형별 가이드, 테스트 자동화, 베타 테스트 계획을 다룹니다.
 
 ---
 
-## Phase 1 (현재)
+## 요약 ⚡
 
-### 테스트 피라미드
+테스트 피라미드 구조로 단위 테스트 70%, 통합 테스트 20%, E2E 테스트 10%를 목표로 합니다. Phase 1에서는 코어 비즈니스 로직 70% 커버리지, Phase 2에서 80%, Phase 3에서 90%를 목표로 합니다. JUnit 5, Jest, Detox/Maestro를 사용하며 GitHub Actions로 테스트를 자동화합니다.
 
+---
+
+## 테스트 피라미드
+
+### 비율
+
+| 테스트 유형 | 비율 | 설명 |
+|------------|------|------|
+| **단위 테스트 (Unit Test)** | 70% | 가장 많은 비중, 기능 단위 검증 |
+| **통합 테스트 (Integration Test)** | 20% | API 엔드포인트, DB 연동 검증 |
+| **E2E 테스트 (End-to-End Test)** | 10% | 사용자 시나리오 전체 플로우 검증 |
+
+### 커버리지 목표
+
+- **Phase 1**: 코어 비즈니스 로직 70% 이상
+- **Phase 2**: 전체 코드 80% 이상
+- **Phase 3**: 90% 이상 (크리티컬 경로 100%)
+
+---
+
+## Phase 1: 단위 테스트
+
+### Backend 테스트
+
+**도구**: JUnit 5, Mockito, AssertJ
+
+**테스트 대상**:
+
+- **비즈니스 로직**
+  - 리밸런싱 계산 알고리즘
+  - 포트폴리오 비율 계산
+  - 매수/매도 수량 제안 로직
+
+- **유틸리티 함수**
+  - 데이터 변환 로직
+  - 입력값 검증 로직
+
+- **Service 레이어**
+  - 포트폴리오/종목 CRUD 로직
+  - 한투 API 호출 래퍼 함수
+
+**테스트 예시**:
+
+```java
+// 리밸런싱 계산 테스트
+@Test
+void testCalculateRebalancing() {
+    Portfolio portfolio = createTestPortfolio();
+    RebalancingResult result = rebalancingService.calculate(portfolio);
+    
+    assertThat(result.getTotalValue()).isEqualTo(10000000);
+    assertThat(result.getSuggestions()).hasSize(3);
+}
+
+// 수량 검증 테스트
+@Test
+void testValidateStockQuantity() {
+    assertThatThrownBy(() -> validator.validateQuantity(-1))
+        .isInstanceOf(IllegalArgumentException.class);
+}
 ```
-         E2E Tests (P2)
-              │
-    ┌─────────┴─────────┐
-    │  Integration Tests  │
-    ├───────────────────┤
-    │    Unit Tests      │
-    └───────────────────┘
+
+### Frontend 테스트
+
+**도구**: Jest, React Native Testing Library
+
+**테스트 대상**:
+
+- **컴포넌트 렌더링**
+  - 버튼, 입력 필드, 리스트 컴포넌트
+
+- **상태 관리 로직**
+  - 포트폴리오 추가/삭제
+  - 종목 수량 변경
+
+- **유틸리티 함수**
+  - 금액 포맷팅
+  - 비율 계산
+
+**테스트 예시**:
+
+```javascript
+// 컴포넌트 테스트
+test('PortfolioCard displays correct data', () => {
+  const portfolio = { name: '테스트 포트폴리오', totalValue: 1000000 };
+  const { getByText } = render(<PortfolioCard portfolio={portfolio} />);
+  
+  expect(getByText('테스트 포트폴리오')).toBeTruthy();
+  expect(getByText('1,000,000원')).toBeTruthy();
+});
+
+// 유틸리티 함수 테스트
+test('formatCurrency formats number correctly', () => {
+  expect(formatCurrency(1234567)).toBe('1,234,567원');
+});
 ```
 
-### 백엔드 테스트
+---
 
-#### 단위 테스트 (Unit Test)
+## Phase 1: 통합 테스트
 
-**프레임워크**: JUnit 5 + Mockito
+### Backend 통합 테스트
 
-**테스트 범위**
+**도구**: Spring Boot Test, TestContainers (MySQL 컨테이너)
 
-| 레이어 | 테스트 대상 | 예시 |
-|---------|------------|------|
-| Service | 비즈니스 로직 | `RebalancingService.calculateRebalancing()` |
-| Repository | 데이터 접근 | `PortfolioRepository.findByUserId()` |
-| Util | 유틸리티 함수 | `JwtUtil.generateToken()` |
+**테스트 대상**:
 
-**테스트 케이스 예시**
+- **API 엔드포인트**
+  - 포트폴리오 생성 → 종목 추가 → 리밸런싱 조회 플로우
+
+- **DB 연동**
+  - JPA Repository 쿼리 검증
+  - Cascade 삭제 동작 확인
+
+- **외부 API 연동**
+  - 한투 API Mock 서버 또는 Sandbox 환경
+
+**테스트 예시**:
 
 ```java
 @SpringBootTest
-class RebalancingServiceTest {
-    
-    @Mock
-    private PortfolioRepository portfolioRepository;
-    
-    @Mock
-    private StockRepository stockRepository;
-    
-    @InjectMocks
-    private RebalancingService rebalancingService;
-    
-    @Test
-    @DisplayName("리밸런싱 계산 - 정상 케이스")
-    void calculateRebalancing_Success() {
-        // Given
-        Portfolio portfolio = createTestPortfolio();
-        List<Stock> stocks = createTestStocks();
-        
-        when(portfolioRepository.findById(any())).thenReturn(Optional.of(portfolio));
-        when(stockRepository.findByPortfolioId(any())).thenReturn(stocks);
-        
-        // When
-        RebalancingResult result = rebalancingService.calculateRebalancing(portfolioId);
-        
-        // Then
-        assertNotNull(result);
-        assertEquals(3, result.getActions().size());
-    }
-    
-    @Test
-    @DisplayName("리밸런싱 계산 - 포트폴리오 없음")
-    void calculateRebalancing_PortfolioNotFound() {
-        // Given
-        when(portfolioRepository.findById(any())).thenReturn(Optional.empty());
-        
-        // When & Then
-        assertThrows(PortfolioNotFoundException.class, 
-            () -> rebalancingService.calculateRebalancing(portfolioId));
-    }
-}
-```
-
-#### 통합 테스트 (Integration Test)
-
-**프레임워크**: Spring Boot Test + TestContainers (MySQL)
-
-**테스트 범위**
-
-| 레이어 | 테스트 대상 | 예시 |
-|---------|------------|------|
-| Controller | API 엔드포인트 | `POST /api/portfolios` |
-| Service + Repository | 데이터베이스 연동 | `PortfolioService.createPortfolio()` |
-| 외부 API | 한투 API 목 서버 | `KoreaInvestmentClient.getCurrentPrice()` |
-
-**테스트 케이스 예시**
-
-```java
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Testcontainers
+@AutoConfigureMockMvc
 class PortfolioIntegrationTest {
     
-    @Container
-    static MySQLContainer mysql = new MySQLContainer("mysql:8.0");
-    
-    @Autowired
-    private TestRestTemplate restTemplate;
-    
     @Test
-    @DisplayName("포트폴리오 생성 API - 정상")
-    void createPortfolio_Success() {
-        // Given
-        String token = getAuthToken();
-        PortfolioCreateRequest request = new PortfolioCreateRequest(
-            "내 포트폴리오", 
-            1000000L
-        );
+    void testFullRebalancingFlow() {
+        // 1. 포트폴리오 생성
+        Long portfolioId = createPortfolio("Test Portfolio");
         
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(token);
-        HttpEntity<PortfolioCreateRequest> entity = new HttpEntity<>(request, headers);
+        // 2. 종목 추가
+        addStock(portfolioId, "005930", 10);
+        addStock(portfolioId, "000660", 5);
         
-        // When
-        ResponseEntity<PortfolioResponse> response = restTemplate.postForEntity(
-            "/api/portfolios", 
-            entity, 
-            PortfolioResponse.class
-        );
+        // 3. 리밸런싱 조회
+        RebalancingResponse response = getRebalancing(portfolioId);
         
-        // Then
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getBody().getId());
+        assertThat(response.getSuggestions()).hasSize(2);
     }
 }
 ```
 
-#### 테스트 커버리지 목표
+### Frontend 통합 테스트
 
-| 레이어 | 목표 | 측정 도구 |
-|---------|------|----------|
-| Service | 80% | JaCoCo |
-| Repository | 70% | JaCoCo |
-| Controller | 60% | JaCoCo |
-| **전체** | **70%** | JaCoCo |
+**도구**: React Native Testing Library, MSW (Mock Service Worker)
 
-### 프론트엔드 테스트
+**테스트 대상**:
 
-#### 단위 테스트 (Unit Test)
+- **화면 간 네비게이션**
+  - 로그인 → 포트폴리오 목록 → 상세 화면
 
-**프레임워크**: Jest + React Native Testing Library
+- **API 호출 및 상태 업데이트**
+  - 종목 추가 후 목록 갱신
 
-**테스트 범위**
-
-| 레이어 | 테스트 대상 | 예시 |
-|---------|------------|------|
-| Component | UI 컴포넌트 | `PortfolioCard`, `StockListItem` |
-| Hook | 커스텀 훅 | `useAuth`, `usePortfolios` |
-| Util | 유틸리티 함수 | `formatCurrency()`, `calculateRatio()` |
-
-**테스트 케이스 예시**
+**테스트 예시**:
 
 ```javascript
-import { render, fireEvent } from '@testing-library/react-native';
-import PortfolioCard from '../components/PortfolioCard';
-
-describe('PortfolioCard', () => {
-  const mockPortfolio = {
-    id: '1',
-    name: '내 포트폴리오',
-    totalAmount: 1000000,
-    currentValue: 1050000,
-  };
+test('Add stock flow integration', async () => {
+  // 1. 목록 화면
+  const { getByText } = render(<StockListScreen />);
   
-  it('포트폴리오 정보를 올바르게 표시한다', () => {
-    const { getByText } = render(<PortfolioCard portfolio={mockPortfolio} />);
-    
-    expect(getByText('내 포트폴리오')).toBeTruthy();
-    expect(getByText('1,050,000원')).toBeTruthy();
-  });
+  // 2. 추가 버튼 클릭
+  fireEvent.press(getByText('종목 추가'));
   
-  it('클릭 시 onPress 콜백이 호출된다', () => {
-    const onPressMock = jest.fn();
-    const { getByTestId } = render(
-      <PortfolioCard portfolio={mockPortfolio} onPress={onPressMock} />
-    );
-    
-    fireEvent.press(getByTestId('portfolio-card'));
-    expect(onPressMock).toHaveBeenCalledWith('1');
+  // 3. 종목 선택 및 저장
+  // ...
+  
+  // 4. 목록 갱신 확인
+  await waitFor(() => {
+    expect(getByText('삼성전자')).toBeTruthy();
   });
 });
 ```
 
-#### 통합 테스트 (Integration Test)
+---
 
-**프레임워크**: Jest + MSW (Mock Service Worker)
+## Phase 1: E2E 테스트
 
-**테스트 범위**
+### 테스트 도구
 
-| 레이어 | 테스트 대상 | 예시 |
-|---------|------------|------|
-| Screen | 화면 전체 플로우 | `PortfolioListScreen` |
-| API Service | API 호출 | `portfolioService.getAll()` |
-| Context | 상태 관리 | `AuthContext`, `PortfolioContext` |
+**선택지**: Detox (추천), Appium, Maestro
 
-**테스트 케이스 예시**
+**Phase 1 추천**: Maestro (간단한 UI 자동화, 빠른 설정)
 
-```javascript
-import { render, waitFor } from '@testing-library/react-native';
-import { server } from '../mocks/server';
-import PortfolioListScreen from '../screens/PortfolioListScreen';
+### 테스트 시나리오
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+#### 1. 회원가입 및 로그인
+- Google 로그인 → 프로필 입력 → 홈 화면 진입
 
-describe('PortfolioListScreen', () => {
-  it('포트폴리오 목록을 불러와서 표시한다', async () => {
-    const { getByText } = render(<PortfolioListScreen />);
-    
-    await waitFor(() => {
-      expect(getByText('포트폴리오 1')).toBeTruthy();
-      expect(getByText('포트폴리오 2')).toBeTruthy();
-    });
-  });
-});
-```
+#### 2. 포트폴리오 생성 및 종목 추가
+- 포트폴리오 추가 → 종목 검색 → 수량 입력 → 저장 → 목록 확인
 
-#### 테스트 커버리지 목표
+#### 3. 리밸런싱 분석
+- 포트폴리오 선택 → 리밸런싱 버튼 → 제안 확인
 
-| 레이어 | 목표 | 측정 도구 |
-|---------|------|----------|
-| Component | 70% | Jest Coverage |
-| Screen | 60% | Jest Coverage |
-| Util | 80% | Jest Coverage |
-| **전체** | **60%** | Jest Coverage |
+#### 4. 알림 설정
+- 설정 화면 → 알림 ON → 주기 선택 → 저장
 
-### CI/CD 테스트 자동화
+#### 5. 포트폴리오 삭제
+- 포트폴리오 선택 → 삭제 버튼 → 확인 다이얼로그 → 삭제 완료
 
-#### GitHub Actions Workflow
+### 실행 주기
 
-**백엔드**
+- **Phase 1**: 배포 전 수동 실행
+- **Phase 2**: CI/CD 파이프라인에 통합, PR 머지 전 자동 실행
+
+---
+
+## 테스트 자동화
+
+### CI/CD 파이프라인 통합
+
+**도구**: GitHub Actions
+
+**트리거**:
+- Pull Request 생성/업데이트 시
+- main/develop 브랜치 Push 시
+
+**실행 단계**:
+
+1. 코드 체크아웃
+2. 의존성 설치
+3. 린트 검사 (ESLint, Checkstyle)
+4. 단위 테스트 실행
+5. 통합 테스트 실행
+6. 테스트 커버리지 리포트 생성
+7. E2E 테스트 실행 (선택적)
+
+### GitHub Actions Workflow 예시
 
 ```yaml
-name: Backend Tests
+name: CI/CD Pipeline
 
 on:
   push:
@@ -255,16 +249,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: test
-          MYSQL_DATABASE: test_db
-        ports:
-          - 3306:3306
-    
     steps:
       - uses: actions/checkout@v3
       
@@ -272,205 +256,137 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'adopt'
       
-      - name: Run tests
+      - name: Run Backend Tests
         run: ./gradlew test
       
-      - name: Generate coverage report
-        run: ./gradlew jacocoTestReport
-      
-      - name: Upload coverage to Codecov
+      - name: Upload Coverage
         uses: codecov/codecov-action@v3
-        with:
-          file: ./build/reports/jacoco/test/jacocoTestReport.xml
-```
+      
+      - name: Run Frontend Tests
+        run: |
+          cd frontend
+          npm test -- --coverage
 
-**프론트엔드**
-
-```yaml
-name: Frontend Tests
-
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
-
-jobs:
-  test:
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Run tests
-        run: npm test -- --coverage
-      
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./coverage/coverage-final.json
+      - name: Deploy to Production
+        run: |
+          ssh user@server 'cd /app && git pull && ./deploy.sh'
 ```
 
-### 수동 QA 테스트
+### 테스트 실패 시 처리
 
-#### 테스트 체크리스트
-
-**기능 테스트**
-
-- [ ] 로그인/로그아웃 테스트
-  - [ ] Google 로그인 성공
-  - [ ] 토큰 만료 시 자동 갱신
-  - [ ] 로그아웃 후 접근 불가
-
-- [ ] 포트폴리오 CRUD
-  - [ ] 포트폴리오 생성 (1~5개)
-  - [ ] 포트폴리오 수정
-  - [ ] 포트폴리오 삭제
-  - [ ] 6번째 포트폴리오 생성 차단
-
-- [ ] 종목 관리
-  - [ ] 종목 검색 및 추가
-  - [ ] 목표 비율 설정
-  - [ ] 종목 수정/삭제
-
-- [ ] 리밸런싱
-  - [ ] 현재 비율 계산
-  - [ ] 리밸런싱 제안 표시
-  - [ ] 매수/매도 수량 계산
-
-- [ ] 알림
-  - [ ] 알림 설정 저장
-  - [ ] 알림 발송 확인
-
-**비기능 테스트**
-
-- [ ] 성능 테스트
-  - [ ] API 응답시간 < 2초
-  - [ ] 앱 로딩시간 < 3초
-
-- [ ] 보안 테스트
-  - [ ] JWT 토큰 검증
-  - [ ] 권한 없는 접근 차단
-
-- [ ] 호환성 테스트
-  - [ ] iOS (14 이상)
-  - [ ] Android (10 이상)
+- PR 더지 차단
+- Slack/Discord 알림
+- 실패 원인 로그 저장
 
 ---
 
-## Phase 2+ (확장 고려사항)
+## 베타 테스트 계획
 
-### E2E 테스트
+### 클로즈드 베타 (Closed Beta)
 
-- [P2] **프레임워크**: Detox (React Native) 또는 Appium
-- [P2] **테스트 시나리오**
-  - 로그인 → 포트폴리오 생성 → 종목 추가 → 리밸런싱 확인
-  - 알림 설정 → 알림 수신 확인
+**`[P1]` Phase 1 개발 완료 후**
 
-### 성능 테스트
+- **기간**: 2주
+- **대상**: 팀원, 지인, 초대된 사용자 (20~50명)
+- **목적**:
+  - 주요 버그 발견
+  - 사용성 테스트
+  - 피드백 수집
+- **배포**: TestFlight (iOS), Firebase App Distribution (Android)
 
-- [P2] **부하 테스트**: JMeter 또는 k6
-  - 동시 사용자 100명 시뮬레이션
-  - 목표: 에러율 < 1%, P95 < 1초
+### 오픈 베타 (Open Beta)
 
-- [P2] **스트레스 테스트**: 예상 CCU의 2배
+**`[P2]` Phase 2 기능 테스트용 (선택적)**
 
-### 보안 테스트
+- **기간**: 1주
+- **대상**: 공개 모집 (100~200명)
+- **목적**:
+  - 대규모 트래픽 테스트
+  - 다양한 기기 호환성 확인
 
-- [P2] **침투 테스트**: OWASP ZAP
-- [P2] **취약점 스캔**: Snyk, Dependabot
+### 정식 출시 체크리스트
 
----
+- [ ] 베타 테스트 피드백 반영
+- [ ] 앱 스토어 스크린샷 및 설명 준비
+- [ ] 개인정보 처리방침 공개
+- [ ] 앱 스토어 심사 통과
+- [ ] 서버 용량 확인 및 스케일링 준비
+- [ ] 마케팅 자료 준비
 
-## 테스트 일정
+### 출시 후 모니터링
 
-| Phase | 시점 | 테스트 종류 |
-|-------|------|------------|
-| Phase 1 | 주간 | 단위/통합 테스트 (CI) |
-| Phase 1 | 마일스톤별 | 수동 QA |
-| Phase 1 | 출시 전 | 전체 회귀 테스트 |
-| Phase 2 | 분기별 | E2E 테스트 |
-| Phase 2 | 주요 기능 추가 시 | 성능 테스트 |
-
----
-
-## 버그 관리
-
-### 버그 심각도
-
-| 레벨 | 정의 | 대응 시간 |
-|------|------|----------|
-| Critical | 서비스 중단, 데이터 손실 | 24시간 이내 |
-| High | 핵심 기능 동작 불가 | 3일 이내 |
-| Medium | 일부 기능 문제 | 1주 이내 |
-| Low | UI 개선, 소소한 불편 | 다음 마일스톤 |
-
-### 버그 추적
-
-- **도구**: GitHub Issues + Labels
-- **레이블**: `bug:critical`, `bug:high`, `bug:medium`, `bug:low`
-- **템플릿**: `.github/ISSUE_TEMPLATE/bug_report.md`
+- **첫 24시간**: 실시간 모니터링 (크래시, 에러율, 성능)
+- **첫 1주일**: 일일 리포트 검토, 사용자 피드백 수집
+- **첫 1개월**: 주간 분석, 개선사항 우선순위 결정
 
 ---
 
-## 테스트 환경
+## Phase 2: 확장 테스트
 
-| 환경 | 용도 | URL/접근 |
-|------|------|--------|
-| Local | 개발자 로컬 | `localhost:8080` |
-| Dev | 개발/테스트 | `dev-api.stock-keeper.com` |
-| Staging | 출시 전 검증 | `staging-api.stock-keeper.com` |
-| Production | 실제 서비스 | `api.stock-keeper.com` |
+### `[P2]` 추가 테스트 항목
+
+- **포트폴리오 공유 기능**
+  - 공개/비공개 링크 생성 테스트
+  - 공유 링크 접근 권한 검증
+
+- **차트 및 그래프**
+  - 비율 비교 차트 렌더링 테스트
+  - 수익률 그래프 데이터 정확성 테스트
+
+- **소수점 거래**
+  - 소수점 수량 계산 테스트
+  - 라운딩 로직 검증
+
+- **Redis 캠싱**
+  - 캠시 히트/미스 테스트
+  - 캠시 만료 동작 테스트
 
 ---
 
-## 팀 논의 필요 사항
+## Phase 3: 고도화 테스트
 
-- [ ] 테스트 커버리지 목표 합의 (70% vs 80%)
-- [ ] E2E 테스트 도입 시점 (Phase 1 vs Phase 2)
-- [ ] 성능 테스트 도구 선택 (JMeter vs k6)
-- [ ] QA 테스트 주기 (마일스톤별 vs 주간)
-- [ ] 버그 대응 시간 기준 확정
+### `[P3]` 추가 테스트 항목
 
----
+- **AI 추천 기능**
+  - AI 모델 출력 검증
+  - 추천 정확도 테스트
 
-## 체크리스트
+- **다국어 지원**
+  - 다국어 리소스 로딩 테스트
+  - 언어 전환 동작 테스트
 
-### Phase 1 출시 전 필수
-
-- [ ] 백엔드 단위 테스트 70% 달성
-- [ ] 프론트엔드 단위 테스트 60% 달성
-- [ ] CI/CD 테스트 자동화 구축
-- [ ] 수동 QA 체크리스트 완료
-- [ ] 크리티컬 버그 0건
-
-### Phase 2 목표
-
-- [ ] E2E 테스트 환경 구축
-- [ ] 부하 테스트 수행
-- [ ] 보안 테스트 도구 도입
+- **성능 테스트**
+  - 부하 테스트 (Load Testing)
+  - 스트레스 테스트 (Stress Testing)
 
 ---
 
 ## 관련 문서
 
-- **기술 스택**: `core/tech-stack.md`
-- **보안**: `reference/security.md`
-- **인프라**: `reference/infra.md`
-- **배포**: `reference/deployment.md`
+- **테스트 도구 선택**: [core/tech-stack.md](../core/tech-stack.md)
+- **API 스펙**: [reference/api-spec.md](api-spec.md)
+- **보안 체크리스트**: [reference/security.md](security.md)
+- **배포 전략**: [reference/deployment.md](deployment.md)
+- **성능 기준**: [reference/infra.md](infra.md)
 
 ---
 
-> **작성일**: 2025-12-31  
-> **Phase**: Phase 1 (MVP)  
-> **담당**: Backend + Frontend + QA
+## 팀 논의 필요 사항
+
+- [ ] E2E 테스트 도구 최종 선택 (Detox vs Maestro)
+- [ ] 테스트 커버리지 목표 최종 결정 (70% vs 80%)
+- [ ] 베타 테스트 기간 및 모집 방법
+- [ ] 정식 출시 목표 일정 (Phase 1 완료 후 언제?)
+- [ ] 에러 추적 도구 예산 (Sentry 유료 vs Firebase Crashlytics 무료)
+
+---
+
+> 📅 **마지막 업데이트**: 2025-12-31  
+> 📝 **버전**: 1.0.0  
+> 🎯 **Phase**: Phase 1 (MVP 개발 중)
