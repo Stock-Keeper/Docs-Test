@@ -6,7 +6,7 @@
 // =============================================
 // THEME & MODE MANAGEMENT
 // =============================================
-const themes = ['indigo', 'ocean', 'sage', 'copper', 'slate'];
+const themes = ['indigo', 'sage', 'copper'];
 const modes = ['dark', 'light'];
 let currentTheme = localStorage.getItem('sk-theme') || 'indigo';
 let currentMode = localStorage.getItem('sk-mode') || 'dark';

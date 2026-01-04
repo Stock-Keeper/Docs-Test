@@ -14,13 +14,20 @@
     --gradient-primary: linear-gradient(135deg, #667eea, #764ba2);
     --gradient-primary-light: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
 
-    /* Semantic Colors (Fixed) */
-    --success: #4CAF93;
-    --success-bg: rgba(76, 175, 147, 0.2);
-    --error: #E57373;
-    --error-bg: rgba(229, 115, 115, 0.2);
+    /* Semantic Colors - Korean Market Style (상승:빨강, 하락:파랑) */
+    --success: #E53E3E;
+    --success-bg: rgba(229, 62, 62, 0.2);
+    --error: #3182CE;
+    --error-bg: rgba(49, 130, 206, 0.2);
     --warning: #FFB74D;
     --warning-bg: rgba(255, 183, 77, 0.2);
+
+    /* Chart Colors (Primary → Light Gray Gradient) */
+    --chart-c1: #667eea;
+    --chart-c2: #8b9bef;
+    --chart-c3: #b0b8f4;
+    --chart-c4: #d0d4f9;
+    --chart-c5: #e8e8e8;
 }
 
 /* ----- Theme: Indigo (Original V1 - Purple-Blue) ----- */
@@ -30,15 +37,12 @@
     --primary-rgb: 102, 126, 234;
     --gradient-primary: linear-gradient(135deg, #667eea, #764ba2);
     --gradient-primary-light: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-}
-
-/* ----- Theme: Ocean (Deep Blue-Teal) ----- */
-[data-theme="ocean"] {
-    --primary: #3b8bba;
-    --primary-dark: #2980b9;
-    --primary-rgb: 59, 139, 186;
-    --gradient-primary: linear-gradient(135deg, #3b8bba, #48b1bf);
-    --gradient-primary-light: linear-gradient(135deg, rgba(59, 139, 186, 0.2), rgba(72, 177, 191, 0.2));
+    /* Chart: Indigo → Light Gray */
+    --chart-c1: #667eea;
+    --chart-c2: #8b9bef;
+    --chart-c3: #b0b8f4;
+    --chart-c4: #d0d4f9;
+    --chart-c5: #e8e8e8;
 }
 
 /* ----- Theme: Forest (Deep Green Gradient) ----- */
@@ -48,6 +52,12 @@
     --primary-rgb: 56, 161, 105;
     --gradient-primary: linear-gradient(135deg, #38a169, #48bb78);
     --gradient-primary-light: linear-gradient(135deg, rgba(56, 161, 105, 0.2), rgba(72, 187, 120, 0.2));
+    /* Chart: Green → Light Gray */
+    --chart-c1: #38a169;
+    --chart-c2: #68b88a;
+    --chart-c3: #98cfab;
+    --chart-c4: #c8e6cd;
+    --chart-c5: #e8e8e8;
 }
 
 /* ----- Theme: Coral (Warm Coral-Peach) ----- */
@@ -57,15 +67,12 @@
     --primary-rgb: 224, 123, 123;
     --gradient-primary: linear-gradient(135deg, #e07b7b, #f0a67a);
     --gradient-primary-light: linear-gradient(135deg, rgba(224, 123, 123, 0.2), rgba(240, 166, 122, 0.2));
-}
-
-/* ----- Theme: Berry (Soft Pink-Purple) ----- */
-[data-theme="slate"] {
-    --primary: #b57edc;
-    --primary-dark: #9b59b6;
-    --primary-rgb: 181, 126, 220;
-    --gradient-primary: linear-gradient(135deg, #b57edc, #d291bc);
-    --gradient-primary-light: linear-gradient(135deg, rgba(181, 126, 220, 0.2), rgba(210, 145, 188, 0.2));
+    /* Chart: Coral → Light Gray */
+    --chart-c1: #e07b7b;
+    --chart-c2: #e99e9e;
+    --chart-c3: #f2c1c1;
+    --chart-c4: #fae4e4;
+    --chart-c5: #e8e8e8;
 }
 
 /* =============================================
@@ -334,16 +341,35 @@ body {
     color: #333;
 }
 
-[data-mode="light"] .rebalance-chart {
-    background: rgba(0, 0, 0, 0.02);
+[data-mode="light"] .ratio-card {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
 }
 
-[data-mode="light"] .bar-container {
-    background: rgba(0, 0, 0, 0.08);
+[data-mode="light"] .ratio-stock-name,
+[data-mode="light"] .ratio-big-num {
+    color: #212121;
 }
 
-[data-mode="light"] .ratio-bar {
+[data-mode="light"] .ratio-label {
+    color: #757575;
+}
+
+[data-mode="light"] .ratio-arrow {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+[data-mode="light"] .ratio-badge.ok {
+    background: rgba(0, 0, 0, 0.05);
+    color: #757575;
+}
+
+[data-mode="light"] .ratio-mini-bar {
     background: rgba(0, 0, 0, 0.1);
+}
+
+[data-mode="light"] .mini-bar-target {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 [data-mode="light"] .suggestion-header {
@@ -1356,104 +1382,137 @@ body {
 }
 
 /* =============================================
-   SCREEN 6: REBALANCING
+   SCREEN 6: REBALANCING (Donut Charts)
    ============================================= */
-.rebalance-chart {
+.donut-section {
     padding: 20px;
-    background: rgba(255, 255, 255, 0.02);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.chart-legend {
+.donut-container {
     display: flex;
+    gap: 16px;
     justify-content: center;
-    gap: 24px;
-    margin-bottom: 20px;
 }
 
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 13px;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.dot.current {
-    background: var(--gradient-primary);
-}
-
-.dot.target {
-    background: var(--success);
-}
-
-.bar-chart {
+.donut-wrapper {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-}
-
-.chart-bar {
-    display: grid;
-    grid-template-columns: 80px 1fr 70px;
+    align-items: center;
     gap: 12px;
-    align-items: center;
 }
 
-.bar-label {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 13px;
-    text-align: right;
-}
-
-.bar-container {
+.donut-chart {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
     position: relative;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.bar {
-    position: absolute;
-    height: 100%;
-    border-radius: 6px;
-    transition: width 0.5s ease;
-}
-
-.bar.current {
-    background: var(--gradient-primary);
-    z-index: 2;
-    opacity: 0.9;
-}
-
-.bar.target {
-    background: var(--success);
-    z-index: 1;
-    opacity: 0.4;
-}
-
-.bar-values {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
 }
 
-.val-current {
-    color: var(--primary);
-    font-size: 13px;
+/* 현재 비율: 삼성35%, SK25%, NAVER20%, 카카오12%, 기타8% */
+/* 색상: 메인 테마색(녹색) → 연한 회색 그라디언트 */
+.current-donut {
+    background: conic-gradient(var(--chart-c1) 0deg 126deg,
+            /* 삼성 35% */
+            var(--chart-c2) 126deg 216deg,
+            /* SK 25% */
+            var(--chart-c3) 216deg 288deg,
+            /* NAVER 20% */
+            var(--chart-c4) 288deg 331.2deg,
+            /* 카카오 12% */
+            var(--chart-c5) 331.2deg 360deg
+            /* 기타 8% */
+        );
+}
+
+/* 목표 비율: 삼성30%, SK25%, NAVER20%, 카카오15%, 기타10% */
+.target-donut {
+    background: conic-gradient(var(--chart-c1) 0deg 108deg,
+            /* 삼성 30% */
+            var(--chart-c2) 108deg 198deg,
+            /* SK 25% */
+            var(--chart-c3) 198deg 270deg,
+            /* NAVER 20% */
+            var(--chart-c4) 270deg 324deg,
+            /* 카카오 15% */
+            var(--chart-c5) 324deg 360deg
+            /* 기타 10% */
+        );
+}
+
+.donut-hole {
+    width: 70px;
+    height: 70px;
+    background: #0f0f1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.donut-title {
+    color: #fff;
+    font-size: 14px;
     font-weight: 600;
 }
 
-.val-target {
-    color: var(--success);
+.donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.legend-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* 차트 색상 클래스 (테마색 → 연한회색 그라데이션) */
+.legend-color.c1 {
+    background: var(--chart-c1);
+}
+
+.legend-color.c2 {
+    background: var(--chart-c2);
+}
+
+.legend-color.c3 {
+    background: var(--chart-c3);
+}
+
+.legend-color.c4 {
+    background: var(--chart-c4);
+}
+
+.legend-color.c5 {
+    background: var(--chart-c5);
+}
+
+/* Light mode donut */
+[data-mode="light"] .donut-hole {
+    background: #ffffff;
+}
+
+[data-mode="light"] .donut-title {
+    color: #212121;
+}
+
+[data-mode="light"] .legend-row {
+    color: #424242;
 }
 
 .rebalance-suggestions {

@@ -22,10 +22,6 @@
                 <span class="color-dot" style="background: linear-gradient(135deg, #667eea, #764ba2);"></span>
                 Indigo
             </button>
-            <button class="theme-btn" data-theme="ocean">
-                <span class="color-dot" style="background: linear-gradient(135deg, #3b8bba, #48b1bf);"></span>
-                Ocean
-            </button>
             <button class="theme-btn" data-theme="sage">
                 <span class="color-dot" style="background: linear-gradient(135deg, #38a169, #48bb78);"></span>
                 Forest
@@ -33,10 +29,6 @@
             <button class="theme-btn" data-theme="copper">
                 <span class="color-dot" style="background: linear-gradient(135deg, #e07b7b, #f0a67a);"></span>
                 Coral
-            </button>
-            <button class="theme-btn" data-theme="slate">
-                <span class="color-dot" style="background: linear-gradient(135deg, #b57edc, #d291bc);"></span>
-                Berry
             </button>
         </div>
     </div>
@@ -435,67 +427,37 @@
                 <button class="icon-btn" onclick="showModal('threshold-modal')">⚙️</button>
             </header>
 
-            <div class="rebalance-chart">
-                <div class="chart-legend">
-                    <span class="legend-item"><span class="dot current"></span> 현재 비율</span>
-                    <span class="legend-item"><span class="dot target"></span> 목표 비율</span>
-                </div>
-                <div class="chart-container">
-                    <div class="bar-chart">
-                        <div class="chart-bar">
-                            <div class="bar-label">삼성전자</div>
-                            <div class="bar-container">
-                                <div class="bar current" style="width: 70%;"></div>
-                                <div class="bar target" style="width: 60%;"></div>
-                            </div>
-                            <div class="bar-values">
-                                <span class="val-current">35%</span>
-                                <span class="val-target">30%</span>
+            <div class="donut-section">
+                <div class="donut-container">
+                    <!-- 현재 비율 도넛 -->
+                    <div class="donut-wrapper">
+                        <div class="donut-chart current-donut">
+                            <div class="donut-hole">
+                                <span class="donut-title">현재</span>
                             </div>
                         </div>
-                        <div class="chart-bar">
-                            <div class="bar-label">SK하이닉스</div>
-                            <div class="bar-container">
-                                <div class="bar current" style="width: 50%;"></div>
-                                <div class="bar target" style="width: 50%;"></div>
-                            </div>
-                            <div class="bar-values">
-                                <span class="val-current">25%</span>
-                                <span class="val-target">25%</span>
+                        <div class="donut-legend">
+                            <div class="legend-row"><span class="legend-color c1"></span>삼성전자 35%</div>
+                            <div class="legend-row"><span class="legend-color c2"></span>SK하이닉스 25%</div>
+                            <div class="legend-row"><span class="legend-color c3"></span>NAVER 20%</div>
+                            <div class="legend-row"><span class="legend-color c4"></span>카카오 12%</div>
+                            <div class="legend-row"><span class="legend-color c5"></span>기타 8%</div>
+                        </div>
+                    </div>
+
+                    <!-- 목표 비율 도넛 -->
+                    <div class="donut-wrapper">
+                        <div class="donut-chart target-donut">
+                            <div class="donut-hole">
+                                <span class="donut-title">목표</span>
                             </div>
                         </div>
-                        <div class="chart-bar">
-                            <div class="bar-label">NAVER</div>
-                            <div class="bar-container">
-                                <div class="bar current" style="width: 40%;"></div>
-                                <div class="bar target" style="width: 40%;"></div>
-                            </div>
-                            <div class="bar-values">
-                                <span class="val-current">20%</span>
-                                <span class="val-target">20%</span>
-                            </div>
-                        </div>
-                        <div class="chart-bar">
-                            <div class="bar-label">카카오</div>
-                            <div class="bar-container">
-                                <div class="bar current" style="width: 24%;"></div>
-                                <div class="bar target" style="width: 30%;"></div>
-                            </div>
-                            <div class="bar-values">
-                                <span class="val-current">12%</span>
-                                <span class="val-target">15%</span>
-                            </div>
-                        </div>
-                        <div class="chart-bar">
-                            <div class="bar-label">LG에너지</div>
-                            <div class="bar-container">
-                                <div class="bar current" style="width: 16%;"></div>
-                                <div class="bar target" style="width: 20%;"></div>
-                            </div>
-                            <div class="bar-values">
-                                <span class="val-current">8%</span>
-                                <span class="val-target">10%</span>
-                            </div>
+                        <div class="donut-legend">
+                            <div class="legend-row"><span class="legend-color c1"></span>삼성전자 30%</div>
+                            <div class="legend-row"><span class="legend-color c2"></span>SK하이닉스 25%</div>
+                            <div class="legend-row"><span class="legend-color c3"></span>NAVER 20%</div>
+                            <div class="legend-row"><span class="legend-color c4"></span>카카오 15%</div>
+                            <div class="legend-row"><span class="legend-color c5"></span>기타 10%</div>
                         </div>
                     </div>
                 </div>
