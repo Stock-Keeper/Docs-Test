@@ -3,21 +3,22 @@
 ## 요약 ⚡
 
 - MySQL 8.0 기반 관계형 데이터베이스
-- 핵심 테이블: users, portfolios, stocks, notifications
-- UUID 기본 키 사용으로 보안 강화
-- 소수점 거래 대비 DECIMAL 타입 사용
-- [P2-고려] Soft Delete, 버전 관리, 인덱스 최적화
+- 핵심 테이블: users, portfolios, portfolio_entries, notification_settings, accounts, account_entries, settings
+- INTEGER 기본 키 사용 (AUTO_INCREMENT)
+- Google 소셜 로그인 지원
+- 계좌 연동 및 포트폴리오 관리 기능
 
 ---
-
-## Phase 1 (현재)
 
 ### 테이블 목록
 
 1. **users** - 사용자 정보
 2. **portfolios** - 포트폴리오
-3. **stocks** - 종목 정보
-4. **notifications** - 알림 설정
+3. **portfolio_entries** - 포트폴리오 내 항목들
+4. **notification_settings** - 알림 설정
+5. **accounts** - 연동 계좌
+6. **account_entries** - 계좌 내 항목들
+7. **settings** - 사용자 설정값
 
 ---
 
@@ -27,30 +28,35 @@
 
 | 컬럼명 | 타입 | 제약 | 설명 |
 |---------|------|------|------|
-| id | VARCHAR(36) | PK | UUID 기본 키 |
-| email | VARCHAR(255) | UNIQUE, NOT NULL | 사용자 이메일 (Google) |
-| name | VARCHAR(100) | NOT NULL | 사용자 이름 |
-| google_id | VARCHAR(255) | UNIQUE, NOT NULL | Google User ID |
+| id | INT | PK, AUTO_INCREMENT | 기본 키 |
+| email | VARCHAR(255) | UNIQUE, NOT NULL | 사용자 이메일 |
+| nickname | VARCHAR(100) | NOT NULL | 사용자 닉네임 |
+| provider | ENUM('GOOGLE') | NOT NULL | 소셜 제공자 (현재 구글) |
+| role | ENUM('USER', 'ADMIN') | NOT NULL | 사용자 역할 |
 | profile_image_url | VARCHAR(500) | NULL | 프로필 사진 URL |
-| created_at | TIMESTAMP | NOT NULL | 가입일시 |
-| updated_at | TIMESTAMP | NOT NULL | 마지막 수정일시 |
+| refresh_token | TEXT | NULL | 토큰 갱신용 |
+| created_at | TIMESTAMP | NOT NULL | 가입 날짜 |
+| updated_at | TIMESTAMP | NOT NULL | 업데이트 날짜 |
+| is_membership | ENUM('NOT', 'PRO') | DEFAULT 'NOT' | 멤버십 여부 |
 
 **인덱스**
 ```sql
 CREATE UNIQUE INDEX idx_users_email ON users(email);
-CREATE UNIQUE INDEX idx_users_google_id ON users(google_id);
 ```
 
 **DDL**
 ```sql
 CREATE TABLE users (
-  id VARCHAR(36) PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) UNIQUE NOT NULL,
-  name VARCHAR(100) NOT NULL,
-  google_id VARCHAR(255) UNIQUE NOT NULL,
+  nickname VARCHAR(100) NOT NULL,
+  provider ENUM('GOOGLE') NOT NULL,
+  role ENUM('USER', 'ADMIN') NOT NULL DEFAULT 'USER',
   profile_image_url VARCHAR(500),
+  refresh_token TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  is_membership ENUM('NOT', 'PRO') DEFAULT 'NOT'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
@@ -60,34 +66,142 @@ CREATE TABLE users (
 
 | 컬럼명 | 타입 | 제약 | 설명 |
 |---------|------|------|------|
-| id | VARCHAR(36) | PK | UUID 기본 키 |
-| user_id | VARCHAR(36) | FK, NOT NULL | users.id 참조 |
-| name | VARCHAR(20) | NOT NULL | 포트폴리오 이름 |
-| description | VARCHAR(100) | NULL | 목표 설명/메모 |
-| is_default | BOOLEAN | DEFAULT false | 기본 포트폴리오 여부 |
-| display_order | INT | NOT NULL | 표시 순서 |
-| created_at | TIMESTAMP | NOT NULL | 생성일시 |
-| updated_at | TIMESTAMP | NOT NULL | 마지막 수정일시 |
+| id | INT | PK, AUTO_INCREMENT | 기본 키 |
+| user_id | INT | FK, NOT NULL | users.id 참조 |
+| name | VARCHAR(100) | NOT NULL | 포트폴리오명 |
+| description | TEXT | NULL | 포트폴리오 설명 |
+| account_id | INT | FK, NULL | accounts.id 참조 (1:1) |
+| created_at | TIMESTAMP | NOT NULL | 생성 날짜 |
+| updated_at | TIMESTAMP | NOT NULL | 업데이트 날짜 |
 
 **제약 조건**
-- 사용자당 최대 5개 포트폴리오 (응용 레벨에서 검증)
-- 사용자당 최소 1개 포트폴리오 유지
+- 한 계좌당 하나의 메인 포트폴리오 설정 가능 (account_id는 UNIQUE)
 
 **인덱스**
 ```sql
 CREATE INDEX idx_portfolios_user_id ON portfolios(user_id);
-CREATE INDEX idx_portfolios_display_order ON portfolios(user_id, display_order);
+CREATE UNIQUE INDEX idx_portfolios_account_id ON portfolios(account_id);
 ```
 
 **DDL**
 ```sql
 CREATE TABLE portfolios (
-  id VARCHAR(36) PRIMARY KEY,
-  user_id VARCHAR(36) NOT NULL,
-  name VARCHAR(20) NOT NULL,
-  description VARCHAR(100),
-  is_default BOOLEAN DEFAULT false,
-  display_order INT NOT NULL,
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  account_id INT UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+---
+
+### 3. portfolio_entries (포트폴리오 내 항목들)
+
+| 컬럼명 | 타입 | 제약 | 설명 |
+|---------|------|------|------|
+| id | INT | PK, AUTO_INCREMENT | 기본 키 |
+| portfolio_id | INT | FK, NOT NULL | portfolios.id 참조 |
+| group | VARCHAR(50) | NULL | 분류 |
+| ticker | VARCHAR(20) | NOT NULL | 주식 ticker |
+| target_weight | FLOAT | NULL | 희망 비중(%) |
+| created_at | TIMESTAMP | NOT NULL | 생성 날짜 |
+
+**제약 조건**
+- 동일 포트폴리오 내 동일 ticker 중복 불가
+
+**인덱스**
+```sql
+CREATE INDEX idx_portfolio_entries_portfolio_id ON portfolio_entries(portfolio_id);
+CREATE UNIQUE INDEX idx_portfolio_entries_unique ON portfolio_entries(portfolio_id, ticker);
+```
+
+**DDL**
+```sql
+CREATE TABLE portfolio_entries (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  portfolio_id INT NOT NULL,
+  `group` VARCHAR(50),
+  ticker VARCHAR(20) NOT NULL,
+  target_weight FLOAT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (portfolio_id) REFERENCES portfolios(id) ON DELETE CASCADE,
+  UNIQUE KEY unique_portfolio_ticker (portfolio_id, ticker)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+---
+
+### 4. notification_settings (알림 설정)
+
+| 컬럼명 | 타입 | 제약 | 설명 |
+|---------|------|------|------|
+| id | INT | PK, AUTO_INCREMENT | 기본 키 |
+| portfolio_id | INT | FK, UNIQUE, NOT NULL | portfolios.id 참조 (1:1) |
+| is_enabled | BOOLEAN | DEFAULT false | 알림 활성화 여부 |
+| alert_cycle | ENUM('WEEKLY') | NOT NULL | 알림 주기 |
+| alert_time | TIME | NOT NULL | 알림 발송 시간 |
+| threshold_percentage | FLOAT | DEFAULT 20.0 | 임계값 (±20%) |
+| updated_at | TIMESTAMP | NOT NULL | 업데이트 날짜 |
+
+**제약 조건**
+- 포트폴리오와 1:1 관계 (portfolio_id UNIQUE)
+
+**인덱스**
+```sql
+CREATE UNIQUE INDEX idx_notification_settings_portfolio_id ON notification_settings(portfolio_id);
+CREATE INDEX idx_notification_settings_enabled ON notification_settings(is_enabled, alert_time);
+```
+
+**DDL**
+```sql
+CREATE TABLE notification_settings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  portfolio_id INT UNIQUE NOT NULL,
+  is_enabled BOOLEAN DEFAULT false,
+  alert_cycle ENUM('WEEKLY') NOT NULL,
+  alert_time TIME NOT NULL,
+  threshold_percentage FLOAT DEFAULT 20.0,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (portfolio_id) REFERENCES portfolios(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+---
+
+### 5. accounts (연동 계좌)
+
+| 컬럼명 | 타입 | 제약 | 설명 |
+|---------|------|------|------|
+| id | INT | PK, AUTO_INCREMENT | 기본 키 |
+| user_id | INT | FK, NOT NULL | users.id 참조 |
+| brokerage_name | VARCHAR(100) | NOT NULL | 증권사 명 |
+| account_number | VARCHAR(255) | NOT NULL | 계좌 번호(암호화) |
+| access_token | TEXT | NULL | API 접근 토큰 |
+| refresh_token | TEXT | NULL | 토큰 갱신용 |
+| is_connected | BOOLEAN | DEFAULT false | 현재 연결 여부 |
+| created_at | TIMESTAMP | NOT NULL | 생성 날짜 |
+| updated_at | TIMESTAMP | NOT NULL | 업데이트 날짜 |
+
+**인덱스**
+```sql
+CREATE INDEX idx_accounts_user_id ON accounts(user_id);
+```
+
+**DDL**
+```sql
+CREATE TABLE accounts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  brokerage_name VARCHAR(100) NOT NULL,
+  account_number VARCHAR(255) NOT NULL,
+  access_token TEXT,
+  refresh_token TEXT,
+  is_connected BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -96,82 +210,68 @@ CREATE TABLE portfolios (
 
 ---
 
-### 3. stocks (종목)
+### 6. account_entries (계좌 내 항목들)
 
 | 컬럼명 | 타입 | 제약 | 설명 |
 |---------|------|------|------|
-| id | VARCHAR(36) | PK | UUID 기본 키 |
-| portfolio_id | VARCHAR(36) | FK, NOT NULL | portfolios.id 참조 |
-| stock_code | VARCHAR(10) | NOT NULL | 종목코드 (6자리) |
-| stock_name | VARCHAR(100) | NOT NULL | 종목명 |
-| quantity | DECIMAL(18,4) | NOT NULL | 보유 수량 (소수점 4자리) |
-| average_price | DECIMAL(15,2) | NULL | 평균 매입 단가 (Phase 2) |
-| target_ratio | DECIMAL(5,2) | NULL | 목표 비율 (0~100%) |
-| created_at | TIMESTAMP | NOT NULL | 추가일시 |
-| updated_at | TIMESTAMP | NOT NULL | 마지막 수정일시 |
-
-**제약 조건**
-- 포트폴리오당 최대 50종목
-- 동일 포트폴리오 내 동일 종목 중복 불가 (UNIQUE)
+| id | INT | PK, AUTO_INCREMENT | 기본 키 |
+| account_id | INT | FK, NOT NULL | accounts.id 참조 |
+| group | VARCHAR(50) | NULL | 분류 |
+| ticker | VARCHAR(20) | NOT NULL | 주식 ticker |
+| current_quantity | FLOAT | NOT NULL | 현재 수량 |
+| bought_price | FLOAT | NULL | 평단가 |
+| currency | ENUM('KRW', 'USD', 'JPY') | DEFAULT 'KRW' | 거래 통화 |
+| exchange | VARCHAR(50) | NULL | 거래소 |
+| created_at | TIMESTAMP | NOT NULL | 생성 날짜 |
 
 **인덱스**
 ```sql
-CREATE INDEX idx_stocks_portfolio_id ON stocks(portfolio_id);
-CREATE UNIQUE INDEX idx_stocks_portfolio_stock ON stocks(portfolio_id, stock_code);
+CREATE INDEX idx_account_entries_account_id ON account_entries(account_id);
 ```
 
 **DDL**
 ```sql
-CREATE TABLE stocks (
-  id VARCHAR(36) PRIMARY KEY,
-  portfolio_id VARCHAR(36) NOT NULL,
-  stock_code VARCHAR(10) NOT NULL,
-  stock_name VARCHAR(100) NOT NULL,
-  quantity DECIMAL(18,4) NOT NULL CHECK (quantity > 0),
-  average_price DECIMAL(15,2),
-  target_ratio DECIMAL(5,2) CHECK (target_ratio >= 0 AND target_ratio <= 100),
+CREATE TABLE account_entries (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  account_id INT NOT NULL,
+  `group` VARCHAR(50),
+  ticker VARCHAR(20) NOT NULL,
+  current_quantity FLOAT NOT NULL,
+  bought_price FLOAT,
+  currency ENUM('KRW', 'USD', 'JPY') DEFAULT 'KRW',
+  exchange VARCHAR(50),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (portfolio_id) REFERENCES portfolios(id) ON DELETE CASCADE,
-  UNIQUE KEY unique_portfolio_stock (portfolio_id, stock_code)
+  FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ---
 
-### 4. notifications (알림 설정)
+### 7. settings (사용자 설정값)
 
 | 컬럼명 | 타입 | 제약 | 설명 |
 |---------|------|------|------|
-| id | VARCHAR(36) | PK | UUID 기본 키 |
-| portfolio_id | VARCHAR(36) | FK, NOT NULL | portfolios.id 참조 |
-| is_enabled | BOOLEAN | DEFAULT false | 알림 활성화 여부 |
-| frequency | ENUM | NOT NULL | 주기 (daily, weekly, biweekly, monthly) |
-| notification_time | TIME | NOT NULL | 알림 시간 (HH:MM) |
-| threshold | DECIMAL(5,2) | DEFAULT 5.0 | 임계값 (%) |
-| last_sent_at | TIMESTAMP | NULL | 마지막 알림 발송 시각 |
-| created_at | TIMESTAMP | NOT NULL | 생성일시 |
-| updated_at | TIMESTAMP | NOT NULL | 마지막 수정일시 |
+| id | INT | PK, AUTO_INCREMENT | 기본 키 |
+| user_id | INT | FK, UNIQUE, NOT NULL | users.id 참조 (1:1) |
+| is_notification | BOOLEAN | DEFAULT true | 알림 설정 허용 |
+| is_privacy | BOOLEAN | DEFAULT true | 개인정보 허용 |
+
+**제약 조건**
+- 사용자와 1:1 관계 (user_id UNIQUE)
 
 **인덱스**
 ```sql
-CREATE INDEX idx_notifications_portfolio_id ON notifications(portfolio_id);
-CREATE INDEX idx_notifications_enabled ON notifications(is_enabled, notification_time);
+CREATE UNIQUE INDEX idx_settings_user_id ON settings(user_id);
 ```
 
 **DDL**
 ```sql
-CREATE TABLE notifications (
-  id VARCHAR(36) PRIMARY KEY,
-  portfolio_id VARCHAR(36) NOT NULL,
-  is_enabled BOOLEAN DEFAULT false,
-  frequency ENUM('daily', 'weekly', 'biweekly', 'monthly') NOT NULL,
-  notification_time TIME NOT NULL,
-  threshold DECIMAL(5,2) DEFAULT 5.0 CHECK (threshold >= 0 AND threshold <= 100),
-  last_sent_at TIMESTAMP NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (portfolio_id) REFERENCES portfolios(id) ON DELETE CASCADE
+CREATE TABLE settings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNIQUE NOT NULL,
+  is_notification BOOLEAN DEFAULT true,
+  is_privacy BOOLEAN DEFAULT true,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
@@ -180,81 +280,38 @@ CREATE TABLE notifications (
 ## 관계도 (ERD)
 
 ```
-users (1) ---< (N) portfolios (1) ---< (N) stocks
-                      |
-                      (1)
-                      |
-                     (1)
-                      |
-                 notifications
+users (1) ---< (N) portfolios (1) ---< (N) portfolio_entries
+  |                   |
+  |                   (1)
+  |                   |
+  |                  (1)
+  |                   |
+  |           notification_settings
+  |
+  (1)
+  |
+ (N)
+  |
+accounts (1) ---< (N) account_entries
+  |
+  (1)
+  |
+ (1)
+  |
+portfolios
+
+users (1) --- (1) settings
 ```
 
 **설명**
 - 1명의 사용자는 여러 포트폴리오를 가질 수 있음
-- 1개의 포트폴리오는 여러 종목을 가질 수 있음
-- 1개의 포트폴리오는 1개의 알림 설정을 가짐
+- 1개의 포트폴리오는 여러 항목(portfolio_entries)을 가질 수 있음
+- 1개의 포트폴리오는 1개의 알림 설정을 가짐 (1:1)
+- 1명의 사용자는 여러 계좌를 연동할 수 있음
+- 1개의 계좌는 여러 항목(account_entries)을 가질 수 있음
+- 1개의 포트폴리오는 1개의 계좌를 메인으로 설정 가능 (1:1, optional)
+- 1명의 사용자는 1개의 설정을 가짐 (1:1)
 - 모든 외래 키는 CASCADE DELETE 설정
-
----
-
-## Phase 2+ (확장 고려사항)
-
-### Phase 2 기능
-
-- [P2] **Soft Delete**
-  - `deleted_at TIMESTAMP NULL` 컬럼 추가
-  - 실제 삭제 대신 타임스탬프 기록
-  - 30일 후 자동 완전 삭제 (배치 작업)
-  - 사용자 복구 기능 제공
-
-- [P2] **버전 관리**
-  - stocks_history 테이블 추가
-  - 종목 변경 이력 추적
-  - 수량, 목표 비율 변경 내역 저장
-
-- [P2] **추가 테이블**
-  ```sql
-  -- 포트폴리오 공유 설정
-  CREATE TABLE portfolio_shares (
-    id VARCHAR(36) PRIMARY KEY,
-    portfolio_id VARCHAR(36) NOT NULL,
-    is_public BOOLEAN DEFAULT false,
-    share_token VARCHAR(64) UNIQUE,
-    expires_at TIMESTAMP NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (portfolio_id) REFERENCES portfolios(id) ON DELETE CASCADE
-  );
-  
-  -- 앱 내 알림 내역
-  CREATE TABLE notification_history (
-    id VARCHAR(36) PRIMARY KEY,
-    user_id VARCHAR(36) NOT NULL,
-    portfolio_id VARCHAR(36) NOT NULL,
-    type ENUM('rebalancing', 'price_alert', 'news') NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    body TEXT,
-    is_read BOOLEAN DEFAULT false,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expires_at TIMESTAMP NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (portfolio_id) REFERENCES portfolios(id) ON DELETE CASCADE
-  );
-  ```
-
-### Phase 3 기능
-
-- [P3] **다국어 지원**
-  - i18n 테이블 추가
-  - 사용자별 선호 언어 저장
-
-- [P3] **해외 주식**
-  - stock_market 컬럼 추가 (KR, US, JP 등)
-  - 환율 정보 테이블
-
-- [P3] **성능 최적화**
-  - 파티셔닝 (user_id 기준)
-  - Read Replica 구성
-  - 인덱스 추가 최적화
 
 ---
 
@@ -266,7 +323,8 @@ users (1) ---< (N) portfolios (1) ---< (N) stocks
 | 전송 암호화 | TLS/SSL 1.2+ |
 | 접근 제어 | 최소 권한 원칙, IP 화이트리스트 |
 | 백업 | 매일 자동 백업 (7일 보관) |
-| 비밀번호 | 해시 저장 (BCrypt) |
+| 계좌 번호 암호화 | AES-256 암호화 저장 |
+| 토큰 관리 | refresh_token, access_token 안전 저장 |
 
 ---
 
@@ -279,6 +337,5 @@ users (1) ---< (N) portfolios (1) ---< (N) stocks
 
 ---
 
-> **작성일**: 2025-12-31  
-> **Phase**: Phase 1 (MVP)  
+> **작성일**: 2026-01-04  
 > **담당**: Backend + DBA
