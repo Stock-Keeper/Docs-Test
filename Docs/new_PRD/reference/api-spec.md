@@ -44,9 +44,19 @@
 - `GET /portfolios/{id}/rebalancing` - 리밸런싱 분석
 - `GET /portfolios/{id}/rebalancing/suggestions` - 리밸런싱 제안
 
-#### 알림 (Notifications)
-- `GET /portfolios/{id}/notification` - 알림 설정 조회
-- `PUT /portfolios/{id}/notification` - 알림 설정 수정
+#### 설정 (Settings)
+- `GET /settings` - 앱 설정 조회
+- `PUT /settings/notification` - 앱 알림 on/off 설정
+- `GET /settings/version` - 버전 정보 조회
+
+#### 포트폴리오 설정 (Portfolio Settings)
+- `GET /portfolios/{id}/settings/notification` - 알림 설정 조회
+- `PUT /portfolios/{id}/settings/notification` - 알림 설정 수정
+- `GET /portfolios/{id}/settings/banner` - 배너 색상 조회
+- `POST /portfolios/{id}/settings/banner` - 배너 색상 설정
+- `PUT /portfolios/{id}/settings/banner` - 배너 색상 수정
+- `GET /portfolios/{id}/settings/threshold` - 임계치 조회
+- `PUT /portfolios/{id}/settings/threshold` - 임계치 수정
 
 ---
 
@@ -692,11 +702,11 @@ Authorization: Bearer {access_token}
 
 ---
 
-### 6. 알림 (Notifications)
+### 6. 설정 (Settings)
 
-#### GET /portfolios/{id}/notification
+#### GET /settings
 
-**설명**: 알림 설정 조회
+**설명**: 앱 설정 조회
 
 **Request Headers**
 ```
@@ -706,21 +716,90 @@ Authorization: Bearer {access_token}
 **Response (200 OK)**
 ```json
 {
-  "id": "notification-uuid-1",
-  "portfolio_id": "portfolio-uuid-1",
-  "is_enabled": true,
-  "frequency": "weekly",
-  "notification_time": "09:00",
-  "threshold": 5.0,
-  "last_sent_at": "2025-12-25T09:00:00Z"
+  "notification_enabled": true,
+  "app_version": "1.0.0",
+  "updated_at": "2025-12-31T10:00:00Z"
 }
 ```
 
 ---
 
-#### PUT /portfolios/{id}/notification
+#### PUT /settings/notification
 
-**설명**: 알림 설정 수정
+**설명**: 앱 알림 on/off 설정
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
+  "notification_enabled": false
+}
+```
+
+**Response (200 OK)**
+```json
+{
+  "notification_enabled": false,
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### GET /settings/version
+
+**설명**: 버전 정보 조회
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "current_version": "1.0.0",
+  "latest_version": "1.0.1",
+  "update_required": false,
+  "update_url": "https://play.google.com/store/apps/...",
+  "release_notes": "버그 수정 및 성능 개선"
+}
+```
+
+---
+
+### 7. 포트폴리오 설정 (Portfolio Settings)
+
+#### GET /portfolios/{id}/settings/notification
+
+**설명**: 포트폴리오 알림 설정 조회
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "portfolio_id": "portfolio-uuid-1",
+  "is_enabled": true,
+  "frequency": "weekly",
+  "notification_time": "09:00",
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### PUT /portfolios/{id}/settings/notification
+
+**설명**: 포트폴리오 알림 설정 수정
 
 **Request Headers**
 ```
@@ -733,7 +812,132 @@ Content-Type: application/json
 {
   "is_enabled": true,
   "frequency": "daily",
+  "notification_time": "10:00"
+}
+```
+
+**Response (200 OK)**
+```json
+{
+  "portfolio_id": "portfolio-uuid-1",
+  "is_enabled": true,
+  "frequency": "daily",
   "notification_time": "10:00",
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### GET /portfolios/{id}/settings/banner
+
+**설명**: 포트폴리오 배너 색상 조회
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "portfolio_id": "portfolio-uuid-1",
+  "banner_color": "#4A90D9",
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### POST /portfolios/{id}/settings/banner
+
+**설명**: 포트폴리오 배너 색상 설정
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
+  "banner_color": "#4A90D9"
+}
+```
+
+**Response (201 Created)**
+```json
+{
+  "portfolio_id": "portfolio-uuid-1",
+  "banner_color": "#4A90D9",
+  "created_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### PUT /portfolios/{id}/settings/banner
+
+**설명**: 포트폴리오 배너 색상 수정
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
+  "banner_color": "#FF6B6B"
+}
+```
+
+**Response (200 OK)**
+```json
+{
+  "portfolio_id": "portfolio-uuid-1",
+  "banner_color": "#FF6B6B",
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### GET /portfolios/{id}/settings/threshold
+
+**설명**: 포트폴리오 리밸런싱 임계치 조회
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "portfolio_id": "portfolio-uuid-1",
+  "threshold": 5.0,
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### PUT /portfolios/{id}/settings/threshold
+
+**설명**: 포트폴리오 리밸런싱 임계치 수정
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
   "threshold": 3.0
 }
 ```
@@ -741,13 +945,17 @@ Content-Type: application/json
 **Response (200 OK)**
 ```json
 {
-  "id": "notification-uuid-1",
   "portfolio_id": "portfolio-uuid-1",
-  "is_enabled": true,
-  "frequency": "daily",
-  "notification_time": "10:00",
   "threshold": 3.0,
   "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+**Error Response (400 Bad Request)**
+```json
+{
+  "error": "invalid_threshold",
+  "message": "Threshold must be between 1.0 and 20.0"
 }
 ```
 
