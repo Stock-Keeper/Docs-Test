@@ -48,38 +48,44 @@
 
     <!-- 통합 제어 패널 (우측) -->
     <div class="control-panel-right">
-        <div class="control-grid">
-            <!-- Row 1: Theme -->
-            <button class="mode-btn" data-mode="light" data-title="라이트 모드">☀️</button>
-            <button class="mode-btn active" data-mode="dark" data-title="다크 모드">🌙</button>
+        <!-- 테마 토글 -->
+        <div class="control-theme-row">
+            <label class="mode-toggle">
+                <input type="checkbox" id="mode-toggle-input" checked>
+                <span class="mode-toggle-slider"></span>
+            </label>
+        </div>
 
-            <!-- Row 2 -->
-            <button class="nav-btn-vertical active" data-screen="screen-login" data-title="로그인 화면">1</button>
-            <button class="state-btn" onclick="toggleLoadingState(this)" data-title="로딩 상태">⏳</button>
+        <div class="control-columns">
+            <!-- 내비게이션 컬럼 -->
+            <div class="nav-column">
+                <button class="nav-btn-vertical active" data-screen="screen-login" data-title="로그인 화면">1</button>
+                <button class="nav-btn-vertical" data-screen="screen-profile" data-title="프로필 화면">2</button>
+                <button class="nav-btn-vertical" data-screen="screen-home" data-title="홈 화면">3</button>
+                <button class="nav-btn-vertical" data-screen="screen-detail" data-title="상세 화면">4</button>
+                <button class="nav-btn-vertical" data-screen="screen-search" data-title="검색 화면">5</button>
+                <button class="nav-btn-vertical" data-screen="screen-rebalance" data-title="리밸런싱 화면">6</button>
+                <button class="nav-btn-vertical" data-screen="screen-settings" data-title="설정 화면">7</button>
+            </div>
 
-            <!-- Row 3 -->
-            <button class="nav-btn-vertical" data-screen="screen-profile" data-title="프로필 화면">2</button>
-            <button class="state-btn" onclick="toggleErrorState(this)" data-title="에러 상태">⚠️</button>
+            <!-- 상태 버튼 컬럼 -->
+            <div class="state-column">
+                <!-- 홈 화면 상태 -->
+                <button class="state-btn" data-for-screens="screen-home" onclick="toggleLoadingState(this)"
+                    data-title="로딩 상태">⏳</button>
+                <button class="state-btn" data-for-screens="screen-home" onclick="toggleErrorState(this)"
+                    data-title="에러 상태">⚠️</button>
+                <button class="state-btn" data-for-screens="screen-home" onclick="toggleEmptyState('home', this)"
+                    data-title="홈 Empty">🏠</button>
 
-            <!-- Row 4 -->
-            <button class="nav-btn-vertical" data-screen="screen-home" data-title="홈 화면">3</button>
-            <button class="state-btn" onclick="toggleEmptyState('home', this)" data-title="홈 Empty State">🏠</button>
+                <!-- 상세 화면 상태 -->
+                <button class="state-btn" data-for-screens="screen-detail" onclick="toggleEmptyState('detail', this)"
+                    data-title="상세 Empty">📊</button>
 
-            <!-- Row 5 -->
-            <button class="nav-btn-vertical" data-screen="screen-detail" data-title="상세 화면">4</button>
-            <button class="state-btn" onclick="toggleEmptyState('detail', this)" data-title="상세 Empty State">📊</button>
-
-            <!-- Row 6 -->
-            <button class="nav-btn-vertical" data-screen="screen-search" data-title="검색 화면">5</button>
-            <button class="state-btn" onclick="toggleEmptyState('search', this)" data-title="검색 No Result">🔍</button>
-
-            <!-- Row 7 -->
-            <button class="nav-btn-vertical" data-screen="screen-rebalance" data-title="리밸런싱 화면">6</button>
-            <div class="empty-slot"></div>
-
-            <!-- Row 8 -->
-            <button class="nav-btn-vertical" data-screen="screen-settings" data-title="설정 화면">7</button>
-            <div class="empty-slot"></div>
+                <!-- 검색 화면 상태 -->
+                <button class="state-btn" data-for-screens="screen-search" onclick="toggleEmptyState('search', this)"
+                    data-title="검색 No Result">🔍</button>
+            </div>
         </div>
     </div>
 

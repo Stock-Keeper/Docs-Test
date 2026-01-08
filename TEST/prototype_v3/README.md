@@ -81,3 +81,64 @@ prototype_v3/
 
 - 모든 CSS는 `css/` 폴더 내 모듈화되어 `index.html`에서 순서대로 로드됩니다.
 - 화면 HTML은 `js/app.js`의 `loadAllScreens()`에서 `fetch()`로 동적 로딩됩니다.
+
+---
+
+## 📚 화면 기획서 참고
+
+프로토타입 작업 시 **화면 기획서**를 참고하세요:
+
+📁 **경로**: [`Docs/project_analysis/pages/`](../../Docs/project_analysis/pages/)
+
+### 기획서에서 확인할 내용
+
+| 항목 | 설명 |
+|------|------|
+| **화면 개요** | 목적, 진입 경로, 이동 가능 화면 |
+| **와이어프레임** | ASCII 레이아웃 스케치 |
+| **화면 상태** | Loading, Error, Empty 등 |
+| **체크리스트** | MVP vs Phase 2 구분 (구현 완료 시 체크) |
+
+### 작업 후 업데이트
+
+기능 구현 완료 시 해당 기획서의 체크리스트를 `[x]`로 업데이트하세요.
+
+---
+
+## 🎛 상태 버튼 추가 방법
+
+컨트롤 패널에 새로운 UI 상태 토글 버튼을 추가하려면:
+
+### 1. HTML 버튼 추가 (`index.html` → `.state-column`)
+
+```html
+<button class="state-btn" 
+        data-for-screens="screen-home screen-detail" 
+        onclick="toggleMyState(this)" 
+        data-title="상태 이름">🔘</button>
+```
+
+| 속성 | 설명 |
+|------|------|
+| `data-for-screens` | 버튼이 표시될 화면 ID (공백으로 구분) |
+| `onclick` | 상태를 토글하는 함수 호출 |
+| `data-title` | 마우스 오버 시 툴팁 |
+
+### 2. JS 토글 함수 추가 (`app.js`)
+
+```javascript
+let myState = false;
+
+function toggleMyState(btnElement) {
+    myState = !myState;
+    if (btnElement) btnElement.classList.toggle('active', myState);
+    
+    // UI 변경 로직
+    document.getElementById('my-element').style.display = myState ? 'block' : 'none';
+    
+    showToast(`My State: ${myState ? 'ON' : 'OFF'}`);
+}
+```
+
+> [!TIP]
+> 상태 버튼은 `data-for-screens`에 명시된 화면에서만 표시됩니다. 다른 화면에서는 자동으로 fade out됩니다.

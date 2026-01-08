@@ -69,6 +69,7 @@ function navigateTo(screenId) {
         targetScreen.classList.add('active');
         currentScreen = screenId;
         updateNavButtons();
+        updateStateButtons();
     }
 }
 
@@ -78,11 +79,23 @@ function initNavigation() {
             navigateTo(btn.dataset.screen);
         });
     });
+
+    // Initialize state buttons visibility for initial screen
+    updateStateButtons();
 }
 
 function updateNavButtons() {
     document.querySelectorAll('.nav-btn-vertical').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.screen === currentScreen);
+    });
+}
+
+function updateStateButtons() {
+    document.querySelectorAll('.state-btn').forEach(btn => {
+        const forScreens = btn.dataset.forScreens || '';
+        const screens = forScreens.split(' ').map(s => s.trim()).filter(Boolean);
+        const isVisible = screens.includes(currentScreen);
+        btn.classList.toggle('visible', isVisible);
     });
 }
 
@@ -92,11 +105,17 @@ function updateNavButtons() {
 let currentMode = localStorage.getItem('sk-mode') || 'dark';
 
 function initTheme() {
-    setMode(currentMode);
+    const toggle = document.getElementById('mode-toggle-input');
 
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-        btn.addEventListener('click', () => setMode(btn.dataset.mode));
-    });
+    // Set initial state (checked = dark mode)
+    if (toggle) {
+        toggle.checked = currentMode === 'dark';
+        toggle.addEventListener('change', () => {
+            setMode(toggle.checked ? 'dark' : 'light');
+        });
+    }
+
+    setMode(currentMode);
 }
 
 function setMode(modeName) {
@@ -106,9 +125,11 @@ function setMode(modeName) {
     currentMode = modeName;
     localStorage.setItem('sk-mode', modeName);
 
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === modeName);
-    });
+    // Sync toggle state
+    const toggle = document.getElementById('mode-toggle-input');
+    if (toggle) {
+        toggle.checked = modeName === 'dark';
+    }
 }
 
 // =============================================
