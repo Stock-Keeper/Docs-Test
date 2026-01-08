@@ -6,9 +6,9 @@
 // =============================================
 // THEME & MODE MANAGEMENT
 // =============================================
-const themes = ['indigo', 'sage', 'copper'];
+const themes = ['sage']; // Forest theme only
 const modes = ['dark', 'light'];
-let currentTheme = localStorage.getItem('sk-theme') || 'indigo';
+let currentTheme = 'sage'; // Fixed to sage
 let currentMode = localStorage.getItem('sk-mode') || 'dark';
 
 function setTheme(themeName) {
@@ -220,3 +220,131 @@ document.querySelectorAll('button, .portfolio-card, .stock-row, .result-item').f
         element.style.transform = '';
     });
 });
+
+// =============================================
+// STATE TOGGLE FUNCTIONS (for demo)
+// =============================================
+let emptyStates = { home: false, detail: false, search: false };
+let loadingState = false;
+let errorState = false;
+
+function toggleEmptyState(screen) {
+    emptyStates[screen] = !emptyStates[screen];
+    const isOn = emptyStates[screen];
+
+    if (screen === 'home') {
+        const content = document.querySelector('#screen-home .portfolio-section');
+        const summary = document.querySelector('#screen-home .home-summary');
+        const emptyEl = document.getElementById('home-empty-state');
+        const fab = document.querySelector('#screen-home .fab');
+
+        if (content) content.style.display = isOn ? 'none' : '';
+        if (summary) summary.style.display = isOn ? 'none' : '';
+        if (emptyEl) emptyEl.style.display = isOn ? 'flex' : 'none';
+        if (fab) fab.style.display = isOn ? 'none' : '';
+    } else if (screen === 'detail') {
+        const summary = document.querySelector('#screen-detail .detail-summary');
+        const stocks = document.querySelector('#screen-detail .stocks-section');
+        const actions = document.querySelector('#screen-detail .detail-actions');
+        const emptyEl = document.getElementById('detail-empty-state');
+
+        if (summary) summary.style.display = isOn ? 'none' : '';
+        if (stocks) stocks.style.display = isOn ? 'none' : '';
+        if (actions) actions.style.display = isOn ? 'none' : '';
+        if (emptyEl) emptyEl.style.display = isOn ? 'flex' : 'none';
+    } else if (screen === 'search') {
+        const results = document.querySelector('#screen-search .search-results');
+        const emptyEl = document.getElementById('search-empty-state');
+
+        if (results) results.style.display = isOn ? 'none' : '';
+        if (emptyEl) emptyEl.style.display = isOn ? 'flex' : 'none';
+    }
+
+    showToast(`${screen} Empty: ${isOn ? 'ON' : 'OFF'}`);
+}
+
+function toggleLoadingState() {
+    loadingState = !loadingState;
+    const isOn = loadingState;
+
+    // 홈 화면 로딩 상태
+    const homeContent = document.querySelector('#screen-home .portfolio-section');
+    const homeSummary = document.querySelector('#screen-home .home-summary');
+    const homeLoading = document.getElementById('home-loading-state');
+    const fab = document.querySelector('#screen-home .fab');
+
+    if (homeContent) homeContent.style.display = isOn ? 'none' : '';
+    if (homeSummary) homeSummary.style.display = isOn ? 'none' : '';
+    if (homeLoading) homeLoading.style.display = isOn ? 'block' : 'none';
+    if (fab) fab.style.display = isOn ? 'none' : '';
+
+    // 로딩 켤 때 Empty/Error는 끔
+    if (isOn) {
+        emptyStates.home = false;
+        errorState = false;
+        const emptyEl = document.getElementById('home-empty-state');
+        const errorEl = document.getElementById('home-error-state');
+        if (emptyEl) emptyEl.style.display = 'none';
+        if (errorEl) errorEl.style.display = 'none';
+    }
+
+    showToast(`Loading: ${isOn ? 'ON' : 'OFF'}`);
+}
+
+function toggleErrorState() {
+    errorState = !errorState;
+    const isOn = errorState;
+
+    // 홈 화면 에러 상태
+    const homeContent = document.querySelector('#screen-home .portfolio-section');
+    const homeSummary = document.querySelector('#screen-home .home-summary');
+    const homeError = document.getElementById('home-error-state');
+    const fab = document.querySelector('#screen-home .fab');
+
+    if (homeContent) homeContent.style.display = isOn ? 'none' : '';
+    if (homeSummary) homeSummary.style.display = isOn ? 'none' : '';
+    if (homeError) homeError.style.display = isOn ? 'flex' : 'none';
+    if (fab) fab.style.display = isOn ? 'none' : '';
+
+    // 에러 켤 때 Empty/Loading은 끔
+    if (isOn) {
+        emptyStates.home = false;
+        loadingState = false;
+        const emptyEl = document.getElementById('home-empty-state');
+        const loadingEl = document.getElementById('home-loading-state');
+        if (emptyEl) emptyEl.style.display = 'none';
+        if (loadingEl) loadingEl.style.display = 'none';
+    }
+
+    showToast(`Error: ${isOn ? 'ON' : 'OFF'}`);
+}
+
+function showToast(message) {
+    // Create toast element
+    let toast = document.getElementById('demo-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'demo-toast';
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 9999;
+            transition: opacity 0.3s;
+        `;
+        document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+    toast.style.opacity = '1';
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+    }, 2000);
+}

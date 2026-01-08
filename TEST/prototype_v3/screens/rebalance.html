@@ -1,0 +1,130 @@
+<!-- Screen: 리밸런싱 분석 -->
+<div id="screen-rebalance" class="screen">
+    <div class="screen-body">
+        <header class="header">
+            <button class="back-btn" onclick="navigateTo('screen-detail')">←</button>
+            <h2>리밸런싱 분석</h2>
+            <button class="icon-btn" onclick="showModal('threshold-modal')">⚙️</button>
+        </header>
+
+        <div class="donut-section">
+            <div class="donut-container">
+                <!-- 현재 비율 도넛 -->
+                <div class="donut-wrapper">
+                    <div class="donut-chart current-donut">
+                        <div class="donut-hole">
+                            <span class="donut-title">현재</span>
+                        </div>
+                    </div>
+                    <div class="donut-legend">
+                        <div class="legend-row"><span class="legend-color c1"></span>삼성전자 35%</div>
+                        <div class="legend-row"><span class="legend-color c2"></span>SK하이닉스 25%</div>
+                        <div class="legend-row"><span class="legend-color c3"></span>NAVER 20%</div>
+                        <div class="legend-row"><span class="legend-color c4"></span>카카오 12%</div>
+                        <div class="legend-row"><span class="legend-color c5"></span>기타 8%</div>
+                    </div>
+                </div>
+
+                <!-- 목표 비율 도넛 -->
+                <div class="donut-wrapper">
+                    <div class="donut-chart target-donut">
+                        <div class="donut-hole">
+                            <span class="donut-title">목표</span>
+                        </div>
+                    </div>
+                    <div class="donut-legend">
+                        <div class="legend-row"><span class="legend-color c1"></span>삼성전자 30%</div>
+                        <div class="legend-row"><span class="legend-color c2"></span>SK하이닉스 25%</div>
+                        <div class="legend-row"><span class="legend-color c3"></span>NAVER 20%</div>
+                        <div class="legend-row"><span class="legend-color c4"></span>카카오 15%</div>
+                        <div class="legend-row"><span class="legend-color c5"></span>기타 10%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rebalance-suggestions">
+            <div class="section-header">
+                <h3>리밸런싱 제안</h3>
+                <span class="threshold-info">임계값: ±5%</span>
+            </div>
+
+            <div class="suggestion-list">
+                <div class="suggestion-card sell">
+                    <div class="suggestion-header">
+                        <span class="suggestion-type">매도</span>
+                        <span class="suggestion-stock">삼성전자</span>
+                    </div>
+                    <div class="suggestion-detail">
+                        <div class="detail-row">
+                            <span class="detail-label">현재 비율</span>
+                            <span class="detail-value">35%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">목표 비율</span>
+                            <span class="detail-value">30%</span>
+                        </div>
+                        <div class="detail-row highlight">
+                            <span class="detail-label">권장 수량</span>
+                            <span class="detail-value">-8주</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">예상 금액</span>
+                            <span class="detail-value">₩596,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suggestion-card buy">
+                    <div class="suggestion-header">
+                        <span class="suggestion-type">매수</span>
+                        <span class="suggestion-stock">카카오</span>
+                    </div>
+                    <div class="suggestion-detail">
+                        <div class="detail-row">
+                            <span class="detail-label">현재 비율</span>
+                            <span class="detail-value">12%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">목표 비율</span>
+                            <span class="detail-value">15%</span>
+                        </div>
+                        <div class="detail-row highlight">
+                            <span class="detail-label">권장 수량</span>
+                            <span class="detail-value">+20주</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">예상 금액</span>
+                            <span class="detail-value">₩974,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suggestion-card buy">
+                    <div class="suggestion-header">
+                        <span class="suggestion-type">매수</span>
+                        <span class="suggestion-stock">LG에너지솔루션</span>
+                    </div>
+                    <div class="suggestion-detail">
+                        <div class="detail-row">
+                            <span class="detail-label">현재 비율</span>
+                            <span class="detail-value">8%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">목표 비율</span>
+                            <span class="detail-value">10%</span>
+                        </div>
+                        <div class="detail-row highlight">
+                            <span class="detail-label">권장 수량</span>
+                            <span class="detail-value">+2주</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">예상 금액</span>
+                            <span class="detail-value">₩648,500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

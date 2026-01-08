@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="sage">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock-Keeper UI Prototype V3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <!-- Screen Styles -->
+    <link rel="stylesheet" href="css/screens/login.css">
+    <link rel="stylesheet" href="css/screens/profile.css">
+    <link rel="stylesheet" href="css/screens/home.css">
+    <link rel="stylesheet" href="css/screens/detail.css">
+    <link rel="stylesheet" href="css/screens/search.css">
+    <link rel="stylesheet" href="css/screens/rebalance.css">
+    <link rel="stylesheet" href="css/screens/settings.css">
+
+    <!-- Global Utilities & Overrides -->
+    <link rel="stylesheet" href="css/light-mode.css">
+    <link rel="stylesheet" href="css/utilities.css">
+</head>
+
+<body>
+
+
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span>📶</span>
+                <span>📡</span>
+                <span>🔋</span>
+            </div>
+        </div>
+
+        <!-- 화면들이 동적으로 로드됨 -->
+        <div id="screen-container"></div>
+
+        <!-- 모달들이 동적으로 로드됨 -->
+        <div id="modal-container"></div>
+    </div>
+
+    <!-- 통합 제어 패널 (우측) -->
+    <div class="control-panel-right">
+        <!-- 테마 토글 -->
+        <div class="control-theme-row">
+            <label class="mode-toggle">
+                <input type="checkbox" id="mode-toggle-input" checked>
+                <span class="mode-toggle-slider"></span>
+            </label>
+        </div>
+
+        <div class="control-columns">
+            <!-- 내비게이션 컬럼 -->
+            <div class="nav-column">
+                <button class="nav-btn-vertical active" data-screen="screen-login" data-title="로그인 화면">1</button>
+                <button class="nav-btn-vertical" data-screen="screen-profile" data-title="프로필 화면">2</button>
+                <button class="nav-btn-vertical" data-screen="screen-home" data-title="홈 화면">3</button>
+                <button class="nav-btn-vertical" data-screen="screen-detail" data-title="상세 화면">4</button>
+                <button class="nav-btn-vertical" data-screen="screen-search" data-title="검색 화면">5</button>
+                <button class="nav-btn-vertical" data-screen="screen-rebalance" data-title="리밸런싱 화면">6</button>
+                <button class="nav-btn-vertical" data-screen="screen-settings" data-title="설정 화면">7</button>
+            </div>
+
+            <!-- 상태 버튼 컬럼 -->
+            <div class="state-column">
+                <!-- 로그인 화면 상태 -->
+                <button class="state-btn" data-for-screens="screen-login" onclick="toggleLoginLoading(this)"
+                    data-title="로그인 로딩">⏳</button>
+                <button class="state-btn" data-for-screens="screen-login" onclick="toggleLoginError(this)"
+                    data-title="로그인 에러">❌</button>
+
+                <!-- 프로필 화면 상태 -->
+                <button class="state-btn" data-for-screens="screen-profile" onclick="toggleProfileLoading(this)"
+                    data-title="프로필 로딩">⏳</button>
+
+                <!-- 홈 화면 상태 -->
+                <button class="state-btn" data-for-screens="screen-home" onclick="toggleLoadingState(this)"
+                    data-title="로딩 상태">⏳</button>
+                <button class="state-btn" data-for-screens="screen-home" onclick="toggleErrorState(this)"
+                    data-title="에러 상태">⚠️</button>
+                <button class="state-btn" data-for-screens="screen-home" onclick="toggleEmptyState('home', this)"
+                    data-title="홈 Empty">🏠</button>
+
+                <!-- 상세 화면 상태 -->
+                <button class="state-btn" data-for-screens="screen-detail" onclick="toggleEmptyState('detail', this)"
+                    data-title="상세 Empty">📊</button>
+
+                <!-- 검색 화면 상태 -->
+                <button class="state-btn" data-for-screens="screen-search" onclick="toggleEmptyState('search', this)"
+                    data-title="검색 No Result">🔍</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Modules (order matters) -->
+    <script src="js/utils.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

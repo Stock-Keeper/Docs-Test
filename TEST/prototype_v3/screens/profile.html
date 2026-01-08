@@ -1,0 +1,69 @@
+<!-- Screen: 프로필 입력 -->
+<div id="screen-profile" class="screen">
+    <!-- 로딩 오버레이 (패널 컨트롤) -->
+    <div id="profile-loading-overlay" class="profile-loading-overlay" style="display: none;">
+        <div class="profile-loading-content">
+            <div class="profile-spinner"></div>
+            <p>프로필 저장 중...</p>
+        </div>
+    </div>
+
+    <div class="screen-body">
+        <header class="header">
+            <button class="back-btn" onclick="navigateTo('screen-login')">←</button>
+            <h2>프로필 설정</h2>
+            <button class="skip-btn" onclick="navigateTo('screen-home')">건너뛰기</button>
+        </header>
+
+        <!-- 진행 인디케이터 -->
+        <div class="progress-indicator">
+            <div class="progress-step active">
+                <span class="step-number">1</span>
+                <span class="step-label">프로필</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step">
+                <span class="step-number">2</span>
+                <span class="step-label">완료</span>
+            </div>
+        </div>
+
+        <div class="profile-container">
+            <div class="profile-photo-section">
+                <div class="profile-photo-placeholder">
+                    <span class="photo-icon">📷</span>
+                    <span class="photo-label">사진 추가</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nickname">닉네임</label>
+                <input type="text" id="nickname" placeholder="사용할 닉네임을 입력하세요" value="투자왕김철수"
+                    oninput="validateNickname(this)">
+                <span class="input-hint" id="nickname-hint">1~20자 이내로 입력해주세요</span>
+                <span class="input-error" id="nickname-error" style="display: none;">닉네임은 1~20자 사이여야 합니다</span>
+            </div>
+
+            <div class="form-group">
+                <label>투자 성향 <span class="optional">(선택)</span></label>
+                <div class="chip-group">
+                    <span class="chip selected">안정형</span>
+                    <span class="chip">중립형</span>
+                    <span class="chip">공격형</span>
+                </div>
+            </div>
+
+            <!-- 포트폴리오 자동 생성 안내 -->
+            <div class="info-banner">
+                <span class="info-icon">💡</span>
+                <div class="info-text">
+                    <strong>알림</strong>
+                    <p>프로필 완료 시 기본 포트폴리오가 자동으로 생성됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="screen-footer">
+        <button class="primary-btn" onclick="navigateTo('screen-home')">시작하기</button>
+    </div>
+</div>

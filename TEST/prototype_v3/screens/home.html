@@ -1,0 +1,154 @@
+<!-- Screen: 포트폴리오 목록 (홈) -->
+<div id="screen-home" class="screen">
+    <div class="screen-body">
+        <header class="header home-header">
+            <div class="user-greeting">
+                <div class="user-avatar">김</div>
+                <div class="greeting-text">
+                    <span class="greeting">안녕하세요 👋</span>
+                    <span class="username">투자왕김철수 님</span>
+                </div>
+            </div>
+            <button class="icon-btn" onclick="navigateTo('screen-settings')">⚙️</button>
+        </header>
+
+        <div class="home-summary">
+            <div class="summary-card">
+                <div class="summary-header">
+                    <span class="summary-label">총 평가금액</span>
+                    <span class="last-update">업데이트: 09:41</span>
+                </div>
+                <span class="summary-value">₩45,230,500</span>
+                <div class="summary-change positive">
+                    <span>+₩2,340,200</span>
+                    <span>(+5.47%)</span>
+                </div>
+                <!-- 현금 자산 표시 -->
+                <div class="cash-section">
+                    <span class="cash-label">💵 보유 현금</span>
+                    <span class="cash-value">₩1,500,000</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-section">
+            <div class="section-header">
+                <h3>내 포트폴리오</h3>
+                <span class="portfolio-count">3개</span>
+            </div>
+
+            <div class="portfolio-list">
+                <!-- 메인 포트폴리오 (리밸런싱 필요) -->
+                <div class="portfolio-card" onclick="navigateTo('screen-detail')">
+                    <div class="portfolio-card-header">
+                        <div class="portfolio-color" style="background: var(--gradient-primary);"></div>
+                        <div class="portfolio-info">
+                            <h4>메인 포트폴리오</h4>
+                            <div class="portfolio-sub-row">
+                                <span class="portfolio-stocks">5종목</span>
+                                <div class="portfolio-icons">
+                                    <span class="notification-icon on" title="알림 ON">🔔</span>
+                                    <span class="threshold-badge">5%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rebalance-badge">리밸런싱 필요</div>
+                        <span class="portfolio-arrow">›</span>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <div class="portfolio-value">
+                            <span class="value-label">평가금액</span>
+                            <span class="value-amount">₩32,450,000</span>
+                        </div>
+                        <div class="portfolio-return positive">
+                            <span>+7.23%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 성장주 투자 -->
+                <div class="portfolio-card" onclick="navigateTo('screen-detail')">
+                    <div class="portfolio-card-header">
+                        <div class="portfolio-color" style="background: linear-gradient(135deg, #6B9080, #4A6F5A);">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>성장주 투자</h4>
+                            <div class="portfolio-sub-row">
+                                <span class="portfolio-stocks">3종목</span>
+                                <div class="portfolio-icons">
+                                    <span class="notification-icon on" title="알림 ON">🔔</span>
+                                    <span class="threshold-badge">3%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="portfolio-arrow">›</span>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <div class="portfolio-value">
+                            <span class="value-label">평가금액</span>
+                            <span class="value-amount">₩8,780,500</span>
+                        </div>
+                        <div class="portfolio-return positive">
+                            <span>+12.45%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 배당주 모음 -->
+                <div class="portfolio-card" onclick="navigateTo('screen-detail')">
+                    <div class="portfolio-card-header">
+                        <div class="portfolio-color" style="background: linear-gradient(135deg, #5C8EAD, #3D6B8C);">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>배당주 모음</h4>
+                            <div class="portfolio-sub-row">
+                                <span class="portfolio-stocks">4종목</span>
+                                <div class="portfolio-icons">
+                                    <span class="notification-icon off" title="알림 OFF">🔕</span>
+                                    <span class="threshold-badge">10%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="portfolio-arrow">›</span>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <div class="portfolio-value">
+                            <span class="value-label">평가금액</span>
+                            <span class="value-amount">₩4,000,000</span>
+                        </div>
+                        <div class="portfolio-return negative">
+                            <span>-2.31%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State (숨김) -->
+        <div id="home-empty-state" class="empty-state" style="display: none;">
+            <div class="empty-icon">📊</div>
+            <h3 class="empty-title">아직 포트폴리오가 없어요</h3>
+            <p class="empty-desc">첫 포트폴리오를 만들어보세요!</p>
+            <button class="empty-btn" onclick="showModal('add-portfolio-modal')">+ 포트폴리오 만들기</button>
+        </div>
+
+        <!-- Loading State (숨김) -->
+        <div id="home-loading-state" class="loading-state" style="display: none;">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </div>
+
+        <!-- Error State (숨김) -->
+        <div id="home-error-state" class="error-state" style="display: none;">
+            <div class="error-icon">⚠️</div>
+            <h3 class="error-title">데이터를 불러올 수 없습니다</h3>
+            <button class="error-btn" onclick="toggleErrorState()">다시 시도</button>
+        </div>
+    </div>
+
+    <!-- FAB is outside screen-body but inside screen -->
+    <button class="fab" onclick="showModal('add-portfolio-modal')">
+        <span>+</span>
+    </button>
+</div>

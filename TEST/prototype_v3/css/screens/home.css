@@ -1,0 +1,298 @@
+/* =============================================
+   SCREEN: HOME
+   ============================================= */
+.home-header {
+    padding: 16px 20px;
+}
+
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-inverse);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.greeting-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.greeting {
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+.username {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.home-summary {
+    padding: 0 20px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    background: var(--gradient-primary-light);
+    border: 1px solid rgba(var(--primary-rgb), 0.3);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    text-align: center;
+}
+
+.summary-label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.summary-value {
+    display: block;
+    color: var(--text-primary);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.summary-change {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.summary-change.positive {
+    color: var(--success);
+}
+
+.summary-change.negative {
+    color: var(--error);
+}
+
+.portfolio-section {
+    flex: 1;
+    padding: 0 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.section-header h3 {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.portfolio-count,
+.stock-count {
+    color: var(--text-tertiary);
+    font-size: 14px;
+}
+
+.portfolio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 100px;
+}
+
+.portfolio-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.portfolio-card:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+}
+
+.portfolio-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.portfolio-color {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+}
+
+.portfolio-info {
+    flex: 1;
+}
+
+.portfolio-info h4 {
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.portfolio-stocks {
+    color: var(--text-tertiary);
+    font-size: 13px;
+}
+
+.portfolio-arrow {
+    color: var(--text-disabled);
+    font-size: 24px;
+}
+
+.portfolio-card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.portfolio-value {
+    display: flex;
+    flex-direction: column;
+}
+
+.value-label {
+    color: var(--text-tertiary);
+    font-size: 12px;
+}
+
+.value-amount {
+    color: var(--text-primary);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.portfolio-return {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.portfolio-return.positive {
+    color: var(--success);
+}
+
+.portfolio-return.negative {
+    color: var(--error);
+}
+
+/* Legacy rebalance-badge style removed - moved to flex item below */
+
+/* =============================================
+   HOME SCREEN - ADDITIONAL FEATURES
+   ============================================= */
+
+/* Summary Header with Update Time */
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.last-update {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    opacity: 0.8;
+}
+
+/* Cash Assets Section */
+.cash-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(var(--primary-rgb), 0.2);
+}
+
+.cash-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.cash-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Portfolio Title Row - Removed (using Sub Row instead) */
+/* .portfolio-sub-row added below */
+
+.portfolio-sub-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.portfolio-icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.notification-icon {
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.notification-icon.off {
+    opacity: 0.4;
+}
+
+.notification-icon:hover {
+    opacity: 1;
+}
+
+.threshold-badge {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    background: var(--bg-surface);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.rebalance-badge {
+    /* Position moved from absolute to flex item */
+    position: static;
+    margin-left: auto;
+    margin-right: 8px;
+    background: var(--warning-bg);
+    color: var(--warning);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+}

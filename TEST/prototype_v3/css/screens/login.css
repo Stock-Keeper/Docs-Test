@@ -1,0 +1,242 @@
+/* =============================================
+   SCREEN: LOGIN
+   ============================================= */
+/* .login-container replaces flex:1 with min-height: 100% to allow scrolling */
+.login-container {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 24px 24px;
+    background: var(--bg-screen);
+}
+
+.logo-section {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.app-logo {
+    width: 100px;
+    height: 100px;
+    background: var(--gradient-primary);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow:
+        0 10px 40px rgba(var(--primary-rgb), 0.4),
+        0 0 60px rgba(var(--primary-rgb), 0.2);
+    animation: logoGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+    from {
+        box-shadow: 0 10px 40px rgba(var(--primary-rgb), 0.4), 0 0 60px rgba(var(--primary-rgb), 0.2);
+    }
+
+    to {
+        box-shadow: 0 10px 50px rgba(var(--primary-rgb), 0.6), 0 0 80px rgba(var(--primary-rgb), 0.3);
+    }
+}
+
+.logo-icon {
+    font-size: 48px;
+}
+
+.app-name {
+    color: var(--text-primary);
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, var(--text-primary) 0%, rgba(var(--primary-rgb), 0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.app-tagline {
+    color: var(--text-tertiary);
+    font-size: 15px;
+    margin-top: 8px;
+}
+
+.login-content {
+    width: 100%;
+}
+
+.feature-highlights {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.feature-icon {
+    font-size: 24px;
+    background: rgba(var(--primary-rgb), 0.15);
+    padding: 12px;
+    border-radius: var(--radius-lg);
+}
+
+.google-login-btn {
+    width: 100%;
+    padding: 16px;
+    background: #fff;
+    border: none;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-card);
+}
+
+.google-login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.google-login-btn:active {
+    transform: scale(0.98);
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.login-hint {
+    text-align: center;
+    margin-top: 16px;
+    color: var(--text-tertiary);
+    font-size: 14px;
+}
+
+.login-hint a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.login-footer {
+    text-align: center;
+}
+
+.terms {
+    color: var(--text-tertiary);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.terms a {
+    color: var(--text-secondary);
+    text-decoration: underline;
+}
+
+/* =============================================
+   LOGIN STATES (Panel Controlled)
+   ============================================= */
+
+/* Loading Overlay */
+.login-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+}
+
+.login-loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-primary);
+}
+
+.login-loading-content p {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.login-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(var(--primary-rgb), 0.2);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Error Toast - Centered Modal Style */
+.login-error-toast {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 48px);
+    max-width: 300px;
+    background: rgba(60, 60, 60, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 90;
+    animation: fadeIn 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.login-error-toast .error-icon {
+    font-size: 32px;
+}
+
+.login-error-toast .error-message {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.5;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}

@@ -1,0 +1,97 @@
+<!-- Screen: 종목 검색/추가 -->
+<div id="screen-search" class="screen">
+    <div class="screen-body">
+        <header class="header">
+            <button class="back-btn" onclick="navigateTo('screen-detail')">←</button>
+            <h2>종목 추가</h2>
+            <div class="header-spacer"></div>
+        </header>
+
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="종목명 또는 종목코드 검색" value="현대">
+            </div>
+        </div>
+
+        <div class="search-results">
+            <div class="result-item" onclick="showModal('stock-add-modal')">
+                <div class="result-info">
+                    <span class="result-name">현대자동차</span>
+                    <span class="result-code">005380</span>
+                </div>
+                <div class="result-price">
+                    <span class="price">₩186,500</span>
+                    <span class="change positive">+1.24%</span>
+                </div>
+            </div>
+            <div class="result-item" onclick="showModal('stock-add-modal')">
+                <div class="result-info">
+                    <span class="result-name">현대모비스</span>
+                    <span class="result-code">012330</span>
+                </div>
+                <div class="result-price">
+                    <span class="price">₩252,000</span>
+                    <span class="change negative">-0.79%</span>
+                </div>
+            </div>
+            <div class="result-item" onclick="showModal('stock-add-modal')">
+                <div class="result-info">
+                    <span class="result-name">현대건설</span>
+                    <span class="result-code">000720</span>
+                </div>
+                <div class="result-price">
+                    <span class="price">₩31,450</span>
+                    <span class="change positive">+2.11%</span>
+                </div>
+            </div>
+            <div class="result-item" onclick="showModal('stock-add-modal')">
+                <div class="result-info">
+                    <span class="result-name">현대제철</span>
+                    <span class="result-code">004020</span>
+                </div>
+                <div class="result-price">
+                    <span class="price">₩33,800</span>
+                    <span class="change positive">+0.45%</span>
+                </div>
+            </div>
+            <div class="result-item" onclick="showModal('stock-add-modal')">
+                <div class="result-info">
+                    <span class="result-name">현대글로비스</span>
+                    <span class="result-code">086280</span>
+                </div>
+                <div class="result-price">
+                    <span class="price">₩112,500</span>
+                    <span class="change positive">+0.89%</span>
+                </div>
+            </div>
+            <div class="result-item" onclick="showModal('stock-add-modal')">
+                <div class="result-info">
+                    <span class="result-name">현대위아</span>
+                    <span class="result-code">011210</span>
+                </div>
+                <div class="result-price">
+                    <span class="price">₩42,300</span>
+                    <span class="change negative">-1.05%</span>
+                </div>
+            </div>
+            <div class="result-item" onclick="showModal('stock-add-modal')">
+                <div class="result-info">
+                    <span class="result-name">현대에너지솔루션</span>
+                    <span class="result-code">322000</span>
+                </div>
+                <div class="result-price">
+                    <span class="price">₩28,750</span>
+                    <span class="change positive">+3.24%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 검색 결과 없음 Empty State (숨김) -->
+        <div id="search-empty-state" class="empty-state search-empty" style="display: none;">
+            <div class="empty-icon">🔍</div>
+            <h3 class="empty-title">검색 결과가 없어요</h3>
+            <p class="empty-desc">다른 검색어로 시도해보세요</p>
+        </div>
+    </div>
+</div>
