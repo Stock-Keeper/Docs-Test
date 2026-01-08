@@ -40,6 +40,25 @@
 - `GET /stocks/search` - 종목 검색
 - `GET /stocks/{code}/price` - 실시간 시세 조회
 
+#### 포트폴리오 현금 (Portfolio Cash)
+- `GET /portfolios/{id}/cash` - 포트폴리오 내 현금 목록 조회
+- `POST /portfolios/{id}/cash` - 포트폴리오 내 현금 추가
+- `PUT /portfolios/{id}/cash/{currency}` - 포트폴리오 내 현금 수정
+- `DELETE /portfolios/{id}/cash/{currency}` - 포트폴리오 내 현금 삭제
+
+#### 계좌 (Accounts) - 수동 입력
+- `GET /accounts` - 계좌 목록 조회
+- `POST /accounts` - 계좌 추가 (수동)
+- `GET /accounts/{id}` - 계좌 상세 조회
+- `PUT /accounts/{id}` - 계좌 수정
+- `DELETE /accounts/{id}` - 계좌 삭제
+
+#### 계좌 현금 (Account Cash) - 수동 입력
+- `GET /accounts/{id}/cash` - 계좌 내 현금 잔고 조회
+- `POST /accounts/{id}/cash` - 계좌 내 현금 추가
+- `PUT /accounts/{id}/cash/{currency}` - 계좌 내 현금 수정
+- `DELETE /accounts/{id}/cash/{currency}` - 계좌 내 현금 삭제
+
 #### 리밸런싱 (Rebalancing)
 - `GET /portfolios/{id}/rebalancing` - 리밸런싱 분석
 - `GET /portfolios/{id}/rebalancing/suggestions` - 리밸런싱 제안
@@ -625,7 +644,407 @@ Authorization: Bearer {access_token}
 
 ---
 
-### 5. 리밸런싱 (Rebalancing)
+### 5. 포트폴리오 현금 (Portfolio Cash)
+
+#### GET /portfolios/{id}/cash
+
+**설명**: 포트폴리오 내 현금 목표 비중 목록 조회
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "portfolio_id": "portfolio-uuid-1",
+  "cash_entries": [
+    {
+      "currency": "KRW",
+      "target_weight": 10.0,
+      "created_at": "2025-12-31T10:00:00Z",
+      "updated_at": "2025-12-31T10:00:00Z"
+    },
+    {
+      "currency": "USD",
+      "target_weight": 5.0,
+      "created_at": "2025-12-31T10:00:00Z",
+      "updated_at": "2025-12-31T10:00:00Z"
+    }
+  ],
+  "total_cash_weight": 15.0
+}
+```
+
+---
+
+#### POST /portfolios/{id}/cash
+
+**설명**: 포트폴리오 내 현금 항목 추가
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
+  "currency": "KRW",
+  "target_weight": 10.0
+}
+```
+
+**Response (201 Created)**
+```json
+{
+  "portfolio_id": "portfolio-uuid-1",
+  "currency": "KRW",
+  "target_weight": 10.0,
+  "created_at": "2025-12-31T10:00:00Z"
+}
+```
+
+**Error Response (400 Bad Request)**
+```json
+{
+  "error": "currency_already_exists",
+  "message": "This currency already exists in the portfolio"
+}
+```
+
+---
+
+#### PUT /portfolios/{id}/cash/{currency}
+
+**설명**: 포트폴리오 내 현금 항목 수정
+
+**Path Parameters**
+- `id`: 포트폴리오 ID
+- `currency`: 통화 코드 (KRW, USD, JPY)
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
+  "target_weight": 15.0
+}
+```
+
+**Response (200 OK)**
+```json
+{
+  "portfolio_id": "portfolio-uuid-1",
+  "currency": "KRW",
+  "target_weight": 15.0,
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+**Error Response (400 Bad Request)**
+```json
+{
+  "error": "invalid_weight",
+  "message": "Target weight must be between 0 and 100"
+}
+```
+
+---
+
+#### DELETE /portfolios/{id}/cash/{currency}
+
+**설명**: 포트폴리오 내 현금 항목 삭제
+
+**Path Parameters**
+- `id`: 포트폴리오 ID
+- `currency`: 통화 코드 (KRW, USD, JPY)
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "message": "Cash entry deleted successfully"
+}
+```
+
+**Error Response (404 Not Found)**
+```json
+{
+  "error": "not_found",
+  "message": "Cash entry with this currency not found"
+}
+```
+
+---
+
+### 6. 계좌 (Accounts) - 수동 입력
+
+#### GET /accounts
+
+**설명**: 계좌 목록 조회
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+[
+  {
+    "id": "account-uuid-1",
+    "brokerage_name": "한국투자증권",
+    "account_number": "****-****-1234",
+    "is_connected": false,
+    "created_at": "2025-12-31T10:00:00Z",
+    "updated_at": "2025-12-31T10:00:00Z"
+  }
+]
+```
+
+---
+
+#### POST /accounts
+
+**설명**: 계좌 추가 (수동 입력)
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
+  "brokerage_name": "한국투자증권",
+  "account_number": "1234-5678-1234"
+}
+```
+
+**Response (201 Created)**
+```json
+{
+  "id": "account-uuid-1",
+  "brokerage_name": "한국투자증권",
+  "account_number": "****-****-1234",
+  "is_connected": false,
+  "created_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### GET /accounts/{id}
+
+**설명**: 계좌 상세 조회
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "id": "account-uuid-1",
+  "brokerage_name": "한국투자증권",
+  "account_number": "****-****-1234",
+  "is_connected": false,
+  "created_at": "2025-12-31T10:00:00Z",
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### PUT /accounts/{id}
+
+**설명**: 계좌 정보 수정
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
+  "brokerage_name": "삼성증권",
+  "account_number": "5678-1234-5678"
+}
+```
+
+**Response (200 OK)**
+```json
+{
+  "id": "account-uuid-1",
+  "brokerage_name": "삼성증권",
+  "account_number": "****-****-5678",
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### DELETE /accounts/{id}
+
+**설명**: 계좌 삭제
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "message": "Account deleted successfully"
+}
+```
+
+---
+
+### 7. 계좌 현금 (Account Cash) - 수동 입력
+
+#### GET /accounts/{id}/cash
+
+**설명**: 계좌 내 현금 잔고 조회
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "account_id": "account-uuid-1",
+  "cash_entries": [
+    {
+      "currency": "KRW",
+      "amount": 1000000,
+      "created_at": "2025-12-31T10:00:00Z",
+      "updated_at": "2025-12-31T10:00:00Z"
+    },
+    {
+      "currency": "USD",
+      "amount": 500.00,
+      "created_at": "2025-12-31T10:00:00Z",
+      "updated_at": "2025-12-31T10:00:00Z"
+    }
+  ]
+}
+```
+
+---
+
+#### POST /accounts/{id}/cash
+
+**설명**: 계좌 내 현금 추가
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
+  "currency": "KRW",
+  "amount": 1000000
+}
+```
+
+**Response (201 Created)**
+```json
+{
+  "account_id": "account-uuid-1",
+  "currency": "KRW",
+  "amount": 1000000,
+  "created_at": "2025-12-31T10:00:00Z"
+}
+```
+
+**Error Response (400 Bad Request)**
+```json
+{
+  "error": "currency_already_exists",
+  "message": "This currency already exists in the account"
+}
+```
+
+---
+
+#### PUT /accounts/{id}/cash/{currency}
+
+**설명**: 계좌 내 현금 수정
+
+**Path Parameters**
+- `id`: 계좌 ID
+- `currency`: 통화 코드 (KRW, USD, JPY)
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+**Request Body**
+```json
+{
+  "amount": 1500000
+}
+```
+
+**Response (200 OK)**
+```json
+{
+  "account_id": "account-uuid-1",
+  "currency": "KRW",
+  "amount": 1500000,
+  "updated_at": "2025-12-31T10:00:00Z"
+}
+```
+
+---
+
+#### DELETE /accounts/{id}/cash/{currency}
+
+**설명**: 계좌 내 현금 삭제
+
+**Path Parameters**
+- `id`: 계좌 ID
+- `currency`: 통화 코드 (KRW, USD, JPY)
+
+**Request Headers**
+```
+Authorization: Bearer {access_token}
+```
+
+**Response (200 OK)**
+```json
+{
+  "message": "Cash entry deleted successfully"
+}
+```
+
+---
+
+### 8. 리밸런싱 (Rebalancing)
 
 #### GET /portfolios/{id}/rebalancing
 
@@ -702,7 +1121,7 @@ Authorization: Bearer {access_token}
 
 ---
 
-### 6. 설정 (Settings)
+### 9. 설정 (Settings)
 
 #### GET /settings
 
@@ -773,7 +1192,7 @@ Authorization: Bearer {access_token}
 
 ---
 
-### 7. 포트폴리오 설정 (Portfolio Settings)
+### 10. 포트폴리오 설정 (Portfolio Settings)
 
 #### GET /portfolios/{id}/settings/notification
 
@@ -1043,6 +1462,16 @@ Authorization: Bearer {access_token}
 ## Phase 2+ (확장 고려사항)
 
 ### Phase 2 기능
+
+- [P2] **계좌 API 연동 자동화 (Accounts Sync)**
+  - `PUT /accounts/{id}/sync` - 한국투자증권 API 연동 계좌 데이터 자동 동기화
+  - `POST /accounts/{id}/connect` - 증권사 계좌 연동 (OAuth)
+  - `DELETE /accounts/{id}/disconnect` - 증권사 계좌 연동 해제
+  - Phase 1에서 수동 입력한 계좌를 API 연동으로 자동화
+
+- [P2] **계좌 종목 (Account Entries)**
+  - `GET /accounts/{id}/stocks` - 계좌 내 보유 종목 조회
+  - 한국투자증권 API 연동으로 자동 동기화
 
 - [P2] **GraphQL API**
   - REST API와 병행 제공
