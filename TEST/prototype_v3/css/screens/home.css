@@ -1,0 +1,214 @@
+/* =============================================
+   SCREEN: HOME
+   ============================================= */
+.home-header {
+    padding: 16px 20px;
+}
+
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    background: var(--gradient-primary);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.greeting-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.greeting {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.username {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.home-summary {
+    padding: 0 20px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    background: var(--gradient-primary-light);
+    border: 1px solid rgba(var(--primary-rgb), 0.3);
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+}
+
+.summary-label {
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.summary-value {
+    display: block;
+    color: #fff;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.summary-change {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.summary-change.positive {
+    color: var(--success);
+}
+
+.summary-change.negative {
+    color: var(--error);
+}
+
+.portfolio-section {
+    flex: 1;
+    padding: 0 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.section-header h3 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.portfolio-count,
+.stock-count {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 14px;
+}
+
+.portfolio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 100px;
+}
+
+.portfolio-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.portfolio-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.portfolio-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.portfolio-color {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+}
+
+.portfolio-info {
+    flex: 1;
+}
+
+.portfolio-info h4 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.portfolio-stocks {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 13px;
+}
+
+.portfolio-arrow {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 24px;
+}
+
+.portfolio-card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.portfolio-value {
+    display: flex;
+    flex-direction: column;
+}
+
+.value-label {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+}
+
+.value-amount {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.portfolio-return {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.portfolio-return.positive {
+    color: var(--success);
+}
+
+.portfolio-return.negative {
+    color: var(--error);
+}
+
+.rebalance-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--warning-bg);
+    color: var(--warning);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+}

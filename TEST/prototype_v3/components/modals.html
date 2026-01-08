@@ -1,0 +1,105 @@
+<!-- Modals -->
+
+<!-- 종목 추가 모달 -->
+<div id="stock-add-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>현대자동차</h3>
+            <button class="modal-close" onclick="hideModal('stock-add-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="stock-modal-price">
+                <span class="current-price">₩186,500</span>
+                <span class="price-change positive">+1.24%</span>
+            </div>
+            <div class="form-group">
+                <label>보유 수량</label>
+                <div class="number-input">
+                    <button class="num-btn">-</button>
+                    <input type="number" value="10">
+                    <button class="num-btn">+</button>
+                </div>
+                <span class="estimated">예상 금액: ₩1,865,000</span>
+            </div>
+            <div class="form-group">
+                <label>목표 비율</label>
+                <div class="slider-container">
+                    <input type="range" min="0" max="100" value="10" class="ratio-slider">
+                    <span class="slider-value">10%</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn secondary" onclick="hideModal('stock-add-modal')">취소</button>
+            <button class="modal-btn primary"
+                onclick="hideModal('stock-add-modal'); navigateTo('screen-detail');">추가</button>
+        </div>
+    </div>
+</div>
+
+<!-- 임계값 설정 모달 -->
+<div id="threshold-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>임계값 설정</h3>
+            <button class="modal-close" onclick="hideModal('threshold-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-description">목표 비율 대비 이 값을 초과하면 리밸런싱을 권장합니다</p>
+            <div class="threshold-options">
+                <label class="radio-option">
+                    <input type="radio" name="threshold" value="3">
+                    <span class="radio-label">±3%</span>
+                    <span class="radio-desc">민감하게 관리</span>
+                </label>
+                <label class="radio-option selected">
+                    <input type="radio" name="threshold" value="5" checked>
+                    <span class="radio-label">±5%</span>
+                    <span class="radio-desc">권장</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="threshold" value="10">
+                    <span class="radio-label">±10%</span>
+                    <span class="radio-desc">느슨하게 관리</span>
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn primary full-width" onclick="hideModal('threshold-modal')">저장</button>
+        </div>
+    </div>
+</div>
+
+<!-- 포트폴리오 추가 모달 -->
+<div id="add-portfolio-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>새 포트폴리오</h3>
+            <button class="modal-close" onclick="hideModal('add-portfolio-modal')">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>포트폴리오 이름</label>
+                <input type="text" placeholder="예: 장기 투자용">
+            </div>
+            <div class="form-group">
+                <label>설명 <span class="optional">(선택)</span></label>
+                <textarea placeholder="포트폴리오 설명을 입력하세요"></textarea>
+            </div>
+            <div class="form-group">
+                <label>색상</label>
+                <div class="color-picker">
+                    <span class="color-option selected" style="background: var(--gradient-primary);"></span>
+                    <span class="color-option" style="background: linear-gradient(135deg, #6B9080, #4A6F5A);"></span>
+                    <span class="color-option" style="background: linear-gradient(135deg, #5C8EAD, #3D6B8C);"></span>
+                    <span class="color-option" style="background: linear-gradient(135deg, #B87D5B, #8B5A3C);"></span>
+                    <span class="color-option" style="background: linear-gradient(135deg, #6B7A8F, #4A5568);"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn secondary" onclick="hideModal('add-portfolio-modal')">취소</button>
+            <button class="modal-btn primary" onclick="hideModal('add-portfolio-modal')">생성</button>
+        </div>
+    </div>
+</div>

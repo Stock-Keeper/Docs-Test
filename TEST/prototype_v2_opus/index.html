@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="indigo">
+<html lang="ko" data-theme="sage">
 
 <head>
     <meta charset="UTF-8">
@@ -17,20 +17,7 @@
             <button class="mode-btn active" data-mode="dark">🌙 Dark</button>
             <button class="mode-btn" data-mode="light">☀️ Light</button>
         </div>
-        <div class="theme-buttons">
-            <button class="theme-btn active" data-theme="indigo">
-                <span class="color-dot" style="background: linear-gradient(135deg, #667eea, #764ba2);"></span>
-                Indigo
-            </button>
-            <button class="theme-btn" data-theme="sage">
-                <span class="color-dot" style="background: linear-gradient(135deg, #38a169, #48bb78);"></span>
-                Forest
-            </button>
-            <button class="theme-btn" data-theme="copper">
-                <span class="color-dot" style="background: linear-gradient(135deg, #e07b7b, #f0a67a);"></span>
-                Coral
-            </button>
-        </div>
+        <!-- Theme: Forest (sage) - 고정 -->
     </div>
 
     <div class="phone-frame">
@@ -212,6 +199,28 @@
             <button class="fab" onclick="showModal('add-portfolio-modal')">
                 <span>+</span>
             </button>
+
+            <!-- Empty State (숨김) -->
+            <div id="home-empty-state" class="empty-state" style="display: none;">
+                <div class="empty-icon">📊</div>
+                <h3 class="empty-title">아직 포트폴리오가 없어요</h3>
+                <p class="empty-desc">첫 포트폴리오를 만들어보세요!</p>
+                <button class="empty-btn" onclick="showModal('add-portfolio-modal')">+ 포트폴리오 만들기</button>
+            </div>
+
+            <!-- Loading State (숨김) -->
+            <div id="home-loading-state" class="loading-state" style="display: none;">
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+
+            <!-- Error State (숨김) -->
+            <div id="home-error-state" class="error-state" style="display: none;">
+                <div class="error-icon">⚠️</div>
+                <h3 class="error-title">데이터를 불러올 수 없습니다</h3>
+                <button class="error-btn" onclick="toggleErrorState()">다시 시도</button>
+            </div>
         </div>
 
         <!-- Screen 4: 포트폴리오 상세 -->
@@ -408,6 +417,14 @@
                     <span>리밸런싱 분석</span>
                 </button>
             </div>
+
+            <!-- 종목 Empty State (숨김) -->
+            <div id="detail-empty-state" class="empty-state detail-empty" style="display: none;">
+                <div class="empty-icon">📈</div>
+                <h3 class="empty-title">아직 종목이 없어요</h3>
+                <p class="empty-desc">첫 종목을 추가해보세요!</p>
+                <button class="empty-btn" onclick="navigateTo('screen-search')">+ 종목 추가</button>
+            </div>
         </div>
 
         <!-- Screen 5: 종목 검색/추가 -->
@@ -466,6 +483,13 @@
                         <span class="change positive">+0.45%</span>
                     </div>
                 </div>
+            </div>
+
+            <!-- 검색 결과 없음 Empty State (숨김) -->
+            <div id="search-empty-state" class="empty-state search-empty" style="display: none;">
+                <div class="empty-icon">🔍</div>
+                <h3 class="empty-title">검색 결과가 없어요</h3>
+                <p class="empty-desc">다른 검색어로 시도해보세요</p>
             </div>
         </div>
 
@@ -773,16 +797,29 @@
         </div>
     </div>
 
-    <div class="screen-navigator">
-        <h4>화면 네비게이터</h4>
-        <div class="nav-buttons">
-            <button onclick="navigateTo('screen-login')">1. 로그인</button>
-            <button onclick="navigateTo('screen-profile')">2. 프로필</button>
-            <button onclick="navigateTo('screen-home')">3. 홈</button>
-            <button onclick="navigateTo('screen-detail')">4. 상세</button>
-            <button onclick="navigateTo('screen-search')">5. 검색</button>
-            <button onclick="navigateTo('screen-rebalance')">6. 리밸런싱</button>
-            <button onclick="navigateTo('screen-settings')">7. 설정</button>
+    <!-- 좌측 화면 네비게이터 (세로) -->
+    <div class="screen-navigator-left">
+        <h4>화면</h4>
+        <div class="nav-buttons-vertical">
+            <button onclick="navigateTo('screen-login')" title="로그인">1</button>
+            <button onclick="navigateTo('screen-profile')" title="프로필">2</button>
+            <button onclick="navigateTo('screen-home')" title="홈">3</button>
+            <button onclick="navigateTo('screen-detail')" title="상세">4</button>
+            <button onclick="navigateTo('screen-search')" title="검색">5</button>
+            <button onclick="navigateTo('screen-rebalance')" title="리밸런싱">6</button>
+            <button onclick="navigateTo('screen-settings')" title="설정">7</button>
+        </div>
+    </div>
+
+    <!-- 우측 상태 리모콘 (예외상황/빈화면 테스트) -->
+    <div class="state-remote-right">
+        <h4>상태</h4>
+        <div class="state-buttons-vertical">
+            <button onclick="toggleEmptyState('home')" title="홈 Empty">🏠</button>
+            <button onclick="toggleEmptyState('detail')" title="상세 Empty">📊</button>
+            <button onclick="toggleEmptyState('search')" title="검색 No Result">🔍</button>
+            <button onclick="toggleLoadingState()" title="로딩">⏳</button>
+            <button onclick="toggleErrorState()" title="에러">⚠️</button>
         </div>
     </div>
 

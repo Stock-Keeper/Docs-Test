@@ -1,0 +1,339 @@
+/* =============================================
+   LIGHT MODE OVERRIDES
+   ============================================= */
+[data-mode="light"] .phone-frame {
+    background: #f8f9fa;
+    box-shadow:
+        0 0 0 3px #e0e0e0,
+        0 0 0 6px #d0d0d0,
+        0 25px 80px rgba(0, 0, 0, 0.15);
+}
+
+[data-mode="light"] .screen {
+    background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+}
+
+[data-mode="light"] .status-bar {
+    color: #333;
+    background: #ffffff;
+    /* Explicit background for light mode */
+}
+
+[data-mode="light"] .header {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-mode="light"] .header h2 {
+    color: #212121;
+}
+
+[data-mode="light"] .login-container {
+    background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 50%, #ffffff 100%);
+}
+
+[data-mode="light"] .app-name {
+    background: linear-gradient(135deg, #333 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+[data-mode="light"] .app-tagline,
+[data-mode="light"] .greeting,
+[data-mode="light"] .terms,
+[data-mode="light"] .login-hint {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-mode="light"] .terms a,
+[data-mode="light"] .login-hint a {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+[data-mode="light"] .feature-item {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+[data-mode="light"] .username,
+[data-mode="light"] .value-amount,
+[data-mode="light"] .summary-value,
+[data-mode="light"] .stock-name,
+[data-mode="light"] .result-name,
+[data-mode="light"] .price,
+[data-mode="light"] .settings-name,
+[data-mode="light"] .settings-label,
+[data-mode="light"] .portfolio-info h4,
+[data-mode="light"] .section-header h3,
+[data-mode="light"] .item-value,
+[data-mode="light"] .value-main,
+[data-mode="light"] .ratio-text,
+[data-mode="light"] .suggestion-stock,
+[data-mode="light"] .detail-value,
+[data-mode="light"] .radio-label,
+[data-mode="light"] .current-price {
+    color: #212121;
+}
+
+[data-mode="light"] .portfolio-stocks,
+[data-mode="light"] .stock-code,
+[data-mode="light"] .result-code,
+[data-mode="light"] .value-label,
+[data-mode="light"] .item-label,
+[data-mode="light"] .summary-label,
+[data-mode="light"] .portfolio-count,
+[data-mode="light"] .stock-count,
+[data-mode="light"] .settings-email,
+[data-mode="light"] .settings-value,
+[data-mode="light"] .ratio-target-text,
+[data-mode="light"] .bar-label,
+[data-mode="light"] .legend-item,
+[data-mode="light"] .detail-label,
+[data-mode="light"] .threshold-info,
+[data-mode="light"] .radio-desc,
+[data-mode="light"] .modal-description,
+[data-mode="light"] .input-hint,
+[data-mode="light"] .estimated {
+    color: #757575;
+}
+
+[data-mode="light"] .form-group label {
+    color: #424242;
+}
+
+[data-mode="light"] .portfolio-card,
+[data-mode="light"] .stock-row,
+[data-mode="light"] .result-item,
+[data-mode="light"] .suggestion-card,
+[data-mode="light"] .settings-item,
+[data-mode="light"] .radio-option {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-mode="light"] .portfolio-card:hover,
+[data-mode="light"] .stock-row:hover,
+[data-mode="light"] .result-item:hover {
+    background: #f5f5f5;
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-mode="light"] .summary-card {
+    background: var(--gradient-primary-light);
+    border-color: rgba(var(--primary-rgb), 0.2);
+}
+
+[data-mode="light"] .form-group input,
+[data-mode="light"] .form-group textarea,
+[data-mode="light"] .search-input-wrapper {
+    background: #f5f5f5;
+    border-color: #e0e0e0;
+    color: #212121;
+}
+
+[data-mode="light"] .form-group input:focus,
+[data-mode="light"] .form-group textarea:focus {
+    background: #ffffff;
+    border-color: var(--primary);
+}
+
+[data-mode="light"] .chip {
+    background: #f5f5f5;
+    border-color: #e0e0e0;
+    color: #616161;
+}
+
+[data-mode="light"] .search-input {
+    color: #212121;
+}
+
+[data-mode="light"] .search-input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+[data-mode="light"] .detail-summary {
+    background: rgba(var(--primary-rgb), 0.08);
+}
+
+[data-mode="light"] .detail-actions {
+    background: transparent;
+    border: none;
+}
+
+[data-mode="light"] .action-btn.secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+[data-mode="light"] .ratio-card {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-mode="light"] .ratio-stock-name,
+[data-mode="light"] .ratio-big-num {
+    color: #212121;
+}
+
+[data-mode="light"] .ratio-label {
+    color: #757575;
+}
+
+[data-mode="light"] .ratio-arrow {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+[data-mode="light"] .ratio-badge.ok {
+    background: rgba(0, 0, 0, 0.05);
+    color: #757575;
+}
+
+[data-mode="light"] .ratio-mini-bar {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+[data-mode="light"] .mini-bar-target {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+[data-mode="light"] .suggestion-header {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+[data-mode="light"] .detail-row.highlight {
+    background: rgba(var(--primary-rgb), 0.08);
+}
+
+[data-mode="light"] .modal-content {
+    background: #ffffff;
+}
+
+[data-mode="light"] .modal-header {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-mode="light"] .modal-header h3 {
+    color: #212121;
+}
+
+[data-mode="light"] .modal-close {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-mode="light"] .modal-btn.secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+[data-mode="light"] .num-btn {
+    background: #f0f0f0;
+    color: #333;
+}
+
+[data-mode="light"] .toggle-slider {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+[data-mode="light"] .settings-group-title {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-mode="light"] .portfolio-arrow,
+[data-mode="light"] .settings-arrow {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+[data-mode="light"] .logout-btn {
+    background: rgba(229, 115, 115, 0.1);
+    border-color: rgba(229, 115, 115, 0.3);
+}
+
+[data-mode="light"] .stock-card {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* States - Light Mode */
+[data-mode="light"] .empty-title,
+[data-mode="light"] .error-title {
+    color: #1a1a2e;
+}
+
+[data-mode="light"] .empty-desc {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-mode="light"] .empty-btn,
+[data-mode="light"] .error-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #1a1a2e;
+}
+
+[data-mode="light"] .empty-btn:hover,
+[data-mode="light"] .error-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+[data-mode="light"] .skeleton-card {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+[data-mode="light"] .skeleton-card::after {
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), transparent);
+}
+
+[data-mode="light"] .rebalance-insight {
+    background: rgba(255, 183, 77, 0.15);
+}
+
+[data-mode="light"] .insight-title {
+    color: #333;
+}
+
+[data-mode="light"] .deviation-track {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+[data-mode="light"] .deviation-center {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+[data-mode="light"] .deviation-tag.ok {
+    background: rgba(0, 0, 0, 0.05);
+    color: #757575;
+}
+
+[data-mode="light"] .ratio-target-label {
+    color: #E65100;
+}
+
+[data-mode="light"] .insight-detail {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+[data-mode="light"] .insight-btn {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+[data-mode="light"] .insight-btn:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+[data-mode="light"] .donut-hole {
+    background: #ffffff;
+}
+
+[data-mode="light"] .donut-title {
+    color: #212121;
+}
+
+[data-mode="light"] .legend-row {
+    color: #424242;
+}
+
+[data-mode="light"] .number-input input {
+    color: #212121;
+    background: transparent;
+}

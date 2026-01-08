@@ -1,0 +1,26 @@
+/* =============================================
+   CSS VARIABLES
+   ============================================= */
+:root {
+    /* Primary Colors - Forest Green */
+    --primary: #38a169;
+    --primary-dark: #2f855a;
+    --primary-rgb: 56, 161, 105;
+    --gradient-primary: linear-gradient(135deg, #38a169, #48bb78);
+    --gradient-primary-light: linear-gradient(135deg, rgba(56, 161, 105, 0.2), rgba(72, 187, 120, 0.2));
+
+    /* Semantic Colors - Korean Market Style (상승:빨강, 하락:파랑) */
+    --success: #E53E3E;
+    --success-bg: rgba(229, 62, 62, 0.2);
+    --error: #3182CE;
+    --error-bg: rgba(49, 130, 206, 0.2);
+    --warning: #FFB74D;
+    --warning-bg: rgba(255, 183, 77, 0.2);
+
+    /* Chart Colors (Green → Light Gray) */
+    --chart-c1: #38a169;
+    --chart-c2: #68b88a;
+    --chart-c3: #98cfab;
+    --chart-c4: #c8e6cd;
+    --chart-c5: #e8e8e8;
+}

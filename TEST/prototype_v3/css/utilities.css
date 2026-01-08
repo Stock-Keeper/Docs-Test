@@ -1,0 +1,144 @@
+/* =============================================
+   UTILITIES
+   ============================================= */
+
+/* Control Panel (Unified Right) */
+.control-panel-right {
+    position: fixed;
+    left: 50%;
+    margin-left: 240px;
+    /* phone-frame width/2 (187.5) + gap */
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+}
+
+.control-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Control Buttons Common Styles */
+.nav-btn-vertical,
+.state-btn,
+.mode-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    /* Reset padding for flex centering */
+    position: relative;
+}
+
+/* Hover Effects */
+.nav-btn-vertical:hover,
+.state-btn:hover,
+.mode-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.nav-btn-vertical:hover,
+.nav-btn-vertical.active {
+    background: rgba(var(--primary-rgb), 0.3);
+    border-color: var(--primary);
+}
+
+.mode-btn.active {
+    background: var(--gradient-primary);
+    border-color: transparent;
+    color: #fff;
+}
+
+.state-btn.active,
+.state-btn:hover {
+    background: rgba(255, 183, 77, 0.3) !important;
+    border-color: #FFB74D !important;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 183, 77, 0.4);
+    z-index: 10;
+}
+
+/* Empty Slot Placeholder */
+.empty-slot {
+    width: 36px;
+    height: 36px;
+}
+
+/* Tooltips (Fixed: data-title) */
+/* Tooltips (Fixed: data-title) */
+[data-title]:hover::after {
+    content: attr(data-title);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 12px;
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    animation: tooltipFadeIn 0.2s ease forwards;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+/* Tooltip Arrow */
+[data-title]:hover::before {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent rgba(0, 0, 0, 0.9) transparent transparent;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Scrollbar Hidden */
+.screen-body {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+}
+
+.screen-body::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
