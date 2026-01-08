@@ -2,6 +2,20 @@
 <div id="screen-login" class="screen active">
     <div class="screen-body">
         <div class="login-container">
+            <!-- 로딩 오버레이 (패널 컨트롤) -->
+            <div id="login-loading-overlay" class="login-loading-overlay" style="display: none;">
+                <div class="login-loading-content">
+                    <div class="login-spinner"></div>
+                    <p>로그인 중...</p>
+                </div>
+            </div>
+
+            <!-- 에러 토스트 (패널 컨트롤) -->
+            <div id="login-error-toast" class="login-error-toast" style="display: none;">
+                <span class="error-icon">⚠️</span>
+                <span class="error-message">로그인에 실패했습니다. 다시 시도해주세요.</span>
+            </div>
+
             <div class="logo-section">
                 <div class="app-logo">
                     <span class="logo-icon">📊</span>
