@@ -15,16 +15,19 @@
 ### API 목록
 
 #### 인증 (Auth)
+
 - `POST /auth/google` - Google OAuth 로그인
 - `POST /auth/refresh` - Access Token 갱신
 - `POST /auth/logout` - 로그아웃
 
 #### 사용자 (Users)
+
 - `GET /users/me` - 내 정보 조회
 - `PUT /users/me` - 내 정보 수정
 - `DELETE /users/me` - 회원 탈퇴
 
 #### 포트폴리오 (Portfolios)
+
 - `GET /portfolios` - 포트폴리오 목록 조회
 - `POST /portfolios` - 포트폴리오 생성
 - `GET /portfolios/{id}` - 포트폴리오 상세 조회
@@ -33,6 +36,7 @@
 - `PUT /portfolios/{id}/order` - 포트폴리오 순서 변경
 
 #### 종목 (Stocks)
+
 - `GET /portfolios/{id}/stocks` - 포트폴리오 내 종목 목록
 - `POST /portfolios/{id}/stocks` - 종목 추가
 - `PUT /stocks/{id}` - 종목 수정
@@ -41,12 +45,14 @@
 - `GET /stocks/{code}/price` - 실시간 시세 조회
 
 #### 포트폴리오 현금 (Portfolio Cash)
+
 - `GET /portfolios/{id}/cash` - 포트폴리오 내 현금 목록 조회
 - `POST /portfolios/{id}/cash` - 포트폴리오 내 현금 추가
 - `PUT /portfolios/{id}/cash/{currency}` - 포트폴리오 내 현금 수정
 - `DELETE /portfolios/{id}/cash/{currency}` - 포트폴리오 내 현금 삭제
 
 #### 계좌 (Accounts) - 수동 입력
+
 - `GET /accounts` - 계좌 목록 조회
 - `POST /accounts` - 계좌 추가 (수동)
 - `GET /accounts/{id}` - 계좌 상세 조회
@@ -54,21 +60,25 @@
 - `DELETE /accounts/{id}` - 계좌 삭제
 
 #### 계좌 현금 (Account Cash) - 수동 입력
+
 - `GET /accounts/{id}/cash` - 계좌 내 현금 잔고 조회
 - `POST /accounts/{id}/cash` - 계좌 내 현금 추가
 - `PUT /accounts/{id}/cash/{currency}` - 계좌 내 현금 수정
 - `DELETE /accounts/{id}/cash/{currency}` - 계좌 내 현금 삭제
 
 #### 리밸런싱 (Rebalancing)
+
 - `GET /portfolios/{id}/rebalancing` - 리밸런싱 분석
 - `GET /portfolios/{id}/rebalancing/suggestions` - 리밸런싱 제안
 
 #### 설정 (Settings)
+
 - `GET /settings` - 앱 설정 조회
 - `PUT /settings/notification` - 앱 알림 on/off 설정
 - `GET /settings/version` - 버전 정보 조회
 
 #### 포트폴리오 설정 (Portfolio Settings)
+
 - `GET /portfolios/{id}/settings/notification` - 알림 설정 조회
 - `PUT /portfolios/{id}/settings/notification` - 알림 설정 수정
 - `GET /portfolios/{id}/settings/banner` - 배너 색상 조회
@@ -88,11 +98,13 @@
 **설명**: Google OAuth 로그인
 
 **Request Headers**
+
 ```
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "code": "4/0AdLIrYe...",
@@ -101,6 +113,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -117,6 +130,7 @@ Content-Type: application/json
 ```
 
 **Error Response (400 Bad Request)**
+
 ```json
 {
   "error": "invalid_code",
@@ -131,11 +145,13 @@ Content-Type: application/json
 **설명**: Access Token 갱신
 
 **Request Headers**
+
 ```
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "refresh_token": "dGhpcyBpcyByZWZyZXNoIHRva2Vu..."
@@ -143,6 +159,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -153,6 +170,7 @@ Content-Type: application/json
 ```
 
 **Error Response (401 Unauthorized)**
+
 ```json
 {
   "error": "invalid_token",
@@ -167,12 +185,14 @@ Content-Type: application/json
 **설명**: 로그아웃 (토큰 무효화)
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "refresh_token": "dGhpcyBpcyByZWZyZXNoIHRva2Vu..."
@@ -180,6 +200,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "message": "Logged out successfully"
@@ -195,11 +216,13 @@ Content-Type: application/json
 **설명**: 내 정보 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -218,12 +241,14 @@ Authorization: Bearer {access_token}
 **설명**: 내 정보 수정
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "name": "김세현_수정",
@@ -232,6 +257,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -249,11 +275,13 @@ Content-Type: application/json
 **설명**: 회원 탈퇴
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "message": "Account deleted successfully"
@@ -269,11 +297,13 @@ Authorization: Bearer {access_token}
 **설명**: 포트폴리오 목록 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 [
   {
@@ -312,12 +342,14 @@ Authorization: Bearer {access_token}
 **설명**: 포트폴리오 생성
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "name": "새 포트폴리오",
@@ -326,6 +358,7 @@ Content-Type: application/json
 ```
 
 **Response (201 Created)**
+
 ```json
 {
   "id": "portfolio-uuid-3",
@@ -338,6 +371,7 @@ Content-Type: application/json
 ```
 
 **Error Response (400 Bad Request)**
+
 ```json
 {
   "error": "limit_exceeded",
@@ -347,16 +381,18 @@ Content-Type: application/json
 
 ---
 
-#### GET /portfolios/{id}
+#### GET /portfolios/
 
 **설명**: 포트폴리오 상세 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "id": "portfolio-uuid-1",
@@ -402,17 +438,19 @@ Authorization: Bearer {access_token}
 
 ---
 
-#### PUT /portfolios/{id}
+#### PUT /portfolios/
 
 **설명**: 포트폴리오 수정
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "name": "수정된 포트폴리오",
@@ -421,6 +459,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "id": "portfolio-uuid-1",
@@ -432,16 +471,18 @@ Content-Type: application/json
 
 ---
 
-#### DELETE /portfolios/{id}
+#### DELETE /portfolios/
 
 **설명**: 포트폴리오 삭제
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "message": "Portfolio deleted successfully"
@@ -449,6 +490,7 @@ Authorization: Bearer {access_token}
 ```
 
 **Error Response (400 Bad Request)**
+
 ```json
 {
   "error": "cannot_delete_last",
@@ -460,16 +502,18 @@ Authorization: Bearer {access_token}
 
 ### 4. 종목 (Stocks)
 
-#### GET /portfolios/{id}/stocks
+#### GET /portfolios//stocks
 
 **설명**: 포트폴리오 내 종목 목록
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 [
   {
@@ -490,17 +534,19 @@ Authorization: Bearer {access_token}
 
 ---
 
-#### POST /portfolios/{id}/stocks
+#### POST /portfolios//stocks
 
 **설명**: 종목 추가
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "stock_code": "005930",
@@ -510,6 +556,7 @@ Content-Type: application/json
 ```
 
 **Response (201 Created)**
+
 ```json
 {
   "id": "stock-uuid-1",
@@ -522,6 +569,7 @@ Content-Type: application/json
 ```
 
 **Error Response (400 Bad Request)**
+
 ```json
 {
   "error": "stock_already_exists",
@@ -531,17 +579,19 @@ Content-Type: application/json
 
 ---
 
-#### PUT /stocks/{id}
+#### PUT /stocks/
 
 **설명**: 종목 수정
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "quantity": 120,
@@ -550,6 +600,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "id": "stock-uuid-1",
@@ -563,16 +614,18 @@ Content-Type: application/json
 
 ---
 
-#### DELETE /stocks/{id}
+#### DELETE /stocks/
 
 **설명**: 종목 삭제
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "message": "Stock deleted successfully"
@@ -586,20 +639,24 @@ Authorization: Bearer {access_token}
 **설명**: 종목 검색
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Query Parameters**
+
 - `q` (required): 검색어 (종목명 또는 종목코드)
 - `limit` (optional): 결과 개수 (default: 10, max: 50)
 
 **Request Example**
+
 ```
 GET /stocks/search?q=삼성&limit=5
 ```
 
 **Response (200 OK)**
+
 ```json
 [
   {
@@ -619,16 +676,18 @@ GET /stocks/search?q=삼성&limit=5
 
 ---
 
-#### GET /stocks/{code}/price
+#### GET /stocks//price
 
 **설명**: 실시간 시세 조회 (한투증권 API 연동)
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "stock_code": "005930",
@@ -646,16 +705,18 @@ Authorization: Bearer {access_token}
 
 ### 5. 포트폴리오 현금 (Portfolio Cash)
 
-#### GET /portfolios/{id}/cash
+#### GET /portfolios//cash
 
 **설명**: 포트폴리오 내 현금 목표 비중 목록 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -679,17 +740,19 @@ Authorization: Bearer {access_token}
 
 ---
 
-#### POST /portfolios/{id}/cash
+#### POST /portfolios//cash
 
 **설명**: 포트폴리오 내 현금 항목 추가
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "currency": "KRW",
@@ -698,6 +761,7 @@ Content-Type: application/json
 ```
 
 **Response (201 Created)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -708,6 +772,7 @@ Content-Type: application/json
 ```
 
 **Error Response (400 Bad Request)**
+
 ```json
 {
   "error": "currency_already_exists",
@@ -717,21 +782,24 @@ Content-Type: application/json
 
 ---
 
-#### PUT /portfolios/{id}/cash/{currency}
+#### PUT /portfolios//cash/
 
 **설명**: 포트폴리오 내 현금 항목 수정
 
 **Path Parameters**
+
 - `id`: 포트폴리오 ID
 - `currency`: 통화 코드 (KRW, USD, JPY)
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "target_weight": 15.0
@@ -739,6 +807,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -749,6 +818,7 @@ Content-Type: application/json
 ```
 
 **Error Response (400 Bad Request)**
+
 ```json
 {
   "error": "invalid_weight",
@@ -758,20 +828,23 @@ Content-Type: application/json
 
 ---
 
-#### DELETE /portfolios/{id}/cash/{currency}
+#### DELETE /portfolios//cash/
 
 **설명**: 포트폴리오 내 현금 항목 삭제
 
 **Path Parameters**
+
 - `id`: 포트폴리오 ID
 - `currency`: 통화 코드 (KRW, USD, JPY)
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "message": "Cash entry deleted successfully"
@@ -779,6 +852,7 @@ Authorization: Bearer {access_token}
 ```
 
 **Error Response (404 Not Found)**
+
 ```json
 {
   "error": "not_found",
@@ -795,11 +869,13 @@ Authorization: Bearer {access_token}
 **설명**: 계좌 목록 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 [
   {
@@ -820,12 +896,14 @@ Authorization: Bearer {access_token}
 **설명**: 계좌 추가 (수동 입력)
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "brokerage_name": "한국투자증권",
@@ -834,6 +912,7 @@ Content-Type: application/json
 ```
 
 **Response (201 Created)**
+
 ```json
 {
   "id": "account-uuid-1",
@@ -846,16 +925,18 @@ Content-Type: application/json
 
 ---
 
-#### GET /accounts/{id}
+#### GET /accounts/
 
 **설명**: 계좌 상세 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "id": "account-uuid-1",
@@ -869,17 +950,19 @@ Authorization: Bearer {access_token}
 
 ---
 
-#### PUT /accounts/{id}
+#### PUT /accounts/
 
 **설명**: 계좌 정보 수정
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "brokerage_name": "삼성증권",
@@ -888,6 +971,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "id": "account-uuid-1",
@@ -899,16 +983,18 @@ Content-Type: application/json
 
 ---
 
-#### DELETE /accounts/{id}
+#### DELETE /accounts/
 
 **설명**: 계좌 삭제
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "message": "Account deleted successfully"
@@ -919,16 +1005,18 @@ Authorization: Bearer {access_token}
 
 ### 7. 계좌 현금 (Account Cash) - 수동 입력
 
-#### GET /accounts/{id}/cash
+#### GET /accounts//cash
 
 **설명**: 계좌 내 현금 잔고 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "account_id": "account-uuid-1",
@@ -951,17 +1039,19 @@ Authorization: Bearer {access_token}
 
 ---
 
-#### POST /accounts/{id}/cash
+#### POST /accounts//cash
 
 **설명**: 계좌 내 현금 추가
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "currency": "KRW",
@@ -970,6 +1060,7 @@ Content-Type: application/json
 ```
 
 **Response (201 Created)**
+
 ```json
 {
   "account_id": "account-uuid-1",
@@ -980,6 +1071,7 @@ Content-Type: application/json
 ```
 
 **Error Response (400 Bad Request)**
+
 ```json
 {
   "error": "currency_already_exists",
@@ -989,21 +1081,24 @@ Content-Type: application/json
 
 ---
 
-#### PUT /accounts/{id}/cash/{currency}
+#### PUT /accounts//cash/
 
 **설명**: 계좌 내 현금 수정
 
 **Path Parameters**
+
 - `id`: 계좌 ID
 - `currency`: 통화 코드 (KRW, USD, JPY)
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "amount": 1500000
@@ -1011,6 +1106,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "account_id": "account-uuid-1",
@@ -1022,20 +1118,23 @@ Content-Type: application/json
 
 ---
 
-#### DELETE /accounts/{id}/cash/{currency}
+#### DELETE /accounts//cash/
 
 **설명**: 계좌 내 현금 삭제
 
 **Path Parameters**
+
 - `id`: 계좌 ID
 - `currency`: 통화 코드 (KRW, USD, JPY)
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "message": "Cash entry deleted successfully"
@@ -1046,16 +1145,18 @@ Authorization: Bearer {access_token}
 
 ### 8. 리밸런싱 (Rebalancing)
 
-#### GET /portfolios/{id}/rebalancing
+#### GET /portfolios//rebalancing
 
 **설명**: 리밸런싱 분석
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -1085,16 +1186,18 @@ Authorization: Bearer {access_token}
 
 ---
 
-#### GET /portfolios/{id}/rebalancing/suggestions
+#### GET /portfolios//rebalancing/suggestions
 
 **설명**: 리밸런싱 제안
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -1128,11 +1231,13 @@ Authorization: Bearer {access_token}
 **설명**: 앱 설정 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "notification_enabled": true,
@@ -1148,12 +1253,14 @@ Authorization: Bearer {access_token}
 **설명**: 앱 알림 on/off 설정
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "notification_enabled": false
@@ -1161,6 +1268,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "notification_enabled": false,
@@ -1175,11 +1283,13 @@ Content-Type: application/json
 **설명**: 버전 정보 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "current_version": "1.0.0",
@@ -1194,16 +1304,18 @@ Authorization: Bearer {access_token}
 
 ### 10. 포트폴리오 설정 (Portfolio Settings)
 
-#### GET /portfolios/{id}/settings/notification
+#### GET /portfolios//settings/notification
 
 **설명**: 포트폴리오 알림 설정 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -1216,17 +1328,19 @@ Authorization: Bearer {access_token}
 
 ---
 
-#### PUT /portfolios/{id}/settings/notification
+#### PUT /portfolios//settings/notification
 
 **설명**: 포트폴리오 알림 설정 수정
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "is_enabled": true,
@@ -1236,6 +1350,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -1248,16 +1363,18 @@ Content-Type: application/json
 
 ---
 
-#### GET /portfolios/{id}/settings/banner
+#### GET /portfolios//settings/banner
 
 **설명**: 포트폴리오 배너 색상 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -1268,17 +1385,19 @@ Authorization: Bearer {access_token}
 
 ---
 
-#### POST /portfolios/{id}/settings/banner
+#### POST /portfolios//settings/banner
 
 **설명**: 포트폴리오 배너 색상 설정
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "banner_color": "#4A90D9"
@@ -1286,6 +1405,7 @@ Content-Type: application/json
 ```
 
 **Response (201 Created)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -1296,17 +1416,19 @@ Content-Type: application/json
 
 ---
 
-#### PUT /portfolios/{id}/settings/banner
+#### PUT /portfolios//settings/banner
 
 **설명**: 포트폴리오 배너 색상 수정
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "banner_color": "#FF6B6B"
@@ -1314,6 +1436,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -1324,16 +1447,18 @@ Content-Type: application/json
 
 ---
 
-#### GET /portfolios/{id}/settings/threshold
+#### GET /portfolios//settings/threshold
 
 **설명**: 포트폴리오 리밸런싱 임계치 조회
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -1344,17 +1469,19 @@ Authorization: Bearer {access_token}
 
 ---
 
-#### PUT /portfolios/{id}/settings/threshold
+#### PUT /portfolios//settings/threshold
 
 **설명**: 포트폴리오 리밸런싱 임계치 수정
 
 **Request Headers**
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 **Request Body**
+
 ```json
 {
   "threshold": 3.0
@@ -1362,6 +1489,7 @@ Content-Type: application/json
 ```
 
 **Response (200 OK)**
+
 ```json
 {
   "portfolio_id": "portfolio-uuid-1",
@@ -1371,6 +1499,7 @@ Content-Type: application/json
 ```
 
 **Error Response (400 Bad Request)**
+
 ```json
 {
   "error": "invalid_threshold",
@@ -1404,27 +1533,29 @@ Authorization: Bearer {access_token}
 
 ### HTTP 상태 코드
 
-| 코드 | 설명 |
-|------|------|
-| 200 OK | 성공 (GET, PUT, DELETE) |
-| 201 Created | 생성 성공 (POST) |
-| 400 Bad Request | 잘못된 요청 (입력값 오류) |
-| 401 Unauthorized | 인증 실패 (토큰 없음/만료) |
-| 403 Forbidden | 권한 없음 |
-| 404 Not Found | 리소스 없음 |
-| 429 Too Many Requests | Rate Limit 초과 |
-| 500 Internal Server Error | 서버 에러 |
-| 503 Service Unavailable | 서비스 일시 중단 |
+| 코드                      | 설명                       |
+| ------------------------- | -------------------------- |
+| 200 OK                    | 성공 (GET, PUT, DELETE)    |
+| 201 Created               | 생성 성공 (POST)           |
+| 400 Bad Request           | 잘못된 요청 (입력값 오류)  |
+| 401 Unauthorized          | 인증 실패 (토큰 없음/만료) |
+| 403 Forbidden             | 권한 없음                  |
+| 404 Not Found             | 리소스 없음                |
+| 429 Too Many Requests     | Rate Limit 초과            |
+| 500 Internal Server Error | 서버 에러                  |
+| 503 Service Unavailable   | 서비스 일시 중단           |
 
 ### Pagination
 
 목록 조회 API는 페이지네이션 지원 (Phase 2):
 
 **Query Parameters**
+
 - `page`: 페이지 번호 (default: 1)
 - `limit`: 페이지당 결과 수 (default: 20, max: 100)
 
 **Response**
+
 ```json
 {
   "data": [...],
@@ -1443,15 +1574,16 @@ Authorization: Bearer {access_token}
 
 ### 한국투자증권 API
 
-| 항목 | 내용 |
-|------|------|
-| API 문서 | [API 포털](https://apiportal.koreainvestment.com/apiservice) |
-| 인증 | App Key + App Secret |
-| 사용 API | 국내주식시세, 종목검색 |
-| Rate Limit | 분당 20~30회 (문서 확인 필요) |
-| 장 운영 시간 | 평일 09:00-15:30 |
+| 항목         | 내용                                                      |
+| ------------ | --------------------------------------------------------- |
+| API 문서     | [API 포털](https://apiportal.koreainvestment.com/apiservice) |
+| 인증         | App Key + App Secret                                      |
+| 사용 API     | 국내주식시세, 종목검색                                    |
+| Rate Limit   | 분당 20~30회 (문서 확인 필요)                             |
+| 장 운영 시간 | 평일 09:00-15:30                                          |
 
 **백엔드 처리**
+
 1. 클라이언트 요청 → 백엔드 API
 2. 백엔드가 한투증권 API 호출
 3. 시세 데이터 가공 후 응답
@@ -1464,34 +1596,36 @@ Authorization: Bearer {access_token}
 ### Phase 2 기능
 
 - [P2] **계좌 API 연동 자동화 (Accounts Sync)**
+
   - `PUT /accounts/{id}/sync` - 한국투자증권 API 연동 계좌 데이터 자동 동기화
   - `POST /accounts/{id}/connect` - 증권사 계좌 연동 (OAuth)
   - `DELETE /accounts/{id}/disconnect` - 증권사 계좌 연동 해제
   - Phase 1에서 수동 입력한 계좌를 API 연동으로 자동화
-
 - [P2] **계좌 종목 (Account Entries)**
+
   - `GET /accounts/{id}/stocks` - 계좌 내 보유 종목 조회
   - 한국투자증권 API 연동으로 자동 동기화
-
 - [P2] **GraphQL API**
+
   - REST API와 병행 제공
   - 클라이언트가 필요한 필드만 조회
-
 - [P2] **Webhook**
+
   - 리밸런싱 알림 발송 시 Webhook 호출
   - 사용자 지정 Webhook URL
-
 - [P2] **Batch API**
+
   - 여러 종목 일괄 추가/수정
   - `/portfolios/{id}/stocks/batch`
 
 ### Phase 3 기능
 
 - [P3] **실시간 통신 (WebSocket)**
+
   - 실시간 시세 발송
   - 리밸런싱 상태 실시간 업데이트
-
 - [P3] **API 버전관리**
+
   - `/v2/...` 로 새 버전 제공
   - v1 유지보수 1년
 
@@ -1506,6 +1640,6 @@ Authorization: Bearer {access_token}
 
 ---
 
-> **작성일**: 2025-12-31  
-> **Phase**: Phase 1 (MVP)  
+> **작성일**: 2025-12-31
+> **Phase**: Phase 1 (MVP)
 > **담당**: Backend + API
