@@ -20,6 +20,10 @@
     <link rel="stylesheet" href="css/screens/search.css">
     <link rel="stylesheet" href="css/screens/rebalance.css">
     <link rel="stylesheet" href="css/screens/settings.css">
+    <link rel="stylesheet" href="css/screens/splash.css">
+    <link rel="stylesheet" href="css/screens/onboarding.css">
+    <link rel="stylesheet" href="css/screens/profile-edit.css">
+    <link rel="stylesheet" href="css/screens/stock-detail.css">
 
     <!-- Global Utilities & Overrides -->
     <link rel="stylesheet" href="css/light-mode.css">
@@ -48,6 +52,12 @@
 
     <!-- 통합 제어 패널 (우측) -->
     <div class="control-panel-right">
+        <!-- 앱 시작/초기화 버튼 -->
+        <div class="control-app-row">
+            <button class="app-start-btn" id="app-start-btn" onclick="startApp()" data-title="앱 시작">🚀</button>
+            <button class="app-reset-btn" onclick="resetApp()" data-title="초기화">🔄</button>
+        </div>
+
         <!-- 테마 토글 -->
         <div class="control-theme-row">
             <label class="mode-toggle">
@@ -59,6 +69,8 @@
         <div class="control-columns">
             <!-- 내비게이션 컬럼 -->
             <div class="nav-column">
+                <button class="nav-btn-vertical" data-screen="screen-splash" data-title="스플래시">S</button>
+                <button class="nav-btn-vertical" data-screen="screen-onboarding" data-title="온보딩">O</button>
                 <button class="nav-btn-vertical active" data-screen="screen-login" data-title="로그인 화면">1</button>
                 <button class="nav-btn-vertical" data-screen="screen-profile" data-title="프로필 화면">2</button>
                 <button class="nav-btn-vertical" data-screen="screen-home" data-title="홈 화면">3</button>

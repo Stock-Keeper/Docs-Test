@@ -7,91 +7,88 @@
             <div class="header-spacer"></div>
         </header>
 
+        <!-- 현재 비중 합계 표시 -->
+        <div class="ratio-summary-bar">
+            <span class="ratio-label">현재 목표 비중 합계</span>
+            <span class="ratio-value" id="current-ratio-sum">95%</span>
+        </div>
+
         <div class="search-container">
             <div class="search-input-wrapper">
                 <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="종목명 또는 종목코드 검색" value="현대">
+                <input type="text" id="search-input" class="search-input" placeholder="종목명 또는 종목코드 검색"
+                    oninput="handleStockSearch(this.value)">
+                <button class="clear-search-btn" onclick="clearSearch()" style="display:none;">✕</button>
             </div>
         </div>
 
-        <div class="search-results">
-            <div class="result-item" onclick="showModal('stock-add-modal')">
-                <div class="result-info">
-                    <span class="result-name">현대자동차</span>
-                    <span class="result-code">005380</span>
-                </div>
-                <div class="result-price">
-                    <span class="price">₩186,500</span>
-                    <span class="change positive">+1.24%</span>
-                </div>
-            </div>
-            <div class="result-item" onclick="showModal('stock-add-modal')">
-                <div class="result-info">
-                    <span class="result-name">현대모비스</span>
-                    <span class="result-code">012330</span>
-                </div>
-                <div class="result-price">
-                    <span class="price">₩252,000</span>
-                    <span class="change negative">-0.79%</span>
-                </div>
-            </div>
-            <div class="result-item" onclick="showModal('stock-add-modal')">
-                <div class="result-info">
-                    <span class="result-name">현대건설</span>
-                    <span class="result-code">000720</span>
-                </div>
-                <div class="result-price">
-                    <span class="price">₩31,450</span>
-                    <span class="change positive">+2.11%</span>
-                </div>
-            </div>
-            <div class="result-item" onclick="showModal('stock-add-modal')">
-                <div class="result-info">
-                    <span class="result-name">현대제철</span>
-                    <span class="result-code">004020</span>
-                </div>
-                <div class="result-price">
-                    <span class="price">₩33,800</span>
-                    <span class="change positive">+0.45%</span>
-                </div>
-            </div>
-            <div class="result-item" onclick="showModal('stock-add-modal')">
-                <div class="result-info">
-                    <span class="result-name">현대글로비스</span>
-                    <span class="result-code">086280</span>
-                </div>
-                <div class="result-price">
-                    <span class="price">₩112,500</span>
-                    <span class="change positive">+0.89%</span>
-                </div>
-            </div>
-            <div class="result-item" onclick="showModal('stock-add-modal')">
-                <div class="result-info">
-                    <span class="result-name">현대위아</span>
-                    <span class="result-code">011210</span>
-                </div>
-                <div class="result-price">
-                    <span class="price">₩42,300</span>
-                    <span class="change negative">-1.05%</span>
-                </div>
-            </div>
-            <div class="result-item" onclick="showModal('stock-add-modal')">
-                <div class="result-info">
-                    <span class="result-name">현대에너지솔루션</span>
-                    <span class="result-code">322000</span>
-                </div>
-                <div class="result-price">
-                    <span class="price">₩28,750</span>
-                    <span class="change positive">+3.24%</span>
-                </div>
-            </div>
+        <div class="search-results" id="search-results">
+            <!-- 검색 결과가 JS로 렌더링됨 -->
         </div>
 
-        <!-- 검색 결과 없음 Empty State (숨김) -->
+        <!-- 검색 결과 없음 Empty State -->
         <div id="search-empty-state" class="empty-state search-empty" style="display: none;">
             <div class="empty-icon">🔍</div>
             <h3 class="empty-title">검색 결과가 없어요</h3>
             <p class="empty-desc">다른 검색어로 시도해보세요</p>
+        </div>
+
+        <!-- 초기 안내 상태 -->
+        <div id="search-initial-state" class="empty-state search-empty">
+            <div class="empty-icon">📝</div>
+            <h3 class="empty-title">종목을 검색해주세요</h3>
+            <p class="empty-desc">종목명 또는 6자리 종목코드를 입력하세요</p>
+        </div>
+    </div>
+
+    <!-- 종목 추가 바텀시트 -->
+    <div id="stock-add-modal" class="modal bottom-sheet" style="display:none;" onclick="closeStockModal(event)">
+        <div class="modal-content bottom-sheet-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="modal-stock-name">현대자동차</h3>
+                <button class="modal-close" onclick="closeStockModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="stock-modal-price">
+                    <span id="modal-stock-price" class="current-price">₩186,500</span>
+                    <span id="modal-stock-change" class="price-change positive">+1.24%</span>
+                </div>
+                <p id="modal-stock-code" class="stock-code-small">005380</p>
+
+                <div class="form-group">
+                    <label>보유 수량</label>
+                    <div class="number-input">
+                        <button class="num-btn" onclick="adjustQuantity(-1)">-</button>
+                        <input type="number" id="stock-quantity" value="10" min="1" oninput="updateEstimatedAmount()">
+                        <button class="num-btn" onclick="adjustQuantity(1)">+</button>
+                    </div>
+                    <span class="estimated" id="estimated-amount">예상 금액: ₩1,865,000</span>
+                </div>
+
+                <div class="form-group">
+                    <div class="ratio-label-row">
+                        <label>목표 비중</label>
+                        <span class="ratio-warning-icon" id="ratio-warning-icon">⚠️</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" id="ratio-slider" min="1" max="100" value="10" class="ratio-slider"
+                            oninput="updateRatioDisplay()">
+                        <span class="slider-value" id="ratio-display">10%</span>
+                    </div>
+                    <div class="ratio-sum-info" id="ratio-sum-info">
+                        <span>기존 종목: <strong id="base-ratio-display">90%</strong></span>
+                        <span>+ 현재: <strong id="current-add-ratio">10%</strong></span>
+                        <span class="ratio-total">합계: <strong id="total-ratio">100%</strong></span>
+                        <span class="ratio-warning-message" id="ratio-warning-message">
+                            초과분은 포트폴리오 상세 화면에서 조정해주세요
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" onclick="closeStockModal()">취소</button>
+                <button class="modal-btn primary" id="confirm-add-btn" onclick="confirmAddStock()">추가</button>
+            </div>
         </div>
     </div>
 </div>

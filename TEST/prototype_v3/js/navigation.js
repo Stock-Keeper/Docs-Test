@@ -4,7 +4,7 @@
 // =================================================================
 
 const SCREENS = [
-    'login', 'profile', 'home', 'detail', 'search', 'rebalance', 'settings'
+    'off', 'splash', 'onboarding', 'login', 'profile', 'home', 'detail', 'search', 'rebalance', 'settings', 'profile-edit', 'stock-detail'
 ];
 
 let currentScreen = 'screen-login';

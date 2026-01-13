@@ -1,0 +1,40 @@
+<!-- Screen: 프로필 편집 -->
+<div id="screen-profile-edit" class="screen">
+    <div class="screen-body">
+        <header class="header">
+            <button class="back-btn" onclick="navigateTo('screen-settings')">←</button>
+            <h2>프로필 편집</h2>
+            <button class="header-action-btn" id="save-profile-btn" onclick="saveProfileEdit()">저장</button>
+        </header>
+
+        <div class="profile-edit-container">
+            <!-- 아바타 섹션 -->
+            <div class="profile-avatar-section">
+                <div class="profile-avatar-large" id="edit-avatar">김</div>
+                <p class="avatar-hint">닉네임 첫 글자가 표시됩니다</p>
+            </div>
+
+            <!-- 폼 섹션 -->
+            <div class="profile-form">
+                <div class="form-group">
+                    <label for="profile-nickname">닉네임</label>
+                    <input type="text" id="profile-nickname" class="form-input" value="투자왕김철수" maxlength="20"
+                        oninput="updateProfilePreview()">
+                    <div class="form-hint-row">
+                        <span class="form-hint">1~20자 이내</span>
+                        <span class="char-count" id="nickname-count">7/20</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>이메일</label>
+                    <div class="form-input readonly">
+                        <span>investor@email.com</span>
+                        <span class="lock-icon">🔒</span>
+                    </div>
+                    <span class="form-hint">이메일은 변경할 수 없습니다</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

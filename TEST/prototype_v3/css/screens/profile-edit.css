@@ -1,0 +1,132 @@
+/* =============================================
+   SCREEN: PROFILE EDIT
+   ============================================= */
+
+#screen-profile-edit {
+    background: var(--bg-primary);
+}
+
+.header-action-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.header-action-btn:hover {
+    opacity: 0.8;
+}
+
+.header-action-btn:disabled {
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+}
+
+.profile-edit-container {
+    padding: 24px 20px;
+}
+
+/* Avatar Section */
+.profile-avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.profile-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.avatar-hint {
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+/* Form */
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.profile-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.profile-form .form-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+.profile-form .form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.profile-form .form-input.readonly {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-surface);
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+}
+
+.lock-icon {
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.form-hint-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-hint {
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+.char-count {
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+/* Validation States */
+.form-input.error {
+    border-color: var(--error);
+}
+
+.form-hint.error {
+    color: var(--error);
+}
