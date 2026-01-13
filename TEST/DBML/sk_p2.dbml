@@ -3,6 +3,7 @@ Table users {
   id integer [primary key, increment]
   email varchar [not null]
   nickname varchar
+  bio text // 자기소개
   provider enum ('GOOGLE', 'KAKAO', 'NAVER') // 소셜 제공자(현 구글)
   role enum ('USER', 'ADMIN') // 사용자, 관리자
   profile_image_url varchar
@@ -11,6 +12,8 @@ Table users {
   updated_at timestamp // 업데이트 날짜
   membership_type enum ('FREE', 'PRO', 'EXPERT') // 멤버쉽 여부(free, pro, expert 같은 구분을 위해 enum 사용)
   is_verified boolean // 본인인증 여부
+  is_suspended boolean [default: false] // 현재 정지 상태
+  suspended_until timestamp // 정지 해제 일시
   is_delete boolean [default: false] // 논리적 삭제 여부
   delete_at timestamp // 논리적 삭제 일시
 }
@@ -29,7 +32,7 @@ Table portfolios {
   delete_at timestamp // 논리적 삭제 일시
 }
 
-// 포트폴리오 내 항목들
+// 포트폴리오 내 종목 항목
 Table portfolio_stock_entries {
   id integer [primary key, increment]
   portfolio_id integer [ref: > portfolios.id]
@@ -80,7 +83,7 @@ Table accounts {
   delete_at timestamp // 논리적 삭제 일시
 }
 
-// 계좌 내 항목들
+// 계좌 내 종목 항목
 Table account_stock_entries {
   id integer [primary key, increment]
   account_id integer [ref: > accounts.id]
@@ -91,6 +94,7 @@ Table account_stock_entries {
   currency enum ('KRW', 'USD', 'JPY') [default: 'KRW'] // 거래 통화
   exchange varchar // 거래소
   created_at timestamp // 생성 날짜
+  updated_at timestamp // 업데이트 날짜
   is_delete boolean [default: false] // 논리적 삭제 여부
   delete_at timestamp // 논리적 삭제 일시
 }
@@ -122,7 +126,7 @@ Table settings {
 Table notifications {
   id integer [primary key, increment]
   user_id integer [ref: > users.id] // 수신 대상자
-  type enum('REBALANCING_CYCLE', 'THRESHOLD_BREACH', 'SYSTEM') [not null] // 알림 종류 1. 주기 2. 임계치 3. 시스템
+  notification_type_id integer [ref: > notification_types.id] // 알림 종류
   title varchar [not null] // 알림 제목
   message text [not null] // 알림 본문
   related_entity_id integer // 관련 포트폴리오 ID 등 (클릭 시 이동용)
@@ -132,20 +136,37 @@ Table notifications {
   delete_at timestamp // 논리적 삭제 일시
 }
 
+// 알림 종류
+Table notification_types {
+  id integer [primary key, increment]
+  code varchar [not null, unique]
+  name varchar [not null] // 알림 종류명
+  is_active boolean [default: true] // 활성화
+}
+
 // 커뮤니티 게시물
 Table community_articles {
   id integer [primary key, increment]
   user_id integer [ref: > users.id] // 작성자
-  category varchar // 게시물 말머리
+  category_id integer [ref: > community_article_categories.id] // 게시물 말머리
   title varchar [not null] // 제목
   content text [not null] //  본문
-  portfolio_id integer [ref: > community_coppied_portfolios.id] // 공유된 포트폴리오 사본
+  portfolio_id integer [ref: > community_copied_portfolios.id] // 공유된 포트폴리오 사본
   views long [default: 0] // 조회수
   like_count integer [default: 0] // 성능을 위한 역정규화
   created_at timestamp [default: `now()`] // 작성일
   updated_at timestamp // 업뎃일
   is_delete boolean [default: false] // 논리적 삭제 여부
   delete_at timestamp // 논리적 삭제 일시
+}
+
+// 커뮤니티 게시물 카테고리(관리자 설정용)
+Table community_article_categories {
+  id integer [primary key, increment]
+  code varchar [not null, unique]
+  name varchar [not null]
+  sort_order integer // 정렬 순서(ui 보여주기)
+  is_active boolean [default: true] // 활성화
 }
 
 // 커뮤니티 게시물 이미지
@@ -161,7 +182,7 @@ Table community_article_images {
 Table community_article_likes {
   id integer [primary key, increment]
   user_id integer [ref: > users.id] // 작성자
-  articles_id integer [ref: - community_articles.id] // 게시물
+  articles_id integer [ref: > community_articles.id] // 게시물
   created_at timestamp [default: `now()`] // 작성일
 }
 
@@ -169,7 +190,8 @@ Table community_article_likes {
 Table community_article_replies {
   id integer [primary key, increment]
   user_id integer [ref: > users.id] // 작성자
-  articles_id integer [ref: - community_articles.id] // 게시물
+  articles_id integer [ref: > community_articles.id] // 게시물
+  content text [not null] // 댓글 내용
   parent_reply_id integer [ref: > community_article_replies.id] // 대댓글 자기참조
   created_at timestamp [default: `now()`] // 작성일
   updated_at timestamp // 업뎃일
@@ -180,20 +202,19 @@ Table community_article_replies {
 // 포트폴리오 복사 이력
 Table portfolio_copy_history {
   id integer [primary key, increment]
-  source_coppied_portfolio_id integer [ref: > community_coppied_portfolios.id] // 원본 (커뮤니티 사본)
+  source_copied_portfolio_id integer [ref: > community_copied_portfolios.id] // 원본 (커뮤니티 사본)
   target_portfolio_id integer [ref: > portfolios.id] // 복사해서 만들어진 내 포폴
   user_id integer [ref: > users.id] // 복사한 사용자
   created_at timestamp [default: `now()`]
 }
 
 // 커뮤니티 게시용 포트폴리오 사본
-Table community_coppied_portfolios {
+Table community_copied_portfolios {
   id integer [primary key, increment]
   source_portfolio_id integer [ref: > portfolios.id] // 원본 포폴
   user_id integer [ref: > users.id] // 작성자
   name varchar // 포트폴리오명
   description text // 포폴 설명
-  account_id integer [ref: - accounts.id] // 한 계좌의 메인으로 설정된 포트폴리오인지
   banner_color varchar [default: '#4CAF93'] // 포트폴리오 배너 색상
   created_at timestamp // 생성 날짜
   updated_at timestamp // 업데이트 날짜
@@ -202,9 +223,9 @@ Table community_coppied_portfolios {
 }
 
 // 커뮤니티 게시용 포트폴리오 사본 현금 목표 비중
-Table community_coppied_portfolio_cash_entries {
+Table community_copied_portfolio_cash_entries {
   id integer [primary key, increment]
-  coppied_portfolio_id integer [ref: > community_coppied_portfolios.id]
+  copied_portfolio_id integer [ref: > community_copied_portfolios.id]
   currency enum('KRW', 'USD', 'JPY') [not null, default: 'KRW'] // 통화
   target_weight decimal // 희망 비중(%)
   created_at timestamp // 생성 날짜
@@ -213,10 +234,10 @@ Table community_coppied_portfolio_cash_entries {
   delete_at timestamp // 논리적 삭제 일시
 }
 
-// 커뮤니티 게시용 포트폴리오 사본 종목 항목들
-Table community_coppied_portfolio_stock_entries {
+// 커뮤니티 게시용 포트폴리오 사본 종목 항목
+Table community_copied_portfolio_stock_entries {
   id integer [primary key, increment]
-  coppied_portfolio_id integer [ref: > community_coppied_portfolios.id]
+  copied_portfolio_id integer [ref: > community_copied_portfolios.id]
   group varchar // 분류
   ticker varchar // 주식 ticker
   target_weight decimal // 희망 비중(%)
@@ -252,11 +273,45 @@ Table user_follows {
   created_at timestamp [default: `now()`]
 }
 
-// 사용자 차단 (내가 특정 사용자를 차단)
+// 사용자 차단(사용자가 타 사용자를 차단)
 Table user_blocks {
   id integer [primary key, increment]
   blocker_id integer [ref: > users.id] // 차단한 사람
   blocked_id integer [ref: > users.id] // 차단당한 사람
+  created_at timestamp [default: `now()`]
+}
+
+// 신고
+Table reports {
+  id integer [primary key, increment]
+  reporter_id integer [ref: > users.id] // 신고자
+  target_type enum('ARTICLE', 'REPLY', 'USER') [not null] // 신고 대상 종류
+  target_id integer [not null] // 대상 ID
+  report_reason_id integer [ref: > report_reasons.id] // 신고 사유
+  description text // 상세 사유
+  status enum('PENDING', 'REVIEWED', 'RESOLVED', 'DISMISSED') [default: 'PENDING']
+  reviewed_by integer [ref: > users.id] // 처리한 관리자
+  reviewed_at timestamp // 처리 날짜
+  created_at timestamp [default: `now()`]
+}
+
+// 신고 사유
+Table report_reasons {
+  id integer [primary key, increment]
+  code varchar [not null, unique]
+  name varchar [not null] // 표시명
+  is_active boolean [default: true] // 활성화
+}
+
+// 정지 이력
+Table user_suspensions {
+  id integer [primary key, increment]
+  user_id integer [ref: > users.id] // 정지된 사용자
+  admin_id integer [ref: > users.id] // 처리한 관리자
+  reason text [not null] // 정지 사유
+  suspended_at timestamp [default: `now()`] // 정지 일시
+  suspended_until timestamp // 정지 해제 예정 (null = 영구)
+  lifted_at timestamp // 조기 해제 시
   created_at timestamp [default: `now()`]
 }
 
