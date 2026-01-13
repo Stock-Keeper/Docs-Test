@@ -1,0 +1,583 @@
+/* =============================================
+   SCREEN: STOCK DETAIL
+   ============================================= */
+
+#screen-stock-detail {
+    background: var(--bg-primary);
+}
+
+#screen-stock-detail .header {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    gap: 12px;
+}
+
+.header-title-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.header-title-group h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.header-title-group .stock-code {
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+/* Price Section */
+.price-section {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.price-main {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.current-price {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.price-change {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.price-change.positive {
+    color: var(--success);
+}
+
+.price-change.negative {
+    color: var(--error);
+}
+
+.price-time {
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+/* Chart Placeholder */
+.chart-section {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.chart-placeholder {
+    height: 120px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px dashed var(--border-color);
+}
+
+.chart-icon {
+    font-size: 32px;
+    opacity: 0.5;
+}
+
+.chart-placeholder p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.coming-soon {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    background: var(--bg-input);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+}
+
+/* Holdings Section */
+.holdings-section,
+.ratio-section {
+    padding: 20px;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.holdings-card,
+.ratio-card {
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.holdings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.holdings-row:last-child {
+    border-bottom: none;
+}
+
+.holdings-row.highlight {
+    border-bottom: none;
+    padding-top: 12px;
+    margin-top: 4px;
+    border-top: 1px solid var(--border-color);
+}
+
+.holdings-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.holdings-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.holdings-value.positive {
+    color: var(--success);
+}
+
+.holdings-value.negative {
+    color: var(--error);
+}
+
+/* Ratio Section */
+.ratio-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.ratio-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    width: 65px;
+    flex-shrink: 0;
+}
+
+.ratio-bar-wrapper {
+    flex: 1;
+    height: 8px;
+    background: var(--bg-input);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.ratio-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.ratio-bar.current {
+    background: var(--primary);
+}
+
+.ratio-bar.target {
+    background: var(--text-tertiary);
+}
+
+.ratio-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    width: 40px;
+    text-align: right;
+}
+
+.ratio-deviation {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+}
+
+.ratio-deviation.warning {
+    background: rgba(var(--warning-rgb, 255, 152, 0), 0.15);
+    color: var(--warning);
+}
+
+.ratio-deviation.ok {
+    background: rgba(var(--success-rgb, 76, 175, 80), 0.15);
+    color: var(--success);
+}
+
+.deviation-icon {
+    font-size: 14px;
+}
+
+/* Action Buttons */
+.stock-detail-actions {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    padding-bottom: 100px;
+}
+
+.stock-detail-actions .secondary-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.stock-detail-actions .secondary-btn:hover {
+    background: var(--bg-input);
+}
+
+.stock-detail-actions .danger-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    background: rgba(var(--error-rgb, 239, 83, 80), 0.15);
+    border: 1px solid var(--error);
+    color: var(--error);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.stock-detail-actions .danger-btn:hover {
+    background: rgba(var(--error-rgb, 239, 83, 80), 0.25);
+}
+
+/* =============================================
+   STOCK EDIT BOTTOM SHEET (Reusing search.css style)
+   ============================================= */
+
+#stock-edit-modal.bottom-sheet-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 100;
+}
+
+#stock-edit-modal .bottom-sheet {
+    background-color: #333333;
+    width: 100%;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    animation: slideUpEdit 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-mode="light"] #stock-edit-modal .bottom-sheet {
+    background-color: #ffffff;
+}
+
+@keyframes slideUpEdit {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+#stock-edit-modal .bottom-sheet-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    margin: 12px auto;
+}
+
+#stock-edit-modal .bottom-sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 16px;
+}
+
+#stock-edit-modal .bottom-sheet-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+#stock-edit-modal .close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: none;
+    font-size: 18px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+#stock-edit-modal .bottom-sheet-body {
+    padding: 0 20px 20px;
+}
+
+.edit-stock-info {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.edit-stock-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.edit-stock-code {
+    font-size: 14px;
+    color: var(--text-tertiary);
+}
+
+.edit-form-group {
+    margin-bottom: 20px;
+}
+
+.edit-form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+/* Number Input (Same as search page) */
+#stock-edit-modal .number-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0 8px;
+}
+
+#stock-edit-modal .num-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+#stock-edit-modal .num-btn:hover {
+    background: var(--bg-input);
+    border-color: var(--primary);
+}
+
+#stock-edit-modal .number-input input {
+    flex: 1;
+    height: 44px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+}
+
+#stock-edit-modal .number-input input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+#stock-edit-modal .quantity-input {
+    flex: 1;
+    height: 44px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+}
+
+#stock-edit-modal .quantity-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.ratio-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#stock-edit-modal .ratio-slider {
+    flex: 1;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--bg-input);
+    border-radius: 4px;
+    outline: none;
+}
+
+#stock-edit-modal .ratio-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#stock-edit-modal .ratio-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+    min-width: 50px;
+    text-align: right;
+}
+
+/* Ratio Sum Info (Same as search page) */
+.edit-ratio-sum-info {
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.edit-ratio-sum-info .ratio-total {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.edit-ratio-sum-info.exceeded .ratio-total {
+    color: var(--error);
+}
+
+.edit-ratio-sum-info.exceeded .ratio-total strong {
+    color: var(--error);
+}
+
+.edit-ratio-sum-info.exceeded {
+    border: 1px solid var(--error);
+    background: var(--error-bg);
+}
+
+/* Warning icon in label (Same as search page) */
+#stock-edit-modal .ratio-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#stock-edit-modal .ratio-warning-icon {
+    display: none;
+    color: var(--error);
+    font-size: 18px;
+}
+
+#stock-edit-modal .ratio-warning-icon.show {
+    display: inline;
+}
+
+/* Slider warning state */
+#stock-edit-modal .ratio-slider.warning::-webkit-slider-thumb {
+    background: var(--error);
+}
+
+#stock-edit-modal .slider-value.warning {
+    color: var(--error);
+}
+
+/* Warning message */
+#stock-edit-modal .ratio-warning-message {
+    display: none;
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+#stock-edit-modal .ratio-warning-message.show {
+    display: block;
+}
+
+/* Warning button state */
+#stock-edit-modal .confirm-btn.warning {
+    background: var(--error);
+}
+
+#stock-edit-modal .bottom-sheet-footer {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+#stock-edit-modal .cancel-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+#stock-edit-modal .confirm-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    background: var(--gradient-primary);
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}

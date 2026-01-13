@@ -49,6 +49,22 @@
                 <span class="threshold-info">임계값: ±5%</span>
             </div>
 
+            <!-- 총 필요 자금 요약 -->
+            <div class="total-required-summary">
+                <div class="summary-row">
+                    <span class="summary-label">총 매수 필요 금액</span>
+                    <span class="summary-value buy">₩1,622,500</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">총 매도 예상 금액</span>
+                    <span class="summary-value sell">₩596,000</span>
+                </div>
+                <div class="summary-row net">
+                    <span class="summary-label">순 필요 자금</span>
+                    <span class="summary-value net-buy">₩1,026,500</span>
+                </div>
+            </div>
+
             <div class="suggestion-list">
                 <div class="suggestion-card sell">
                     <div class="suggestion-header">
@@ -125,6 +141,21 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 결과 복사 버튼 -->
+            <div class="copy-result-section">
+                <button class="secondary-btn copy-btn" onclick="copyRebalanceResult()">
+                    <span class="copy-icon">📋</span> 결과 복사하기
+                </button>
+            </div>
+        </div>
+
+        <!-- 리밸런싱 불필요 상태 (숨김) -->
+        <div id="rebalance-ok-state" class="empty-state rebalance-ok" style="display: none;">
+            <div class="empty-icon">✅</div>
+            <h3 class="empty-title">포트폴리오가 균형 잡혀있어요!</h3>
+            <p class="empty-desc">현재 모든 종목이 목표 비율 임계값 내에 있습니다.</p>
+            <p class="empty-sub">임계값: ±5%</p>
         </div>
     </div>
 </div>
