@@ -1,0 +1,61 @@
+<!-- Screen: 온보딩 슬라이드 -->
+<div id="screen-onboarding" class="screen">
+    <div class="onboarding-container">
+        <!-- 슬라이드 컨테이너 -->
+        <div class="slides-wrapper">
+            <!-- 슬라이드 1: 핵심 가치 -->
+            <div class="onboarding-slide active" data-slide="0">
+                <div class="slide-icon">📊</div>
+                <h2 class="slide-title">왜 리밸런싱이 중요할까요?</h2>
+                <p class="slide-desc">
+                    목표 비율을 유지하면 리스크를 줄이고<br>
+                    수익을 안정화할 수 있어요
+                </p>
+            </div>
+
+            <!-- 슬라이드 2: 포트폴리오 생성 -->
+            <div class="onboarding-slide" data-slide="1">
+                <div class="slide-icon">📁</div>
+                <h2 class="slide-title">나만의 포트폴리오를 만들어요</h2>
+                <p class="slide-desc">
+                    + 버튼을 눌러 새 포트폴리오를<br>
+                    쉽게 추가할 수 있어요
+                </p>
+            </div>
+
+            <!-- 슬라이드 3: 종목 추가 및 목표 비중 -->
+            <div class="onboarding-slide" data-slide="2">
+                <div class="slide-icon">🎯</div>
+                <h2 class="slide-title">종목을 추가하고 목표 비중을 설정</h2>
+                <p class="slide-desc">
+                    원하는 비율만 입력하면<br>
+                    리밸런싱은 자동으로 계산해줘요
+                </p>
+            </div>
+
+            <!-- 슬라이드 4: 시작하기 -->
+            <div class="onboarding-slide" data-slide="3">
+                <div class="slide-icon">🚀</div>
+                <h2 class="slide-title">스마트한 투자 관리, 시작!</h2>
+                <p class="slide-desc">
+                    임계값 초과 시 알림을 받고<br>
+                    언제든 리밸런싱하세요
+                </p>
+            </div>
+        </div>
+
+        <!-- 페이지 인디케이터 -->
+        <div class="slide-indicators">
+            <span class="indicator active" data-slide="0" onclick="goToSlide(0)"></span>
+            <span class="indicator" data-slide="1" onclick="goToSlide(1)"></span>
+            <span class="indicator" data-slide="2" onclick="goToSlide(2)"></span>
+            <span class="indicator" data-slide="3" onclick="goToSlide(3)"></span>
+        </div>
+
+        <!-- 네비게이션 버튼 -->
+        <div class="onboarding-nav">
+            <button class="nav-prev" onclick="prevSlide()" style="visibility: hidden;">← 이전</button>
+            <button class="nav-skip" onclick="completeOnboarding()">건너뛰기 →</button>
+        </div>
+    </div>
+</div>

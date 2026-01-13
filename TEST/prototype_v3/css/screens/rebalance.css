@@ -204,3 +204,106 @@
     color: var(--primary);
     font-weight: 600;
 }
+
+/* Total Required Summary */
+.total-required-summary {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.total-required-summary .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.total-required-summary .summary-row:last-child {
+    border-bottom: none;
+}
+
+.total-required-summary .summary-row.net {
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 2px solid var(--primary);
+    border-bottom: none;
+}
+
+.total-required-summary .summary-label {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.total-required-summary .summary-value {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.total-required-summary .summary-value.buy {
+    color: var(--success);
+    /* Red in Korean market means buy up */
+}
+
+.total-required-summary .summary-value.sell {
+    color: var(--error);
+    /* Blue in Korean market means sell down */
+}
+
+.total-required-summary .summary-value.net-buy {
+    color: var(--success);
+}
+
+.total-required-summary .summary-value.net-sell {
+    color: var(--error);
+}
+
+/* Copy Result Section */
+.copy-result-section {
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.copy-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.copy-btn:hover {
+    background: var(--bg-surface-hover);
+    transform: translateY(-2px);
+}
+
+.copy-icon {
+    font-size: 18px;
+}
+
+/* Rebalance OK State */
+.rebalance-ok {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.rebalance-ok .empty-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.rebalance-ok .empty-sub {
+    color: var(--text-tertiary);
+    font-size: 13px;
+    margin-top: 8px;
+}
