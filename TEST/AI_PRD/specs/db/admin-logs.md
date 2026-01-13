@@ -28,19 +28,19 @@ CREATE TABLE admin_logs (
 
 ## 컬럼 상세
 
-| 컬럼 | 타입 | 필수 | 설명 |
-|------|------|------|------|
-| id | INT | Y | PK, AUTO_INCREMENT |
-| admin_user_id | UUID | Y | 행위자 관리자 ID |
-| action | VARCHAR(100) | Y | 수행한 액션 |
-| target_type | VARCHAR(50) | N | 대상 유형 (USER, PORTFOLIO 등) |
-| target_id | UUID | N | 대상 ID |
-| before_value | JSON | N | 변경 전 값 |
-| after_value | JSON | N | 변경 후 값 |
-| reason | TEXT | N | 변경 사유 |
-| ip_address | VARCHAR(45) | N | 요청 IP 주소 |
-| user_agent | TEXT | N | 브라우저 정보 |
-| created_at | TIMESTAMP | Y | 기록 시각 |
+| 컬럼 | 타입 | 필수 | 설명 | Phase |
+|------|------|------|------|-------|
+| id | INT | Y | PK, AUTO_INCREMENT | P1 |
+| admin_user_id | UUID | Y | 행위자 관리자 ID | P1 |
+| action | VARCHAR(100) | Y | 수행한 액션 | P1 |
+| target_type | VARCHAR(50) | N | 대상 유형 (USER, PORTFOLIO 등) | P1 |
+| target_id | UUID | N | 대상 ID | P1 |
+| before_value | JSON | N | 변경 전 값 | P1 |
+| after_value | JSON | N | 변경 후 값 | P1 |
+| reason | TEXT | N | 변경 사유 | P1 |
+| ip_address | VARCHAR(45) | N | 요청 IP 주소 | P1 |
+| user_agent | TEXT | N | 브라우저 정보 | P1 |
+| created_at | TIMESTAMP | Y | 기록 시각 | P1 |
 
 ## Action 유형
 

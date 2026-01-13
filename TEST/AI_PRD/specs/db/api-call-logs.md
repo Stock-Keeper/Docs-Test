@@ -23,15 +23,15 @@ CREATE TABLE api_call_logs (
 
 ## 컬럼 상세
 
-| 컬럼 | 타입 | 필수 | 설명 |
-|------|------|------|------|
-| id | INT | Y | PK, AUTO_INCREMENT |
-| api_type | VARCHAR(50) | Y | API 유형 (HANTOO_PRICE, HANTOO_SEARCH 등) |
-| endpoint | VARCHAR(255) | N | 호출 엔드포인트 |
-| status_code | INT | N | HTTP 응답 코드 |
-| response_time_ms | INT | N | 응답 시간 (밀리초) |
-| user_id | UUID | N | 호출한 사용자 ID |
-| created_at | TIMESTAMP | Y | 호출 시각 |
+| 컬럼 | 타입 | 필수 | 설명 | Phase |
+|------|------|------|------|-------|
+| id | INT | Y | PK, AUTO_INCREMENT | P1 |
+| api_type | VARCHAR(50) | Y | API 유형 (HANTOO_PRICE, HANTOO_SEARCH 등) | P1 |
+| endpoint | VARCHAR(255) | N | 호출 엔드포인트 | P1 |
+| status_code | INT | N | HTTP 응답 코드 | P1 |
+| response_time_ms | INT | N | 응답 시간 (밀리초) | P1 |
+| user_id | UUID | N | 호출한 사용자 ID | P1 |
+| created_at | TIMESTAMP | Y | 호출 시각 | P1 |
 
 ## API 유형 (api_type)
 
