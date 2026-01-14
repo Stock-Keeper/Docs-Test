@@ -19,8 +19,8 @@
     {
       "name": "portfolio_stock_entries",
       "schemaName": "public",
-      "x": -575.217672413793,
-      "y": 710.0215517241377
+      "x": -798.1702586206895,
+      "y": 1658
     },
     {
       "name": "portfolio_cash_entries",
@@ -43,8 +43,8 @@
     {
       "name": "account_stock_entries",
       "schemaName": "public",
-      "x": 835.04248046875,
-      "y": 1425.2369253490297
+      "x": -486.94076643318954,
+      "y": 1658
     },
     {
       "name": "account_cash_entries",
@@ -67,8 +67,8 @@
     {
       "name": "notification_types",
       "schemaName": "public",
-      "x": -798.1702586206895,
-      "y": 3505.2629310344837
+      "x": -96.06088362068954,
+      "y": 1658
     },
     {
       "name": "community_articles",
@@ -79,8 +79,8 @@
     {
       "name": "community_article_categories",
       "schemaName": "public",
-      "x": -32.095703125,
-      "y": 2249.2629310344837
+      "x": 300.17642106681046,
+      "y": 1658
     },
     {
       "name": "community_article_images",
@@ -101,6 +101,12 @@
       "y": 1288
     },
     {
+      "name": "community_reply_likes",
+      "schemaName": "public",
+      "x": -798.1702586206895,
+      "y": 3010
+    },
+    {
       "name": "portfolio_copy_history",
       "schemaName": "public",
       "x": -798.1702586206895,
@@ -110,61 +116,61 @@
       "name": "community_copied_portfolios",
       "schemaName": "public",
       "x": -798.1702586206895,
-      "y": 3103.2629310344837
+      "y": 2028
     },
     {
       "name": "community_copied_portfolio_cash_entries",
       "schemaName": "public",
       "x": -486.94076643318954,
-      "y": 3103.2629310344837
+      "y": 2124
     },
     {
       "name": "community_copied_portfolio_stock_entries",
       "schemaName": "public",
       "x": -96.06088362068954,
-      "y": 3103.2629310344837
+      "y": 1868
     },
     {
       "name": "badges",
       "schemaName": "public",
-      "x": -32.095703125,
-      "y": 1765.2629310344819
+      "x": 300.17642106681046,
+      "y": 1900
     },
     {
       "name": "user_badges",
       "schemaName": "public",
-      "x": 214.91455078125,
-      "y": 1765.2629310344819
+      "x": -798.1702586206895,
+      "y": 2430
     },
     {
       "name": "user_follows",
       "schemaName": "public",
-      "x": -32.095703125,
-      "y": 1555.262931034482
+      "x": -486.94076643318954,
+      "y": 2462
     },
     {
       "name": "user_blocks",
       "schemaName": "public",
-      "x": -32.095703125,
-      "y": 2039.2629310344828
+      "x": -96.06088362068954,
+      "y": 2238
     },
     {
       "name": "reports",
       "schemaName": "public",
-      "x": -798.1702586206895,
-      "y": 2491.2629310344837
+      "x": 300.17642106681046,
+      "y": 2174
     },
     {
       "name": "report_reasons",
       "schemaName": "public",
       "x": -798.1702586206895,
-      "y": 2893.2629310344837
+      "y": 2640
     },
     {
       "name": "user_suspensions",
       "schemaName": "public",
-      "x": -798.1702586206895,
-      "y": 3715.2629310344837
+      "x": -486.94076643318954,
+      "y": 2672
     },
     {
       "name": "token_wallet",
@@ -351,6 +357,21 @@
       "firstFieldNames": [
         "id"
       ],
+      "firstTableName": "portfolios",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "related_entity_id"
+      ],
+      "secondTableName": "notifications",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
       "firstTableName": "users",
       "firstSchemaName": "public",
       "firstRelation": "1",
@@ -385,7 +406,7 @@
       "firstSchemaName": "public",
       "firstRelation": "1",
       "secondFieldNames": [
-        "portfolio_id"
+        "copied_portfolio_id"
       ],
       "secondTableName": "community_articles",
       "secondSchemaName": "public",
@@ -430,7 +451,7 @@
       "firstSchemaName": "public",
       "firstRelation": "1",
       "secondFieldNames": [
-        "articles_id"
+        "article_id"
       ],
       "secondTableName": "community_article_likes",
       "secondSchemaName": "public",
@@ -460,7 +481,7 @@
       "firstSchemaName": "public",
       "firstRelation": "1",
       "secondFieldNames": [
-        "articles_id"
+        "article_id"
       ],
       "secondTableName": "community_article_replies",
       "secondSchemaName": "public",
@@ -478,6 +499,36 @@
         "parent_reply_id"
       ],
       "secondTableName": "community_article_replies",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "user_id"
+      ],
+      "secondTableName": "community_reply_likes",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "community_article_replies",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "reply_id"
+      ],
+      "secondTableName": "community_reply_likes",
       "secondSchemaName": "public",
       "secondRelation": "*",
       "checkPoints": []
@@ -686,6 +737,21 @@
       "firstRelation": "1",
       "secondFieldNames": [
         "reporter_id"
+      ],
+      "secondTableName": "reports",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "community_articles",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "target_id"
       ],
       "secondTableName": "reports",
       "secondSchemaName": "public",

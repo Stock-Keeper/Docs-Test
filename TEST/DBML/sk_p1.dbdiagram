@@ -7,8 +7,8 @@
     {
       "name": "users",
       "schemaName": "public",
-      "x": -64.00862068965516,
-      "y": 42.31896551724138
+      "x": -491.9088258437116,
+      "y": 140.06266720217806
     },
     {
       "name": "portfolios",
@@ -19,8 +19,8 @@
     {
       "name": "portfolio_stock_entries",
       "schemaName": "public",
-      "x": -64.00862068965516,
-      "y": 1754
+      "x": 951.8318965517242,
+      "y": 1150.5303857972003
     },
     {
       "name": "portfolio_cash_entries",
@@ -31,8 +31,8 @@
     {
       "name": "notification_settings",
       "schemaName": "public",
-      "x": 0,
-      "y": 548
+      "x": -497.4068374633448,
+      "y": 700.0457581765684
     },
     {
       "name": "accounts",
@@ -43,8 +43,8 @@
     {
       "name": "account_stock_entries",
       "schemaName": "public",
-      "x": -64.00862068965516,
-      "y": 1288
+      "x": 946.802983100034,
+      "y": 712.1894097814954
     },
     {
       "name": "account_cash_entries",
@@ -55,14 +55,20 @@
     {
       "name": "settings",
       "schemaName": "public",
-      "x": 0,
-      "y": 854
+      "x": -345.36107928677654,
+      "y": 945.2274549059407
     },
     {
       "name": "notifications",
       "schemaName": "public",
       "x": 321.603515625,
       "y": 886
+    },
+    {
+      "name": "notification_types",
+      "schemaName": "public",
+      "x": 47.492355872844826,
+      "y": 1360.056708623176
     }
   ],
   "tableGroupCollapseStates": [],
