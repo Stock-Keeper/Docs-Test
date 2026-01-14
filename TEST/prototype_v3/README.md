@@ -140,9 +140,9 @@ prototype_v3/
 
 ## 📚 화면 기획서 참고
 
-프로토타입 작업 시 **화면 기획서**를 참고하세요:
+프로토타입 작업 시 **페이지 상세 시나리오**를 참고하세요:
 
-📁 **경로**: [`Docs/project_analysis/pages/`](../../Docs/project_analysis/pages/)
+📁 **경로**: [`AI_PRD/reference/pages/`](../AI_PRD/reference/pages/)
 
 ### 기획서에서 확인할 내용
 
@@ -206,5 +206,5 @@ function toggleMyState(btnElement) {
 
 ## 🔗 관련 문서
 
-- [리팩토링 계획서](../../Docs/project_analysis/prototype_refactoring_plan.md)
-- [화면 기획서 인덱스](../../Docs/project_analysis/pages/README.md)
+- [AI_PRD 메인](../AI_PRD/README.md) - AI 기반 개발용 스펙
+- [페이지 상세 시나리오](../AI_PRD/reference/pages/README.md) - UI/UX 검증용 상세 시나리오
