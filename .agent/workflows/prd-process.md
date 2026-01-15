@@ -1,3 +1,7 @@
+---
+description: _staging/의 정형화된 초안을 최종 specs/에 반영
+---
+
 # /prd-process 워크플로우
 
 PRD `_staging/` 디렉토리의 정형화된 초안들을 최종 스펙 파일로 변환하여 `specs/`에 반영합니다.
@@ -88,19 +92,52 @@ _inbox/ → [/prd-prepare] → _staging/ → [/prd-process] → specs/
 
 **Windows (PowerShell):**
 ```powershell
-# 1. Archive Inbox
-$date = Get-Date -Format "yyyy-MM-dd"
-New-Item -ItemType Directory -Force -Path "Docs/AI_PRD/_processed/$date"
-Move-Item "Docs/AI_PRD/_inbox/*" "Docs/AI_PRD/_processed/$date/" -Force -ErrorAction SilentlyContinue
+# 1. Archive Inbox (날짜+시간 폴더)
+$datetime = Get-Date -Format "yyyy-MM-dd_HHmm"
+$archivePath = "Docs/AI_PRD/_processed/$datetime"
+New-Item -ItemType Directory -Force -Path $archivePath
 
-# 2. Clear Staging
+# 2. Move inbox files
+Get-ChildItem "Docs/AI_PRD/_inbox/" -Exclude "README.md" | Move-Item -Destination $archivePath -Force
+
+# 3. Clear Staging
 Remove-Item "Docs/AI_PRD/_staging/*" -Recurse -Force -Exclude "README.md"
 ```
 
-### 8. 완료 보고
+### 8. 수정 내역 저장 (CHANGELOG)
+
+아카이브 폴더에 `CHANGELOG.md` 생성:
+
+```markdown
+# 처리 내역 - {datetime}
+
+## 원본 파일
+- sk_p1.dbml
+
+## 생성된 스펙 (14개)
+| 파일 | 테이블 | 작업 |
+|------|--------|------|
+| specs/db/user-consents.md | user_consents | NEW |
+| specs/db/token-vault.md | token_vault | NEW |
+...
+
+## 업데이트된 스펙 (4개)
+| 파일 | 변경 내용 |
+|------|----------|
+| specs/db/users.md | related 섹션에 6개 신규 테이블 링크 추가 |
+| specs/db/portfolios.md | related 섹션에 5개 신규 테이블 링크 추가 |
+...
+
+## 처리 시각
+- 시작: 2026-01-16 00:15
+- 완료: 2026-01-16 00:20
+```
+
+### 9. 완료 보고
 ```
 - 처리 완료된 파일 목록
-- 아카이브 위치 안내
+- 아카이브 위치 안내 (날짜_시분 형식)
+- CHANGELOG.md 생성 완료 안내
 ```
 
 ## 프론트매터 템플릿 (참고용)
