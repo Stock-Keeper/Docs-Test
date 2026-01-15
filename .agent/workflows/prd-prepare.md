@@ -42,7 +42,10 @@ _inbox/ (자유형식) → [/prd-prepare] → _staging/ (정형화) → [/prd-pr
    - 핵심 기능, 필수 → P1
    - 커뮤니티, 소셜 → P2
    - 고급 기능, 확장 → P3
-5. 기존 스펙과 연관성 검색
+5. 내용 분리 판단:
+   - 하나의 파일에 서로 다른 도메인/기능이 섞여 있는 경우 분리 필요 여부 확인
+   - 예: User 테이블과 Portfolio 테이블 정의가 함께 있는 경우 → 별도의 스펙으로 분리 권장
+6. 기존 스펙과 연관성 검색
 ```
 
 ### 3. 용어 정규화
@@ -59,7 +62,7 @@ _inbox/ (자유형식) → [/prd-prepare] → _staging/ (정형화) → [/prd-pr
 
 ### 4. 초안 생성 (_staging/)
 ```
-각 분석 결과에 대해 _staging/에 정형화된 파일 생성:
+식별된 각 '기능 단위'별로 _staging/에 정형화된 파일 생성 (1개의 Inbox 파일에서 여러 개의 Staging 파일이 나올 수 있음):
 
 파일명 형식: [작업유형] 스펙명.md
 
@@ -99,6 +102,7 @@ _inbox/ (자유형식) → [/prd-prepare] → _staging/ (정형화) → [/prd-pr
 | 원본 파일 | 추론 유형 | 추론 작업 | 생성된 초안 |
 |----------|----------|----------|------------|
 | 결제해줘.txt | api | NEW | [NEW] payment-create.md |
+| 통합메모.md | api | NEW | [NEW] auth-login.md <br> [NEW] user-profile.md |
 | 로그인수정.md | api | UPDATE | [UPDATE] auth-google.md |
 
 ✅ _staging/ 폴더를 확인하고 검토해주세요.

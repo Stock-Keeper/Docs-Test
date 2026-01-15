@@ -85,10 +85,14 @@ _inbox/ → [/prd-prepare] → _staging/ → [/prd-process] → specs/
 - 해당 섹션에 새 스펙 링크 추가/수정/삭제
 ```
 
-### 6. 원본 아카이브
+### 6. 정리 (Cleanup)
 ```
-- _inbox/의 원본 파일을 _processed/YYYY-MM-DD/ 디렉토리로 이동
-- _inbox/ 디렉토리 비우기
+1. 원본 아카이브:
+   - _inbox/의 원본 파일을 _processed/YYYY-MM-DD/ 디렉토리로 이동
+   - _inbox/ 디렉토리 비우기
+
+2. Staging 정리:
+   - 처리가 완료된 _staging/ 내의 파일들 삭제
 ```
 
 ### 7. 완료 보고
