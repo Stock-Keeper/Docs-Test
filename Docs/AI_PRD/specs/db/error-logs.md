@@ -1,3 +1,12 @@
+---
+type: db
+phase: P1
+table: error_logs
+related:
+  api:
+    - ../api/admin/monitoring-errors.md
+---
+
 # error_logs 테이블
 
 ## 개요

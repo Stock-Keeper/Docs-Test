@@ -1,3 +1,14 @@
+---
+type: ui
+phase: P1
+screen: 프로필 입력 화면
+related:
+  api:
+    - ../../api/auth/profile-update.md
+  ui:
+    - login-screen.md
+---
+
 # 프로필 입력 화면 (Profile Input)
 
 ## 개요

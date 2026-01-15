@@ -1,3 +1,12 @@
+---
+type: db
+phase: P2
+table: post_likes, portfolio_likes
+related:
+  api:
+    - ../api/community/like.md
+---
+
 # 좋아요 테이블 (post_likes, portfolio_likes)
 
 ## 개요

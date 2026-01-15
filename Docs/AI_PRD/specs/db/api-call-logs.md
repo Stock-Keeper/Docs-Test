@@ -1,3 +1,12 @@
+---
+type: db
+phase: P1
+table: api_call_logs
+related:
+  api:
+    - ../api/admin/monitoring-api.md
+---
+
 # api_call_logs 테이블
 
 ## 개요

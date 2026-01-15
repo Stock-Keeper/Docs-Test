@@ -1,3 +1,13 @@
+---
+type: db
+phase: P1
+table: notifications
+related:
+  api:
+    - ../api/notification/list.md
+    - ../api/notification/read.md
+---
+
 # notifications 테이블
 
 ## 개요

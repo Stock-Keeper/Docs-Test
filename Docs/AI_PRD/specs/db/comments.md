@@ -1,3 +1,14 @@
+---
+type: db
+phase: P2
+table: comments, replies
+related:
+  api:
+    - ../api/community/comment-create.md
+  db:
+    - posts.md
+---
+
 # comments 테이블
 
 ## 개요

@@ -1,3 +1,14 @@
+---
+type: db
+phase: P1
+table: refresh_tokens
+related:
+  api:
+    - ../api/auth/google-callback.md
+    - ../api/auth/refresh.md
+    - ../api/auth/logout.md
+---
+
 # refresh_tokens 테이블
 
 ## 개요

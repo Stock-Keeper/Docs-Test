@@ -1,6 +1,20 @@
+---
+type: index
+description: 모든 API, DB, UI 스펙 문서의 인덱스
+role: 사람이 전체 구조를 파악하고, AI가 스펙 목록을 빠르게 조회하는 데 사용
+spec_count:
+  api: 35
+  db: 14
+  ui: 13
+  total: 62
+last_updated: 2026-01-15
+---
+
 # 스펙 인덱스
 
 > 모든 API, DB, UI 스펙 문서의 목록입니다.
+> 
+> **💡 참고**: 각 스펙 파일에는 YAML 프론트매터가 포함되어 있어 AI가 개별 파일의 메타데이터(type, phase, related 등)를 빠르게 파싱할 수 있습니다.
 
 ---
 

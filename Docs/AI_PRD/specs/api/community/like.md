@@ -1,3 +1,15 @@
+---
+type: api
+phase: P2
+category: community
+method: POST
+endpoint: /api/community/likes
+auth: verified
+related:
+  db:
+    - ../../db/likes.md
+---
+
 # POST /api/community/likes
 
 ## 개요

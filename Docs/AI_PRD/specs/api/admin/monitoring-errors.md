@@ -1,3 +1,17 @@
+---
+type: api
+phase: P1
+category: admin
+method: GET
+endpoint: /api/admin/monitoring/errors
+auth: admin
+related:
+  db:
+    - ../../db/error-logs.md
+  api:
+    - monitoring-errors-detail.md
+---
+
 # GET /api/admin/monitoring/errors
 
 ## 개요

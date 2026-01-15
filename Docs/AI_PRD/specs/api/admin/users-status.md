@@ -1,3 +1,16 @@
+---
+type: api
+phase: P1
+category: admin
+method: PATCH
+endpoint: /api/admin/users/{id}/status
+auth: admin
+related:
+  db:
+    - ../../db/admin-logs.md
+    - ../../db/users.md
+---
+
 # PATCH /api/admin/users/{id}/status
 
 ## 개요

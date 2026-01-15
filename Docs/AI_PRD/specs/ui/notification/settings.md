@@ -1,3 +1,13 @@
+---
+type: ui
+phase: P1
+screen: 알림 설정 화면
+related:
+  api:
+    - ../../api/notification/settings.md
+reference: ../../../reference/pages/settings.md
+---
+
 # 알림 설정 화면 (Notification Settings)
 
 ## 개요

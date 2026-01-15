@@ -1,3 +1,19 @@
+---
+type: api
+phase: P1
+category: rebalancing
+method: GET
+endpoint: /api/portfolios/{portfolioId}/rebalancing
+auth: required
+related:
+  db:
+    - ../../db/portfolios.md
+  ui:
+    - ../../ui/rebalancing/check.md
+  api:
+    - ../notification/list.md
+---
+
 # GET /api/portfolios/{portfolioId}/rebalancing
 
 ## 개요

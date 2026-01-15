@@ -1,3 +1,14 @@
+---
+type: ui
+phase: P1
+screen: 종목 추가 화면
+related:
+  api:
+    - ../../api/stock/search.md
+    - ../../api/stock/add.md
+reference: ../../../reference/pages/stock_search.md
+---
+
 # 종목 추가 화면 (Stock Add)
 
 ## 개요

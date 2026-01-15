@@ -1,3 +1,15 @@
+---
+type: db
+phase: P2
+table: posts, post_images
+related:
+  api:
+    - ../api/community/post-create.md
+    - ../api/community/feed-list.md
+  db:
+    - comments.md
+---
+
 # posts 테이블
 
 ## 개요

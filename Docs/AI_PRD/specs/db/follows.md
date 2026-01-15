@@ -1,3 +1,12 @@
+---
+type: db
+phase: P3
+table: follows
+related:
+  api:
+    - ../api/community/follow.md
+---
+
 # follows 테이블
 
 ## 개요

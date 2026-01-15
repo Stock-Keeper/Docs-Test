@@ -1,3 +1,15 @@
+---
+type: ui
+phase: P1
+screen: 리밸런싱 확인 화면
+related:
+  api:
+    - ../../api/rebalancing/calculate.md
+  ui:
+    - ../portfolio/detail.md
+reference: ../../../reference/pages/rebalancing.md
+---
+
 # 리밸런싱 확인 화면 (Rebalancing Check)
 
 ## 개요

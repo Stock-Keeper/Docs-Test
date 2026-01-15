@@ -1,3 +1,17 @@
+---
+type: api
+phase: P1
+category: auth
+method: PUT
+endpoint: /api/users/profile
+auth: required
+related:
+  db:
+    - ../../db/users.md
+  ui:
+    - ../../ui/auth/profile-input.md
+---
+
 # PUT /api/users/profile
 
 ## 개요

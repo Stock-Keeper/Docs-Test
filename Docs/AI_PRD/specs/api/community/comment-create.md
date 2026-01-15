@@ -1,3 +1,18 @@
+---
+type: api
+phase: P2
+category: community
+method: POST
+endpoint: /api/community/posts/{postId}/comments
+auth: verified
+related:
+  db:
+    - ../../db/comments.md
+  api:
+    - comment-update.md
+    - comment-delete.md
+---
+
 # POST /api/community/posts/{postId}/comments
 
 ## 개요

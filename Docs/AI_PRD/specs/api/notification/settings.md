@@ -1,3 +1,17 @@
+---
+type: api
+phase: P1
+category: notification
+method: GET/PUT
+endpoint: /api/notifications/settings
+auth: required
+related:
+  db:
+    - ../../db/notification-settings.md
+  ui:
+    - ../../ui/notification/settings.md
+---
+
 # GET/PUT /api/notifications/settings
 
 ## 개요

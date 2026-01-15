@@ -1,3 +1,16 @@
+---
+type: ui
+phase: P1
+screen: 포트폴리오 상세 화면
+related:
+  api:
+    - ../../api/portfolio/detail.md
+  ui:
+    - ../stock/add.md
+    - ../rebalancing/check.md
+reference: ../../../reference/pages/portfolio_detail.md
+---
+
 # 포트폴리오 상세 화면 (Portfolio Detail)
 
 ## 개요

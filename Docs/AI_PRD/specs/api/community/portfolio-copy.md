@@ -1,3 +1,16 @@
+---
+type: api
+phase: P3
+category: community
+method: POST
+endpoint: /api/community/portfolios/{portfolioId}/copy
+auth: verified
+related:
+  db:
+    - ../../db/portfolios.md
+    - ../../db/portfolio-copies.md
+---
+
 # POST /api/community/portfolios/{portfolioId}/copy
 
 ## 개요

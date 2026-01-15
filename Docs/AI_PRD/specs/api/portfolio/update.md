@@ -1,3 +1,15 @@
+---
+type: api
+phase: P1
+category: portfolio
+method: PUT
+endpoint: /api/portfolios/{portfolioId}
+auth: required
+related:
+  db:
+    - ../../db/portfolios.md
+---
+
 # PUT /api/portfolios/{portfolioId}
 
 ## 개요

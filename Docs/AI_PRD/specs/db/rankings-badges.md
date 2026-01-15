@@ -1,3 +1,12 @@
+---
+type: db
+phase: P3
+table: rankings, badge_types, user_badges
+related:
+  api:
+    - ../api/community/ranking.md
+---
+
 # rankings, badges 테이블
 
 ## 개요

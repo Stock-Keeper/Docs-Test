@@ -1,3 +1,17 @@
+---
+type: api
+phase: P1
+category: portfolio
+method: POST
+endpoint: /api/portfolios
+auth: required
+related:
+  db:
+    - ../../db/portfolios.md
+  ui:
+    - ../../ui/portfolio/create.md
+---
+
 # POST /api/portfolios
 
 ## 개요

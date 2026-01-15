@@ -1,3 +1,13 @@
+---
+type: db
+phase: P1
+table: users
+related:
+  api:
+    - ../api/auth/google-callback.md
+    - ../api/auth/profile-update.md
+---
+
 # users 테이블
 
 ## 개요

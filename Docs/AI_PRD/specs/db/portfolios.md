@@ -1,3 +1,13 @@
+---
+type: db
+phase: P1
+table: portfolios, portfolio_items
+related:
+  api:
+    - ../api/portfolio/list.md
+    - ../api/portfolio/detail.md
+---
+
 # portfolios, portfolio_items 테이블
 
 ## 개요

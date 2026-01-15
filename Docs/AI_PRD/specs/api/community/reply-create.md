@@ -1,3 +1,15 @@
+---
+type: api
+phase: P3
+category: community
+method: POST
+endpoint: /api/community/comments/{commentId}/replies
+auth: verified
+related:
+  db:
+    - ../../db/comments.md
+---
+
 # POST /api/community/comments/{commentId}/replies
 
 ## 개요

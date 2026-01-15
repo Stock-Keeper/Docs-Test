@@ -1,3 +1,12 @@
+---
+type: db
+phase: P3
+table: portfolio_copies
+related:
+  api:
+    - ../api/community/portfolio-copy.md
+---
+
 # portfolio_copies 테이블
 
 ## 개요

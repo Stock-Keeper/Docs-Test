@@ -1,3 +1,12 @@
+---
+type: ui
+phase: P1
+screen: 관리자 사용자 목록 화면
+related:
+  api:
+    - ../../api/admin/users-list.md
+---
+
 # 관리자 사용자 목록 화면 (Admin User List)
 
 ## 개요

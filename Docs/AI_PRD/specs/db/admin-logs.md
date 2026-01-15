@@ -1,3 +1,13 @@
+---
+type: db
+phase: P1
+table: admin_logs
+related:
+  api:
+    - ../api/admin/users-role.md
+    - ../api/admin/users-status.md
+---
+
 # admin_logs 테이블
 
 ## 개요

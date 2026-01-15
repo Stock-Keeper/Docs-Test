@@ -1,3 +1,13 @@
+---
+type: db
+phase: P1
+table: notification_settings, fcm_tokens
+related:
+  api:
+    - ../api/notification/settings.md
+    - ../api/notification/fcm-token.md
+---
+
 # notification_settings, fcm_tokens 테이블
 
 ## 개요

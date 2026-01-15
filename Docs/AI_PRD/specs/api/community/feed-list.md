@@ -1,3 +1,18 @@
+---
+type: api
+phase: P2
+category: community
+method: GET
+endpoint: /api/community/feed
+auth: optional
+related:
+  db:
+    - ../../db/posts.md
+    - ../../db/portfolios.md
+  ui:
+    - ../../ui/community/feed.md
+---
+
 # GET /api/community/feed
 
 ## 개요

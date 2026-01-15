@@ -1,3 +1,16 @@
+---
+type: api
+phase: P1
+category: admin
+method: GET
+endpoint: /api/admin/stats/overview
+auth: admin
+related:
+  api:
+    - stats-users.md
+    - stats-portfolios.md
+---
+
 # GET /api/admin/stats/overview
 
 ## 개요

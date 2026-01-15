@@ -1,3 +1,17 @@
+---
+type: api
+phase: P1
+category: portfolio
+method: PATCH
+endpoint: /api/portfolios/reorder
+auth: required
+related:
+  db:
+    - ../../db/portfolios.md
+  ui:
+    - ../../ui/portfolio/list.md
+---
+
 # PATCH /api/portfolios/reorder
 
 ## 개요

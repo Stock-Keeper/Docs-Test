@@ -1,3 +1,15 @@
+---
+type: api
+phase: P1
+category: portfolio
+method: DELETE
+endpoint: /api/portfolios/{portfolioId}
+auth: required
+related:
+  db:
+    - ../../db/portfolios.md
+---
+
 # DELETE /api/portfolios/{portfolioId}
 
 ## 개요
