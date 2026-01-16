@@ -1,3 +1,15 @@
+---
+type: api
+phase: P1
+category: notification
+method: PATCH
+endpoint: /api/notifications/{notificationId}/read
+auth: required
+related:
+  db:
+    - ../../db/notifications.md
+---
+
 # PATCH /api/notifications/{notificationId}/read
 
 ## 개요

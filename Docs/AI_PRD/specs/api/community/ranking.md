@@ -1,3 +1,17 @@
+---
+type: api
+phase: P3
+category: community
+method: GET
+endpoint: /api/community/rankings
+auth: none
+related:
+  db:
+    - ../../db/rankings-badges.md
+  api:
+    - badges.md
+---
+
 # GET /api/community/rankings
 
 ## 개요

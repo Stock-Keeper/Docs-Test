@@ -1,3 +1,15 @@
+---
+type: api
+phase: P2
+category: community
+method: GET
+endpoint: /api/community/search
+auth: none
+related:
+  ui:
+    - ../../ui/community/search.md
+---
+
 # GET /api/community/search
 
 ## 개요

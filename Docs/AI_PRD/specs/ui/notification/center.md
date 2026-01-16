@@ -1,3 +1,13 @@
+---
+type: ui
+phase: P1
+screen: 알림 센터 화면
+related:
+  api:
+    - ../../api/notification/list.md
+    - ../../api/notification/read.md
+---
+
 # 알림 센터 화면 (Notification Center)
 
 ## 개요

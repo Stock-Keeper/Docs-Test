@@ -1,3 +1,15 @@
+---
+type: ui
+phase: P1
+screen: 로그인 화면
+related:
+  api:
+    - ../../api/auth/auth-google.md
+  ui:
+    - profile-input.md
+reference: ../../../reference/pages/onboarding.md
+---
+
 # 로그인 화면 (Login Screen)
 
 ## 개요

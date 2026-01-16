@@ -26,6 +26,52 @@
 
 ---
 
+## 1.5. 프론트매터 (필수)
+
+모든 스펙 파일 상단에 YAML 프론트매터를 포함합니다:
+
+### API 스펙
+```yaml
+---
+type: api
+phase: P1 | P2 | P3
+category: auth | portfolio | stock | rebalancing | notification | admin | community
+method: GET | POST | PUT | DELETE
+endpoint: /api/...
+auth: required | optional | none | admin
+related:
+  db: [경로]
+  ui: [경로]
+---
+```
+
+### DB 스펙
+```yaml
+---
+type: db
+phase: P1 | P2 | P3
+table: 테이블명
+related:
+  api: [경로]
+---
+```
+
+### UI 스펙
+```yaml
+---
+type: ui
+phase: P1 | P2 | P3
+screen: 화면명
+related:
+  api: [경로]
+reference: (선택) 참조 페이지 경로
+---
+```
+
+> 💡 프론트매터는 `/prd-prepare` 워크플로우 실행 시 자동 생성됩니다.
+
+---
+
 ## 2. 스펙 유형별 템플릿
 
 ### API 스펙 (`specs/api/`)
@@ -228,4 +274,4 @@
 
 ---
 
-> 📅 최종 수정: 2026-01-13
+> 📅 최종 수정: 2026-01-15

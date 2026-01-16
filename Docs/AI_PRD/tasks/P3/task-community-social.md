@@ -1,18 +1,28 @@
+---
+type: task
+phase: P3
+domain: community
+status: not-started
+
+specs:
+  api:
+    - community/reply-create.md
+    - community/follow.md
+    - community/ranking.md
+  db:
+    - community/follows.md
+    - community/rankings-badges.md
+  ui: []
+
+tech:
+  backend: spring-boot
+  frontend: react-native
+---
+
 # Task: 커뮤니티 P3 기능 구현 (대댓글, 팔로우, 랭킹, 배지)
 
 ## 목표
 커뮤니티 확장 기능 - 대댓글, 팔로우/팔로워, 랭킹 시스템, 배지 시스템
-
-## 스펙 참조
-
-### API
-- `../../specs/api/community/reply-create.md`
-- `../../specs/api/community/follow.md`
-- `../../specs/api/community/ranking.md`
-
-### DB
-- `../../specs/db/follows.md`
-- `../../specs/db/rankings-badges.md`
 
 ## 구현 체크리스트
 

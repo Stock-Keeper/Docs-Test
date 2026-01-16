@@ -9,34 +9,58 @@
 
 ## 📋 태스크 목록
 
-| 순서 | 파일 | 설명 | 예상 기간 | 의존성 |
-|:----:|------|------|:---------:|--------|
-| 1 | [task-auth.md](task-auth.md) | Google OAuth + JWT 인증 | 9일 | - |
-| 2 | [task-google-oauth.md](task-google-oauth.md) | Google OAuth 세부 설정 | - | task-auth |
-| 3 | [task-portfolio.md](task-portfolio.md) | 포트폴리오 CRUD | 10일 | task-auth |
-| 4 | [task-stock-rebalancing.md](task-stock-rebalancing.md) | 종목 관리 + 리밸런싱 | - | task-portfolio |
-| 5 | [task-notification.md](task-notification.md) | FCM 알림 + 알림 센터 | 14일 | task-portfolio |
-| 6 | [task-admin-dashboard.md](task-admin-dashboard.md) | 관리자 대시보드 | - | task-auth |
-| 7 | [task-admin-users.md](task-admin-users.md) | 관리자 사용자 관리 | - | task-admin-dashboard |
+| 순서 | 파일 | 도메인 | 설명 | 예상 기간 |
+|:----:|------|--------|------|:---------:|
+| 1 | [task-auth.md](task-auth.md) | `auth` | Google OAuth + JWT 인증 | 9일 |
+| 2 | [task-portfolio.md](task-portfolio.md) | `portfolio` | 포트폴리오 CRUD | 10일 |
+| 3 | [task-accounts.md](task-accounts.md) | `accounts` | 증권사 계좌 연동 | 6일 |
+| 4 | [task-stock-rebalancing.md](task-stock-rebalancing.md) | `stock` | 종목 관리 + 리밸런싱 | 14일 |
+| 5 | [task-notification.md](task-notification.md) | `notification` | FCM 알림 + 알림 센터 | 14일 |
+| 6 | [task-admin-dashboard.md](task-admin-dashboard.md) | `admin` | 관리자 대시보드 | 4일 |
+| 7 | [task-admin-users.md](task-admin-users.md) | `admin` | 관리자 사용자 관리 | 7일 |
+| 8 | [task-admin-announcements.md](task-admin-announcements.md) | `admin` | 관리자 공지사항 관리 | 6일 |
+
+## 📝 프론트매터 스키마
+
+각 task 파일은 다음 프론트매터를 포함합니다:
+
+```yaml
+---
+type: task
+phase: P1
+domain: auth          # 도메인 식별자
+status: not-started   # not-started | in-progress | completed
+
+specs:
+  api: []             # 관련 API 스펙 목록
+  db: []              # 관련 DB 스펙 목록
+  ui: []              # 관련 UI 스펙 목록
+
+tech:
+  backend: spring-boot
+  frontend: react-native
+  admin: next-js      # (선택) Admin 프론트엔드
+---
+```
 
 ## 🔗 개발 순서 권장
 
 ```
 task-auth (인증)
     │
-    ├── task-google-oauth (OAuth 세부)
-    │
-    └── task-portfolio (포트폴리오)
-            │
-            ├── task-stock-rebalancing (종목/리밸런싱)
-            │
-            └── task-notification (알림)
-
-task-auth (인증)
+    ├── task-portfolio (포트폴리오)
+    │       │
+    │       ├── task-accounts (계좌 연동)
+    │       │
+    │       ├── task-stock-rebalancing (종목/리밸런싱)
+    │       │
+    │       └── task-notification (알림)
     │
     └── task-admin-dashboard (관리자)
             │
-            └── task-admin-users (사용자 관리)
+            ├── task-admin-users (사용자 관리)
+            │
+            └── task-admin-announcements (공지사항)
 ```
 
 ## ⚠️ 주의사항
@@ -54,6 +78,7 @@ task-auth (인증)
 - [ ] 리밸런싱 계산 및 결과 표시
 - [ ] 푸시 알림 수신 (리밸런싱 필요 시)
 - [ ] 관리자 대시보드 기본 기능 동작
+- [ ] 공지사항 관리 동작
 
 ## 📊 예상 총 소요 시간
 
@@ -61,7 +86,10 @@ task-auth (인증)
 |------|------|
 | 인증 | 9일 |
 | 포트폴리오 | 10일 |
+| 계좌 연동 | 6일 |
+| 종목/리밸런싱 | 14일 |
 | 알림 | 14일 |
-| **총합** | **약 5-6주** |
+| Admin | 17일 |
+| **총합** | **약 10-12주** |
 
-> 병렬 개발 시 단축 가능
+> 병렬 개발 시 단축 가능 (약 6-8주)

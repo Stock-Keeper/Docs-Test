@@ -1,3 +1,18 @@
+---
+type: api
+phase: P2
+category: community
+method: POST
+endpoint: /api/community/posts
+auth: verified
+related:
+  db:
+    - ../../db/posts.md
+  api:
+    - post-detail.md
+    - post-update.md
+---
+
 # POST /api/community/posts
 
 ## 개요

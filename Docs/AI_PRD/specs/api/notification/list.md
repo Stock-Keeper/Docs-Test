@@ -1,3 +1,17 @@
+---
+type: api
+phase: P1
+category: notification
+method: GET
+endpoint: /api/notifications
+auth: required
+related:
+  db:
+    - ../../db/notifications.md
+  ui:
+    - ../../ui/notification/center.md
+---
+
 # GET /api/notifications
 
 ## 개요

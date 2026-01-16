@@ -1,19 +1,27 @@
+---
+type: task
+phase: P2
+domain: community
+status: not-started
+
+specs:
+  api:
+    - community/search.md
+    - community/portfolio-copy.md
+  db:
+    - portfolio/portfolio-copies.md
+  ui:
+    - community/search.md
+
+tech:
+  backend: spring-boot
+  frontend: react-native
+---
+
 # Task: 커뮤니티 검색 및 포트폴리오 복사 기능 구현
 
 ## 목표
 통합 검색 + 포트폴리오 공유/복사 기능 구현
-
-## 스펙 참조
-
-### API
-- `../../specs/api/community/search.md`
-- `../../specs/api/community/portfolio-copy.md`
-
-### DB
-- `../../specs/db/portfolio-copies.md`
-
-### UI
-- `../../specs/ui/community/search.md`
 
 ## 구현 체크리스트
 

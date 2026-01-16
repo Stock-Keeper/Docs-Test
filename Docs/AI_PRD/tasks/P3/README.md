@@ -9,10 +9,30 @@
 
 ## 📋 태스크 목록
 
-| 순서 | 파일 | 설명 | 예상 기간 | 의존성 |
-|:----:|------|------|:---------:|--------|
-| 1 | [task-community-social.md](task-community-social.md) | 대댓글, 팔로우, 랭킹, 배지 | 14일 | P2 완료 |
-| 2 | [task-community-extensions.md](task-community-extensions.md) | 추가 확장 기능 | TBD | task-community-social |
+| 순서 | 파일 | 도메인 | 설명 | 예상 기간 |
+|:----:|------|--------|------|:---------:|
+| 1 | [task-community-social.md](task-community-social.md) | `community` | 대댓글, 팔로우, 랭킹, 배지 | 14일 |
+| 2 | [task-community-extensions.md](task-community-extensions.md) | `community` | 피드 확장, 공유, 이벤트 | 11일 |
+
+## 📝 프론트매터 스키마
+
+```yaml
+---
+type: task
+phase: P3
+domain: community
+status: not-started
+
+specs:
+  api: []
+  db: []
+  ui: []
+
+tech:
+  backend: spring-boot
+  frontend: react-native
+---
+```
 
 ## 🔗 개발 순서 권장
 
@@ -30,6 +50,12 @@ P2 완료 (피드, 게시글, 검색)
             └── 배지 시스템
                     │
                     └── task-community-extensions
+                            │
+                            ├── 피드 정렬 확장
+                            │
+                            ├── 게시글 공유
+                            │
+                            └── 이벤트 참여
 ```
 
 ## ⚠️ 주의사항
@@ -47,6 +73,9 @@ P2 완료 (피드, 게시글, 검색)
 - [ ] 주간/월간 랭킹 표시
 - [ ] 배지 획득 및 프로필 표시
 - [ ] 배지 획득 알림 발송
+- [ ] 인기순/팔로잉 우선 정렬 동작
+- [ ] 외부 공유 동작
+- [ ] 이벤트 참여 동작
 
 ## 📊 예상 총 소요 시간
 
@@ -56,8 +85,11 @@ P2 완료 (피드, 게시글, 검색)
 | 팔로우 | 3일 |
 | 랭킹 | 4일 |
 | 배지 | 3일 |
-| 테스트 | 2일 |
-| **총합** | **약 2주** |
+| 피드 확장 | 3일 |
+| 공유 | 2일 |
+| 이벤트 | 4일 |
+| 테스트 | 4일 |
+| **총합** | **약 4주** |
 
 ## 🔗 P2 → P3 전환 시 확인사항
 
@@ -68,7 +100,6 @@ P2 완료 (피드, 게시글, 검색)
 
 ## 💡 향후 고려사항
 
-- 포트폴리오 복사 기능
 - 그룹/채팅 기능
 - 수익률 인증 시스템
 - 프리미엄 구독 모델

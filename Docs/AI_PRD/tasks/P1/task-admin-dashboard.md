@@ -1,15 +1,25 @@
+---
+type: task
+phase: P1
+domain: admin
+status: not-started
+
+specs:
+  api:
+    - admin/stats-overview.md
+  db: []
+  ui:
+    - admin/dashboard.md
+
+tech:
+  backend: spring-boot
+  frontend: next-js
+---
+
 # Task: Admin 대시보드 및 통계 구현
 
 ## 목표
 관리자 대시보드 - 메인 통계 카드 및 차트 구현
-
-## 스펙 참조
-
-### API
-- `../../specs/api/admin/stats-overview.md`
-
-### UI
-- `../../specs/ui/admin/dashboard.md`
 
 ## 구현 체크리스트
 

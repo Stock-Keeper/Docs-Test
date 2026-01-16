@@ -1,21 +1,29 @@
+---
+type: task
+phase: P1
+domain: admin
+status: not-started
+
+specs:
+  api:
+    - admin/users-list.md
+    - admin/users-detail.md
+    - admin/users-role.md
+    - admin/users-status.md
+  db:
+    - admin/admin-logs.md
+  ui:
+    - admin/users-list.md
+
+tech:
+  backend: spring-boot
+  frontend: next-js
+---
+
 # Task: Admin 사용자 관리 기능 구현
 
 ## 목표
 관리자 대시보드 - 사용자 목록 조회, 상세 조회, 역할/상태 변경 기능 구현
-
-## 스펙 참조
-
-### API
-- `../../specs/api/admin/users-list.md`
-- `../../specs/api/admin/users-detail.md`
-- `../../specs/api/admin/users-role.md`
-- `../../specs/api/admin/users-status.md`
-
-### DB
-- `../../specs/db/admin-logs.md`
-
-### UI
-- `../../specs/ui/admin/users-list.md`
 
 ## 구현 체크리스트
 

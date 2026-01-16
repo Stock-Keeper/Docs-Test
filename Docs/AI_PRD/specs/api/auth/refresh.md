@@ -1,3 +1,18 @@
+---
+type: api
+phase: P1
+category: auth
+method: POST
+endpoint: /api/auth/refresh
+auth: none
+related:
+  api:
+    - google-callback.md
+    - logout.md
+  db:
+    - ../../db/refresh-tokens.md
+---
+
 # POST /api/auth/refresh
 
 ## 개요

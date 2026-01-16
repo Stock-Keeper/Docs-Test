@@ -1,3 +1,15 @@
+---
+type: api
+phase: P1
+category: notification
+method: POST
+endpoint: /api/notifications/fcm-token
+auth: required
+related:
+  db:
+    - ../../db/fcm-tokens.md
+---
+
 # POST /api/notifications/fcm-token
 
 ## 개요

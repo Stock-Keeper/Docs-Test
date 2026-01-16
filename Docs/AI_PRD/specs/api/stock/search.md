@@ -1,3 +1,15 @@
+---
+type: api
+phase: P1
+category: stock
+method: GET
+endpoint: /api/stocks/search
+auth: required
+related:
+  ui:
+    - ../../ui/stock/search.md
+---
+
 # GET /api/stocks/search
 
 ## 개요

@@ -1,3 +1,17 @@
+---
+type: api
+phase: P3
+category: community
+method: POST
+endpoint: /api/community/follows
+auth: verified
+related:
+  db:
+    - ../../db/follows.md
+  api:
+    - profile.md
+---
+
 # POST /api/community/follows
 
 ## 개요

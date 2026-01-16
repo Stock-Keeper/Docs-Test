@@ -1,3 +1,17 @@
+---
+type: api
+phase: P1
+category: stock
+method: POST
+endpoint: /api/portfolios/{portfolioId}/items
+auth: required
+related:
+  db:
+    - ../../db/portfolios.md
+  ui:
+    - ../../ui/stock/add.md
+---
+
 # POST /api/portfolios/{portfolioId}/items
 
 ## 개요

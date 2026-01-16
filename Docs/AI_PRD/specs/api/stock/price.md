@@ -1,3 +1,15 @@
+---
+type: api
+phase: P1
+category: stock
+method: GET
+endpoint: /api/stocks/price
+auth: required
+related:
+  ui:
+    - ../../ui/portfolio/detail.md
+---
+
 # GET /api/stocks/price
 
 ## 개요

@@ -1,12 +1,24 @@
+---
+type: task
+phase: P3
+domain: community
+status: not-started
+
+specs:
+  api: []
+  db: []
+  ui:
+    - community/feed.md
+
+tech:
+  backend: spring-boot
+  frontend: react-native
+---
+
 # Task: 커뮤니티 P3 기능 구현 (피드 확장, 공유, 이벤트)
 
 ## 목표
 피드 확장 기능 - 정렬 옵션, 콘텐츠 필터, 게시글 공유, 이벤트 참여
-
-## 스펙 참조
-
-### UI
-- `../../specs/ui/community/feed.md` (P3 확장)
 
 ## 구현 체크리스트
 

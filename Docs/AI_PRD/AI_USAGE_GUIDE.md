@@ -36,6 +36,27 @@ AI는 자동으로:
 @AI_PRD/specs/ui/auth/login-screen.md 이 화면을 React Native로 구현해줘
 ```
 
+### PRD 스펙 추가/수정 (워크플로우)
+
+팀원이 새 기능을 요청하거나 기존 스펙을 수정하려면:
+
+```
+1. _inbox/ 폴더에 자유 형식으로 파일 작성
+2. /prd-prepare 실행 → AI가 정형화
+3. _staging/ 에서 검토/수정
+4. /prd-process 실행 → specs/에 최종 반영
+```
+
+예시:
+```
+"_inbox/결제기능.md" 내용:
+결제 기능 만들어야 함
+- 카드랑 카카오페이 지원
+- 월정액 구독 형태
+
+→ /prd-prepare 실행 → AI가 API 스펙 초안 생성
+```
+
 ---
 
 ## 2. 프롬프트 템플릿

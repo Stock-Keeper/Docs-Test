@@ -1,23 +1,33 @@
+---
+type: task
+phase: P1
+domain: notification
+status: not-started
+
+specs:
+  api:
+    - notification/list.md
+    - notification/read.md
+    - notification/settings.md
+    - notification/fcm-token.md
+  db:
+    - notification/notifications.md
+    - notification/notification-settings.md
+    - notification/notification-types.md
+    - notification/device-tokens.md
+  ui:
+    - notification/center.md
+    - notification/settings.md
+
+tech:
+  backend: spring-boot
+  frontend: react-native
+---
+
 # Task: 알림 기능 구현 (FCM + 알림 센터)
 
 ## 목표
 리밸런싱 알림, 푸시(FCM), 알림 센터, 알림 설정 기능 구현
-
-## 스펙 참조
-
-### API
-- `../../specs/api/notification/list.md`
-- `../../specs/api/notification/read.md`
-- `../../specs/api/notification/settings.md`
-- `../../specs/api/notification/fcm-token.md`
-
-### DB
-- `../../specs/db/notifications.md`
-- `../../specs/db/notification-settings.md`
-
-### UI
-- `../../specs/ui/notification/center.md`
-- `../../specs/ui/notification/settings.md`
 
 ## 구현 체크리스트
 

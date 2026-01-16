@@ -1,3 +1,17 @@
+---
+type: api
+phase: P1
+category: auth
+method: POST
+endpoint: /api/auth/logout
+auth: required
+related:
+  db:
+    - ../../db/refresh-tokens.md
+  ui:
+    - ../../ui/auth/login-screen.md
+---
+
 # POST /api/auth/logout
 
 ## 개요

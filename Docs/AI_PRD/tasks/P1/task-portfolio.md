@@ -1,24 +1,39 @@
+---
+type: task
+phase: P1
+domain: portfolio
+status: not-started
+
+specs:
+  api:
+    - portfolio/list.md
+    - portfolio/detail.md
+    - portfolio/create.md
+    - portfolio/update.md
+    - portfolio/delete.md
+    - portfolio/reorder.md
+    - portfolio/snapshots-list.md
+    - portfolio/snapshots-detail.md
+    - portfolio/snapshots-create.md
+    - portfolio/snapshots-compare.md
+  db:
+    - portfolio/portfolios.md
+    - portfolio/portfolio-stock-entries.md
+    - portfolio/portfolio-cash-entries.md
+    - portfolio/portfolio-snapshots.md
+  ui:
+    - portfolio/list.md
+    - portfolio/detail.md
+
+tech:
+  backend: spring-boot
+  frontend: react-native
+---
+
 # Task: 포트폴리오 관리 기능 구현
 
 ## 목표
 포트폴리오 CRUD, 정렬, 현금 자산 관리 기능 구현
-
-## 스펙 참조
-
-### API
-- `../../specs/api/portfolio/list.md`
-- `../../specs/api/portfolio/detail.md`
-- `../../specs/api/portfolio/create.md`
-- `../../specs/api/portfolio/update.md`
-- `../../specs/api/portfolio/delete.md`
-- `../../specs/api/portfolio/reorder.md`
-
-### DB
-- `../../specs/db/portfolios.md`
-
-### UI
-- `../../specs/ui/portfolio/list.md`
-- `../../specs/ui/portfolio/detail.md`
 
 ## 구현 체크리스트
 

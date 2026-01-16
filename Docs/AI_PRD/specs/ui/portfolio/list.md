@@ -1,3 +1,15 @@
+---
+type: ui
+phase: P1
+screen: 포트폴리오 목록 화면
+related:
+  api:
+    - ../../api/portfolio/list.md
+  ui:
+    - detail.md
+reference: ../../../reference/pages/home.md
+---
+
 # 포트폴리오 목록 화면 (Portfolio List)
 
 ## 개요

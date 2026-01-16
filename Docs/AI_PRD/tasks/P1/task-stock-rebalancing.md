@@ -1,23 +1,31 @@
+---
+type: task
+phase: P1
+domain: stock
+status: not-started
+
+specs:
+  api:
+    - stock/search.md
+    - stock/add.md
+    - stock/update-delete.md
+    - stock/price.md
+    - rebalancing/calculate.md
+  db:
+    - portfolio/portfolios.md
+  ui:
+    - stock/add.md
+    - rebalancing/check.md
+
+tech:
+  backend: spring-boot
+  frontend: react-native
+---
+
 # Task: 종목 관리 + 리밸런싱 기능 구현
 
 ## 목표
 종목 CRUD, 실시간 시세, 리밸런싱 제안 기능 구현
-
-## 스펙 참조
-
-### API
-- `../../specs/api/stock/search.md`
-- `../../specs/api/stock/add.md`
-- `../../specs/api/stock/update-delete.md`
-- `../../specs/api/stock/price.md`
-- `../../specs/api/rebalancing/calculate.md`
-
-### DB
-- `../../specs/db/portfolios.md`
-
-### UI
-- `../../specs/ui/stock/add.md`
-- `../../specs/ui/rebalancing/check.md`
 
 ## 구현 체크리스트
 

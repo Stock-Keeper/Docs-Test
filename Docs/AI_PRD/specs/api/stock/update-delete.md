@@ -1,3 +1,15 @@
+---
+type: api
+phase: P1
+category: stock
+method: PUT/DELETE
+endpoint: /api/portfolios/{portfolioId}/items/{itemId}
+auth: required
+related:
+  db:
+    - ../../db/portfolios.md
+---
+
 # PUT/DELETE /api/portfolios/{portfolioId}/items/{itemId}
 
 ## 개요

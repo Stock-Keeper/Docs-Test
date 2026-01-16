@@ -1,3 +1,14 @@
+---
+type: ui
+phase: P2
+screen: 검색 화면
+related:
+  api:
+    - ../../api/community/search.md
+  ui:
+    - feed.md
+---
+
 # 검색 화면 (Search Screen)
 
 ## 개요

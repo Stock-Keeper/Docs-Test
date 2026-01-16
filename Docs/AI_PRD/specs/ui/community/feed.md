@@ -1,3 +1,14 @@
+---
+type: ui
+phase: P2
+screen: 피드 화면
+related:
+  api:
+    - ../../api/community/feed-list.md
+  ui:
+    - search.md
+---
+
 # 피드 화면 (Feed Screen)
 
 ## 개요

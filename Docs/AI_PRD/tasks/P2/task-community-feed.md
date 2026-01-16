@@ -1,23 +1,31 @@
+---
+type: task
+phase: P2
+domain: community
+status: not-started
+
+specs:
+  api:
+    - community/feed-list.md
+    - community/post-create.md
+    - community/comment-create.md
+    - community/like.md
+  db:
+    - community/posts.md
+    - community/comments.md
+    - community/likes.md
+  ui:
+    - community/feed.md
+
+tech:
+  backend: spring-boot
+  frontend: react-native
+---
+
 # Task: 커뮤니티 피드 및 게시글 기능 구현
 
 ## 목표
 커뮤니티 피드, 게시글 CRUD, 댓글, 좋아요 기능 구현
-
-## 스펙 참조
-
-### API
-- `../../specs/api/community/feed-list.md`
-- `../../specs/api/community/post-create.md`
-- `../../specs/api/community/comment-create.md`
-- `../../specs/api/community/like.md`
-
-### DB
-- `../../specs/db/posts.md`
-- `../../specs/db/comments.md`
-- `../../specs/db/likes.md`
-
-### UI
-- `../../specs/ui/community/feed.md`
 
 ## 구현 체크리스트
 

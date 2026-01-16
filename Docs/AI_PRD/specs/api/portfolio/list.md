@@ -1,3 +1,19 @@
+---
+type: api
+phase: P1
+category: portfolio
+method: GET
+endpoint: /api/portfolios
+auth: required
+related:
+  db:
+    - ../../db/portfolios.md
+  api:
+    - detail.md
+  ui:
+    - ../../ui/portfolio/list.md
+---
+
 # GET /api/portfolios
 
 ## 개요

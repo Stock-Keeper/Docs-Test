@@ -1,3 +1,14 @@
+---
+type: ui
+phase: P1
+screen: 관리자 대시보드 화면
+related:
+  api:
+    - ../../api/admin/stats-overview.md
+  ui:
+    - users-list.md
+---
+
 # 관리자 대시보드 화면 (Admin Dashboard)
 
 ## 개요

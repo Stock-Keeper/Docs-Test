@@ -1,3 +1,17 @@
+---
+type: api
+phase: P1
+category: admin
+method: GET
+endpoint: /api/admin/users/{id}
+auth: admin
+related:
+  api:
+    - users-list.md
+    - users-role.md
+    - users-status.md
+---
+
 # GET /api/admin/users/{id}
 
 ## 개요
