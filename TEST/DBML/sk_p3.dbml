@@ -2,7 +2,7 @@
 Table users {
   id integer [primary key, increment]
   email varchar [not null] // 탈퇴 후 재가입자를 고려해 유니크 해제
-  nickname varchar // 삭제해야 하나
+  nickname varchar // 앱 내 닉네임
   provider enum ('GOOGLE', 'KAKAO', 'NAVER') // 소셜 제공자(현 구글)
   role enum ('USER', 'ADMIN') // 사용자, 관리자
   profile_image_url varchar
@@ -279,7 +279,7 @@ Table community_profiles {
   
   // 공개 설정
   show_recent_activity boolean [default: true] // 최근활동 공개
-  show_portfolio boolean [default: false] // 투자현황 공개 - 이거 진행할 건가요
+  show_portfolio boolean [default: false] // 투자현황 공개
   
   // 카운트 캐시 (성능용 반정규화)
   post_count integer [default: 0]
@@ -639,3 +639,59 @@ Table device_tokens {
     (user_id, platform) [name: 'idx_device_tokens_user_platform']
   }
 }
+
+// ==================== Phase 3 전용 테이블 ====================
+
+// 토큰 지갑 (인앱 결제용)
+Table token_wallet {
+  id integer [primary key, increment]
+  user_id integer [ref: > users.id]
+  balance integer [default: 0] // 현재 토큰 잔액
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+
+  Indexes {
+    user_id [unique, name: 'idx_token_wallet_user']
+  }
+}
+
+// 결제 내역
+Table payment_history {
+  id integer [primary key, increment]
+  user_id integer [ref: > users.id]
+  amount integer [not null] // 결제 금액
+  token_amount integer [not null] // 충전된 토큰 수
+  payment_method enum('CARD', 'BANK', 'INAPP_IOS', 'INAPP_ANDROID') // 결제 수단
+  status enum('PENDING', 'COMPLETED', 'FAILED', 'REFUNDED') [default: 'PENDING'] // 결제 상태
+  transaction_id varchar // 외부 결제 트랜잭션 ID
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+
+  Indexes {
+    user_id [name: 'idx_payment_user']
+    status [name: 'idx_payment_status']
+    transaction_id [unique, name: 'idx_payment_transaction']
+  }
+}
+
+// 토큰 사용 내역
+Table token_transactions {
+  id integer [primary key, increment]
+  user_id integer [ref: > users.id]
+  amount integer [not null] // 변동량 (+충전, -사용)
+  balance_after integer [not null] // 변동 후 잔액
+  transaction_type enum('CHARGE', 'USE', 'REFUND', 'EXPIRE', 'BONUS') // 거래 유형
+  description varchar // 사용처 설명 (예: 'AI 리밸런싱 1회')
+  related_entity_type varchar // 관련 엔티티 타입
+  related_entity_id integer // 관련 엔티티 ID
+  created_at timestamp [default: `now()`]
+
+  Indexes {
+    user_id [name: 'idx_token_tx_user']
+    (user_id, created_at) [name: 'idx_token_tx_user_time']
+  }
+}
+
+// 충전 내역
+// 광고 시청 내역
+// 리밸런싱 내역

@@ -17,7 +17,8 @@ Phase별로 분리하여 단계적 개발을 지원합니다.
 DBML/
 ├── README.md           # 이 파일
 ├── sk_p1.dbml          # Phase 1 스키마 (MVP)
-└── sk_p2.dbml          # Phase 2 스키마 (확장)
+├── sk_p2.dbml          # Phase 2 스키마 (커뮤니티)
+└── sk_p3.dbml          # Phase 3 스키마 (결제, 리밸런싱 AI 추가 예정)
 ```
 
 ---
@@ -48,31 +49,47 @@ DBML/
 |                | `device_tokens`           | 푸시 알림 토큰            |
 | **합계** | **18개**              |                           |
 
-### Phase 2 (확장) - `sk_p2.dbml`
+### Phase 2 (커뮤니티) - `sk_p2.dbml`
 
-| 도메인         | 테이블                                       | 설명              |
-| -------------- | -------------------------------------------- | ----------------- |
-| P1 포함        | 18개                                         | Phase 1 전체 포함 |
-| 커뮤니티       | `community_articles`                       | 게시물            |
-|                | `community_article_categories`             | 게시물 카테고리   |
-|                | `community_article_images`                 | 게시물 이미지     |
-|                | `community_article_likes`                  | 게시물 좋아요     |
-|                | `community_article_replies`                | 댓글              |
-|                | `community_reply_likes`                    | 댓글 좋아요       |
-|                | `community_copied_portfolios`              | 포트폴리오 사본   |
-|                | `community_copied_portfolio_cash_entries`  | 사본 현금         |
-|                | `community_copied_portfolio_stock_entries` | 사본 종목         |
-|                | `portfolio_copy_history`                   | 복사 이력         |
-| 소셜           | `user_follows`                             | 팔로우            |
-|                | `user_blocks`                              | 차단              |
-| 배지           | `badges`                                   | 배지 마스터       |
-|                | `user_badges`                              | 사용자 배지       |
-| 신고/정지      | `reports`                                  | 신고              |
-|                | `report_reasons`                           | 신고 사유         |
-|                | `user_suspensions`                         | 정지 이력         |
-| 결제(P3)       | `token_wallet`                             | 토큰 지갑         |
-|                | `payment_history`                          | 결제 내역         |
-| **합계** | **37개**                               |                   |
+| 도메인          | 테이블                                     | 설명                 |
+| --------------- | ------------------------------------------ | -------------------- |
+| P1 포함         | 18개                                       | Phase 1 전체 포함    |
+| 검색            | `search_histories`                         | 검색 이력            |
+| 커뮤니티 프로필 | `community_profiles`                       | 커뮤니티 전용 프로필 |
+|                 | `community_settings`                       | 커뮤니티 알림 설정   |
+|                 | `nickname_histories`                       | 닉네임 변경 이력     |
+| 커뮤니티 게시물 | `community_articles`                       | 게시물               |
+|                 | `community_article_categories`             | 게시물 카테고리      |
+|                 | `community_article_images`                 | 게시물 이미지        |
+|                 | `community_article_likes`                  | 게시물 좋아요        |
+|                 | `community_article_replies`                | 댓글                 |
+|                 | `community_reply_likes`                    | 댓글 좋아요          |
+|                 | `community_bookmarks`                      | 게시글 북마크        |
+| 포트폴리오 공유 | `community_copied_portfolios`              | 포트폴리오 사본      |
+|                 | `community_copied_portfolio_cash_entries`  | 사본 현금            |
+|                 | `community_copied_portfolio_stock_entries` | 사본 종목            |
+|                 | `portfolio_copy_history`                   | 복사 이력            |
+| 소셜            | `user_follows`                             | 팔로우               |
+|                 | `user_blocks`                              | 차단                 |
+| 배지            | `badges`                                   | 배지 마스터          |
+|                 | `user_badges`                              | 사용자 배지          |
+| 신고/정지       | `reports`                                  | 신고                 |
+|                 | `report_reasons`                           | 신고 사유            |
+|                 | `user_suspensions`                         | 정지 이력            |
+| **합계**        | **40개**                                   |                      |
+
+### Phase 3 (결제/AI) - `sk_p3.dbml`
+
+| 도메인   | 테이블               | 설명                |
+| -------- | -------------------- | ------------------- |
+| P2 포함  | 40개                 | Phase 2 전체 포함   |
+| 결제     | `token_wallet`       | 토큰 잔액 관리      |
+|          | `payment_history`    | 결제 내역           |
+|          | `token_transactions` | 토큰 사용/충전 내역 |
+| 예정     | (충전 내역)          | TBD                 |
+|          | (광고 시청 내역)     | TBD                 |
+|          | (리밸런싱 내역)      | TBD                 |
+| **합계** | **43개** (+예정)     |                     |
 
 ---
 
@@ -86,17 +103,18 @@ DBML/
 
 ### 인덱스 전략
 
-| 유형        | 적용 예시                                        |
-| ----------- | ------------------------------------------------ |
-| Unique      | `(portfolio_id, ticker)`, `email`            |
-| FK 인덱스   | `user_id`, `portfolio_id` 등                 |
-| 복합 인덱스 | `(user_id, is_read)`, `(user_id, is_delete)` |
+| 유형        | 적용 예시                                            |
+| ----------- | ---------------------------------------------------- |
+| Unique      | `(portfolio_id, ticker)`, `email`, `nickname`        |
+| FK 인덱스   | `user_id`, `portfolio_id`, `article_id` 등           |
+| 복합 인덱스 | `(user_id, is_read)`, `(user_id, visibility_status)` |
 
 ### 공통 패턴
 
-- **논리적 삭제**: `is_delete`, `delete_at` 컬럼
-- **타임스탬프**: `created_at`, `updated_at`
-- **Primary Key**: `id integer [primary key, increment]`
+-   **논리적 삭제**: `is_delete`, `delete_at` 컬럼
+-   **타임스탬프**: `created_at`, `updated_at`
+-   **Primary Key**: `id integer [primary key, increment]`
+-   **카운트 캐시**: `like_count`, `comment_count`, `follower_count` 등
 
 ---
 
@@ -174,12 +192,23 @@ announcements: 공지사항/패치노트
 
 ## 📊 Phase 2 ERD
 
-### 커뮤니티
+### 커뮤니티 프로필
+
+```
+users (1) ─── (1) community_profiles
+users (1) ─── (1) community_settings
+users (1) ──< (N) search_histories
+users (1) ──< (N) nickname_histories
+```
+
+### 커뮤니티 게시물
 
 ```
 users (1) ──< (N) community_articles (1) ──< (N) community_article_images
                       │
                       ├──< (N) community_article_likes
+                      │
+                      ├──< (N) community_bookmarks
                       │
                       └──< (N) community_article_replies (1) ──< (N) community_reply_likes
                                       │
