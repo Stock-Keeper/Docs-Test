@@ -88,21 +88,36 @@ _inbox/ → [/prd-prepare] → _staging/ → [/prd-process] → specs/
 ```
 
 ### 7. 정리 (Cleanup)
-> **중요**: OS별 명령어를 사용하여 확실하게 처리
+> **중요**: 각 명령어를 순차적으로 실행하고, 이전 명령이 완료된 후 다음 명령 실행
 
-**Windows (PowerShell):**
+**Windows (PowerShell) - 반드시 순차 실행:**
+
 ```powershell
-# 1. Archive Inbox (날짜+시간 폴더)
+# Step 1: 아카이브 폴더 생성 (먼저 실행하고 완료 확인)
 $datetime = Get-Date -Format "yyyy-MM-dd_HHmm"
 $archivePath = "Docs/AI_PRD/_processed/$datetime"
 New-Item -ItemType Directory -Force -Path $archivePath
-
-# 2. Move inbox files
-Get-ChildItem "Docs/AI_PRD/_inbox/" -Exclude "README.md" | Move-Item -Destination $archivePath -Force
-
-# 3. Clear Staging
-Remove-Item "Docs/AI_PRD/_staging/*" -Recurse -Force -Exclude "README.md"
 ```
+
+```powershell
+# Step 2: Step 1 완료 후 inbox 파일 이동
+Get-ChildItem "Docs/AI_PRD/_inbox/" -Exclude "README.md" | Move-Item -Destination $archivePath -Force
+```
+
+```powershell
+# Step 3: Step 2 완료 후 staging 정리
+Get-ChildItem "Docs/AI_PRD/_staging/" -Exclude "README.md" | Remove-Item -Force
+```
+
+> ⚠️ **AI 주의**: 위 명령어들을 **한 번에 병렬 실행하지 말 것**! 폴더 생성 전에 파일 이동 시 파일명이 폴더명으로 변경되는 버그 발생.
+
+**검증 (필수):**
+```powershell
+# 아카이브 폴더 구조 확인
+Get-ChildItem $archivePath
+```
+- 폴더가 생성되고 그 안에 원본 파일들이 있어야 함
+- 파일이 폴더명으로 이름만 변경된 경우 수정 필요
 
 ### 8. 수정 내역 저장 (CHANGELOG)
 
