@@ -9,13 +9,116 @@ description: PRD 스펙 전체를 점검하여 중복, 누락, 불일치 검출
 PRD `specs/` 디렉토리 전체를 스캔하여 일관성, 중복, 누락을 점검합니다.
 
 ## 실행 방법
+
+### 전체 검증 (기본)
 ```
-/prd-validate
+/prd-validate                      # 전체 specs 검증
 ```
+
+### 도메인별 처리 (토큰 최적화) ⭐
+```
+/prd-validate auth                 # auth 도메인 관련 스펙만 검증
+/prd-validate portfolio            # portfolio 도메인만 검증
+/prd-validate community            # community 도메인만 검증
+```
+
+> **Note**: 도메인별 처리 시에도 cross-reference 검증은 유지됩니다.
+> 해당 도메인 스펙이 참조하는 다른 도메인 파일도 존재 여부를 확인합니다.
+
+### 빠른 검증 모드
+```
+/prd-validate --quick              # 프론트매터 + 파일 존재만 빠르게 검사
+/prd-validate --quick auth         # auth 도메인만 빠르게 검사
+```
+
+### 특정 영역 검증
+```
+/prd-validate --tasks              # tasks 관련 검증만 수행
+/prd-validate --tasks P1           # P1 phase의 tasks만 검증
+```
+
+### 모드별 동작 차이
+
+| 모드 | 스캔 범위 | Dead Link | Cross-Ref | 중복 검출 | 사용 시점 |
+|------|----------|-----------|-----------|----------|----------|
+| 기본 | 전체 | ✅ | ✅ | ✅ | 정기 점검 |
+| 도메인별 | 해당 도메인 | ✅ | ✅ | ⚠️ 도메인 내만 | 도메인 작업 후 |
+| --quick | 전체/지정 | ✅ | ❌ | ❌ | 빠른 무결성 체크 |
+| --tasks | tasks만 | - | ✅ | - | task 참조 검증 |
 
 ## 워크플로우 단계
 
-### 1. 스펙 전체 스캔
+### 모드 분기
+
+```
+인자 확인:
+- 없음 → 기본 모드 (전체 검증)
+- {domain} → 도메인별 모드
+- --quick → 빠른 검증 모드
+- --tasks → Tasks 검증 모드
+```
+
+---
+
+### [도메인별 모드] 범위 지정 검증 ⭐
+
+```
+/prd-validate auth 실행 시:
+
+1. 스캔 대상:
+   - specs/db/auth/*.md
+   - specs/api/auth/*.md
+   - specs/ui/auth/*.md
+
+2. Cross-reference 검증:
+   - 위 파일들의 related 필드가 참조하는 다른 도메인 파일
+   - 존재 여부만 확인 (내용은 읽지 않음)
+
+3. 검증 항목:
+   - 프론트매터 필수 필드 ✅
+   - Dead Link ✅
+   - 도메인 내 중복 ✅
+   - Phase 일관성 ✅
+```
+
+---
+
+### [--quick 모드] 빠른 검증
+
+```
+/prd-validate --quick 실행 시:
+
+1. 모든 스펙 파일 목록만 수집 (내용 최소 로드)
+2. 프론트매터 필수 필드 확인
+3. related 경로의 파일 존재 여부만 확인
+4. 스킵: 중복 검출, 상세 cross-ref 분석
+
+결과:
+✅ 76개 파일 검사 완료
+❌ 2개 파일 프론트매터 누락
+❌ 1개 Dead Link 발견
+```
+
+---
+
+### [--tasks 모드] Tasks 전용 검증
+
+```
+/prd-validate --tasks [P1|P2|P3] 실행 시:
+
+1. tasks/{Phase}/*.md 파일 로드 (Phase 없으면 전체)
+2. 프론트매터 필수 필드 확인
+3. specs 참조 유효성 검증
+4. 고아 스펙 검출 (어떤 task에도 없는 스펙)
+
+→ 본문의 "6. Tasks 검증" 섹션만 실행
+```
+
+---
+
+### [기본 모드] 전체 검증
+
+#### 1. 스펙 전체 스캔
 ```
 - specs/api/, specs/db/, specs/ui/ 모든 파일 수집
 - 각 파일의 프론트매터 파싱 (type, phase, related, table 등)
@@ -109,7 +212,7 @@ A → B 참조가 있으면 B → A도 있어야 함
 Task 파일의 필수 필드:
 - type: task
 - phase: P1 | P2 | P3
-- domain: auth | portfolio | accounts | stock | notification | admin | community
+- domain: (specs/ 하위 디렉토리에서 자동 추론된 도메인)
 - status: not-started | in-progress | completed
 - specs: api, db, ui 배열
 - tech: backend, frontend (선택: admin, app)
@@ -164,19 +267,17 @@ specs/ 디렉토리의 모든 파일 중:
 | 총 스펙 파일 | 76개 |
 | 문제 발견 | 8건 |
 
-## ⚠️ 잠재적 중복 (3건)
+## ⚠️ 잠재적 중복 ({n}건)
 
 | 파일 A | 파일 B | 유형 | 권장 조치 |
 |--------|--------|------|----------|
-| token-vault.md | refresh-tokens.md | 테이블 중복 | 통합 검토 |
-| device-tokens.md | notification-settings.md | 기능 중복 | 하나 삭제 |
+| {file_a}.md | {file_b}.md | 테이블 중복 | 통합 검토 |
 
-## ❌ API 누락 (5건)
+## ❌ API 누락 ({n}건)
 
 | DB 스펙 | 테이블 | 필요한 API |
 |---------|--------|-----------|
-| accounts.md | accounts | CRUD |
-| announcements.md | announcements | 조회 |
+| {spec}.md | {table} | CRUD |
 
 ## 🔗 Dead Link (0건)
 ✅ 모든 related 경로 유효
@@ -195,11 +296,10 @@ specs/ 디렉토리의 모든 파일 중:
 ### 잘못된 스펙 참조 (0건)
 ✅ 모든 specs 참조가 유효함
 
-### 고아 스펙 (2건)
+### 고아 스펙 ({n}건)
 | 스펙 파일 | 추천 |
 |-----------|------|
-| audit-logs.md | 로그 테이블 (task 불필요) |
-| user-activities.md | 로그 테이블 (task 불필요) |
+| {spec}.md | 로그 테이블 (task 불필요) |
 ```
 
 ### 8. 검증 결과 파일 생성 (_inbox/)
@@ -234,55 +334,30 @@ _inbox/[VALIDATE] YYYY-MM-DD.md
 
 ## 🔴 중복 해결
 
-### 1. device-tokens ↔ fcm_tokens
-푸시 토큰 저장 테이블이 2개 존재합니다.
+### 1. {table_a} ↔ {table_b}
+유사 기능의 테이블이 2개 존재합니다.
 
-- [ ] `device-tokens.md` 유지 (fcm_tokens 삭제)
-- [ ] `fcm_tokens` 유지 (device-tokens.md 삭제)
+- [ ] `{table_a}.md` 유지
+- [ ] `{table_b}.md` 유지
 
 ---
 
 ## 🟡 API 생성에 필요한 정보
 
-### 1. accounts (계좌 연동)
+### 1. {domain} ({기능 설명})
 
-**지원할 증권사:**
-- [ ] 한국투자증권
-- [ ] 삼성증권
-- [ ] 키움증권
+**필요한 정보:**
+- [ ] 옵션 A
+- [ ] 옵션 B
 - [ ] 기타: ________________
-
-**연동 방식:**
-- [ ] OAuth
-- [ ] Open API
-- [ ] 스크래핑 (MTS 연동)
-
-**필요한 기능:**
-- [ ] 계좌 목록 조회
-- [ ] 계좌 연결/해제
-- [ ] 잔고 조회
-- [ ] 거래 내역 조회
-
----
-
-### 2. announcements (공지사항)
-
-**접근 권한:**
-- [ ] 누구나 조회 가능
-- [ ] 로그인 사용자만
-
-**기능:**
-- [ ] 목록 조회
-- [ ] 상세 조회
-- [ ] 팝업 공지 자동 표시
 
 ---
 
 ## ✅ AI가 자동 처리할 항목 (참고용)
 
-- Dead Link 수정: 0건
-- 프론트매터 보완: 0건
-- Phase 조정: 0건
+- Dead Link 수정: {n}건
+- 프론트매터 보완: {n}건
+- Phase 조정: {n}건
 ```
 
 #### 생성 후 안내

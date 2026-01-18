@@ -16,21 +16,57 @@ description: CHANGELOG 기반으로 변경된 specs를 tasks에 동기화
 ```
 
 ## 실행 방법
+
+### 기본 (CHANGELOG 기반)
 ```
 /prd-sync-tasks                    # 가장 최근 CHANGELOG 자동 감지
 /prd-sync-tasks 2026-01-16_0028    # 특정 아카이브 지정
 ```
 
+### Phase별 처리 (토큰 최적화) ⭐
+```
+/prd-sync-tasks P1                 # P1 task 파일만 스펙 참조 검증/업데이트
+/prd-sync-tasks P2                 # P2 task 파일만 처리
+/prd-sync-tasks P3                 # P3 task 파일만 처리
+```
+
+### 빠른 검증 모드
+```
+/prd-sync-tasks --verify           # 전체 tasks 스펙 참조 유효성만 빠르게 체크
+/prd-sync-tasks --verify P1        # P1만 빠르게 체크
+```
+
+### 모드별 동작 차이
+
+| 모드 | CHANGELOG | Task 스캔 | 스펙 수정 | 사용 시점 |
+|------|-----------|----------|----------|----------|
+| 기본 | ✅ 읽음 | 관련 task만 | ✅ 참조 추가/삭제 | /prd-process 완료 후 |
+| Phase별 | ❌ 불필요 | 해당 Phase만 | ✅ 참조 추가/삭제 | 특정 Phase 집중 작업 |
+| --verify | ❌ 불필요 | 전체/지정 | ❌ 읽기만 | 빠른 무결성 검사 |
+
 ## 워크플로우 단계
 
-### 1. CHANGELOG 찾기
+### 모드 분기
+
+```
+인자 확인:
+- 없음 또는 날짜패턴 → 기본 모드 (CHANGELOG 기반)
+- P1/P2/P3 → Phase별 모드
+- --verify → 검증 모드
+```
+
+---
+
+### [기본 모드] CHANGELOG 기반 처리
+
+#### 1. CHANGELOG 찾기
 ```
 - _processed/ 디렉토리에서 가장 최근 폴더 찾기
 - 또는 사용자가 지정한 아카이브 폴더 사용
 - CHANGELOG.md 읽기
 ```
 
-### 2. 변경된 스펙 파싱
+#### 2. 변경된 스펙 파싱
 ```
 CHANGELOG에서 추출:
 - 생성된 스펙 (NEW)
@@ -38,18 +74,68 @@ CHANGELOG에서 추출:
 - 삭제된 스펙 (DELETE)
 ```
 
+---
+
+### [Phase별 모드] 직접 스캔 처리 ⭐
+
+#### 1. Task 파일 스캔
+```
+/prd-sync-tasks P1 실행 시:
+- tasks/P1/*.md 파일만 로드
+- 각 파일의 specs 필드 추출
+```
+
+#### 2. 스펙 참조 검증
+```
+각 task의 specs 참조에 대해:
+- specs/db/{path} 존재 확인
+- specs/api/{path} 존재 확인
+- specs/ui/{path} 존재 확인
+```
+
+#### 3. 누락된 스펙 탐지
+```
+specs/db/{domain}/, specs/api/{domain}/ 스캔:
+- 해당 Phase의 스펙 중 task에서 참조되지 않은 것 찾기
+- 사용자에게 할당 여부 확인
+```
+
+---
+
+### [--verify 모드] 빠른 검증
+
+```
+/prd-sync-tasks --verify [P1|P2|P3] 실행 시:
+
+1. 지정된 범위의 task 파일 로드 (없으면 전체)
+2. 각 task의 specs 참조 존재 여부만 확인
+3. 문제 있으면 보고, 수정하지 않음
+
+결과:
+✅ task-auth.md: 모든 참조 유효
+❌ task-portfolio.md: specs/db/accounts.md 없음
+```
+
+---
+
 ### 3. 관련 Task 식별
 
-#### 도메인 → Task 매핑 테이블
-| 도메인/테이블 패턴 | 관련 Task |
-|------------------|-----------|
-| users, user_*, auth* | task-auth.md |
-| portfolios, portfolio_* | task-portfolio.md |
-| accounts, account_* | task-portfolio.md (또는 별도) |
-| notifications, notification_* | task-notification.md |
-| stocks, rebalancing* | task-stock-rebalancing.md |
-| admin*, announcements | task-admin-*.md |
-| posts, comments, likes | task-community-*.md |
+#### 도메인 → Task 동적 매핑
+
+```
+매핑 방식 (자동 추론):
+
+1. tasks/{Phase}/*.md 파일 스캔
+2. 각 task 파일의 프론트매터에서 domain 필드 추출
+3. 스펙의 도메인과 task의 domain 매칭
+
+예시:
+- specs/db/auth/users.md → domain: auth
+- task-auth.md (domain: auth) 와 매칭
+
+매칭 실패 시:
+- 사용자에게 확인 요청 (4-D 참조)
+```
 
 ### 4. Task 파일 업데이트
 
@@ -92,21 +178,17 @@ CHANGELOG에서 추출:
 
 다음 스펙들은 어디에 추가해야 할지 결정이 필요합니다:
 
-### accounts 도메인 (3개)
-- accounts.md
-- account-stock-entries.md
-- account-cash-entries.md
+### {domain} 도메인 ({n}개)
+- {spec1}.md
+- {spec2}.md
+- ...
 
 **기존 Task 목록:**
-1. task-auth.md
-2. task-portfolio.md
-3. task-notification.md
-4. task-stock-rebalancing.md
-5. task-admin-*.md
+(tasks/ 디렉토리에서 동적으로 스캔)
 
 **선택:**
 - [ ] 기존 task에 포함 → 번호 입력: ___
-- [ ] 새 task 생성: task-accounts.md ⭐ (추천)
+- [ ] 새 task 생성: task-{domain}.md ⭐ (추천)
 - [ ] 무시 (task 불필요)
 ```
 
@@ -158,19 +240,17 @@ CHANGELOG에서 추출:
 # Task 동기화 결과
 
 ## 변경 소스
-- 📁 CHANGELOG: _processed/2026-01-16_0028/CHANGELOG.md
+- 📁 CHANGELOG: _processed/{datetime}/CHANGELOG.md
 
-## 업데이트된 Task 파일 (3개)
+## 업데이트된 Task 파일 ({n}개)
 
 | Task | 추가된 스펙 | 제거된 스펙 |
 |------|------------|------------|
-| task-auth.md | user-consents.md, token-vault.md, settings.md | - |
-| task-portfolio.md | accounts.md, portfolio-snapshots.md | - |
-| task-notification.md | notification-types.md, device-tokens.md | - |
+| task-{domain}.md | {추가된 스펙 목록} | {제거된 스펙 목록} |
 
-## 관련 Task 없음 (2개)
-- audit-logs.md → 로그 테이블 (task 불필요)
-- announcements.md → 💡 새 task 생성 검토 필요
+## 관련 Task 없음 ({n}개)
+- {spec}.md → 로그 테이블 (task 불필요)
+- {spec}.md → 💡 새 task 생성 검토 필요
 ```
 
 ## Task 파일 형식 참고
@@ -180,14 +260,13 @@ CHANGELOG에서 추출:
 ## 스펙 참조
 
 ### API
--   `../../specs/api/auth/google-callback.md`
+-   `../../specs/api/{domain}/{endpoint}.md`
 
 ### DB
--   `../../specs/db/users.md`
--   `../../specs/db/user-consents.md`    ← 새로 추가
+-   `../../specs/db/{domain}/{table}.md`
 
 ### UI
--   `../../specs/ui/auth/login-screen.md`
+-   `../../specs/ui/{domain}/{screen}.md`
 ```
 
 ### 체크리스트 섹션 (선택적 업데이트)
