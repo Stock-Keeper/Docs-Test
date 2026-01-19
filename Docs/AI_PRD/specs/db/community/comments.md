@@ -1,66 +1,86 @@
 ---
 type: db
 phase: P2
-table: comments, replies
+table: community_article_replies
 related:
   api:
     - ../api/community/comment-create.md
+    - ../api/community/reply-create.md
   db:
-    - community/posts.md
+    - community/articles.md
+    - community/reply-likes.md
 ---
 
-# comments 테이블
+# community_article_replies 테이블
+
+> 기존 `comments` + `replies` 테이블을 통합 대체
 
 ## 개요
-게시글 댓글 저장
+
+커뮤니티 게시물의 댓글과 대댓글을 자기참조 구조로 통합 관리
 
 ## 스키마
 
 ```sql
-CREATE TABLE comments (
-  id VARCHAR(36) PRIMARY KEY,
-  post_id VARCHAR(36) NOT NULL,
-  user_id VARCHAR(36) NOT NULL,
-  content VARCHAR(500) NOT NULL,
-  is_deleted BOOLEAN DEFAULT FALSE,
+-- 커뮤니티 댓글 (기존 comments + replies 통합 대체)
+CREATE TABLE community_article_replies (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,                           -- 작성자
+  article_id INT NOT NULL,                        -- 게시물
+  content TEXT NOT NULL,                          -- 댓글 내용
+  parent_reply_id INT,                            -- 대댓글 자기참조 (NULL이면 최상위 댓글)
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP,
+  is_delete BOOLEAN DEFAULT FALSE,
+  delete_at TIMESTAMP,
   
-  FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  INDEX idx_comments_post (post_id),
-  INDEX idx_comments_user (user_id),
-  INDEX idx_comments_created (created_at)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- P3: 대댓글 테이블
-CREATE TABLE replies (
-  id VARCHAR(36) PRIMARY KEY,
-  comment_id VARCHAR(36) NOT NULL,
-  user_id VARCHAR(36) NOT NULL,
-  content VARCHAR(500) NOT NULL,
-  is_deleted BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  
-  FOREIGN KEY (comment_id) REFERENCES comments(id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  INDEX idx_replies_comment (comment_id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (article_id) REFERENCES community_articles(id) ON DELETE CASCADE,
+  FOREIGN KEY (parent_reply_id) REFERENCES community_article_replies(id) ON DELETE CASCADE,
+  INDEX idx_replies_article_id (article_id),
+  INDEX idx_replies_article_delete (article_id, is_delete)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
-## 컬럼 상세 (comments)
+## 컬럼 상세
 
 | 컬럼 | 타입 | 필수 | 설명 | Phase |
 |------|------|------|------|-------|
-| id | UUID | Y | PK | P2 |
-| post_id | UUID | Y | 게시글 ID (FK) | P2 |
-| user_id | UUID | Y | 작성자 ID (FK) | P2 |
-| content | VARCHAR(500) | Y | 댓글 내용 | P2 |
-| is_deleted | BOOLEAN | Y | 삭제 여부 (soft delete) | P2 |
+| id | INT | Y | PK, AUTO_INCREMENT | P2 |
+| user_id | INT | Y | 작성자 ID (FK) | P2 |
+| article_id | INT | Y | 게시물 ID (FK) | P2 |
+| content | TEXT | Y | 댓글 내용 | P2 |
+| parent_reply_id | INT | N | 상위 댓글 ID (자기참조) | P2 |
 | created_at | TIMESTAMP | Y | 작성일 | P2 |
-| updated_at | TIMESTAMP | Y | 수정일 | P2 |
+| updated_at | TIMESTAMP | N | 수정일 | P2 |
+| is_delete | BOOLEAN | Y | 논리적 삭제 | P2 |
+| delete_at | TIMESTAMP | N | 삭제 일시 | P2 |
+
+## 자기참조 구조
+
+- `parent_reply_id = NULL` → 최상위 댓글
+- `parent_reply_id = 다른 댓글 ID` → 대댓글
+
+## 비즈니스 규칙
+
+- 대댓글의 대댓글은 허용하지 않음 (1단계 깊이만)
+- 삭제 시 soft delete (`is_delete = TRUE`, `delete_at` 기록)
+
+## 댓글 조회 쿼리
+
+```sql
+-- 게시물의 모든 댓글 조회 (최상위 댓글만)
+SELECT * FROM community_article_replies 
+WHERE article_id = ? AND parent_reply_id IS NULL AND is_delete = FALSE
+ORDER BY created_at;
+
+-- 특정 댓글의 대댓글 조회
+SELECT * FROM community_article_replies 
+WHERE parent_reply_id = ? AND is_delete = FALSE
+ORDER BY created_at;
+```
 
 ## 관련 스펙
-- API: `../api/community/comment-create.md`
-- DB: `posts.md`
+
+- API: `../api/community/comment-create.md`, `../api/community/reply-create.md`
+- DB: `community/community-articles.md`, `community/reply-likes.md`
