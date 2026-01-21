@@ -5,8 +5,10 @@ domain: community
 status: not-started
 
 specs:
-  api: []
-  db: []
+  api:
+    - community/portfolio-copy.md
+  db:
+    - portfolio/portfolio-copies.md
   ui:
     - community/feed.md
 

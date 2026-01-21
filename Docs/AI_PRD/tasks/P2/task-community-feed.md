@@ -11,9 +11,11 @@ specs:
     - community/comment-create.md
     - community/like.md
   db:
-    - community/posts.md
+    - community/articles.md
+    - community/article-images.md
     - community/comments.md
     - community/likes.md
+    - community/bookmarks.md
   ui:
     - community/feed.md
 

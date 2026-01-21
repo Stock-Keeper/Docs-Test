@@ -4,6 +4,23 @@ description: _staging/의 정형화된 초안을 최종 specs/에 반영
 
 // turbo-all
 
+## 기본 경로 (⚠️ 필수 확인)
+
+```
+PRD_ROOT = Docs/AI_PRD
+├── _staging/        # 여기서 읽음
+├── _processed/      # 여기에 아카이브
+├── specs/           # 여기에 생성/수정
+│   ├── api/
+│   ├── db/
+│   └── ui/
+└── _inbox/          # 완료 시 이동
+```
+
+> **워크스페이스 루트가 아닌 `Docs/AI_PRD/` 하위에서 작업해야 함!**
+
+---
+
 # /prd-process 워크플로우
 
 PRD `_staging/` 디렉토리의 정형화된 초안들을 최종 스펙 파일로 변환하여 `specs/`에 반영합니다.

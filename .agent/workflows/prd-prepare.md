@@ -3,6 +3,20 @@ description: PRD inbox의 자유 형식 파일을 정형화된 초안으로 변�
 ---
 // turbo-all
 
+## 기본 경로 (⚠️ 필수 확인)
+
+```
+PRD_ROOT = Docs/AI_PRD
+├── _inbox/          # 원본 입력 ← 여기서 읽음
+├── _staging/        # 정형화된 초안 ← 여기에 생성
+├── _processed/      # 처리 완료 아카이브
+└── specs/           # 기존 스펙 (비교용)
+```
+
+> **워크스페이스 루트가 아닌 `Docs/AI_PRD/` 하위에서 작업해야 함!**
+
+---
+
 # /prd-prepare 워크플로우
 
 PRD `_inbox/` 디렉토리의 자유 형식 파일들을 분석하여 `_staging/`에 정형화된 초안을 생성합니다.
