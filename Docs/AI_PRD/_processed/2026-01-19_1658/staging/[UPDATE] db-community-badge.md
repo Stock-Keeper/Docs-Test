@@ -184,7 +184,7 @@ CREATE TABLE user_badges (
 
 **2. rankings 테이블 처리**
 
-- [ ] 옵션 A (추천) - 별도 서브도메인으로 분리 (community-ranking)
+- [X] 옵션 A (추천) - 별도 서브도메인으로 분리 (community-ranking)
 - [ ] 옵션 B - 현재 rankings-badges.md 그대로 유지
 - [ ] 옵션 C - badges만 분리, rankings는 rankings-badges.md에 유지
 

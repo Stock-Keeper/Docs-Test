@@ -4,10 +4,10 @@ description: 모든 API, DB, UI 스펙 문서의 인덱스
 role: 사람이 전체 구조를 파악하고, AI가 스펙 목록을 빠르게 조회하는 데 사용
 spec_count:
   api: 45
-  db: 27
+  db: 38
   ui: 13
-  total: 85
-last_updated: 2026-01-16
+  total: 96
+last_updated: 2026-01-20
 ---
 
 # 스펙 인덱스
@@ -134,11 +134,24 @@ last_updated: 2026-01-16
 
 | 파일 | 테이블명 | 설명 | Phase |
 |------|----------|------|:-----:|
-| [posts.md](db/community/posts.md) | `posts` | 게시글 | P2 |
-| [comments.md](db/community/comments.md) | `comments` | 댓글 | P2 |
-| [likes.md](db/community/likes.md) | `post_likes` | 좋아요 | P2 |
-| [follows.md](db/community/follows.md) | `follows` | 팔로우 | P3 |
-| [rankings-badges.md](db/community/rankings-badges.md) | `rankings`, `badges` | 랭킹/배지 | P3 |
+| [profiles.md](db/community/profiles.md) | `community_profiles` | 커뮤니티 프로필 | P2 |
+| [settings.md](db/community/settings.md) | `community_settings` | 커뮤니티 설정 | P2 |
+| [nickname-histories.md](db/community/nickname-histories.md) | `nickname_histories` | 닉네임 변경 이력 | P2 |
+| [articles.md](db/community/articles.md) | `community_articles` | 게시글 | P2 |
+| [article-images.md](db/community/article-images.md) | `community_article_images` | 게시글 이미지 | P2 |
+| [article-categories.md](db/community/article-categories.md) | `community_article_categories` | 게시글 카테고리 | P2 |
+| [bookmarks.md](db/community/bookmarks.md) | `community_bookmarks` | 북마크 | P2 |
+| [comments.md](db/community/comments.md) | `community_article_replies` | 댓글 | P2 |
+| [likes.md](db/community/likes.md) | `community_article_likes` | 좋아요 | P2 |
+| [reports.md](db/community/reports.md) | `reports` | 신고 | P2 |
+| [report-reasons.md](db/community/report-reasons.md) | `report_reasons` | 신고 사유 | P2 |
+| [user-suspensions.md](db/community/user-suspensions.md) | `user_suspensions` | 사용자 정지 이력 | P2 |
+| [follows.md](db/community/follows.md) | `user_follows` | 팔로우 | P2 |
+| [user-blocks.md](db/community/user-blocks.md) | `user_blocks` | 사용자 차단 | P2 |
+| [rankings.md](db/community/rankings.md) | `rankings` | 랭킹 스냅샷 | P3 |
+| [badges.md](db/community/badges.md) | `badges`, `user_badges` | 뱃지 | P3 |
+| [reply-likes.md](db/community/reply-likes.md) | `community_reply_likes` | 대댓글 좋아요 | P2 |
+| [search-histories.md](db/community/search-histories.md) | `search_histories` | 검색 기록 | P2 |
 
 ### admin (관리자)
 

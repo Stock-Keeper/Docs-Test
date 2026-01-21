@@ -4,6 +4,25 @@ description: PRD 스펙 전체를 점검하여 중복, 누락, 불일치 검출
 
 // turbo-all
 
+## 기본 경로 (⚠️ 필수 확인)
+
+```
+PRD_ROOT = Docs/AI_PRD
+├── specs/           # 여기를 검증
+│   ├── api/
+│   ├── db/
+│   └── ui/
+├── tasks/           # Task 파일 검증
+│   ├── P1/
+│   ├── P2/
+│   └── P3/
+└── _inbox/          # 결과 파일 생성
+```
+
+> **워크스페이스 루트가 아닌 `Docs/AI_PRD/` 하위에서 작업해야 함!**
+
+---
+
 # /prd-validate 워크플로우
 
 PRD `specs/` 디렉토리 전체를 스캔하여 일관성, 중복, 누락을 점검합니다.

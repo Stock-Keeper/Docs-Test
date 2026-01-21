@@ -3,6 +3,20 @@ description: PRD inbox의 자유 형식 파일을 정형화된 초안으로 변�
 ---
 // turbo-all
 
+## 기본 경로 (⚠️ 필수 확인)
+
+```
+PRD_ROOT = Docs/AI_PRD
+├── _inbox/          # 원본 입력 ← 여기서 읽음
+├── _staging/        # 정형화된 초안 ← 여기에 생성
+├── _processed/      # 처리 완료 아카이브
+└── specs/           # 기존 스펙 (비교용)
+```
+
+> **워크스페이스 루트가 아닌 `Docs/AI_PRD/` 하위에서 작업해야 함!**
+
+---
+
 # /prd-prepare 워크플로우
 
 PRD `_inbox/` 디렉토리의 자유 형식 파일들을 분석하여 `_staging/`에 정형화된 초안을 생성합니다.
@@ -30,11 +44,29 @@ specs/
 
 ```
 _inbox/ (자유형식) → [/prd-prepare] → _staging/ (정형화) → [/prd-process] → specs/ (최종)
+                              ↓
+                     BATCH.txt 생성 (배치 타임스탬프)
+                              ↓
+                     _processed/{BATCH}/ (아카이브)
 ```
 
 ---
 
 ## 워크플로우 단계 (도메인 지정 시)
+
+### 0. 배치 관리 (BATCH.txt)
+
+```
+1. _staging/BATCH.txt 존재 여부 확인
+2. 없으면 → 새로 생성 (내용: 현재 시간, 예: 2026-01-19_1653)
+3. 있으면 → 기존 배치에 추가하는 것으로 간주 (건드리지 않음)
+
+PowerShell 예시:
+$batchFile = "Docs/AI_PRD/_staging/BATCH.txt"
+if (-not (Test-Path $batchFile)) {
+    Get-Date -Format "yyyy-MM-dd_HHmm" | Out-File $batchFile -Encoding UTF8
+}
+```
 
 ### 1. Inbox 스캔 및 필터링
 
@@ -191,11 +223,12 @@ _inbox/ (자유형식) → [/prd-prepare] → _staging/ (정형화) → [/prd-pr
    검토 완료 후: /prd-process
 ```
 
-### 8. 원본 유지
+### 8. 원본 및 배치 유지
 
 ```
 - _inbox/ 파일은 그대로 유지 (삭제하지 않음)
-- /prd-process 완료 후에만 _processed/로 이동
+- BATCH.txt는 /prd-process 완료 시까지 유지
+- /prd-process 완료 후 _processed/{BATCH}/로 이동 + BATCH.txt 삭제
 ```
 
 ---

@@ -4,6 +4,23 @@ description: _staging/의 정형화된 초안을 최종 specs/에 반영
 
 // turbo-all
 
+## 기본 경로 (⚠️ 필수 확인)
+
+```
+PRD_ROOT = Docs/AI_PRD
+├── _staging/        # 여기서 읽음
+├── _processed/      # 여기에 아카이브
+├── specs/           # 여기에 생성/수정
+│   ├── api/
+│   ├── db/
+│   └── ui/
+└── _inbox/          # 완료 시 이동
+```
+
+> **워크스페이스 루트가 아닌 `Docs/AI_PRD/` 하위에서 작업해야 함!**
+
+---
+
 # /prd-process 워크플로우
 
 PRD `_staging/` 디렉토리의 정형화된 초안들을 최종 스펙 파일로 변환하여 `specs/`에 반영합니다.
@@ -13,10 +30,11 @@ PRD `_staging/` 디렉토리의 정형화된 초안들을 최종 스펙 파일�
 ## 파이프라인
 ```
 _inbox/ → [/prd-prepare] → _staging/ → [/prd-process] → specs/
-                              ↑ 여기서 읽음   ↓ 완료된 파일
-                                        _processed/{datetime}/staging/
+                   ↓              ↑ 여기서 읽음   ↓ 완료된 파일
+            BATCH.txt 생성                 BATCH.txt 읽기
+                                        _processed/{BATCH}/staging/
                                               ↓ staging 모두 완료 시
-                                        _processed/{datetime}/ (inbox 파일 이동)
+                                        _processed/{BATCH}/ (inbox 이동 + BATCH.txt 삭제)
 ```
 
 ## 실행 옵션
@@ -50,14 +68,26 @@ CHANGELOG.md 생성
 
 ## 워크플로우 단계 (도메인 지정 시)
 
-### 1. Staging 스캔 및 필터링
+### 1. Staging 스캔 및 배치 확인
 
 ```
-1. AI_PRD/_staging/ 디렉토리의 모든 파일 목록 확인 (README.md 제외)
-2. 빈 경우 "처리할 파일이 없습니다. /prd-prepare를 먼저 실행하세요" 알림 후 종료
-3. 도메인 지정 시: 해당 도메인 파일만 필터링
+1. AI_PRD/_staging/BATCH.txt 존재 확인
+   - 없으면: "BATCH.txt가 없습니다. /prd-prepare를 먼저 실행하세요" 알림 후 종료
+   - 있으면: 내용 읽어서 $batch 변수에 저장 (예: 2026-01-19_1653)
+
+2. AI_PRD/_staging/ 디렉토리의 모든 파일 목록 확인 (README.md, BATCH.txt 제외)
+3. 빈 경우 "처리할 파일이 없습니다" 알림 후 종료
+4. 도메인 지정 시: 해당 도메인 파일만 필터링
    - 예: /prd-process community-profile
    - 매칭: [NEW] db-community-profile.md, [UPDATE] api-community-profile.md 등
+
+PowerShell 예시:
+$batchFile = "Docs/AI_PRD/_staging/BATCH.txt"
+if (-not (Test-Path $batchFile)) {
+    Write-Host "❌ BATCH.txt가 없습니다. /prd-prepare를 먼저 실행하세요"
+    return
+}
+$batch = Get-Content $batchFile -Raw | ForEach-Object { $_.Trim() }
 ```
 
 ### 2. 파일별 분석
@@ -93,17 +123,16 @@ CHANGELOG.md 생성
    - 파일을 하위 디렉토리에 저장
 ```
 
-#### 하위 디렉토리 생성 규칙
-```
-파일명 패턴: [NEW] {type}-{domain}-{subdomain}.md
-  ↓ 변환
-경로: specs/{type}/{domain}/{table-name}.md
+#### 테이블명 → 파일명 변환 규칙
 
-예시:
-- [NEW] db-community-profile.md의 community_profiles
-  → specs/db/community/community-profiles.md
-- [UPDATE] db-community-article.md의 community_articles
-  → specs/db/community/community-articles.md (기존 posts.md 대체 또는 업데이트)
+```
+1. 도메인 prefix 제거: {domain}_{remaining} → {remaining}
+2. 언더스코어 → 하이픈: _ → -
+3. 확장자 추가: .md
+
+변환 공식:
+  테이블: {domain}_{remaining_name}
+  파일:   specs/{type}/{domain}/{remaining-name}.md
 ```
 
 #### 4-B. 수정 ([UPDATE])
@@ -141,14 +170,18 @@ CHANGELOG.md 생성
 
 ### 7. Staging 파일 이동 (도메인별)
 
-> **핵심**: 처리된 staging 파일만 _processed로 이동
+> **핵심**: BATCH.txt를 읽어 동일한 배치 폴더로 이동
+> 
+> ⚠️ **종료 조건**: 현재 도메인의 파일 이동이 완료되면 **반드시 사용자에게 결과를 보고하고 종료**합니다.
+> 다음 도메인 처리는 사용자가 별도로 `/prd-process {다음 도메인}` 명령을 실행해야 합니다.
+> **절대로 자동으로 다음 도메인을 처리하지 마세요.**
 
 **Windows (PowerShell):**
 
 ```powershell
-# Step 1: 아카이브 폴더 구조 확인/생성
-$datetime = Get-Date -Format "yyyy-MM-dd_HHmm"
-$archivePath = "Docs/AI_PRD/_processed/$datetime"
+# Step 1: BATCH.txt에서 배치 ID 읽기
+$batch = Get-Content "Docs/AI_PRD/_staging/BATCH.txt" -Raw | ForEach-Object { $_.Trim() }
+$archivePath = "Docs/AI_PRD/_processed/$batch"
 $stagingArchive = "$archivePath/staging"
 
 # staging 폴더가 아직 없으면 생성
@@ -163,11 +196,19 @@ if (-not (Test-Path $stagingArchive)) {
 Move-Item "Docs/AI_PRD/_staging/*community-profile*" -Destination $stagingArchive -Force
 ```
 
+> ⛔ **STOP - 무한루프 방지 지시 (AI 필독)**
+>
+> 1. **현재 도메인 파일만 이동**했으므로, 다른 도메인 파일이 staging에 남아있는 것은 **정상**입니다.
+> 2. 남은 파일 때문에 "다시 이동 시도"하지 마세요. **이것은 오류가 아닙니다.**
+> 3. 현재 도메인 처리가 완료되면 **즉시 사용자에게 결과 보고 후 종료**하세요.
+> 4. 다음 도메인은 **사용자가 별도로 호출**해야 합니다.
+> 5. **Step 8로 자동 진행하지 마세요** - Step 8은 마지막 도메인 처리 시에만 실행됩니다.
+
 ### 8. Staging 완료 확인 및 Inbox 이동
 
 ```powershell
-# Step 3: staging이 비었는지 확인 (README.md 제외)
-$remaining = Get-ChildItem "Docs/AI_PRD/_staging/" -Exclude "README.md"
+# Step 3: staging이 비었는지 확인 (README.md, BATCH.txt 제외)
+$remaining = Get-ChildItem "Docs/AI_PRD/_staging/" -Exclude "README.md", "BATCH.txt"
 
 if ($remaining.Count -eq 0) {
     # staging이 비었으면 inbox 파일들도 이동
@@ -176,9 +217,9 @@ if ($remaining.Count -eq 0) {
     # inbox 파일들을 아카이브 루트로 이동
     Get-ChildItem "Docs/AI_PRD/_inbox/" -Exclude "README.md" | Move-Item -Destination $archivePath -Force
     
-    # staging 폴더 내용물을 아카이브 루트로 병합 (선택적)
-    # Get-ChildItem $stagingArchive | Move-Item -Destination $archivePath -Force
-    # Remove-Item $stagingArchive -Force
+    # BATCH.txt 삭제 (배치 완료)
+    Remove-Item "Docs/AI_PRD/_staging/BATCH.txt" -Force
+    Write-Host "🗑️ BATCH.txt 삭제 완료 (배치 종료)"
     
     Write-Host "✅ 처리 완료! 아카이브 위치: $archivePath"
 } else {

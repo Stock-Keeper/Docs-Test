@@ -11,7 +11,8 @@ specs:
     - community/ranking.md
   db:
     - community/follows.md
-    - community/rankings-badges.md
+    - community/rankings.md
+    - community/badges.md
   ui: []
 
 tech:

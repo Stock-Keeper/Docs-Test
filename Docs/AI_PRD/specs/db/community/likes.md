@@ -1,69 +1,66 @@
 ---
 type: db
 phase: P2
-table: post_likes, portfolio_likes
+table: community_article_likes
 related:
   api:
     - ../api/community/like.md
+  db:
+    - community/articles.md
 ---
 
-# 좋아요 테이블 (post_likes, portfolio_likes)
+# community_article_likes 테이블
+
+> 기존 `post_likes` 테이블을 대체
 
 ## 개요
-게시글/포트폴리오 좋아요 기록
+
+커뮤니티 게시물에 대한 좋아요 기록
 
 ## 스키마
 
 ```sql
--- 게시글 좋아요
-CREATE TABLE post_likes (
+-- 커뮤니티 게시물 좋아요 (기존 post_likes 대체)
+CREATE TABLE community_article_likes (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  post_id VARCHAR(36) NOT NULL,
-  user_id VARCHAR(36) NOT NULL,
+  user_id INT NOT NULL,                           -- 좋아요 누른 사용자
+  article_id INT NOT NULL,                        -- 게시물
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   
-  FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  UNIQUE INDEX idx_post_likes_unique (post_id, user_id),
-  INDEX idx_post_likes_user (user_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- 포트폴리오 좋아요
-CREATE TABLE portfolio_likes (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  portfolio_id VARCHAR(36) NOT NULL,
-  user_id VARCHAR(36) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  
-  FOREIGN KEY (portfolio_id) REFERENCES portfolios(id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  UNIQUE INDEX idx_portfolio_likes_unique (portfolio_id, user_id),
-  INDEX idx_portfolio_likes_user (user_id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (article_id) REFERENCES community_articles(id) ON DELETE CASCADE,
+  UNIQUE INDEX idx_article_likes_user_article (user_id, article_id),
+  INDEX idx_article_likes_article (article_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## 컬럼 상세
 
-| 컬럼 | 타입 | 필수 | 설명 |
-|------|------|------|------|
-| id | INT | Y | PK, AUTO_INCREMENT |
-| post_id / portfolio_id | UUID | Y | 대상 ID (FK) |
-| user_id | UUID | Y | 좋아요 한 사용자 ID (FK) |
-| created_at | TIMESTAMP | Y | 좋아요 시각 |
+| 컬럼 | 타입 | 필수 | 설명 | Phase |
+|------|------|------|------|-------|
+| id | INT | Y | PK, AUTO_INCREMENT | P2 |
+| user_id | INT | Y | 좋아요 누른 사용자 (FK) | P2 |
+| article_id | INT | Y | 게시물 ID (FK) | P2 |
+| created_at | TIMESTAMP | Y | 좋아요 일시 | P2 |
 
 ## UNIQUE 제약
 
-- `(post_id, user_id)` - 사용자당 게시글별 1회
-- `(portfolio_id, user_id)` - 사용자당 포트폴리오별 1회
+- `(user_id, article_id)` - 사용자당 게시물당 1회만 좋아요 가능
+
+## 비즈니스 규칙
+
+- 좋아요 취소 시 레코드 DELETE
 
 ## 좋아요 여부 확인 쿼리
 
 ```sql
 SELECT EXISTS(
-  SELECT 1 FROM post_likes 
-  WHERE post_id = ? AND user_id = ?
+  SELECT 1 FROM community_article_likes 
+  WHERE article_id = ? AND user_id = ?
 ) as is_liked;
 ```
 
 ## 관련 스펙
+
 - API: `../api/community/like.md`
+- DB: `community/community-articles.md`

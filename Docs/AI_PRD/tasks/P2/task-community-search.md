@@ -10,6 +10,7 @@ specs:
     - community/portfolio-copy.md
   db:
     - portfolio/portfolio-copies.md
+    - community/search-histories.md
   ui:
     - community/search.md
 

@@ -4,6 +4,27 @@ description: CHANGELOG 기반으로 변경된 specs를 tasks에 동기화
 
 // turbo-all
 
+## 기본 경로 (⚠️ 필수 확인)
+
+```
+PRD_ROOT = Docs/AI_PRD
+├── _inbox/          # 원본 입력
+├── _staging/        # 정형화된 초안
+├── _processed/      # 처리 완료 아카이브
+├── specs/           # 최종 스펙
+│   ├── api/
+│   ├── db/
+│   └── ui/
+└── tasks/           # Task 파일
+    ├── P1/
+    ├── P2/
+    └── P3/
+```
+
+> **워크스페이스 루트가 아닌 `Docs/AI_PRD/` 하위에서 작업해야 함!**
+
+---
+
 # /prd-sync-tasks 워크플로우
 
 `/prd-process` 완료 후 생성된 CHANGELOG를 읽고, 관련 task 파일의 스펙 참조를 업데이트합니다.
