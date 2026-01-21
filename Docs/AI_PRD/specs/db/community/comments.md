@@ -3,12 +3,12 @@ type: db
 phase: P2
 table: community_article_replies
 related:
-  api:
-    - ../api/community/comment-create.md
-    - ../api/community/reply-create.md
-  db:
-    - community/articles.md
-    - community/reply-likes.md
+    api:
+        - specs/api/community/comment-create.md
+        - specs/api/community/reply-create.md
+    db:
+        - specs/db/community/articles.md
+        - specs/db/community/reply-likes.md
 ---
 
 # community_article_replies 테이블
@@ -33,7 +33,7 @@ CREATE TABLE community_article_replies (
   updated_at TIMESTAMP,
   is_delete BOOLEAN DEFAULT FALSE,
   delete_at TIMESTAMP,
-  
+
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (article_id) REFERENCES community_articles(id) ON DELETE CASCADE,
   FOREIGN KEY (parent_reply_id) REFERENCES community_article_replies(id) ON DELETE CASCADE,
@@ -44,17 +44,17 @@ CREATE TABLE community_article_replies (
 
 ## 컬럼 상세
 
-| 컬럼 | 타입 | 필수 | 설명 | Phase |
-|------|------|------|------|-------|
-| id | INT | Y | PK, AUTO_INCREMENT | P2 |
-| user_id | INT | Y | 작성자 ID (FK) | P2 |
-| article_id | INT | Y | 게시물 ID (FK) | P2 |
-| content | TEXT | Y | 댓글 내용 | P2 |
-| parent_reply_id | INT | N | 상위 댓글 ID (자기참조) | P2 |
-| created_at | TIMESTAMP | Y | 작성일 | P2 |
-| updated_at | TIMESTAMP | N | 수정일 | P2 |
-| is_delete | BOOLEAN | Y | 논리적 삭제 | P2 |
-| delete_at | TIMESTAMP | N | 삭제 일시 | P2 |
+| 컬럼            | 타입      | 필수 | 설명                    | Phase |
+| --------------- | --------- | ---- | ----------------------- | ----- |
+| id              | INT       | Y    | PK, AUTO_INCREMENT      | P2    |
+| user_id         | INT       | Y    | 작성자 ID (FK)          | P2    |
+| article_id      | INT       | Y    | 게시물 ID (FK)          | P2    |
+| content         | TEXT      | Y    | 댓글 내용               | P2    |
+| parent_reply_id | INT       | N    | 상위 댓글 ID (자기참조) | P2    |
+| created_at      | TIMESTAMP | Y    | 작성일                  | P2    |
+| updated_at      | TIMESTAMP | N    | 수정일                  | P2    |
+| is_delete       | BOOLEAN   | Y    | 논리적 삭제             | P2    |
+| delete_at       | TIMESTAMP | N    | 삭제 일시               | P2    |
 
 ## 자기참조 구조
 
@@ -70,12 +70,12 @@ CREATE TABLE community_article_replies (
 
 ```sql
 -- 게시물의 모든 댓글 조회 (최상위 댓글만)
-SELECT * FROM community_article_replies 
+SELECT * FROM community_article_replies
 WHERE article_id = ? AND parent_reply_id IS NULL AND is_delete = FALSE
 ORDER BY created_at;
 
 -- 특정 댓글의 대댓글 조회
-SELECT * FROM community_article_replies 
+SELECT * FROM community_article_replies
 WHERE parent_reply_id = ? AND is_delete = FALSE
 ORDER BY created_at;
 ```

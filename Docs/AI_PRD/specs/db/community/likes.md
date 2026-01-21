@@ -3,10 +3,10 @@ type: db
 phase: P2
 table: community_article_likes
 related:
-  api:
-    - ../api/community/like.md
-  db:
-    - community/articles.md
+    api:
+        - specs/api/community/like.md
+    db:
+        - specs/db/community/articles.md
 ---
 
 # community_article_likes 테이블
@@ -26,7 +26,7 @@ CREATE TABLE community_article_likes (
   user_id INT NOT NULL,                           -- 좋아요 누른 사용자
   article_id INT NOT NULL,                        -- 게시물
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  
+
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (article_id) REFERENCES community_articles(id) ON DELETE CASCADE,
   UNIQUE INDEX idx_article_likes_user_article (user_id, article_id),
@@ -36,12 +36,12 @@ CREATE TABLE community_article_likes (
 
 ## 컬럼 상세
 
-| 컬럼 | 타입 | 필수 | 설명 | Phase |
-|------|------|------|------|-------|
-| id | INT | Y | PK, AUTO_INCREMENT | P2 |
-| user_id | INT | Y | 좋아요 누른 사용자 (FK) | P2 |
-| article_id | INT | Y | 게시물 ID (FK) | P2 |
-| created_at | TIMESTAMP | Y | 좋아요 일시 | P2 |
+| 컬럼       | 타입      | 필수 | 설명                    | Phase |
+| ---------- | --------- | ---- | ----------------------- | ----- |
+| id         | INT       | Y    | PK, AUTO_INCREMENT      | P2    |
+| user_id    | INT       | Y    | 좋아요 누른 사용자 (FK) | P2    |
+| article_id | INT       | Y    | 게시물 ID (FK)          | P2    |
+| created_at | TIMESTAMP | Y    | 좋아요 일시             | P2    |
 
 ## UNIQUE 제약
 
@@ -55,7 +55,7 @@ CREATE TABLE community_article_likes (
 
 ```sql
 SELECT EXISTS(
-  SELECT 1 FROM community_article_likes 
+  SELECT 1 FROM community_article_likes
   WHERE article_id = ? AND user_id = ?
 ) as is_liked;
 ```

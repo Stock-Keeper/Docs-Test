@@ -3,19 +3,20 @@ type: db
 phase: P2
 table: community_articles
 related:
-  api:
-    - ../api/community/post-create.md
-    - ../api/community/feed-list.md
-  db:
-    - community/comments.md
-    - community/article-images.md
-    - community/article-categories.md
-    - community/bookmarks.md
+    api:
+        - specs/api/community/post-create.md
+        - specs/api/community/feed-list.md
+    db:
+        - specs/db/community/comments.md
+        - specs/db/community/article-images.md
+        - specs/db/community/article-categories.md
+        - specs/db/community/bookmarks.md
 ---
 
 # community_articles 테이블
 
 ## 개요
+
 커뮤니티 게시글 저장 (기존 `posts` 테이블 대체)
 
 ## 스키마
@@ -49,26 +50,27 @@ CREATE TABLE community_articles (
 
 ## 컬럼 상세
 
-| 컬럼 | 타입 | 필수 | 설명 | Phase |
-|------|------|------|------|-------|
-| id | INT | Y | PK, AUTO_INCREMENT | P2 |
-| user_id | INT | Y | 작성자 ID (FK) | P2 |
-| category_id | INT | N | 말머리 카테고리 (FK) | P2 |
-| title | VARCHAR(100) | Y | 제목 | P2 |
-| content | TEXT | Y | 본문 | P2 |
-| copied_portfolio_id | INT | N | 공유 포트폴리오 사본 (FK) | P2 |
-| views | INT | Y | 조회수 | P2 |
-| like_count | INT | Y | 좋아요 수 (캐시) | P2 |
-| comment_count | INT | Y | 댓글 수 (캐시) | P2 |
-| visibility_status | ENUM | Y | 공개 상태 | P2 |
-| created_at | TIMESTAMP | Y | 작성일 | P2 |
-| updated_at | TIMESTAMP | N | 수정일 | P2 |
-| is_delete | BOOLEAN | Y | 논리적 삭제 | P2 |
-| delete_at | TIMESTAMP | N | 삭제 일시 | P2 |
+| 컬럼                | 타입         | 필수 | 설명                      | Phase |
+| ------------------- | ------------ | ---- | ------------------------- | ----- |
+| id                  | INT          | Y    | PK, AUTO_INCREMENT        | P2    |
+| user_id             | INT          | Y    | 작성자 ID (FK)            | P2    |
+| category_id         | INT          | N    | 말머리 카테고리 (FK)      | P2    |
+| title               | VARCHAR(100) | Y    | 제목                      | P2    |
+| content             | TEXT         | Y    | 본문                      | P2    |
+| copied_portfolio_id | INT          | N    | 공유 포트폴리오 사본 (FK) | P2    |
+| views               | INT          | Y    | 조회수                    | P2    |
+| like_count          | INT          | Y    | 좋아요 수 (캐시)          | P2    |
+| comment_count       | INT          | Y    | 댓글 수 (캐시)            | P2    |
+| visibility_status   | ENUM         | Y    | 공개 상태                 | P2    |
+| created_at          | TIMESTAMP    | Y    | 작성일                    | P2    |
+| updated_at          | TIMESTAMP    | N    | 수정일                    | P2    |
+| is_delete           | BOOLEAN      | Y    | 논리적 삭제               | P2    |
+| delete_at           | TIMESTAMP    | N    | 삭제 일시                 | P2    |
 
 ## 마이그레이션 노트
 
 > 기존 `posts` 테이블에서 변경됨
+>
 > - 테이블명: `posts` → `community_articles`
 > - `category` ENUM → `category_id` FK (정규화)
 > - `view_count` → `views`
@@ -76,6 +78,7 @@ CREATE TABLE community_articles (
 > - 추가 컬럼: `copied_portfolio_id`, `visibility_status`, `delete_at`
 
 ## 관련 스펙
+
 - API: `../api/community/post-create.md`
 - API: `../api/community/feed-list.md`
 - DB: `comments.md`, `article-images.md`, `article-categories.md`, `bookmarks.md`

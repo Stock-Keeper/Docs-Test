@@ -6,71 +6,74 @@ method: GET
 endpoint: /api/admin/monitoring/errors
 auth: admin
 related:
-  db:
-    - ../../db/error-logs.md
-  api:
-    - monitoring-errors-detail.md
+    db:
+        - specs/db/admin/error-logs.md
 ---
 
 # GET /api/admin/monitoring/errors
 
 ## 개요
+
 관리자 - 에러 로그 조회
 
 ## 스펙
 
 ### Request
+
 - **URL**: `/api/admin/monitoring/errors`
 - **Method**: `GET`
 - **Auth**: Bearer Token (ADMIN role 필수)
 
 ### Query Parameters
-| 파라미터 | 타입 | 필수 | 설명 | 기본값 |
-|----------|------|------|------|--------|
-| period | enum | N | TODAY, WEEK, MONTH, CUSTOM | TODAY |
-| startDate | date | period=CUSTOM 시 필수 | 시작일 (YYYY-MM-DD) | - |
-| endDate | date | period=CUSTOM 시 필수 | 종료일 (YYYY-MM-DD) | - |
-| level | enum | N | ERROR, WARN, INFO, ALL | ALL |
-| search | string | N | 에러 메시지 키워드 검색 | - |
-| page | int | N | 페이지 번호 | 1 |
-| limit | int | N | 페이지당 건수 | 50 |
+
+| 파라미터  | 타입   | 필수                  | 설명                       | 기본값 |
+| --------- | ------ | --------------------- | -------------------------- | ------ |
+| period    | enum   | N                     | TODAY, WEEK, MONTH, CUSTOM | TODAY  |
+| startDate | date   | period=CUSTOM 시 필수 | 시작일 (YYYY-MM-DD)        | -      |
+| endDate   | date   | period=CUSTOM 시 필수 | 종료일 (YYYY-MM-DD)        | -      |
+| level     | enum   | N                     | ERROR, WARN, INFO, ALL     | ALL    |
+| search    | string | N                     | 에러 메시지 키워드 검색    | -      |
+| page      | int    | N                     | 페이지 번호                | 1      |
+| limit     | int    | N                     | 페이지당 건수              | 50     |
 
 ## Response
 
 ### 성공 (200)
+
 ```json
 {
-  "data": [
-    {
-      "id": 123,
-      "level": "ERROR",
-      "errorCode": "500",
-      "message": "NullPointerException in RebalancingService",
-      "requestPath": "/api/portfolios/123/rebalance",
-      "requestMethod": "POST",
-      "userId": "uuid",
-      "createdAt": "2026-01-13T14:30:00Z"
+    "data": [
+        {
+            "id": 123,
+            "level": "ERROR",
+            "errorCode": "500",
+            "message": "NullPointerException in RebalancingService",
+            "requestPath": "/api/portfolios/123/rebalance",
+            "requestMethod": "POST",
+            "userId": "uuid",
+            "createdAt": "2026-01-13T14:30:00Z"
+        }
+    ],
+    "pagination": {
+        "currentPage": 1,
+        "totalPages": 5,
+        "totalItems": 234,
+        "limit": 50
+    },
+    "summary": {
+        "totalErrors": 150,
+        "totalWarns": 84,
+        "totalInfos": 0
     }
-  ],
-  "pagination": {
-    "currentPage": 1,
-    "totalPages": 5,
-    "totalItems": 234,
-    "limit": 50
-  },
-  "summary": {
-    "totalErrors": 150,
-    "totalWarns": 84,
-    "totalInfos": 0
-  }
 }
 ```
 
 ### 에러
-| 코드 | 상황 | 메시지 |
-|------|------|--------|
-| 401 | 인증 실패 | "로그인이 필요합니다" |
-| 403 | 권한 없음 | "관리자 권한이 필요합니다" |
+
+| 코드 | 상황      | 메시지                     |
+| ---- | --------- | -------------------------- |
+| 401  | 인증 실패 | "로그인이 필요합니다"      |
+| 403  | 권한 없음 | "관리자 권한이 필요합니다" |
 
 ## 구현 로직
 
@@ -88,5 +91,6 @@ related:
 ```
 
 ## 관련 스펙
+
 - DB: `../db/error-logs.md`
 - API: `monitoring-errors-detail.md`

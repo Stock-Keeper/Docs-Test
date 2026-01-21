@@ -6,53 +6,59 @@ method: POST
 endpoint: /api/auth/refresh
 auth: none
 related:
-  api:
-    - google-callback.md
-    - logout.md
-  db:
-    - ../../db/refresh-tokens.md
+    api:
+        - specs/api/auth/auth-google.md
+        - specs/api/auth/logout.md
+    db:
+        - specs/db/auth/token-vault.md
 ---
 
 # POST /api/auth/refresh
 
 ## 개요
+
 Refresh Token으로 새 Access Token 발급
 
 ## 스펙
 
 ### Request
+
 - **URL**: `/api/auth/refresh`
 - **Method**: `POST`
 - **Auth**: 불필요 (Refresh Token으로 인증)
 
 ### Headers
+
 ```
 Content-Type: application/json
 ```
 
 ### Body
+
 ```json
 {
-  "refresh_token": "string (필수)"
+    "refresh_token": "string (필수)"
 }
 ```
 
 ## Response
 
 ### 성공 (200)
+
 ```json
 {
-  "access_token": "string (JWT, 1시간)"
+    "access_token": "string (JWT, 1시간)"
 }
 ```
 
 ### 에러
-| 코드 | 상황 | 메시지 |
-|------|------|--------|
-| 400 | refresh_token 누락 | "Refresh Token이 필요합니다" |
-| 401 | 유효하지 않은 토큰 | "유효하지 않은 토큰입니다" |
-| 401 | 만료된 토큰 | "토큰이 만료되었습니다. 다시 로그인해주세요" |
-| 401 | DB에 없는 토큰 (로그아웃됨) | "유효하지 않은 토큰입니다" |
+
+| 코드 | 상황                        | 메시지                                       |
+| ---- | --------------------------- | -------------------------------------------- |
+| 400  | refresh_token 누락          | "Refresh Token이 필요합니다"                 |
+| 401  | 유효하지 않은 토큰          | "유효하지 않은 토큰입니다"                   |
+| 401  | 만료된 토큰                 | "토큰이 만료되었습니다. 다시 로그인해주세요" |
+| 401  | DB에 없는 토큰 (로그아웃됨) | "유효하지 않은 토큰입니다"                   |
 
 ## 구현 로직
 
@@ -75,32 +81,33 @@ Content-Type: application/json
 ```javascript
 // axios 인터셉터 예시
 axios.interceptors.response.use(
-  response => response,
-  async error => {
-    if (error.response?.status === 401) {
-      const refreshToken = await SecureStore.getItemAsync('refresh_token');
-      if (refreshToken) {
-        try {
-          const { data } = await axios.post('/api/auth/refresh', {
-            refresh_token: refreshToken
-          });
-          await SecureStore.setItemAsync('access_token', data.access_token);
-          // 원래 요청 재시도
-          error.config.headers.Authorization = `Bearer ${data.access_token}`;
-          return axios.request(error.config);
-        } catch {
-          // 갱신 실패 → 로그아웃
-          await logout();
-          navigation.navigate('Login');
+    (response) => response,
+    async (error) => {
+        if (error.response?.status === 401) {
+            const refreshToken = await SecureStore.getItemAsync('refresh_token');
+            if (refreshToken) {
+                try {
+                    const { data } = await axios.post('/api/auth/refresh', {
+                        refresh_token: refreshToken,
+                    });
+                    await SecureStore.setItemAsync('access_token', data.access_token);
+                    // 원래 요청 재시도
+                    error.config.headers.Authorization = `Bearer ${data.access_token}`;
+                    return axios.request(error.config);
+                } catch {
+                    // 갱신 실패 → 로그아웃
+                    await logout();
+                    navigation.navigate('Login');
+                }
+            }
         }
-      }
-    }
-    return Promise.reject(error);
-  }
+        return Promise.reject(error);
+    },
 );
 ```
 
 ## 관련 스펙
+
 - API: `google-callback.md`
 - API: `logout.md`
 - DB: `../db/refresh-tokens.md`

@@ -6,62 +6,68 @@ method: PUT
 endpoint: /api/users/profile
 auth: required
 related:
-  db:
-    - ../../db/users.md
-  ui:
-    - ../../ui/auth/profile-input.md
+    db:
+        - specs/db/auth/users.md
+    ui:
+        - specs/ui/auth/profile-input.md
 ---
 
 # PUT /api/users/profile
 
 ## 개요
+
 프로필 입력/수정 (최초 로그인 후 필수)
 
 ## 스펙
 
 ### Request
+
 - **URL**: `/api/users/profile`
 - **Method**: `PUT`
 - **Auth**: Bearer Token 필수
 
 ### Headers
+
 ```
 Authorization: Bearer {access_token}
 Content-Type: application/json
 ```
 
 ### Body
+
 ```json
 {
-  "nickname": "string (필수, 1-20자)",
-  "profile_picture": "string (선택, URL)"
+    "nickname": "string (필수, 1-20자)",
+    "profile_picture": "string (선택, URL)"
 }
 ```
 
-| 필드 | 타입 | 필수 | 설명 |
-|------|------|------|------|
-| nickname | string | Y | 1~20자, 특수문자 제한 |
-| profile_picture | string | N | 프로필 이미지 URL (없으면 Google 기본값 유지) |
+| 필드            | 타입   | 필수 | 설명                                          |
+| --------------- | ------ | ---- | --------------------------------------------- |
+| nickname        | string | Y    | 1~20자, 특수문자 제한                         |
+| profile_picture | string | N    | 프로필 이미지 URL (없으면 Google 기본값 유지) |
 
 ## Response
 
 ### 성공 (200)
+
 ```json
 {
-  "id": "uuid",
-  "email": "user@example.com",
-  "nickname": "홍길동",
-  "profile_picture": "https://...",
-  "is_profile_complete": true
+    "id": "uuid",
+    "email": "user@example.com",
+    "nickname": "홍길동",
+    "profile_picture": "https://...",
+    "is_profile_complete": true
 }
 ```
 
 ### 에러
-| 코드 | 상황 | 메시지 |
-|------|------|--------|
-| 400 | nickname 누락 | "닉네임을 입력해주세요" |
-| 400 | nickname 길이 초과 | "닉네임은 1~20자 이내로 입력해주세요" |
-| 401 | 인증 실패 | "로그인이 필요합니다" |
+
+| 코드 | 상황               | 메시지                                |
+| ---- | ------------------ | ------------------------------------- |
+| 400  | nickname 누락      | "닉네임을 입력해주세요"               |
+| 400  | nickname 길이 초과 | "닉네임은 1~20자 이내로 입력해주세요" |
+| 401  | 인증 실패          | "로그인이 필요합니다"                 |
 
 ## 구현 로직
 
@@ -91,5 +97,6 @@ Content-Type: application/json
 ```
 
 ## 관련 스펙
+
 - DB: `../db/users.md`
 - UI: `../ui/auth/profile-input.md`
