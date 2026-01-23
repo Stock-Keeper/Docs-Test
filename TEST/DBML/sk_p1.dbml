@@ -1,12 +1,9 @@
 // 사용자 정보
 Table users {
   id integer [primary key, increment]
-  email varchar // 재가입자를 위해 null 허용
-  nickname varchar
-  bio text // 자기소개
+  email varchar [not null] // 탈퇴 후 재가입자를 고려해 유니크 해제
   provider enum ('GOOGLE', 'KAKAO', 'NAVER') // 소셜 제공자(현 구글)
   role enum ('USER', 'ADMIN') // 사용자, 관리자
-  profile_image_url varchar
   created_at timestamp // 가입 날짜
   updated_at timestamp // 업데이트 날짜
   membership_type enum ('FREE', 'PRO', 'EXPERT') // 멤버쉽 여부(free, pro, expert 같은 구분을 위해 enum 사용)
@@ -34,6 +31,11 @@ Table user_consents {
   version varchar // 동의한 약관 버전
   created_at timestamp
   updated_at timestamp
+
+  Indexes {
+    user_id [name: 'idx_user_consents_user_id']
+    (user_id, consent_type) [name: 'idx_user_consents_user_type']
+  }
 }
 
 // 토큰 암호화 저장소 (users, accounts의 토큰을 분리 저장)
@@ -110,7 +112,7 @@ Table portfolios {
   }
 }
 
-// 포트폴리오 내 종목 항목들
+// 포트폴리오 내 종목 항목
 Table portfolio_stock_entries {
   id integer [primary key, increment]
   portfolio_id integer [not null, ref: > portfolios.id]
@@ -144,7 +146,7 @@ Table portfolio_cash_entries {
   }
 }
 
-// 알림 설정
+// 포트폴리오 개별 알림 설정
 Table notification_settings {
   id integer [primary key, increment]
   portfolio_id integer [ref: - portfolios.id] // 포트폴리오와 1:1 관계
@@ -161,6 +163,7 @@ Table accounts {
   user_id integer [ref: > users.id] // 어떤 사용자의 계좌인지
   brokerage_name varchar // 증권사 명
   account_number varchar // 계좌 번호(AES-256 암호화)
+  account_number_iv varchar [not null] // 복호화용 IV
   // access_token, refresh_token은 token_vault 테이블로 이관
   is_connected boolean [default: false] // 현재 연결 여부
   created_at timestamp
@@ -173,7 +176,7 @@ Table accounts {
   }
 }
 
-// 계좌 내 종목 항목들
+// 계좌 내 종목 항목
 Table account_stock_entries {
   id integer [primary key, increment]
   account_id integer [not null, ref: > accounts.id]
