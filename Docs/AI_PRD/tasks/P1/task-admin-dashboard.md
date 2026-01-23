@@ -7,6 +7,7 @@ status: not-started
 specs:
   api:
     - admin/stats-overview.md
+    - admin/stats-users.md
   db: []
   ui:
     - admin/dashboard.md

@@ -16,6 +16,7 @@ specs:
     - community/comments.md
     - community/likes.md
     - community/bookmarks.md
+    - community/profiles.md
   ui:
     - community/feed.md
 
@@ -35,10 +36,10 @@ tech:
 
 - [ ] `CommunityController` 생성
   - [ ] `GET /api/community/feed` - 피드 조회
-  - [ ] `POST /api/community/posts` - 게시글 작성
-  - [ ] `GET /api/community/posts/{id}` - 게시글 상세
-  - [ ] `PUT /api/community/posts/{id}` - 게시글 수정
-  - [ ] `DELETE /api/community/posts/{id}` - 게시글 삭제
+  - [ ] `POST /api/community/articles` - 게시글 작성
+  - [ ] `GET /api/community/articles/{id}` - 게시글 상세
+  - [ ] `PUT /api/community/articles/{id}` - 게시글 수정
+  - [ ] `DELETE /api/community/articles/{id}` - 게시글 삭제
 - [ ] `CommentController` 생성
   - [ ] `GET /api/community/posts/{id}/comments` - 댓글 목록
   - [ ] `POST /api/community/posts/{id}/comments` - 댓글 작성
@@ -48,7 +49,8 @@ tech:
   - [ ] `POST /api/community/likes` - 좋아요 토글
 - [ ] 본인인증 검증 인터셉터 (`VerificationRequired`)
 - [ ] 이미지 업로드 (S3)
-- [ ] `Post`, `Comment`, `PostLike` 엔티티 생성
+- [ ] `CommunityArticle`, `Comment`, `ArticleLike` 엔티티 생성
+- [ ] `CommunityProfile` 엔티티 생성
 - [ ] Repository 생성
 
 ### Frontend (React Native)
@@ -72,10 +74,11 @@ tech:
 
 ### Database
 
-- [ ] `posts` 테이블 생성
-- [ ] `post_images` 테이블 생성
-- [ ] `comments` 테이블 생성
-- [ ] `post_likes` 테이블 생성
+- [ ] `community_articles` 테이블 생성
+- [ ] `community_article_images` 테이블 생성
+- [ ] `community_article_replies` (댓글) 테이블 생성
+- [ ] `community_article_likes` 테이블 생성
+- [ ] `community_profiles` 테이블 생성
 
 ## 완료 조건
 

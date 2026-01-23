@@ -6,7 +6,7 @@ status: not-started
 
 specs:
   api:
-    - auth/google-callback.md
+    - auth/auth-google.md
     - auth/refresh.md
     - auth/logout.md
     - auth/profile-update.md
