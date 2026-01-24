@@ -23,6 +23,7 @@ CREATE TABLE settings (
   is_notification BOOLEAN DEFAULT TRUE,
   is_privacy BOOLEAN DEFAULT FALSE,
   is_tutorial_completed BOOLEAN DEFAULT FALSE,
+  investment_type ENUM('STABLE', 'NEUTRAL', 'AGGRESSIVE') DEFAULT 'NEUTRAL',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
@@ -39,6 +40,7 @@ CREATE TABLE settings (
 | is_notification       | BOOLEAN   | Y    | 알림 허용             | P1    |
 | is_privacy            | BOOLEAN   | Y    | 개인정보 허용         | P1    |
 | is_tutorial_completed | BOOLEAN   | Y    | 튜토리얼 완료         | P1    |
+| investment_type       | ENUM      | Y    | 투자 성향 (STABLE/NEUTRAL/AGGRESSIVE) | P1 |
 | created_at            | TIMESTAMP | Y    | 생성일                | P1    |
 | updated_at            | TIMESTAMP | Y    | 수정일                | P1    |
 

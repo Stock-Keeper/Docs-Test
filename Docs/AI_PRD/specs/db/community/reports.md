@@ -20,7 +20,7 @@ related:
 CREATE TABLE reports (
   id INT AUTO_INCREMENT PRIMARY KEY,
   reporter_id INT NOT NULL,                       -- 신고자
-  target_type ENUM('ARTICLE', 'REPLY', 'USER') NOT NULL, -- 신고 대상 종류
+  target_type ENUM('POST', 'COMMENT', 'USER') NOT NULL,  -- 신고 대상 종류
   target_id INT NOT NULL,                         -- 대상 ID (target_type에 따라 다른 테이블 참조)
   report_reason_id INT,                           -- 신고 사유 (FK)
   description TEXT,                               -- 상세 사유
@@ -44,7 +44,7 @@ CREATE TABLE reports (
 | ---------------- | --------- | ---- | ----------------------------------- | ----- |
 | id               | INT       | Y    | PK, AUTO_INCREMENT                  | P2    |
 | reporter_id      | INT       | Y    | 신고자 ID (FK)                      | P2    |
-| target_type      | ENUM      | Y    | 신고 대상 종류 (ARTICLE/REPLY/USER) | P2    |
+| target_type      | ENUM      | Y    | 신고 대상 종류 (POST/COMMENT/USER)  | P2    |
 | target_id        | INT       | Y    | 대상 ID (다형성 참조)               | P2    |
 | report_reason_id | INT       | N    | 신고 사유 (FK)                      | P2    |
 | description      | TEXT      | N    | 상세 사유 (기타 선택 시)            | P2    |
@@ -58,8 +58,8 @@ CREATE TABLE reports (
 - 동일 사용자가 동일 대상을 중복 신고 시 → 기존 신고에 추가 기록 또는 무시
 - 관리자만 status 변경 가능 (관리자 수동 처리만)
 - `target_type`에 따른 `target_id` 참조:
-    - ARTICLE → `community_articles.id`
-    - REPLY → `community_article_replies.id`
+    - POST → `community_posts.id`
+    - COMMENT → `community_comments.id`
     - USER → `users.id`
 
 > [!NOTE]

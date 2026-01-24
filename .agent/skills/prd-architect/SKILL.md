@@ -201,7 +201,18 @@ PRD_ROOT = Docs/AI_PRD
      - CHANGELOG.md 생성
    ```
 
+   > [!CRITICAL] **마지막 staging 파일 처리 시 반드시 확인**
+   > staging 폴더에 README.md와 BATCH.txt만 남았다면, 이는 "모든 staging 완료" 상태입니다.
+   > 이 시점에서 **반드시** 다음을 수행하세요:
+   > 1. `_inbox/` 내 모든 파일/폴더 → `_processed/{batch}/`로 이동 (README.md 제외)
+   > 2. `_staging/BATCH.txt` 삭제
+   > 3. `_processed/{batch}/CHANGELOG.md` 생성
+   >
+   > **inbox 아카이브를 누락하면 다음 배치와 혼선이 발생합니다!**
+
 #### 결과 보고
+
+**개별 도메인 처리 시:**
 ```
 ✅ {domain} 도메인 처리 완료
 
@@ -209,7 +220,19 @@ PRD_ROOT = Docs/AI_PRD
 이동: _processed/{batch}/staging/
 
 남은 staging 파일: N개
-다음: "다른 도메인도 처리해줘" 또는 /prd-process {domain}
+다음: "/prd-process {파일명}" 또는 전체 완료 시 아래 수행
+```
+
+**마지막 staging 파일 처리 후 (배치 완료 시):**
+```
+🎉 전체 배치 처리 완료!
+
+✅ 모든 staging 파일 처리됨
+✅ inbox 파일 → _processed/{batch}/로 아카이브됨
+✅ BATCH.txt 삭제됨
+✅ CHANGELOG.md 생성됨
+
+다음: "/prd-sync-tasks"로 태스크 동기화
 ```
 
 ---

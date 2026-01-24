@@ -38,7 +38,8 @@ Content-Type: application/json
 ```json
 {
     "nickname": "string (필수, 1-20자)",
-    "profile_picture": "string (선택, URL)"
+    "profile_picture": "string (선택, URL)",
+    "investmentType": "string (필수, STABLE|NEUTRAL|AGGRESSIVE)"
 }
 ```
 
@@ -46,6 +47,7 @@ Content-Type: application/json
 | --------------- | ------ | ---- | --------------------------------------------- |
 | nickname        | string | Y    | 1~20자, 특수문자 제한                         |
 | profile_picture | string | N    | 프로필 이미지 URL (없으면 Google 기본값 유지) |
+| investmentType  | string | Y    | 투자 성향 (STABLE, NEUTRAL, AGGRESSIVE)       |
 
 ## Response
 
@@ -74,14 +76,16 @@ Content-Type: application/json
 ```
 1. Authorization 헤더에서 Access Token 추출 및 검증
 2. JWT payload에서 user_id 추출
-3. Request Body 검증 (nickname 필수, 길이)
+3. Request Body 검증 (nickname 필수, 길이, investmentType 유효성)
 4. users 테이블 업데이트
    - nickname, profile_picture 업데이트
    - is_profile_complete = true
-5. 신규 사용자인 경우 (첫 프로필 입력):
+5. settings 테이블 업데이트
+   - investment_type = investmentType
+6. 신규 사용자인 경우 (첫 프로필 입력):
    - 기본 포트폴리오 자동 생성
    - portfolios 테이블에 INSERT
-6. 응답 반환
+7. 응답 반환
 ```
 
 ## 프로필 완료 후 처리

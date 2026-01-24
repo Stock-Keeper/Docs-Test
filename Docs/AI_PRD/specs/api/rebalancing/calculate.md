@@ -55,6 +55,12 @@ Authorization: Bearer {access_token}
   "totalValue": 10000000,
   "needsRebalancing": true,
   "threshold": 5,
+  "summary": {
+    "totalSellAmount": 200000,
+    "totalBuyAmount": 200000,
+    "netAmount": 0,
+    "netLabel": "균형 상태"
+  },
   "suggestions": [
     {
       "stockCode": "035720",
@@ -89,6 +95,15 @@ Authorization: Bearer {access_token}
 }
 ```
 
+### summary 필드 설명
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| totalSellAmount | number | 매도 총액 |
+| totalBuyAmount | number | 매수 총액 |
+| netAmount | number | 순수 필요 자금 (Buy - Sell, 양수=입금 필요, 음수=현금 확보) |
+| netLabel | string | 동적 라벨 ("추가 필요 자금" / "예상 현금 확보" / "균형 상태") |
+
 ### 에러
 
 | 코드 | 상황 | 메시지 |
@@ -114,8 +129,13 @@ Authorization: Bearer {access_token}
    b. 차이 금액 = 목표 금액 - 현재 평가금액
    c. 수량 = ROUND(차이 금액 / 현재가)
    d. action = 차이 > 0 ? BUY : SELL
-7. 괴리율 절댓값 기준 내림차순 정렬
-8. 응답 반환
+7. summary 계산:
+   a. totalSellAmount = SUM(SELL 종목들의 estimatedAmount)
+   b. totalBuyAmount = SUM(BUY 종목들의 estimatedAmount)
+   c. netAmount = totalBuyAmount - totalSellAmount
+   d. netLabel = netAmount > 0 ? "추가 필요 자금" : netAmount < 0 ? "예상 현금 확보" : "균형 상태"
+8. 괴리율 절댓값 기준 내림차순 정렬
+9. 응답 반환
 ```
 
 ## 관련 스펙

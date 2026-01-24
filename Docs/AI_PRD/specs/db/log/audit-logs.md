@@ -23,7 +23,7 @@ related:
 CREATE TABLE audit_logs (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   user_id INTEGER,
-  action ENUM('LOGIN', 'LOGOUT', 'CREATE', 'UPDATE', 'DELETE', 'VIEW', 'EXPORT') NOT NULL,
+  action ENUM('LOGIN', 'LOGIN_FAILED', 'LOGOUT', 'CREATE', 'UPDATE', 'DELETE', 'VIEW', 'EXPORT') NOT NULL,
   entity_type VARCHAR(50) NOT NULL,
   entity_id INTEGER,
   old_value JSON,
@@ -45,11 +45,11 @@ CREATE TABLE audit_logs (
 |------|------|------|------|-------|
 | id | INTEGER | Y | PK, AUTO_INCREMENT | P1 |
 | user_id | INTEGER | N | FK → users.id (NULL = 시스템) | P1 |
-| action | ENUM | Y | LOGIN/LOGOUT/CREATE/UPDATE/DELETE/VIEW/EXPORT | P1 |
+| action | ENUM | Y | LOGIN/LOGIN_FAILED/LOGOUT/CREATE/UPDATE/DELETE/VIEW/EXPORT | P1 |
 | entity_type | VARCHAR(50) | Y | 대상 테이블명 | P1 |
 | entity_id | INTEGER | N | 대상 레코드 ID | P1 |
 | old_value | JSON | N | 변경 전 값 | P1 |
-| new_value | JSON | N | 변경 후 값 | P1 |
+| new_value | JSON | N | 변경 후 값 (LOGIN_FAILED 시 reason 포함) | P1 |
 | ip_address | VARCHAR(45) | N | 접속 IP | P1 |
 | user_agent | TEXT | N | 앱/브라우저 정보 | P1 |
 | created_at | TIMESTAMP | Y | 로그 생성일 | P1 |

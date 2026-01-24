@@ -21,12 +21,13 @@ related:
 CREATE TABLE community_profiles (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL UNIQUE,                    -- users와 1:1
-  nickname VARCHAR(50) NOT NULL UNIQUE,           -- 커뮤니티 닉네임 (앱 내 닉네임과 별도)
+  nickname VARCHAR(20) NOT NULL UNIQUE,           -- 커뮤니티 닉네임 (최대 20자)
   nickname_changed_at TIMESTAMP,                  -- 닉네임 변경일 (90일 쿨타임용)
   profile_image_url VARCHAR(500),                 -- 커뮤니티 전용 프로필 이미지
   bio VARCHAR(200),                               -- 자기소개 (200자)
 
   -- 공개 설정
+  show_trade BOOLEAN DEFAULT FALSE,               -- 거래 공개 여부
   show_recent_activity BOOLEAN DEFAULT TRUE,      -- 최근활동 공개
   show_portfolio BOOLEAN DEFAULT FALSE,           -- 투자현황 공개 (P3 연기)
 
@@ -57,10 +58,11 @@ CREATE TABLE community_profiles (
 | -------------------- | ------------ | ---- | ----------------- | --------------------------- |
 | id                   | INT          | Y    | AUTO_INCREMENT    | PK                          |
 | user_id              | INT          | Y    | -                 | users.id (1:1, UNIQUE)      |
-| nickname             | VARCHAR(50)  | Y    | -                 | 커뮤니티 닉네임 (UNIQUE)    |
+| nickname             | VARCHAR(20)  | Y    | -                 | 커뮤니티 닉네임 (UNIQUE, 최대 20자) |
 | nickname_changed_at  | TIMESTAMP    | N    | NULL              | 닉네임 변경일 (90일 쿨타임) |
 | profile_image_url    | VARCHAR(500) | N    | NULL              | 커뮤니티 전용 프로필 이미지 |
 | bio                  | VARCHAR(200) | N    | NULL              | 자기소개                    |
+| show_trade           | BOOLEAN      | Y    | FALSE             | 거래 공개 여부              |
 | show_recent_activity | BOOLEAN      | Y    | TRUE              | 최근활동 공개 여부          |
 | show_portfolio       | BOOLEAN      | Y    | FALSE             | 투자현황 공개 여부 (P3)     |
 | post_count           | INT          | Y    | 0                 | 게시글 수 (캐시)            |

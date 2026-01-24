@@ -53,21 +53,28 @@ Authorization: Bearer {access_token}
   "displayOrder": 1,
   "cashKrw": 1000000,
   "cashUsd": 500.0,
+  "totalValue": 10000000,
+  "totalBuyAmount": 9000000,
+  "totalProfit": 1000000,
+  "totalProfitRate": 11.1,
   "stocks": [
     {
       "id": "uuid",
       "stockCode": "005930",
       "stockName": "삼성전자",
       "quantity": 10.0,
+      "averagePrice": 70000,
       "currentPrice": 75000,
+      "buyAmount": 700000,
       "value": 750000,
+      "profit": 50000,
+      "profitRate": 7.14,
       "currentRatio": 25.5,
       "targetRatio": 30.0,
       "change": 2.5,
       "changePercent": 1.2
     }
   ],
-  "totalValue": 10000000,
   "needsRebalancing": true,
   "createdAt": "2026-01-01T00:00:00Z",
   "updatedAt": "2026-01-15T12:00:00Z"
@@ -93,10 +100,15 @@ Authorization: Bearer {access_token}
 4. 각 종목에 대해:
    - 외부 API로 현재가 조회 (캐시 활용)
    - 평가금액 계산 (quantity × currentPrice)
+   - 매입금액 계산 (quantity × averagePrice)
+   - 종목별 수익금/수익률 계산
    - 현재 비율 계산
 5. 총 평가금액 = 종목 합계 + 현금
-6. 리밸런싱 필요 여부 확인 (임계값 초과 종목 있는지)
-7. 응답 반환
+6. 총 매입금액 = 종목 매입금 합계 + 현금 (전체 자산 기준)
+7. 총 수익금 = 총 평가금액 - 총 매입금액
+8. 총 수익률 = (총 수익금 / 총 매입금액) × 100
+9. 리밸런싱 필요 여부 확인 (임계값 초과 종목 있는지)
+10. 응답 반환
 ```
 
 ## 관련 스펙

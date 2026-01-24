@@ -114,3 +114,7 @@ related:
 ## 관련 스펙
 - API: `../api/community/search.md`
 - UI: `feed.md`
+
+## 비즈니스 규칙
+
+- 핫토픽 기능은 **P1 제외** (선정 기준 TBD, 초기 UI에서 숨김 처리)

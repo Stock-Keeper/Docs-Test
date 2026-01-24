@@ -3,11 +3,11 @@ type: index
 description: 모든 API, DB, UI 스펙 문서의 인덱스
 role: 사람이 전체 구조를 파악하고, AI가 스펙 목록을 빠르게 조회하는 데 사용
 spec_count:
-    api: 46
+    api: 47
     db: 39
-    ui: 13
-    total: 98
-last_updated: 2026-01-22
+    ui: 23
+    total: 109
+last_updated: 2026-01-24
 ---
 
 # 스펙 인덱스
@@ -40,14 +40,15 @@ last_updated: 2026-01-22
 | [delete.md](api/portfolio/delete.md)   | 포트폴리오 삭제      |
 | [reorder.md](api/portfolio/reorder.md) | 포트폴리오 순서 변경 |
 
-### 종목 (Stock) - P1
+### 종목 (Stock) - P1/P2
 
-| 파일                                           | 설명             |
-| ---------------------------------------------- | ---------------- |
-| [search.md](api/stock/search.md)               | 종목 검색        |
-| [add.md](api/stock/add.md)                     | 종목 추가        |
-| [update-delete.md](api/stock/update-delete.md) | 종목 수정/삭제   |
-| [price.md](api/stock/price.md)                 | 종목 현재가 조회 |
+| 파일                                           | 설명             | Phase |
+| ---------------------------------------------- | ---------------- | :---: |
+| [search.md](api/stock/search.md)               | 종목 검색        |  P1   |
+| [add.md](api/stock/add.md)                     | 종목 추가        |  P1   |
+| [update-delete.md](api/stock/update-delete.md) | 종목 수정/삭제   |  P1   |
+| [price.md](api/stock/price.md)                 | 종목 현재가 조회 |  P1   |
+| [history.md](api/stock/history.md)             | 종목 차트 조회   |  P2   |
 
 ### 리밸런싱 (Rebalancing) - P1
 
@@ -180,7 +181,9 @@ last_updated: 2026-01-22
 | 파일                                         | 화면             |
 | -------------------------------------------- | ---------------- |
 | [login-screen.md](ui/auth/login-screen.md)   | 로그인 화면      |
+| [splash.md](ui/auth/splash.md)               | 스플래시 화면     |
 | [profile-input.md](ui/auth/profile-input.md) | 프로필 입력 화면 |
+| [profile-edit.md](ui/auth/profile-edit.md)   | 프로필 편집 화면 |
 
 ### 포트폴리오
 
@@ -196,12 +199,32 @@ last_updated: 2026-01-22
 | [center.md](ui/notification/center.md)     | 알림 센터 |
 | [settings.md](ui/notification/settings.md) | 알림 설정 |
 
+### 종목 - P1/P2
+
+| 파일                              | 화면           | Phase |
+| --------------------------------- | -------------- | :---: |
+| [add.md](ui/stock/add.md)         | 종목 추가 화면 |  P1   |
+| [search.md](ui/stock/search.md)   | 종목 검색 화면 |  P1   |
+| [detail.md](ui/stock/detail.md)   | 종목 상세 화면 |  P2   |
+
+### 설정
+
+| 파일                                | 화면          |
+| ----------------------------------- | ------------- |
+| [main.md](ui/settings/main.md)      | 설정 메인 화면 |
+
 ### 커뮤니티 - P2/P3
 
-| 파일                                | 화면      |
-| ----------------------------------- | --------- |
-| [feed.md](ui/community/feed.md)     | 피드 화면 |
-| [search.md](ui/community/search.md) | 검색 화면 |
+| 파일                                          | 화면             | Phase |
+| --------------------------------------------- | ---------------- | :---: |
+| [feed.md](ui/community/feed.md)               | 피드 화면        |  P2   |
+| [search.md](ui/community/search.md)           | 검색 화면        |  P2   |
+| [onboarding.md](ui/community/onboarding.md)   | 온보딩 화면      |  P2   |
+| [post-detail.md](ui/community/post-detail.md) | 게시글 상세 화면 |  P2   |
+| [profile.md](ui/community/profile.md)         | 프로필 화면      |  P2   |
+| [post-create.md](ui/community/post-create.md) | 게시글 작성 화면 |  P2   |
+| [lists.md](ui/community/lists.md)             | 참조 목록 화면   |  P2   |
+| [settings.md](ui/community/settings.md)       | 커뮤니티 설정    |  P2   |
 
 ---
 

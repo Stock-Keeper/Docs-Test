@@ -21,10 +21,12 @@ CREATE TABLE community_settings (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL UNIQUE,
 
-  -- 알림 설정
+  -- 알림 설정 (6종)
   notify_new_follower BOOLEAN DEFAULT TRUE,       -- 새 팔로워 알림
   notify_new_like BOOLEAN DEFAULT TRUE,           -- 새 좋아요 알림
   notify_new_comment BOOLEAN DEFAULT TRUE,        -- 새 댓글 알림
+  notify_reply BOOLEAN DEFAULT TRUE,              -- 답글 알림
+  notify_mention BOOLEAN DEFAULT TRUE,            -- 멘션 알림
   notify_following_post BOOLEAN DEFAULT TRUE,     -- 팔로잉 사용자 새 게시글 알림
 
   -- 팔로우 바텀시트 스킵 설정
@@ -47,6 +49,8 @@ CREATE TABLE community_settings (
 | notify_new_follower      | BOOLEAN   | Y    | TRUE              | 새 팔로워 알림               |
 | notify_new_like          | BOOLEAN   | Y    | TRUE              | 새 좋아요 알림               |
 | notify_new_comment       | BOOLEAN   | Y    | TRUE              | 새 댓글 알림                 |
+| notify_reply             | BOOLEAN   | Y    | TRUE              | 답글 알림                   |
+| notify_mention           | BOOLEAN   | Y    | TRUE              | 멘션 알림                   |
 | notify_following_post    | BOOLEAN   | Y    | TRUE              | 팔로잉 사용자 새 게시글 알림 |
 | skip_follow_confirmation | BOOLEAN   | Y    | FALSE             | 팔로우 확인 바텀시트 스킵    |
 | created_at               | TIMESTAMP | Y    | CURRENT_TIMESTAMP | 생성일                       |
