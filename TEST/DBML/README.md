@@ -27,69 +27,69 @@ DBML/
 
 ### Phase 1 (MVP) - `sk_p1.dbml`
 
-| 도메인         | 테이블                      | 설명                      |
-| -------------- | --------------------------- | ------------------------- |
-| 사용자         | `users`                   | 사용자 정보 (소셜 로그인) |
-|                | `user_consents`           | 약관 동의 관리            |
-| 보안           | `token_vault`             | 토큰 암호화 저장소        |
-|                | `audit_logs`              | 감사 추적 (보안 로그)     |
-| 분석           | `user_activities`         | 사용자 활동 추적          |
-| 포트폴리오     | `portfolio_snapshots`     | 포트폴리오 히스토리       |
-|                | `portfolios`              | 포트폴리오                |
-|                | `portfolio_stock_entries` | 포트폴리오 내 종목        |
-|                | `portfolio_cash_entries`  | 포트폴리오 내 현금 비중   |
-| 계좌           | `accounts`                | 연동 계좌                 |
-|                | `account_stock_entries`   | 계좌 내 종목              |
-|                | `account_cash_entries`    | 계좌 내 현금 잔고         |
-| 알림           | `notifications`           | 알림 스택                 |
-|                | `notification_types`      | 알림 종류                 |
-|                | `notification_settings`   | 포트폴리오별 알림 설정    |
-| 설정           | `settings`                | 사용자 설정값             |
-| 운영           | `announcements`           | 공지사항/패치노트         |
-|                | `device_tokens`           | 푸시 알림 토큰            |
-| **합계** | **18개**              |                           |
+| 도메인     | 테이블                    | 설명                          |
+| ---------- | ------------------------- | ----------------------------- |
+| 사용자     | `users`                   | 사용자 정보 (소셜 로그인)     |
+|            | `user_consents`           | 약관 동의 관리                |
+| 보안       | `token_vault`             | 토큰 암호화 저장소            |
+|            | `audit_logs`              | 감사 추적 (보안 로그)         |
+| 분석       | `user_activities`         | 사용자 활동 추적              |
+| 포트폴리오 | `portfolio_snapshots`     | 포트폴리오 히스토리           |
+|            | `portfolios`              | 포트폴리오                    |
+|            | `portfolio_stock_entries` | 포트폴리오 내 종목            |
+|            | `portfolio_cash_entries`  | 포트폴리오 내 현금 비중       |
+| 계좌       | `accounts`                | 연동 계좌                     |
+|            | `account_stock_entries`   | 계좌 내 종목                  |
+|            | `account_cash_entries`    | 계좌 내 현금 잔고             |
+| 알림       | `notifications`           | 알림 스택                     |
+|            | `notification_types`      | 알림 종류                     |
+|            | `notification_settings`   | 포트폴리오별 알림 설정        |
+| 설정       | `settings`                | 사용자 설정값 (투자유형 포함) |
+| 운영       | `announcements`           | 공지사항/패치노트             |
+|            | `device_tokens`           | 푸시 알림 토큰                |
+| **합계**   | **18개**                  |                               |
 
 ### Phase 2 (커뮤니티) - `sk_p2.dbml`
 
-| 도메인          | 테이블                                     | 설명                 |
-| --------------- | ------------------------------------------ | -------------------- |
-| P1 포함         | 18개                                       | Phase 1 전체 포함    |
-| 검색            | `search_histories`                         | 검색 이력            |
-| 커뮤니티 프로필 | `community_profiles`                       | 커뮤니티 전용 프로필 |
-|                 | `community_settings`                       | 커뮤니티 알림 설정   |
-|                 | `nickname_histories`                       | 닉네임 변경 이력     |
-| 커뮤니티 게시물 | `community_articles`                       | 게시물               |
-|                 | `community_article_categories`             | 게시물 카테고리      |
-|                 | `community_article_images`                 | 게시물 이미지        |
-|                 | `community_article_likes`                  | 게시물 좋아요        |
-|                 | `community_article_replies`                | 댓글                 |
-|                 | `community_reply_likes`                    | 댓글 좋아요          |
-|                 | `community_bookmarks`                      | 게시글 북마크        |
-| 포트폴리오 공유 | `community_copied_portfolios`              | 포트폴리오 사본      |
-|                 | `community_copied_portfolio_cash_entries`  | 사본 현금            |
-|                 | `community_copied_portfolio_stock_entries` | 사본 종목            |
-|                 | `portfolio_copy_history`                   | 복사 이력            |
-| 소셜            | `user_follows`                             | 팔로우               |
-|                 | `user_blocks`                              | 차단                 |
-| 배지            | `badges`                                   | 배지 마스터          |
-|                 | `user_badges`                              | 사용자 배지          |
-| 신고/정지       | `reports`                                  | 신고                 |
-|                 | `report_reasons`                           | 신고 사유            |
-|                 | `user_suspensions`                         | 정지 이력            |
-| **합계**        | **40개**                                   |                      |
+| 도메인          | 테이블                                     | 설명                           |
+| --------------- | ------------------------------------------ | ------------------------------ |
+| P1 포함         | 17개                                       | Phase 1 (user_activities 제외) |
+| 검색            | `search_histories`                         | 검색 이력                      |
+| 커뮤니티 프로필 | `community_profiles`                       | 커뮤니티 전용 프로필           |
+|                 | `community_settings`                       | 커뮤니티 알림 설정             |
+|                 | `nickname_histories`                       | 닉네임 변경 이력               |
+| 커뮤니티 게시물 | `community_articles`                       | 게시물                         |
+|                 | `community_article_categories`             | 게시물 카테고리                |
+|                 | `community_article_images`                 | 게시물 이미지                  |
+|                 | `community_article_likes`                  | 게시물 좋아요                  |
+|                 | `community_article_replies`                | 댓글                           |
+|                 | `community_reply_likes`                    | 댓글 좋아요                    |
+|                 | `community_bookmarks`                      | 게시글 북마크                  |
+| 포트폴리오 공유 | `community_copied_portfolios`              | 포트폴리오 사본                |
+|                 | `community_copied_portfolio_cash_entries`  | 사본 현금                      |
+|                 | `community_copied_portfolio_stock_entries` | 사본 종목                      |
+|                 | `portfolio_copy_history`                   | 복사 이력                      |
+| 소셜            | `user_follows`                             | 팔로우                         |
+|                 | `user_blocks`                              | 차단                           |
+| 배지            | `badges`                                   | 배지 마스터                    |
+|                 | `user_badges`                              | 사용자 배지                    |
+| 신고/정지       | `reports`                                  | 신고                           |
+|                 | `report_reasons`                           | 신고 사유                      |
+|                 | `user_suspensions`                         | 정지 이력                      |
+| **합계**        | **38개**                                   |                                |
 
 ### Phase 3 (결제/AI) - `sk_p3.dbml`
 
-| 도메인   | 테이블               | 설명                |
-| -------- | -------------------- | ------------------- |
-| P2 포함  | 40개                 | Phase 2 전체 포함   |
-| 결제     | `token_wallet`       | 토큰 잔액 관리      |
-|          | `payment_history`    | 결제 내역           |
-|          | `token_transactions` | 토큰 사용/충전 내역 |
-| 예정     | (충전 내역)          | TBD                 |
-|          | (광고 시청 내역)     | TBD                 |
-|          | (리밸런싱 내역)      | TBD                 |
-| **합계** | **43개** (+예정)     |                     |
+| 도메인   | 테이블               | 설명                  |
+| -------- | -------------------- | --------------------- |
+| P2 포함  | 38개                 | Phase 2 전체 포함     |
+| 결제     | `token_wallet`       | 토큰 지갑 (잔액 관리) |
+|          | `payment_history`    | 결제 내역             |
+|          | `token_transactions` | 토큰 사용/충전 내역   |
+| 예정     | (충전 내역)          | TBD                   |
+|          | (광고 시청 내역)     | TBD                   |
+|          | (리밸런싱 내역)      | TBD                   |
+| **합계** | **41개** (+예정)     |                       |
 
 ---
 
@@ -111,10 +111,10 @@ DBML/
 
 ### 공통 패턴
 
--   **논리적 삭제**: `is_delete`, `delete_at` 컬럼
--   **타임스탬프**: `created_at`, `updated_at`
--   **Primary Key**: `id integer [primary key, increment]`
--   **카운트 캐시**: `like_count`, `comment_count`, `follower_count` 등
+- **논리적 삭제**: `is_delete`, `delete_at` 컬럼
+- **타임스탬프**: `created_at`, `updated_at`
+- **Primary Key**: `id integer [primary key, increment]`
+- **카운트 캐시**: `like_count`, `comment_count`, `follower_count` 등
 
 ---
 
@@ -148,8 +148,8 @@ DBML/
 
 ## 🔗 관련 문서
 
-| 문서             | 경로                                    | 용도          |
-| ---------------- | --------------------------------------- | ------------- |
+| 문서             | 경로                                  | 용도          |
+| ---------------- | ------------------------------------- | ------------- |
 | DB 스키마 (원본) | `Docs/new_PRD/reference/db-schema.md` | 기존 DB 문서  |
 | API 스펙 (원본)  | `Docs/new_PRD/reference/api-spec.md`  | 기존 API 문서 |
 
@@ -259,4 +259,4 @@ users (1) ──< (N) user_suspensions (처리 관리자)
 
 ---
 
-> 📅 최종 수정: 2026-01-15
+> 📅 최종 수정: 2026-01-25
