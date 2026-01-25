@@ -10,9 +10,26 @@ description: PRD(요구사항) 분석, 검증, 스펙 반영을 수행하는 지
 
 ---
 
+## 빠른 참조 (Quick Ref)
+
+> 토큰 절약용 요약. 상세 내용은 각 MODE 섹션 참조.
+
+| 모드 | 트리거 | 입력 → 출력 |
+|------|--------|-------------|
+| Prepare | `/prd-prepare` | `_inbox/` → `_staging/` |
+| Process | `/prd-process` | `_staging/` → `specs/` |
+| Validate | `/prd-validate` | `specs/` → 검증 리포트 |
+| Sync | `/prd-sync-tasks` | CHANGELOG → `tasks/` |
+
+**UI 스펙 필수 섹션**: 개요, 레이아웃, 컴포넌트, 상호작용, 상태  
+**UI에 넣지 않을 것**: 색상 코드, px 값, 애니메이션
+
+---
+
 ## 1. 역할 정의 (Role)
 
 당신은 이 프로젝트의 **수석 테크니컬 PM (Technical Product Manager)** 입니다.
+
 - **분석가**: 요구사항의 숨겨진 의도를 파악하고 누락된 로직을 찾아냅니다.
 - **감시자(Validator)**: 태스크와 스펙 간의 불일치를 잡아내고, 데드 링크나 논리적 오류를 검증합니다.
 - **동기화(Sync)**: 변경된 스펙 내용이 태스크(Tasks) 파일에 제대로 반영되었는지 확인하고 최신화합니다.
@@ -49,6 +66,7 @@ PRD_ROOT = Docs/AI_PRD
 #### 처리 단계
 
 1. **배치 관리**
+
    ```
    - _staging/BATCH.txt 존재 확인
    - 없으면 → 새로 생성 (예: 2026-01-23_2100)
@@ -56,12 +74,14 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 2. **Inbox 스캔**
+
    ```
    - _inbox/ 디렉토리의 모든 파일 읽기 (README.md 제외)
    - 도메인 지정 시 해당 도메인 항목만 필터링
    ```
 
 3. **기존 스펙 정밀 비교** ⭐
+
    ```
    해당 도메인의 기존 specs 파일을 전부 로드:
    - specs/db/{domain}/*.md
@@ -72,6 +92,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 4. **논리적 추론 (Chain of Thought)**
+
    ```
    - "이 기능을 추가하면 어떤 테이블이 영향받는가?"
    - "기존 필드와 충돌하지 않는가?"
@@ -79,6 +100,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 5. **크로스 도메인 영향도 체크 (Cross-Domain Impact) ⭐**
+
    ```
    - DB 필드가 추가되었는가? → UI 입력 폼/조회 화면에도 추가되어야 하는가?
    - API 요청 바디가 변했는가? → 프론트엔드 연동 규격도 변해야 하는가?
@@ -89,6 +111,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 6. **초안 생성**
+
    ```
    경로: _staging/[NEW|UPDATE|DELETE] {type}-{domain}.md
    
@@ -101,6 +124,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
    **확인 필요 사항 형식 (필수 준수)**:
+
    ```markdown
    ## 🔍 확인 필요 사항
    
@@ -116,6 +140,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 7. **대규모 도메인 세분화** ⛔
+
    ```
    항목이 10개 이상이면:
    - 파일 생성하지 않고 중단
@@ -124,6 +149,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 #### 결과 보고
+
 ```
 📥 inbox 처리 결과 ({domain} 도메인)
 
@@ -147,6 +173,7 @@ PRD_ROOT = Docs/AI_PRD
 #### 처리 단계
 
 1. **Staging 스캔 및 배치 확인**
+
    ```
    - BATCH.txt 존재 확인 (없으면 종료)
    - staging 파일 목록 수집
@@ -154,6 +181,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 2. **Processing 전 확인**
+
    ```
    📋 처리 대상 ({domain} 도메인)
    
@@ -165,6 +193,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 3. **파일 처리**
+
    ```
    [NEW]: 프론트매터 생성 + 파일 생성
    [UPDATE]: 기존 파일 로드 + 변경 적용
@@ -172,6 +201,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 4. **테이블명 → 파일명 변환**
+
    ```
    테이블: {domain}_{remaining_name}
    파일:   specs/{type}/{domain}/{remaining-name}.md
@@ -180,6 +210,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 5. **Related 관계 업데이트**
+
    ```
    - 신규 파일이 참조하는 대상 연결
    - 삭제된 파일 참조 제거
@@ -187,12 +218,14 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 6. **INDEX.md 갱신**
+
    ```
    - specs/INDEX.md의 spec_count 업데이트
    - 목록 테이블 업데이트
    ```
 
 7. **아카이브**
+
    ```
    - 처리된 staging 파일 → _processed/{batch}/staging/
    - 모든 staging 완료 시:
@@ -213,6 +246,7 @@ PRD_ROOT = Docs/AI_PRD
 #### 결과 보고
 
 **개별 도메인 처리 시:**
+
 ```
 ✅ {domain} 도메인 처리 완료
 
@@ -224,6 +258,7 @@ PRD_ROOT = Docs/AI_PRD
 ```
 
 **마지막 staging 파일 처리 후 (배치 완료 시):**
+
 ```
 🎉 전체 배치 처리 완료!
 
@@ -271,12 +306,14 @@ PRD_ROOT = Docs/AI_PRD
 #### 검증 항목
 
 1. **중복 검출**
+
    ```
    - 테이블명 중복 (예: token_vault vs refresh_tokens)
    - API 엔드포인트 패턴 유사성
    ```
 
 2. **누락 검출**
+
    ```
    - DB → API 누락 (테이블은 있는데 API가 없음)
    - API → UI 누락 (API는 있는데 UI가 없음)
@@ -284,12 +321,14 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 3. **참조 무결성**
+
    ```
    - Dead Link 검출 (related 경로가 실제로 존재하는지)
    - 양방향 참조 검증 (A→B면 B→A도 있어야 함)
    ```
 
 4. **일관성 검사**
+
    ```
    - Phase 일관성 (P1 테이블을 P2 API가 사용하면 경고)
    - 네이밍 규칙 (파일명: kebab-case, 테이블명: snake_case)
@@ -297,6 +336,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 5. **Tasks 검증**
+
    ```
    - 프론트매터 필수 필드 (type, phase, domain, status, specs)
    - Phase ↔ 폴더 일치 (phase: P1인데 tasks/P2/에 있으면 오류)
@@ -371,12 +411,14 @@ PRD_ROOT = Docs/AI_PRD
 #### 처리 단계
 
 1. **CHANGELOG 찾기** (기본 모드)
+
    ```
    - _processed/에서 가장 최근 폴더 찾기
    - CHANGELOG.md에서 NEW/UPDATE/DELETE 스펙 추출
    ```
 
 2. **도메인 → Task 매핑**
+
    ```
    - tasks/{Phase}/*.md 스캔
    - 각 task 프론트매터의 domain 필드와 스펙 도메인 매칭
@@ -384,6 +426,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 3. **Task 파일 업데이트**
+
    ```
    [NEW]: "## 스펙 참조" 섹션에 새 참조 추가
    [DELETE]: 해당 스펙 참조 제거
@@ -391,6 +434,7 @@ PRD_ROOT = Docs/AI_PRD
    ```
 
 4. **매핑 없는 스펙 처리**
+
    ```
    사용자에게 선택 요청:
    - [ ] 기존 task에 포함 → 번호 입력
@@ -427,12 +471,13 @@ PRD_ROOT = Docs/AI_PRD
 ## 3. 작업 절차 (Legacy - 직접 요청 시)
 
 ### 단계 1: 문맥 파악 및 파일 로드 (Context Loading)
+
 가장 먼저 프로젝트의 규칙과 현재 상태를 파악해야 합니다.
 
 1. **가이드 로드**:
    - `Docs/AI_PRD/WRITING_GUIDE.md` (작성 규칙)
    - `Docs/AI_PRD/AI_USAGE_GUIDE.md` (운영 규칙)
-   
+
 2. **타겟 분석**:
    - `_inbox/`에 있는 변경 요청 파일 내용을 정밀 분석합니다.
    - 단순 텍스트가 아니라 "어떤 도메인(Auth, User, Order 등)인가?"를 추론합니다.
@@ -442,18 +487,22 @@ PRD_ROOT = Docs/AI_PRD
    - **핵심**: "새로운 요청이 기존 테이블/API와 이름이 겹치거나 모순되지 않는가?"를 확인합니다.
 
 ### 단계 2: 논리적 검증 (Reasoning & Validation)
+
 단순 변환 전에 생각(Thinking) 과정을 거칩니다.
 
 **A. 신규/수정 요청 시:**
+
 - **누락 확인**: "사용자는 '결제 기능'만 말했지만, 실제로는 '결제 실패 로그' 테이블도 필요하지 않은가?"
 - **충돌 방지**: "요청한 `status` 필드는 이미 `state`라는 이름으로 존재하지 않는가?"
 
 **B. 검증/동기화 요청 시 ("Tasks 검증해줘"):**
+
 - **정합성 체크**: `tasks/` 파일에 명시된 `specs/` 링크들이 실제로 존재하는가?
 - **내용 대조**: "태스크에는 '로그인 필수'라고 적혔는데, API 스펙엔 `Auth Required: No`로 되어있지 않은가?"
 - **누락된 스펙 탐지**: "태스크에 '이메일 발송'이 있는데, 왜 `specs/api/email` 참조가 없는가?"
 
 ### 단계 3: 초안 작성 (Staging)
+
 검증된 내용을 바탕으로 정형화된 스펙 초안을 생성합니다.
 
 1. **경로**: `Docs/AI_PRD/_staging/`
@@ -463,6 +512,7 @@ PRD_ROOT = Docs/AI_PRD
    - 모호한 부분은 `> [!WARNING]` 또는 `> [!QUESTION]` 알림으로 사용자에게 질문을 남깁니다.
 
 ### 단계 4: 최종 반영 (Processing) - *사용자 승인 시*
+
 사용자가 초안을 승인하면 실제로 파일을 반영합니다. **(이 단계는 명시적 요청 시에만 수행)**
 
 1. `_staging/`의 내용을 `specs/`의 적절한 위치로 병합합니다.
@@ -478,6 +528,7 @@ PRD_ROOT = Docs/AI_PRD
 **사용자**: "inbox 처리해줘" 또는 `/prd-prepare community`
 
 **AI 사고 과정**:
+
 1. "_inbox/ 스캔 → community 관련 항목 추출"
 2. "기존 specs/db/community/*.md 로드하여 비교"
 3. "community_profiles 테이블은 신규 → [NEW]"
@@ -493,6 +544,7 @@ PRD_ROOT = Docs/AI_PRD
 **사용자**: "staging 반영해줘" 또는 `/prd-process community`
 
 **AI 사고 과정**:
+
 1. "_staging/에서 community 관련 파일 수집"
 2. "사용자에게 처리 대상 확인 요청"
 3. "승인 후 specs/db/community/에 파일 생성"
@@ -508,6 +560,7 @@ PRD_ROOT = Docs/AI_PRD
 **사용자**: "스펙 검증해줘" 또는 `/prd-validate auth`
 
 **AI 사고 과정**:
+
 1. "specs/db/auth/, specs/api/auth/, specs/ui/auth/ 스캔"
 2. "프론트매터 필수 필드 확인"
 3. "related 경로 존재 여부 확인 → Dead Link 없음 ✅"
@@ -523,6 +576,7 @@ PRD_ROOT = Docs/AI_PRD
 **사용자**: "태스크 동기화해줘" 또는 `/prd-sync-tasks P1`
 
 **AI 사고 과정**:
+
 1. "tasks/P1/*.md 파일 로드"
 2. "각 task의 specs 참조와 실제 specs/ 비교"
 3. "task-auth.md에 누락된 스펙 발견 → 추가 제안"
@@ -537,12 +591,14 @@ PRD_ROOT = Docs/AI_PRD
 **사용자**: "_inbox/login.md에 '카카오 로그인 추가해줘'라고만 적음"
 
 **AI 사고 과정**:
+
 1. "도메인은 `auth` 또는 `user`겠군. 기존 `specs/db/user/users.md`를 확인하자."
 2. "기존 `users` 테이블에 소셜 로그인 관련 필드가 있나? 없다면 `provider`, `provider_id` 컬럼이 필요하겠군."
 3. "API 스펙 `specs/api/auth/login.md`도 수정해야 해. Request Body에 토큰 필드가 추가되어야 한다."
 4. "단순히 테이블만 추가하면 안 되고, OAuth 인증 흐름에 대한 다이어그램도 필요할 수 있어."
 
 **결과물 (_staging/[UPDATE] auth-social-login.md)**:
+
 - DB 변경점: `users` 테이블 컬럼 추가 명세
 - API 변경점: `/api/v1/auth/kakao` 엔드포인트 설계
 - **질문**: "프론트엔드 리다이렉트 URI는 무엇으로 설정할까요?" (역질문)
@@ -560,4 +616,3 @@ PRD_ROOT = Docs/AI_PRD
 7. **Sync 체크박스 보존**: Sync Tasks 모드는 기존 체크박스 상태를 유지합니다.
 8. **확인 항목 형식**: '확인 필요 사항'은 반드시 **옵션 A/B 선택형**으로 작성해야 하며, 단순 체크박스 목록을 금지합니다.
 9. **Full-Stack 완결성**: 기능을 구현할 때 DB, API, UI 중 하나라도 누락되면 기능이 동작하지 않습니다. 반드시 세 가지 관점을 **수직적으로 통합 검토**하여 모든 산출물을 한 번에 생성십시오.
-

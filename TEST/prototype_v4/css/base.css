@@ -1,0 +1,284 @@
+/* =============================================
+   BASE STYLES
+   ============================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Fixed dark background - does not change with theme */
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* =============================================
+   THEME CONTROLLER
+   ============================================= */
+.theme-controller {
+    /* Fixed dark style - does not change with theme */
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 20px;
+    border-radius: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.theme-controller-label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theme-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.theme-btn {
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.theme-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-btn.active {
+    background: var(--gradient-primary);
+    border-color: transparent;
+    color: #fff;
+}
+
+.theme-btn .color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Mode Toggle Buttons */
+.mode-toggle {
+    display: flex;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.mode-btn {
+    padding: 6px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mode-btn.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+/* =============================================
+   PHONE FRAME
+   ============================================= */
+.phone-frame {
+    margin-top: 50px;
+    width: 375px;
+    height: 812px;
+    background: var(--bg-card-solid);
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+    /* Border visible in both dark and light modes */
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.15),
+        0 0 0 6px rgba(255, 255, 255, 0.08),
+        0 25px 80px rgba(0, 0, 0, 0.4);
+}
+
+/* Status Bar */
+.status-bar {
+    height: 44px;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.status-icons {
+    display: flex;
+    gap: 4px;
+    font-size: 12px;
+}
+
+/* =============================================
+   SCREEN STYLES
+   ============================================= */
+/* Container for dynamic screens - Critical for layout inheritance */
+#screen-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Below status bar (100) and headers (50) */
+}
+
+.screen {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 44px;
+    /* Start below status bar */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 44px);
+    /* Full height minus status bar */
+    background: var(--bg-screen);
+    /* NO overflow here - handled by .screen-body */
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Scrollable content area */
+.screen-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scroll for iOS */
+}
+
+/* Fixed footer for action buttons (e.g., "시작하기") */
+.screen-footer {
+    flex-shrink: 0;
+    padding: 16px 20px 24px;
+    background: transparent;
+}
+
+/* FAB - positioned relative to .screen, outside .screen-body */
+.fab {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    z-index: 50;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* =============================================
+   HEADER (Sticky)
+   ============================================= */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--border-color);
+    min-height: 56px;
+}
+
+.header h2 {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 24px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    transition: background 0.2s;
+}
+
+.back-btn:hover {
+    background: rgba(var(--primary-rgb), 0.1);
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    background: var(--bg-surface-hover);
+    transform: scale(1.05);
+}
+
+.header-spacer {
+    width: 40px;
+}

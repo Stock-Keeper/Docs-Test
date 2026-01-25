@@ -1,0 +1,109 @@
+{
+  "version": "4.0.0",
+  "phases": ["P1", "P2", "P3"],
+  "defaultPhase": "P1",
+  "screens": [
+    {
+      "id": "splash",
+      "phase": "P1",
+      "domain": "auth",
+      "name": "스플래시",
+      "path": "screens/auth/splash.html",
+      "controller": "screen-controllers/auth/splash.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/auth/splash.md",
+      "navButton": { "icon": "S", "order": 0 },
+      "stateButtons": []
+    },
+    {
+      "id": "login",
+      "phase": "P1",
+      "domain": "auth",
+      "name": "로그인",
+      "path": "screens/auth/login.html",
+      "controller": "screen-controllers/auth/login.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/auth/login-screen.md",
+      "navButton": { "icon": "1", "order": 1 },
+      "stateButtons": [
+        { "id": "loading", "icon": "⏳", "title": "로그인 로딩" },
+        { "id": "error", "icon": "❌", "title": "로그인 에러" }
+      ]
+    },
+    {
+      "id": "profile-input",
+      "phase": "P1",
+      "domain": "auth",
+      "name": "프로필 입력",
+      "path": "screens/auth/profile-input.html",
+      "controller": "screen-controllers/auth/profile-input.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/auth/profile-input.md",
+      "navButton": { "icon": "2", "order": 2 },
+      "stateButtons": [
+        { "id": "loading", "icon": "⏳", "title": "프로필 로딩" }
+      ]
+    },
+    {
+      "id": "portfolio-list",
+      "phase": "P1",
+      "domain": "portfolio",
+      "name": "포트폴리오 목록",
+      "path": "screens/portfolio/list.html",
+      "controller": "screen-controllers/portfolio/list.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/portfolio/list.md",
+      "navButton": { "icon": "🏠", "order": 3 },
+      "stateButtons": [
+        { "id": "empty", "icon": "📭", "title": "Empty 상태" },
+        { "id": "loading", "icon": "⏳", "title": "로딩 상태" },
+        { "id": "error", "icon": "⚠️", "title": "에러 상태" }
+      ]
+    },
+    {
+      "id": "portfolio-detail",
+      "phase": "P1",
+      "domain": "portfolio",
+      "name": "포트폴리오 상세",
+      "path": "screens/portfolio/detail.html",
+      "controller": "screen-controllers/portfolio/detail.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/portfolio/detail.md",
+      "navButton": { "icon": "📊", "order": 4 },
+      "stateButtons": [
+        { "id": "empty", "icon": "📊", "title": "종목 없음" },
+        { "id": "edit-mode", "icon": "✏️", "title": "편집 모드" }
+      ]
+    },
+    {
+      "id": "stock-search",
+      "phase": "P1",
+      "domain": "stock",
+      "name": "종목 검색",
+      "path": "screens/stock/search.html",
+      "controller": "screen-controllers/stock/search.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/stock/search.md",
+      "navButton": { "icon": "🔍", "order": 5 },
+      "stateButtons": [
+        { "id": "empty", "icon": "🔍", "title": "검색 결과 없음" }
+      ]
+    },
+    {
+      "id": "rebalancing-check",
+      "phase": "P1",
+      "domain": "rebalancing",
+      "name": "리밸런싱 확인",
+      "path": "screens/rebalancing/check.html",
+      "controller": "screen-controllers/rebalancing/check.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/rebalancing/check.md",
+      "navButton": { "icon": "⚖️", "order": 6 },
+      "stateButtons": []
+    },
+    {
+      "id": "settings-main",
+      "phase": "P1",
+      "domain": "settings",
+      "name": "설정",
+      "path": "screens/settings/main.html",
+      "controller": "screen-controllers/settings/main.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/settings/main.md",
+      "navButton": { "icon": "⚙️", "order": 7 },
+      "stateButtons": []
+    }
+  ]
+}

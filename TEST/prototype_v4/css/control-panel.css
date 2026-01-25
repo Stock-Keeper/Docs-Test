@@ -1,0 +1,224 @@
+/* =================================================================
+   Control Panel Styles
+   ================================================================= */
+
+.control-panel-right {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1000;
+    padding: 16px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* App Control Row */
+.control-app-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.app-start-btn,
+.app-reset-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.app-start-btn {
+    background: var(--accent);
+}
+
+.app-reset-btn {
+    background: var(--bg-card);
+}
+
+.app-start-btn:hover,
+.app-reset-btn:hover {
+    transform: scale(1.05);
+}
+
+.app-start-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Phase Toggle Row */
+.control-phase-row {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.phase-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.phase-btn.active {
+    background: var(--accent);
+    color: var(--text-inverse);
+    border-color: var(--accent);
+}
+
+.phase-btn:hover:not(.active) {
+    background: var(--bg-surface);
+}
+
+/* Theme Toggle Row */
+.control-theme-row {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.mode-toggle {
+    position: relative;
+    width: 50px;
+    height: 26px;
+}
+
+.mode-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.mode-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-card);
+    border-radius: 26px;
+    transition: 0.3s;
+}
+
+.mode-toggle-slider::before {
+    content: '🌙';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background: var(--bg-surface);
+    border-radius: 50%;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.mode-toggle input:checked+.mode-toggle-slider::before {
+    content: '☀️';
+    transform: translateX(24px);
+}
+
+/* Control Columns */
+.control-columns {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-column,
+.state-column {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nav-btn:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-hover);
+}
+
+.nav-btn.active {
+    background: var(--accent);
+    color: var(--text-inverse);
+    border-color: var(--accent);
+}
+
+/* State Buttons */
+.state-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.state-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.state-btn.active {
+    background: var(--warning);
+    border-color: var(--warning);
+}
+
+/* Tooltips */
+[data-title] {
+    position: relative;
+}
+
+[data-title]:hover::after {
+    content: attr(data-title);
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 8px;
+    padding: 6px 10px;
+    background: var(--bg-modal);
+    color: var(--text-primary);
+    font-size: 12px;
+    white-space: nowrap;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+}
