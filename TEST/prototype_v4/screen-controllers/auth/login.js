@@ -111,6 +111,16 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// =================================================================
+// STATE MANAGEMENT & DEVELOPER TOOLS
+// =================================================================
+
+window.addEventListener('app-state-change', (e) => {
+    if (e.detail.screenId === 'login') {
+        setLoginState(e.detail.state);
+    }
+});
+
 /**
  * Set login screen state (for control panel)
  * @param {string} stateId - State ID (loading, error)

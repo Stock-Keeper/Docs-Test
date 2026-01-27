@@ -1,0 +1,79 @@
+<!-- Screen: Portfolio Detail -->
+<div id="screen-portfolio-detail" class="screen" data-domain="portfolio">
+    <div class="screen-body">
+        <header class="header">
+            <button class="back-btn" id="detail-back-btn">←</button>
+            <h2 id="detail-title">포트폴리오 상세</h2>
+            <div class="header-actions">
+                <button class="icon-btn" id="detail-edit-btn">✏️</button>
+            </div>
+        </header>
+
+        <!-- Summary Grid -->
+        <div class="detail-summary">
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span class="item-label">총 평가금액</span>
+                    <span class="item-value large" id="detail-total-val">₩0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="item-label">현금 비중 (<span id="detail-cash-ratio">0</span>%)</span>
+                    <span class="item-value" id="detail-cash-val">₩0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="item-label">수익금</span>
+                    <span class="item-value" id="detail-return-val">+₩0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="item-label">수익률</span>
+                    <span class="item-value" id="detail-return-rate">+0.00%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stocks-section">
+            <div class="section-header">
+                <h3>보유 종목</h3>
+                <div class="stock-meta">
+                    <span class="stock-count" id="detail-stock-count">0종목</span>
+                    <span class="ratio-sum" id="detail-ratio-sum">비율합계 0%</span>
+                </div>
+            </div>
+
+            <!-- Rebalance Insight (Conditional) -->
+            <div class="rebalance-insight" id="detail-rebalance-insight" style="display: none;">
+                <span class="insight-icon">⚠️</span>
+                <div class="insight-text">
+                    <span class="insight-title">리밸런싱 필요</span>
+                    <span class="insight-detail" id="detail-insight-msg">0개 종목 비율 조정 필요</span>
+                </div>
+                <button class="insight-btn" id="detail-rebalance-btn">분석 →</button>
+            </div>
+
+            <!-- Stock List -->
+            <div class="stocks-cards" id="detail-stock-list">
+                <!-- Stock Cards will be injected here -->
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="detail-empty-state" class="empty-state detail-empty" style="display: none;">
+            <div class="empty-icon">📈</div>
+            <h3 class="empty-title">아직 종목이 없어요</h3>
+            <p class="empty-desc">첫 종목을 추가해보세요!</p>
+            <button class="empty-btn" id="detail-add-stock-empty-btn">+ 종목 추가</button>
+        </div>
+    </div>
+
+    <!-- Fixed Bottom Actions -->
+    <div class="detail-actions">
+        <button class="action-btn secondary" id="detail-add-stock-btn">
+            <span class="action-icon">+</span>
+            <span>종목 추가</span>
+        </button>
+        <button class="action-btn primary" id="detail-rebalance-action-btn">
+            <span class="action-icon">⚖️</span>
+            <span>리밸런싱 분석</span>
+        </button>
+    </div>
+</div>

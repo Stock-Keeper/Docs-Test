@@ -242,6 +242,16 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// =================================================================
+// STATE MANAGEMENT & DEVELOPER TOOLS
+// =================================================================
+
+window.addEventListener('app-state-change', (e) => {
+    if (e.detail.screenId === 'profile-input') {
+        setState(e.detail.state);
+    }
+});
+
 /**
  * Set profile input screen state (for control panel)
  * @param {string} stateId - State ID (loading)

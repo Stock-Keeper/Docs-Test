@@ -196,13 +196,11 @@
     font-size: 14px;
     cursor: pointer;
     transition: all 0.2s;
-    opacity: 0;
-    pointer-events: none;
+    display: none;
 }
 
 .state-btn.visible {
-    opacity: 1;
-    pointer-events: auto;
+    display: block;
 }
 
 .state-btn.active {
@@ -223,8 +221,10 @@
     transform: translateY(-50%);
     margin-right: 8px;
     padding: 6px 10px;
-    background: var(--bg-modal);
-    color: var(--text-primary);
+    background: #333333;
+    /* Hardcoded Dark Gray */
+    color: #ffffff;
+    /* Hardcoded White */
     font-size: 12px;
     white-space: nowrap;
     border-radius: var(--radius-sm);

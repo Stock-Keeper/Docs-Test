@@ -1,0 +1,255 @@
+/* =============================================
+   SCREEN: PORTFOLIO DETAIL
+   ============================================= */
+/* Hide Scrollbar */
+.screen-body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.screen-body::-webkit-scrollbar {
+    display: none;
+}
+
+.detail-summary {
+    padding: 24px 24px 20px;
+    /* Increased side padding */
+    background: rgba(var(--primary-rgb), 0.1);
+    border-bottom: 1px solid var(--border-color);
+}
+
+
+/* Stock styles moved to components/stock-card.css */
+
+/* Summary styles moved to components/summary-card.css */
+
+/* Rebalance Insight Banner */
+.detail-actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    gap: 12px;
+    padding: 20px 24px 40px;
+    /* Adjusted padding */
+    background: transparent;
+    /* Removed background */
+    border: none;
+    z-index: 50;
+    pointer-events: none;
+    /* Let clicks pass through empty space */
+}
+
+.detail-actions>* {
+    pointer-events: auto;
+    /* Re-enable clicks on buttons */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Add shadow to buttons since bg is gone */
+}
+
+.rebalance-insight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--warning-bg);
+    border: 1px solid rgba(255, 183, 77, 0.3);
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+    /* Increased margin */
+}
+
+.insight-icon {
+    font-size: 20px;
+}
+
+.insight-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.insight-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Ratio Sum Badge */
+.ratio-sum {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
+    display: inline-flex;
+    align-items: center;
+}
+
+.stock-count {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Action Button Click Effect */
+.action-btn {
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+}
+
+.action-btn:active {
+    transform: scale(0.94);
+    /* More noticeable shrink */
+    opacity: 0.9;
+}
+
+.insight-detail {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.insight-btn {
+    background: var(--bg-surface-hover);
+    border: none;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.insight-btn:hover {
+    background: var(--bg-card-hover);
+}
+
+.stocks-section {
+    flex: 1;
+    padding: 24px 24px 120px;
+    /* Increased side padding & bottom spacing */
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    /* Increased margin */
+}
+
+.section-header h3 {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.action-btn>* {
+    pointer-events: none;
+}
+
+.action-btn.secondary {
+    background: var(--bg-card-solid);
+    color: var(--text-primary);
+}
+
+.action-btn.secondary:hover {
+    transform: translateY(-2px);
+}
+
+.action-btn.primary {
+    background: var(--gradient-primary);
+    color: #ffffff;
+}
+
+.action-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.4);
+}
+
+.action-icon {
+    font-size: 18px;
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Delete Stock Button (Redesigned) */
+.delete-stock-btn {
+    width: 28px;
+    height: 28px;
+    display: none;
+    /* Toggled via .edit-mode */
+    align-items: center;
+    justify-content: center;
+    background: rgba(229, 62, 62, 0.9);
+    /* Red background */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 2px 8px rgba(229, 62, 62, 0.4);
+
+    /* Position absolutly top-right of card or header */
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+.delete-stock-btn:hover {
+    background: #c53030;
+    transform: scale(1.1);
+}
+
+.delete-stock-btn:active {
+    transform: scale(0.95);
+}
+
+/* Edit Mode Animation */
+#screen-detail.edit-mode .delete-stock-btn {
+    display: flex;
+    animation: popIn 0.3s forwards;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    80% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

@@ -121,15 +121,29 @@ window.setPhase = function (phase) {
  * Toggle state for a screen
  */
 window.toggleState = function (screenId, stateId, btnElement) {
-    // This will be handled by screen controllers
-    btnElement.classList.toggle('active');
-    const isActive = btnElement.classList.contains('active');
+    // 1. Toggle Active State
+    const wasActive = btnElement.classList.contains('active');
 
-    // Call navigation API directly
-    if (window.updateScreenState) {
-        // If active, set stateId. If inactive, revert to default.
-        window.updateScreenState(screenId, isActive ? stateId : 'default');
+    // De-activate all buttons for this screen first (Mutually Exclusive)
+    const siblings = document.querySelectorAll(`.state-btn[data-for-screens="${screenId}"]`);
+    siblings.forEach(btn => btn.classList.remove('active'));
+
+    // Activate clicked button if it wasn't already active
+    if (!wasActive) {
+        btnElement.classList.add('active');
     }
+
+    const newState = !wasActive ? stateId : 'default';
+
+    // 2. Dispatch Event for Controllers
+    console.log(`[ControlPanel] State Changed: ${screenId} -> ${newState}`);
+    const event = new CustomEvent('app-state-change', {
+        detail: {
+            screenId: screenId,
+            state: newState
+        }
+    });
+    window.dispatchEvent(event);
 };
 
 export { currentPhase };
