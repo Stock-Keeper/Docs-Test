@@ -3,6 +3,8 @@
 // Auth Domain
 // =================================================================
 
+import { navigateTo } from '../../core/navigation.js';
+
 let state = {
     nickname: '',
     investmentStyle: 'neutral', // conservative, neutral, aggressive
@@ -12,44 +14,97 @@ let state = {
 /**
  * Initialize profile input screen
  */
-export function initProfileInputScreen() {
+export function init() {
     const screen = document.getElementById('screen-profile-input');
     if (!screen) return;
 
-    // Nickname input
+    // Reset state
+    state = {
+        nickname: '',
+        investmentStyle: 'neutral',
+        isLoading: false,
+    };
+
+    // Nickname input - Re-query to ensure fresh DOM reference
     const nicknameInput = screen.querySelector('#nickname-input');
     if (nicknameInput) {
-        nicknameInput.addEventListener('input', handleNicknameInput);
+        // Clone to clear listeners
+        const newInput = nicknameInput.cloneNode(true);
+        nicknameInput.parentNode.replaceChild(newInput, nicknameInput);
+
+        newInput.value = ''; // Clear value
+        newInput.addEventListener('input', handleNicknameInput);
     }
+
+    // Reset counter
+    const counter = screen.querySelector('#nickname-count');
+    if (counter) counter.textContent = '0';
 
     // Investment style toggle buttons
     const toggleBtns = screen.querySelectorAll('.toggle-btn');
     toggleBtns.forEach(btn => {
-        btn.addEventListener('click', () => handleStyleSelect(btn));
+        // Clone
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', () => handleStyleSelect(newBtn));
+
+        // Reset selection visual
+        newBtn.classList.toggle('selected', newBtn.dataset.value === 'neutral');
     });
+
+    // Profile Image interaction
+    const profileImage = screen.querySelector('.profile-image-wrapper');
+    if (profileImage) {
+        const newImg = profileImage.cloneNode(true);
+        profileImage.parentNode.replaceChild(newImg, profileImage);
+        newImg.addEventListener('click', handleProfileImageClick);
+    }
 
     // Submit button
     const submitBtn = screen.querySelector('#profile-submit-btn');
     if (submitBtn) {
-        submitBtn.addEventListener('click', handleSubmit);
+        const newBtn = submitBtn.cloneNode(true);
+        submitBtn.parentNode.replaceChild(newBtn, submitBtn);
+        newBtn.addEventListener('click', handleSubmit);
+        newBtn.disabled = true;
     }
 
     // Back button
     const backBtn = screen.querySelector('#profile-back-btn');
     if (backBtn) {
-        backBtn.addEventListener('click', handleBackClick);
+        const newBtn = backBtn.cloneNode(true);
+        backBtn.parentNode.replaceChild(newBtn, backBtn);
+        newBtn.addEventListener('click', handleBackClick);
     }
 
-    // Modal buttons
+    // Modal buttons (Re-query as they might have been replaced)
+    setupModalListeners(screen);
+
+    console.log('[ProfileInput] Screen initialized');
+}
+
+function setupModalListeners(screen) {
     const cancelBtn = screen.querySelector('#logout-cancel-btn');
     const confirmBtn = screen.querySelector('#logout-confirm-btn');
     const modalClose = screen.querySelector('.modal-close');
 
-    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
-    if (confirmBtn) confirmBtn.addEventListener('click', handleLogout);
-    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (cancelBtn) {
+        const newBtn = cancelBtn.cloneNode(true);
+        cancelBtn.parentNode.replaceChild(newBtn, cancelBtn);
+        newBtn.addEventListener('click', closeModal);
+    }
 
-    console.log('[ProfileInput] Screen initialized');
+    if (confirmBtn) {
+        const newBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+        newBtn.addEventListener('click', handleLogout);
+    }
+
+    if (modalClose) {
+        const newBtn = modalClose.cloneNode(true);
+        modalClose.parentNode.replaceChild(newBtn, modalClose);
+        newBtn.addEventListener('click', closeModal);
+    }
 }
 
 /**
@@ -98,6 +153,18 @@ function updateSubmitButton() {
 }
 
 /**
+ * Handle profile image click
+ */
+function handleProfileImageClick() {
+    console.log('[ProfileInput] Profile image clicked');
+    // Visual feedback is handled by CSS :active
+
+    // Optional: Show toast or feedback
+    // import { showToast } from '../../core/utils.js';
+    // showToast('프로필 사진 변경 기능은 준비 중입니다.');
+}
+
+/**
  * Handle submit button click
  */
 async function handleSubmit() {
@@ -111,7 +178,9 @@ async function handleSubmit() {
 
     showLoading(false);
     console.log('[ProfileInput] Profile saved successfully');
-    // In real app: navigate to home
+
+    // Should navigate to Home (Portfolio List)
+    navigateTo('portfolio-list');
 }
 
 /**
@@ -140,7 +209,7 @@ function closeModal() {
 function handleLogout() {
     closeModal();
     console.log('[ProfileInput] User logged out');
-    // In real app: clear tokens and navigate to login
+    navigateTo('login');
 }
 
 /**
@@ -177,7 +246,7 @@ function delay(ms) {
  * Set profile input screen state (for control panel)
  * @param {string} stateId - State ID (loading)
  */
-export function setProfileInputState(stateId) {
+export function setState(stateId) {
     switch (stateId) {
         case 'loading':
             showLoading(true);
@@ -190,6 +259,6 @@ export function setProfileInputState(stateId) {
 /**
  * Get profile input screen state
  */
-export function getProfileInputState() {
+export function getState() {
     return { ...state };
 }

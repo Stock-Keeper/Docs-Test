@@ -7,11 +7,19 @@
  * Initialize splash screen
  * Simulates token check and auto-navigation
  */
-export function initSplashScreen() {
+export function init() {
     const screen = document.getElementById('screen-splash');
     if (!screen) return;
 
     console.log('[Splash] Screen initialized');
+}
+
+/**
+ * Set screen state (Standard Interface)
+ * @param {string} stateId 
+ */
+export function setState(stateId) {
+    console.log('[Splash] State set to:', stateId);
 }
 
 /**
@@ -22,7 +30,7 @@ export function initSplashScreen() {
 export function simulateSplashFlow() {
     // Prototype: Just log the flow
     console.log('[Splash] Checking token...');
-    
+
     // In real implementation:
     // 1. Check localStorage for access token
     // 2. Validate token (API call or JWT expiry check)

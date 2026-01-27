@@ -123,11 +123,13 @@ window.setPhase = function (phase) {
 window.toggleState = function (screenId, stateId, btnElement) {
     // This will be handled by screen controllers
     btnElement.classList.toggle('active');
+    const isActive = btnElement.classList.contains('active');
 
-    // Dispatch custom event for screen controller to handle
-    window.dispatchEvent(new CustomEvent('stateToggle', {
-        detail: { screenId, stateId, isActive: btnElement.classList.contains('active') }
-    }));
+    // Call navigation API directly
+    if (window.updateScreenState) {
+        // If active, set stateId. If inactive, revert to default.
+        window.updateScreenState(screenId, isActive ? stateId : 'default');
+    }
 };
 
 export { currentPhase };

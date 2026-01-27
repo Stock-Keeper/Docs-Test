@@ -12,6 +12,15 @@
     gap: 12px;
     z-index: 1000;
     padding: 16px;
+
+    /* Force Dark Mode Colors */
+    --bg-surface: #1a1a2e;
+    --bg-card: #0a0a0f;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-primary: #ffffff;
+    --accent: #38a169;
+
     background: var(--bg-surface);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
@@ -79,12 +88,12 @@
 
 .phase-btn.active {
     background: var(--accent);
-    color: var(--text-inverse);
+    color: #ffffff;
     border-color: var(--accent);
 }
 
 .phase-btn:hover:not(.active) {
-    background: var(--bg-surface);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* Theme Toggle Row */

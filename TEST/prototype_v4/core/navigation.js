@@ -5,6 +5,7 @@
 
 let config = null;
 let currentScreen = null;
+const loadedControllers = new Map();
 
 /**
  * Initialize navigation with config
@@ -33,10 +34,32 @@ export async function loadAllScreens(screenConfig) {
 
     for (const screen of screenConfig.screens) {
         try {
+            // 1. Load HTML
             const response = await fetch(screen.path);
             if (response.ok) {
                 const html = await response.text();
                 container.insertAdjacentHTML('beforeend', html);
+                
+                // 2. Load Controller (if exists)
+                if (screen.controller) {
+                    try {
+                        // Dynamic import
+                        const module = await import('../' + screen.controller);
+                        loadedControllers.set(screen.id, module);
+                        
+                        // Initialize if init() exists
+                        if (module.init) {
+                            module.init();
+                        } else {
+                            // Fallback for named init (e.g., initLoginScreen)
+                            // Try to find a function starting with 'init'
+                            const initFn = Object.values(module).find(v => typeof v === 'function' && v.name.startsWith('init'));
+                            if (initFn) initFn();
+                        }
+                    } catch (err) {
+                        console.warn(`Failed to load controller for ${screen.id}:`, err);
+                    }
+                }
             }
         } catch (error) {
             console.warn(`Screen not found: ${screen.path}`);
@@ -59,6 +82,25 @@ export function navigateTo(screenId) {
         currentScreen = screenId;
         updateNavButtons();
         updateStateButtons();
+    }
+}
+
+/**
+ * Update screen state (called from control panel)
+ * @param {string} screenId 
+ * @param {string} stateId 
+ */
+export function updateScreenState(screenId, stateId) {
+    const controller = loadedControllers.get(screenId);
+    if (!controller) return;
+
+    // Try standard setState or legacy set{ScreenName}State
+    if (controller.setState) {
+        controller.setState(stateId);
+    } else {
+        // Fallback: find setXState function
+        const setFn = Object.values(controller).find(v => typeof v === 'function' && v.name.startsWith('set') && v.name.endsWith('State'));
+        if (setFn) setFn(stateId);
     }
 }
 
@@ -88,3 +130,6 @@ function updateStateButtons() {
 export function getCurrentScreen() {
     return currentScreen;
 }
+
+// Make updateScreenState global for control-panel.js to use if needed
+window.updateScreenState = updateScreenState;
