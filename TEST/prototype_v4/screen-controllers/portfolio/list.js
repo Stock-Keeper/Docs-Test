@@ -220,7 +220,7 @@ function renderState(stateId) {
                 // Restore Dummy Data (Quick & Dirty re-render)
                 // ideally call renderPortfolios(state.portfolios)
                 // For prototype, just reload initial dummy data or similar
-                init(); // Re-init creates listeners again? Potentially bad.
+                // init(); // Removing unnecessary init call
                 // Better: Just re-inject HTML.
                 container.innerHTML = `
                     <!-- Portfolio Card 1 -->
