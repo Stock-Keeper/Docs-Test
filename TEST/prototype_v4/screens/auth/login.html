@@ -1,0 +1,46 @@
+<!-- Screen: Login -->
+<div id="screen-login" class="screen" data-domain="auth">
+    <div class="login-container">
+        <!-- App Logo Section -->
+        <div class="login-header">
+            <div class="login-logo">
+                <div class="logo-icon">📊</div>
+            </div>
+            <div class="login-title">Stock Keeper</div>
+            <div class="login-subtitle">포트폴리오 리밸런싱 앱</div>
+        </div>
+
+        <!-- Login Button Section -->
+        <div class="login-actions">
+            <button id="google-login-btn" class="google-login-btn">
+                <span class="google-icon">G</span>
+                <span class="google-text">Google로 시작하기</span>
+            </button>
+        </div>
+
+        <!-- Terms Section -->
+        <div class="login-terms">
+            <p class="terms-notice">
+                로그인하면 서비스 이용약관 및<br>
+                개인정보처리방침에 동의하게 됩니다.
+            </p>
+            <div class="terms-links">
+                <a href="#" class="terms-link">이용약관</a>
+                <a href="#" class="terms-link">개인정보처리방침</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State Overlay -->
+    <div id="login-loading-overlay" class="login-overlay hidden">
+        <div class="login-loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">로그인 중...</div>
+        </div>
+    </div>
+
+    <!-- Error Toast -->
+    <div id="login-error-toast" class="toast hidden">
+        <span class="toast-message">로그인에 실패했습니다.</span>
+    </div>
+</div>

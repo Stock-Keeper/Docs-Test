@@ -1,0 +1,50 @@
+/* =============================================
+   COMPONENT: SUMMARY CARD & GRID
+   Refactored from portfolio/detail.css & list.css
+   ============================================= */
+
+/* Summary Card Style (Used in List) */
+.summary-card {
+    background: var(--gradient-primary-light);
+    border: 1px solid rgba(var(--primary-rgb), 0.3);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    text-align: center;
+}
+
+/* Summary Grid Style (Used in Detail) */
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item-label {
+    color: var(--text-tertiary);
+    font-size: 12px;
+}
+
+.item-value {
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.item-value.large {
+    font-size: 22px;
+}
+
+/* Common Value Utilities */
+.value-up {
+    color: var(--success);
+}
+
+.value-down {
+    color: var(--error);
+}

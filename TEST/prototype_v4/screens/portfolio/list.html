@@ -1,0 +1,128 @@
+<!-- Screen: Portfolio List -->
+<div id="screen-portfolio-list" class="screen" data-domain="portfolio">
+    <div class="screen-body">
+        <!-- Header (Modified for v4 PRD: Simple Title + Add Button) -->
+        <header class="header home-header">
+            <h2>포트폴리오</h2>
+            <button class="icon-btn" id="portfolio-add-btn">➕</button>
+        </header>
+
+        <!-- Summary Section (v3 style reused) -->
+        <div class="home-summary">
+            <div class="summary-card">
+                <div class="summary-header">
+                    <span class="summary-label">총 평가금액</span>
+                    <span class="last-update">업데이트: <span id="total-update-time">09:41</span></span>
+                </div>
+                <span class="summary-value" id="total-valuation">₩45,230,500</span>
+                <div class="summary-change positive" id="total-change-container">
+                    <span id="total-change-amount">+₩2,340,200</span>
+                    <span id="total-change-rate">(+5.47%)</span>
+                </div>
+                <!-- Cash Section -->
+                <div class="cash-section">
+                    <span class="cash-label">💵 보유 현금</span>
+                    <span class="cash-value" id="total-cash">₩1,500,000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio List Section -->
+        <div class="portfolio-section">
+            <div class="section-header">
+                <h3>내 포트폴리오</h3>
+                <span class="portfolio-count" id="portfolio-count">3개</span>
+            </div>
+
+            <!-- List Container - Items will be injected by JS, but keeping v3 static items for now -->
+            <div class="portfolio-list" id="portfolio-list-container">
+                <!-- Static Item 1 (메인) -->
+                <div class="portfolio-card" data-id="1">
+                    <div class="portfolio-card-header">
+                        <div class="portfolio-color" style="background: var(--gradient-primary);"></div>
+                        <div class="portfolio-info">
+                            <h4>메인 포트폴리오</h4>
+                            <div class="portfolio-sub-row">
+                                <span class="portfolio-stocks">5종목</span>
+                                <div class="portfolio-icons">
+                                    <span class="notification-icon on" title="알림 ON">🔔</span>
+                                    <span class="threshold-badge">5%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rebalance-badge">리밸런싱 필요</div>
+                        <span class="portfolio-arrow">›</span>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <div class="portfolio-value">
+                            <span class="value-label">평가금액</span>
+                            <span class="value-amount">₩32,450,000</span>
+                        </div>
+                        <div class="portfolio-return positive">
+                            <span>+7.23%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Static Item 2 (성장주) -->
+                <div class="portfolio-card" data-id="2">
+                    <div class="portfolio-card-header">
+                        <div class="portfolio-color" style="background: linear-gradient(135deg, #6B9080, #4A6F5A);">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>성장주 투자</h4>
+                            <div class="portfolio-sub-row">
+                                <span class="portfolio-stocks">3종목</span>
+                                <div class="portfolio-icons">
+                                    <span class="notification-icon on" title="알림 ON">🔔</span>
+                                    <span class="threshold-badge">3%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="portfolio-arrow">›</span>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <div class="portfolio-value">
+                            <span class="value-label">평가금액</span>
+                            <span class="value-amount">₩8,780,500</span>
+                        </div>
+                        <div class="portfolio-return positive">
+                            <span>+12.45%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mode Toggle (Optional, maybe in Settings) -->
+
+    <!-- Modals will be injected here -->
+    <!-- Create Portfolio Modal -->
+    <div id="create-portfolio-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>새 포트폴리오 만들기</h3>
+                <button class="close-btn" id="modal-close-x">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- Name Input -->
+                <div class="form-group">
+                    <label>이름</label>
+                    <input type="text" id="portfolio-name-input" placeholder="예: 배당주 포트폴리오" maxlength="20">
+                    <span class="input-hint" id="name-count">0/20자</span>
+                </div>
+                <!-- Description Input -->
+                <div class="form-group">
+                    <label>설명 (선택)</label>
+                    <textarea id="portfolio-desc-input" placeholder="포트폴리오에 대한 설명" maxlength="100"></textarea>
+                    <span class="input-hint" id="desc-count">0/100자</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn secondary" id="modal-cancel-btn">취소</button>
+                <button class="action-btn primary" id="modal-create-btn">만들기</button>
+            </div>
+        </div>
+    </div>
+</div>

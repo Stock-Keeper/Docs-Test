@@ -1,0 +1,208 @@
+/* =============================================
+   Auth Domain - Profile Input Screen Styles
+   ============================================= */
+
+/* Header */
+#screen-profile-input .screen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-header);
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+}
+
+.back-btn:hover {
+    background: var(--bg-surface-hover);
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.header-spacer {
+    width: 40px;
+}
+
+/* Content */
+.profile-input-content {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 20px;
+    height: calc(100% - 65px);
+    overflow-y: auto;
+}
+
+/* Profile Image */
+.profile-image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.profile-image-wrapper {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.profile-image-wrapper:active {
+    transform: scale(0.95);
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.profile-image-wrapper:hover .profile-image {
+    border-color: var(--primary);
+}
+
+.profile-image.placeholder {
+    background: var(--bg-surface);
+}
+
+.profile-placeholder-icon {
+    font-size: 36px;
+    opacity: 0.5;
+}
+
+.profile-image-hint {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+}
+
+/* Form */
+.profile-form {
+    flex: 1;
+}
+
+.profile-form .form-group {
+    margin-bottom: 28px;
+}
+
+.profile-form .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+.required {
+    color: var(--success);
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background: var(--bg-input-focus);
+}
+
+.form-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.char-counter {
+    display: block;
+    text-align: right;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+/* Toggle Button Group */
+.toggle-btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 12px 16px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggle-btn:hover {
+    background: rgba(var(--primary-rgb), 0.1);
+    border-color: rgba(var(--primary-rgb), 0.3);
+}
+
+.toggle-btn.selected {
+    background: var(--gradient-primary);
+    border-color: transparent;
+    color: #ffffff;
+}
+
+/* Submit Section */
+.profile-submit-section {
+    margin-top: auto;
+    padding-top: 24px;
+}
+
+.profile-submit-section .primary-btn {
+    margin-bottom: 16px;
+}
+
+.profile-submit-section .primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.submit-hint {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-tertiary);
+}

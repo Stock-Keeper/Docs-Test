@@ -1,0 +1,73 @@
+<!-- Screen: Profile Input -->
+<div id="screen-profile-input" class="screen" data-domain="auth">
+    <!-- Header -->
+    <div class="screen-header">
+        <button class="back-btn" id="profile-back-btn">←</button>
+        <h1 class="header-title">프로필 설정</h1>
+        <div class="header-spacer"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="profile-input-content">
+        <!-- Profile Image -->
+        <div class="profile-image-section">
+            <div class="profile-image-wrapper">
+                <div class="profile-image placeholder">
+                    <span class="profile-placeholder-icon">📷</span>
+                </div>
+            </div>
+            <span class="profile-image-hint">사진 변경하기</span>
+        </div>
+
+        <!-- Form -->
+        <div class="profile-form">
+            <!-- Nickname Input -->
+            <div class="form-group">
+                <label for="nickname-input">닉네임 <span class="required">*</span></label>
+                <input type="text" id="nickname-input" class="form-input" placeholder="닉네임을 입력해주세요" maxlength="20">
+                <span class="char-counter"><span id="nickname-count">0</span>/20</span>
+            </div>
+
+            <!-- Investment Style -->
+            <div class="form-group">
+                <label>투자 성향 <span class="required">*</span></label>
+                <div class="toggle-btn-group" id="investment-style-group">
+                    <button class="toggle-btn" data-value="conservative">안정형</button>
+                    <button class="toggle-btn selected" data-value="neutral">중립형</button>
+                    <button class="toggle-btn" data-value="aggressive">공격형</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="profile-submit-section">
+            <button id="profile-submit-btn" class="primary-btn" disabled>시작하기</button>
+            <span class="submit-hint">나중에 변경할 수 있습니다</span>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="profile-loading-overlay" class="login-overlay hidden">
+        <div class="login-loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">저장 중...</div>
+        </div>
+    </div>
+
+    <!-- Back Confirm Dialog -->
+    <div id="logout-confirm-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>로그아웃</h3>
+                <button class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">로그아웃하시겠습니까?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" id="logout-cancel-btn">취소</button>
+                <button class="modal-btn primary" id="logout-confirm-btn">로그아웃</button>
+            </div>
+        </div>
+    </div>
+</div>

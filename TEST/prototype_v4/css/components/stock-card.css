@@ -1,0 +1,201 @@
+/* =============================================
+   COMPONENT: STOCK CARD
+   Refactored from portfolio/detail.css
+   ============================================= */
+
+/* Stock Cards Container */
+.stocks-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Base Card Style */
+.stock-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    /* For delete button positioning */
+}
+
+.stock-card:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--border-hover);
+    transform: translateX(2px);
+}
+
+/* Header Section */
+.stock-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.stock-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stock-name {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.stock-code {
+    color: var(--text-tertiary);
+    font-size: 11px;
+}
+
+.stock-value-info {
+    flex-shrink: 0;
+    margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.value-main {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.value-change {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Ratio Section */
+.stock-card-ratio {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ratio-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.ratio-current-label {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.ratio-target-label {
+    color: #FFB74D;
+}
+
+/* Deviation Bar (Center-based) */
+.deviation-bar {
+    height: 6px;
+}
+
+.deviation-track {
+    height: 100%;
+    background: var(--bg-surface);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.deviation-center {
+    position: absolute;
+    left: 50%;
+    top: -2px;
+    width: 2px;
+    height: 10px;
+    background: var(--text-tertiary);
+    border-radius: 1px;
+    transform: translateX(-50%);
+}
+
+.deviation-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.deviation-fill.over {
+    left: 50%;
+    background: linear-gradient(90deg, transparent, var(--error));
+    border-radius: 0 3px 3px 0;
+}
+
+.deviation-fill.under {
+    right: 50%;
+    background: linear-gradient(90deg, var(--success), transparent);
+    border-radius: 3px 0 0 3px;
+}
+
+/* Deviation Tags */
+.deviation-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    width: fit-content;
+}
+
+.deviation-tag.sell {
+    background: var(--error-bg);
+    color: var(--error);
+}
+
+.deviation-tag.buy {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.deviation-tag.ok {
+    background: var(--bg-surface);
+    color: var(--text-tertiary);
+}
+
+/* Delete Button */
+.delete-stock-btn {
+    width: 28px;
+    height: 28px;
+    display: none;
+    /* Toggled via .edit-mode */
+    align-items: center;
+    justify-content: center;
+    background: rgba(229, 62, 62, 0.9);
+    /* Red background */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 2px 8px rgba(229, 62, 62, 0.4);
+
+    /* Position absolutly top-right of card or header */
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+.delete-stock-btn:hover {
+    background: #c53030;
+    transform: scale(1.1);
+}
+
+.delete-stock-btn:active {
+    transform: scale(0.95);
+}

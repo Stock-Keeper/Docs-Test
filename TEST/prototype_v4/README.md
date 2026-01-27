@@ -72,9 +72,9 @@ prototype_v4/
 
 ### P1 - Auth
 
-- [ ] splash
-- [ ] login
-- [ ] profile-input
+- [x] splash
+- [x] login
+- [x] profile-input
 
 ### P1 - Portfolio
 

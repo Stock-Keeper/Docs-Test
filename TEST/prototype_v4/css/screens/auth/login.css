@@ -1,0 +1,205 @@
+/* =============================================
+   Auth Domain - Login Screen Styles
+   ============================================= */
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 40px 20px;
+    background: var(--bg-screen);
+}
+
+/* Header Section */
+.login-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.login-logo {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.login-logo .logo-icon {
+    font-size: 72px;
+}
+
+.login-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.login-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Actions Section */
+.login-actions {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 40px;
+}
+
+/* Google Login Button (Following Google Branding Guidelines) */
+.google-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    background: #ffffff;
+    border: 1px solid #DADCE0;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.google-login-btn:hover {
+    background: #f8f9fa;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.google-login-btn:active {
+    background: #f1f3f4;
+}
+
+.google-login-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.google-icon {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4285F4;
+}
+
+.google-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3c4043;
+}
+
+/* Terms Section */
+.login-terms {
+    text-align: center;
+}
+
+.terms-notice {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.terms-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.terms-link {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.terms-link:hover {
+    color: var(--primary);
+}
+
+/* Loading Overlay */
+.login-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.login-overlay.hidden {
+    display: none;
+}
+
+.login-loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Toast */
+.toast {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background: var(--bg-card-solid);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    z-index: 200;
+    animation: toastIn 0.3s ease;
+}
+
+.toast.hidden {
+    display: none;
+}
+
+.toast-message {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
