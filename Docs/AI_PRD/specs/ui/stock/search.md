@@ -7,6 +7,8 @@ related:
     - specs/api/stock/search.md
   ui:
     - specs/ui/stock/add.md
+  shared:
+    - specs/ui/_shared/stock-card.md
 ---
 
 # 종목 검색 화면 (Stock Search)

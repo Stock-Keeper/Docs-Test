@@ -8,6 +8,10 @@ related:
   ui:
     - specs/ui/stock/add.md
     - specs/ui/rebalancing/check.md
+  shared:
+    - specs/ui/_shared/modal.md
+    - specs/ui/_shared/stock-card.md
+    - specs/ui/_shared/summary-card.md
 reference: ../../../reference/pages/portfolio_detail.md
 ---
 
