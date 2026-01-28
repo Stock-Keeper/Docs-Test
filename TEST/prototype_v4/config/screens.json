@@ -1,6 +1,10 @@
 {
   "version": "4.0.0",
-  "phases": ["P1", "P2", "P3"],
+  "phases": [
+    "P1",
+    "P2",
+    "P3"
+  ],
   "defaultPhase": "P1",
   "screens": [
     {
@@ -11,7 +15,10 @@
       "path": "screens/auth/splash.html",
       "controller": "screen-controllers/auth/splash.js",
       "prd": "../../Docs/AI_PRD/specs/ui/auth/splash.md",
-      "navButton": { "icon": "S", "order": 0 },
+      "navButton": {
+        "icon": "S",
+        "order": 0
+      },
       "stateButtons": []
     },
     {
@@ -22,10 +29,21 @@
       "path": "screens/auth/login.html",
       "controller": "screen-controllers/auth/login.js",
       "prd": "../../Docs/AI_PRD/specs/ui/auth/login-screen.md",
-      "navButton": { "icon": "1", "order": 1 },
+      "navButton": {
+        "icon": "1",
+        "order": 1
+      },
       "stateButtons": [
-        { "id": "loading", "icon": "⏳", "title": "로그인 로딩" },
-        { "id": "error", "icon": "❌", "title": "로그인 에러" }
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "로그인 로딩"
+        },
+        {
+          "id": "error",
+          "icon": "❌",
+          "title": "로그인 에러"
+        }
       ]
     },
     {
@@ -36,9 +54,16 @@
       "path": "screens/auth/profile-input.html",
       "controller": "screen-controllers/auth/profile-input.js",
       "prd": "../../Docs/AI_PRD/specs/ui/auth/profile-input.md",
-      "navButton": { "icon": "2", "order": 2 },
+      "navButton": {
+        "icon": "2",
+        "order": 2
+      },
       "stateButtons": [
-        { "id": "loading", "icon": "⏳", "title": "프로필 로딩" }
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "프로필 로딩"
+        }
       ]
     },
     {
@@ -49,11 +74,26 @@
       "path": "screens/portfolio/list.html",
       "controller": "screen-controllers/portfolio/list.js",
       "prd": "../../Docs/AI_PRD/specs/ui/portfolio/list.md",
-      "navButton": { "icon": "🏠", "order": 3 },
+      "navButton": {
+        "icon": "🏠",
+        "order": 3
+      },
       "stateButtons": [
-        { "id": "empty", "icon": "📭", "title": "Empty 상태" },
-        { "id": "loading", "icon": "⏳", "title": "로딩 상태" },
-        { "id": "error", "icon": "⚠️", "title": "에러 상태" }
+        {
+          "id": "empty",
+          "icon": "📭",
+          "title": "Empty 상태"
+        },
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "로딩 상태"
+        },
+        {
+          "id": "error",
+          "icon": "⚠️",
+          "title": "에러 상태"
+        }
       ]
     },
     {
@@ -64,12 +104,31 @@
       "path": "screens/portfolio/detail.html",
       "controller": "screen-controllers/portfolio/detail.js",
       "prd": "../../Docs/AI_PRD/specs/ui/portfolio/detail.md",
-      "navButton": { "icon": "📊", "order": 4 },
+      "navButton": {
+        "icon": "📊",
+        "order": 4
+      },
       "stateButtons": [
-        { "id": "loading", "icon": "⏳", "title": "로딩 상태" },
-        { "id": "empty", "icon": "📭", "title": "종목 없음" },
-        { "id": "error", "icon": "⚠️", "title": "에러 상태" },
-        { "id": "edit-mode", "icon": "✏️", "title": "편집 모드" }
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "로딩 상태"
+        },
+        {
+          "id": "empty",
+          "icon": "📭",
+          "title": "종목 없음"
+        },
+        {
+          "id": "error",
+          "icon": "⚠️",
+          "title": "에러 상태"
+        },
+        {
+          "id": "edit-mode",
+          "icon": "✏️",
+          "title": "편집 모드"
+        }
       ]
     },
     {
@@ -80,9 +139,51 @@
       "path": "screens/stock/search.html",
       "controller": "screen-controllers/stock/search.js",
       "prd": "../../Docs/AI_PRD/specs/ui/stock/search.md",
-      "navButton": { "icon": "🔍", "order": 5 },
+      "navButton": {
+        "icon": "🔍",
+        "order": 5
+      },
       "stateButtons": [
-        { "id": "empty", "icon": "🔍", "title": "검색 결과 없음" }
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "검색 중"
+        },
+        {
+          "id": "empty",
+          "icon": "🔍",
+          "title": "검색 결과 없음"
+        },
+        {
+          "id": "error",
+          "icon": "⚠️",
+          "title": "에러 발생"
+        }
+      ]
+    },
+    {
+      "id": "stock-detail",
+      "phase": "P1",
+      "domain": "stock",
+      "name": "종목 상세",
+      "path": "screens/stock/detail.html",
+      "controller": "screen-controllers/stock/detail.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/stock/detail.md",
+      "navButton": {
+        "icon": "📈",
+        "order": 6
+      },
+      "stateButtons": [
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "로딩 중"
+        },
+        {
+          "id": "delete",
+          "icon": "🗑️",
+          "title": "삭제 확인"
+        }
       ]
     },
     {
@@ -93,7 +194,10 @@
       "path": "screens/rebalancing/check.html",
       "controller": "screen-controllers/rebalancing/check.js",
       "prd": "../../Docs/AI_PRD/specs/ui/rebalancing/check.md",
-      "navButton": { "icon": "⚖️", "order": 6 },
+      "navButton": {
+        "icon": "⚖️",
+        "order": 6
+      },
       "stateButtons": []
     },
     {
@@ -104,7 +208,10 @@
       "path": "screens/settings/main.html",
       "controller": "screen-controllers/settings/main.js",
       "prd": "../../Docs/AI_PRD/specs/ui/settings/main.md",
-      "navButton": { "icon": "⚙️", "order": 7 },
+      "navButton": {
+        "icon": "⚙️",
+        "order": 7
+      },
       "stateButtons": []
     }
   ]

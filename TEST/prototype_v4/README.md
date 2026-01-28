@@ -83,7 +83,8 @@ prototype_v4/
 
 ### P1 - Stock
 
-- [ ] search
+- [x] search (w/ add modal)
+- [x] detail (P1 only)
 
 ### P1 - Rebalancing
 

@@ -161,6 +161,16 @@ function renderStocks(stocks) {
             </div>
         `;
         list.appendChild(card);
+
+        // Click Event for Detail Navigation
+        card.addEventListener('click', (e) => {
+            // Prevent navigation if delete button or other controls are clicked
+            if (e.target.closest('.delete-stock-btn')) return;
+
+            // Navigate to stock detail
+            // Pass stock info (mocking ID based on code or index)
+            navigateTo('stock-detail', { id: stock.code, stockData: stock });
+        });
     });
 }
 
@@ -180,6 +190,38 @@ function attachListeners() {
         const newBtn = editBtn.cloneNode(true);
         editBtn.parentNode.replaceChild(newBtn, editBtn);
         newBtn.addEventListener('click', toggleEditMode);
+    }
+
+    // Add Stock Button (Bottom Action)
+    const addBtn = document.getElementById('detail-add-stock-btn');
+    if (addBtn) {
+        const newBtn = addBtn.cloneNode(true);
+        addBtn.parentNode.replaceChild(newBtn, addBtn);
+        newBtn.addEventListener('click', () => navigateTo('stock-search'));
+    }
+
+    // Add Stock Button (Empty State)
+    const emptyAddBtn = document.getElementById('detail-add-stock-empty-btn');
+    if (emptyAddBtn) {
+        const newBtn = emptyAddBtn.cloneNode(true);
+        emptyAddBtn.parentNode.replaceChild(newBtn, emptyAddBtn);
+        newBtn.addEventListener('click', () => navigateTo('stock-search'));
+    }
+
+    // Rebalance Action Button
+    const rebalanceBtn = document.getElementById('detail-rebalance-action-btn');
+    if (rebalanceBtn) {
+        const newBtn = rebalanceBtn.cloneNode(true);
+        rebalanceBtn.parentNode.replaceChild(newBtn, rebalanceBtn);
+        newBtn.addEventListener('click', () => navigateTo('rebalancing-check'));
+    }
+
+    // Insight Banner Button
+    const insightBtn = document.getElementById('detail-rebalance-btn');
+    if (insightBtn) {
+        const newBtn = insightBtn.cloneNode(true);
+        insightBtn.parentNode.replaceChild(newBtn, insightBtn);
+        newBtn.addEventListener('click', () => navigateTo('rebalancing-check'));
     }
 }
 

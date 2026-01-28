@@ -199,3 +199,34 @@
 .delete-stock-btn:active {
     transform: scale(0.95);
 }
+
+/* =============================================
+   VARIANT: COMPACT (for Search Results)
+   ============================================= */
+.stock-card.compact {
+    padding: 12px 16px;
+    height: auto;
+    /* Allow auto height */
+}
+
+.stock-card.compact:hover {
+    transform: none;
+    /* No lift effect for compact items if preferred, or keep it */
+    background: var(--bg-surface-hover);
+}
+
+.stock-card.compact .stock-card-ratio {
+    display: none;
+}
+
+.stock-card.compact.owned {
+    opacity: 0.6;
+    background: var(--bg-primary);
+    border-style: dashed;
+    cursor: default;
+}
+
+.stock-card.compact.owned:hover {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+}

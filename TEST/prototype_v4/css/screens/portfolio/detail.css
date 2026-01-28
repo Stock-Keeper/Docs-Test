@@ -112,20 +112,28 @@
     color: var(--text-secondary);
 }
 
+/* Insight Button */
 .insight-btn {
-    background: var(--bg-surface-hover);
-    border: none;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 8px 14px;
-    border-radius: var(--radius-sm);
+    border-radius: 8px;
     color: var(--text-primary);
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    flex-shrink: 0;
 }
 
 .insight-btn:hover {
-    background: var(--bg-card-hover);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.stocks-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .stocks-section {
