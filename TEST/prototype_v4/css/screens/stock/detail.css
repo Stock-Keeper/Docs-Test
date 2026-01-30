@@ -9,7 +9,7 @@
 #screen-stock-detail .header {
     display: flex;
     align-items: center;
-    padding: 16px 20px;
+    padding: 56px 20px 16px;
     gap: 12px;
 }
 

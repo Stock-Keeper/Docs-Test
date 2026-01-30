@@ -168,14 +168,14 @@ body {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 44px;
-    /* Start below status bar */
+    top: 0;
+    /* Start from very top */
     left: 0;
     width: 100%;
-    height: calc(100% - 44px);
-    /* Full height minus status bar */
+    height: 100%;
+    /* Full height */
     background: var(--bg-screen);
-    /* NO overflow here - handled by .screen-body */
+    z-index: 1;
 }
 
 .screen.active {
@@ -230,10 +230,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 20px;
+    padding: 56px 20px 12px;
     background: var(--bg-header);
     border-bottom: 1px solid var(--border-color);
-    min-height: 56px;
+    min-height: 100px;
 }
 
 .header h2 {

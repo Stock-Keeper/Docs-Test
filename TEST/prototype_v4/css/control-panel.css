@@ -1,113 +1,150 @@
 /* =================================================================
-   Control Panel Styles
+   Control Panel Styles (Strictly following v3 utilities.css)
    ================================================================= */
 
+/* 
+   v3 Style Positioning 
+   Allows panel to stay relative to the phone frame center
+*/
 .control-panel-right {
     position: fixed;
-    right: 20px;
+    left: 50%;
+    margin-left: 240px;
+    /* phone-frame width/2 (187.5) + gap */
     top: 50%;
     transform: translateY(-50%);
+
+    background: rgba(255, 255, 255, 0.08);
+    /* v3 styling */
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+
+    /* Flex layout for v4 structure */
     display: flex;
     flex-direction: column;
     gap: 12px;
-    z-index: 1000;
-    padding: 16px;
+    align-items: center;
 
-    /* Force Dark Mode Colors */
-    --bg-surface: #1a1a2e;
-    --bg-card: #0a0a0f;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --text-secondary: rgba(255, 255, 255, 0.6);
-    --text-primary: #ffffff;
+    /* Reset v4 specific colors */
     --accent: #38a169;
-
-    background: var(--bg-surface);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* App Control Row */
-.control-app-row {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border-color);
-}
+/* Phase Control Panel (Targeting user request for separate top panel) */
+.control-panel-phase {
+    position: fixed;
+    left: 50%;
+    margin-left: 240px;
+    top: 50%;
+    /* Position above the main panel */
+    transform: translateY(-50%) translateY(-320px);
+    /* Adjust vertical offset based on main panel height */
 
-.app-start-btn,
-.app-reset-btn {
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: var(--radius-md);
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
+    background: rgba(255, 255, 255, 0.08);
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
 
-.app-start-btn {
-    background: var(--accent);
-}
-
-.app-reset-btn {
-    background: var(--bg-card);
-}
-
-.app-start-btn:hover,
-.app-reset-btn:hover {
-    transform: scale(1.05);
-}
-
-.app-start-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* Phase Toggle Row */
-.control-phase-row {
     display: flex;
     gap: 4px;
-    justify-content: center;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border-color);
 }
 
 .phase-btn {
     padding: 6px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    background: var(--bg-card);
-    color: var(--text-secondary);
-    font-size: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .phase-btn.active {
-    background: var(--accent);
-    color: #ffffff;
-    border-color: var(--accent);
+    background: rgba(56, 161, 105, 0.3);
+    color: #fff;
+    border-color: #38a169;
 }
 
 .phase-btn:hover:not(.active) {
     background: rgba(255, 255, 255, 0.1);
 }
 
+/* App Control Row */
+.control-app-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+.app-start-btn,
+.app-reset-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-start-btn {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
+    color: white;
+}
+
+.app-start-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.6);
+}
+
+.app-start-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.app-reset-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.app-reset-btn:hover {
+    background: rgba(255, 152, 0, 0.3);
+    border-color: #FF9800;
+    transform: scale(1.1);
+}
+
 /* Theme Toggle Row */
 .control-theme-row {
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border-color);
+    gap: 8px;
+    margin-bottom: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
 }
 
+/* Mode Toggle Switch - Minimal Version (v3 Colored) */
 .mode-toggle {
     position: relative;
-    width: 50px;
-    height: 26px;
+    width: 100%;
+    height: 32px;
+    display: block;
 }
 
 .mode-toggle input {
@@ -123,89 +160,128 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--bg-card);
-    border-radius: 26px;
-    transition: 0.3s;
+    background: linear-gradient(135deg, #5C6BC0, #3949AB);
+    /* v3 Dark/Blue color */
+    border-radius: 16px;
+    transition: all 0.3s ease;
 }
 
 .mode-toggle-slider::before {
-    content: '🌙';
     position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 3px;
-    bottom: 3px;
-    background: var(--bg-surface);
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    top: 4px;
+    background: white;
     border-radius: 50%;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+
+/* Checked state (Light Mode in v3 usually means Orange/Yellow for Sun) */
+.mode-toggle input:checked+.mode-toggle-slider {
+    background: linear-gradient(135deg, #FFB74D, #FF9800);
+    /* v3 Light/Orange color */
 }
 
 .mode-toggle input:checked+.mode-toggle-slider::before {
-    content: '☀️';
-    transform: translateX(24px);
+    /* Correct translation for toggle width (100% of parent minus margins) */
+    /* But since parent width is dynamic, we need calc based on width */
+    /* Assuming width is roughly 40px+ from parent padding, but here it's 100% of row */
+    /* Let's fix width to fixed pixel for reliable drag/click visually */
+
+    transform: translateX(calc(100% + 20px));
+    /* This is tricky with %. Let's change parent to fixed width */
 }
 
-/* Control Columns */
+/* Fix toggle width for reliable sliding */
+.control-theme-row .mode-toggle {
+    width: 88px;
+    /* Fixed width to match visual */
+}
+
+.mode-toggle input:checked+.mode-toggle-slider::before {
+    transform: translateX(56px);
+    /* 88px - 24px(width) - 4px(left) - 4px(right margin approx) = 56px move */
+}
+
+
+/* Columns */
 .control-columns {
     display: flex;
-    gap: 8px;
+    gap: 12px;
 }
 
 .nav-column,
 .state-column {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
-/* Navigation Buttons */
-.nav-btn {
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    background: var(--bg-card);
-    color: var(--text-secondary);
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
+.state-column {
+    min-width: 36px;
 }
 
-.nav-btn:hover {
-    background: var(--bg-surface);
-    border-color: var(--border-hover);
-}
-
-.nav-btn.active {
-    background: var(--accent);
-    color: var(--text-inverse);
-    border-color: var(--accent);
-}
-
-/* State Buttons */
+/* Common Button Styles */
+.nav-btn,
+/* v4 class */
 .state-btn {
     width: 36px;
     height: 36px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.08);
+    /* v3 transparency */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hover Effects */
+.nav-btn:hover,
+.state-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+/* Active States */
+.nav-btn.active {
+    background: rgba(56, 161, 105, 0.3);
+    /* Green tint */
+    border-color: #38a169;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(56, 161, 105, 0.2);
+}
+
+/* State Button Visibility */
+.state-btn {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    display: flex !important;
+}
+
+.state-btn:not(.visible) {
+    display: none !important;
 }
 
 .state-btn.visible {
-    display: block;
-}
-
-.state-btn.active {
-    background: var(--warning);
-    border-color: var(--warning);
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    display: flex !important;
 }
 
 /* Tooltips */
@@ -216,18 +292,32 @@
 [data-title]:hover::after {
     content: attr(data-title);
     position: absolute;
-    right: 100%;
+    left: 100%;
     top: 50%;
     transform: translateY(-50%);
-    margin-right: 8px;
+    margin-left: 12px;
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
     padding: 6px 10px;
-    background: #333333;
-    /* Hardcoded Dark Gray */
-    color: #ffffff;
-    /* Hardcoded White */
+    border-radius: 6px;
     font-size: 12px;
     white-space: nowrap;
-    border-radius: var(--radius-sm);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1001;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Tooltip Arrow */
+[data-title]:hover::before {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent rgba(0, 0, 0, 0.9) transparent transparent;
+    z-index: 1000;
+    pointer-events: none;
 }

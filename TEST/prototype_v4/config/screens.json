@@ -22,6 +22,20 @@
       "stateButtons": []
     },
     {
+      "id": "onboarding",
+      "phase": "P1",
+      "domain": "auth",
+      "name": "온보딩",
+      "path": "screens/auth/onboarding.html",
+      "controller": "screen-controllers/auth/onboarding.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/auth/onboarding.md",
+      "navButton": {
+        "icon": "📖",
+        "order": 0.5
+      },
+      "stateButtons": []
+    },
+    {
       "id": "login",
       "phase": "P1",
       "domain": "auth",
