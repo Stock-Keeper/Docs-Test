@@ -30,14 +30,28 @@ let baseRatioSum = 90; // Mock existing ratio sum
  */
 export function init() {
     console.log('[StockSearch] Initializing...');
+    reset(); // Call reset on init
+    attachListeners();
+    updateRatioSummary();
+}
 
-    // Reset state
+/**
+ * Reset screen state (clears inputs and results)
+ */
+export function reset() {
+    console.log('[StockSearch] Resetting state...');
     selectedStock = null;
     addQuantity = 10;
     addRatio = 10;
 
-    attachListeners();
-    updateRatioSummary();
+    // Clear Input
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.value = '';
+    }
+
+    // Clear Results
+    handleSearch('');
 }
 
 function attachListeners() {
@@ -291,6 +305,111 @@ function setText(id, text) {
     if (el) el.textContent = text;
 }
 
+// =================================================================
+// STATE MANAGEMENT
+// =================================================================
+
+/**
+ * Set screen state (called from control panel)
+ * @param {string} stateId - 'loading', 'empty', 'error', 'default'
+ */
+export function setState(stateId) {
+    console.log('[StockSearch] Setting state:', stateId);
+
+    const resultsContainer = document.getElementById('search-results');
+    const emptyState = document.getElementById('search-empty-state');
+    const initialState = document.getElementById('search-initial-state');
+    const loadingState = getOrCreateStateElement('search-loading-state', 'loading-state', '⏳', '검색 중...', '잠시만 기다려주세요');
+    const errorState = getOrCreateStateElement('search-error-state', 'error-state', '⚠️', '에러가 발생했습니다', '다시 시도해주세요');
+
+    // Reset visibility
+    if (resultsContainer) resultsContainer.style.display = 'none';
+    if (emptyState) emptyState.style.display = 'none';
+    if (initialState) initialState.style.display = 'none';
+    if (loadingState) loadingState.style.display = 'none';
+    if (errorState) errorState.style.display = 'none';
+
+    switch (stateId) {
+        case 'loading':
+            // Show skeleton search result cards
+            if (resultsContainer) {
+                resultsContainer.style.display = 'block';
+                resultsContainer.innerHTML = Array(3).fill(0).map(() => `
+                    <div class="result-item skeleton-item">
+                        <div class="result-info">
+                            <div class="skeleton-text" style="width: 100px; height: 18px; margin-bottom: 6px;"></div>
+                            <div class="skeleton-text" style="width: 80px; height: 14px;"></div>
+                        </div>
+                        <div class="result-price" style="text-align: right;">
+                            <div class="skeleton-text" style="width: 70px; height: 18px; margin-bottom: 6px; margin-left: auto;"></div>
+                            <div class="skeleton-text" style="width: 50px; height: 14px; margin-left: auto;"></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            break;
+        case 'empty':
+            if (emptyState) emptyState.style.display = 'flex';
+            break;
+        case 'error':
+            if (errorState) {
+                errorState.style.display = 'flex';
+                errorState.style.flex = '1';
+                errorState.style.justifyContent = 'center';
+                errorState.style.alignItems = 'center';
+            }
+            break;
+        case 'default':
+        default:
+            // Show initial state or results if query exists?? 
+            // For simplicity, default goes back to initial state unless we have results logic.
+            // But usually default implies "normal content".
+            // Let's rely on current input value.
+            const searchInput = document.getElementById('search-input');
+            if (searchInput && searchInput.value.length > 0) {
+                if (resultsContainer) resultsContainer.style.display = 'block';
+            } else {
+                if (initialState) initialState.style.display = 'flex';
+            }
+            break;
+    }
+}
+
+/**
+ * Helper to get or create a state element dynamically
+ */
+function getOrCreateStateElement(id, className, icon, title, desc) {
+    let el = document.getElementById(id);
+    if (!el) {
+        // Fix: Scope to this specific screen
+        const screen = document.getElementById('screen-stock-search');
+        if (!screen) return null;
+        const container = screen.querySelector('.screen-body');
+        if (!container) return null;
+
+        el = document.createElement('div');
+        el.id = id;
+        el.className = className;
+        el.style.display = 'none';
+        el.innerHTML = `
+            <div class="empty-icon">${icon}</div>
+            <h3 class="empty-title">${title}</h3>
+            <p class="empty-desc">${desc}</p>
+        `;
+        container.appendChild(el);
+    }
+    return el;
+}
+
 function updateRatioSummary() {
     setText('current-ratio-sum', `${baseRatioSum}%`);
 }
+
+// =================================================================
+// EVENT LISTENERS FOR CONTROL PANEL
+// =================================================================
+window.addEventListener('app-state-change', (e) => {
+    if (e.detail.screenId === 'stock-search') {
+        setState(e.detail.state);
+    }
+});

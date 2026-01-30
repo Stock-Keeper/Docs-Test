@@ -44,7 +44,7 @@
       "controller": "screen-controllers/auth/login.js",
       "prd": "../../Docs/AI_PRD/specs/ui/auth/login-screen.md",
       "navButton": {
-        "icon": "1",
+        "icon": "🔐",
         "order": 1
       },
       "stateButtons": [
@@ -69,7 +69,7 @@
       "controller": "screen-controllers/auth/profile-input.js",
       "prd": "../../Docs/AI_PRD/specs/ui/auth/profile-input.md",
       "navButton": {
-        "icon": "2",
+        "icon": "🆔",
         "order": 2
       },
       "stateButtons": [
@@ -137,11 +137,6 @@
           "id": "error",
           "icon": "⚠️",
           "title": "에러 상태"
-        },
-        {
-          "id": "edit-mode",
-          "icon": "✏️",
-          "title": "편집 모드"
         }
       ]
     },
@@ -162,11 +157,6 @@
           "id": "loading",
           "icon": "⏳",
           "title": "검색 중"
-        },
-        {
-          "id": "empty",
-          "icon": "🔍",
-          "title": "검색 결과 없음"
         },
         {
           "id": "error",
@@ -192,11 +182,6 @@
           "id": "loading",
           "icon": "⏳",
           "title": "로딩 중"
-        },
-        {
-          "id": "delete",
-          "icon": "🗑️",
-          "title": "삭제 확인"
         }
       ]
     },
@@ -225,6 +210,20 @@
       "navButton": {
         "icon": "⚙️",
         "order": 7
+      },
+      "stateButtons": []
+    },
+    {
+      "id": "profile-edit",
+      "phase": "P1",
+      "domain": "auth",
+      "name": "프로필 편집",
+      "path": "screens/auth/profile-edit.html",
+      "controller": "screen-controllers/auth/profile-edit.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/auth/profile-edit.md",
+      "navButton": {
+        "icon": "👤",
+        "order": 8
       },
       "stateButtons": []
     }

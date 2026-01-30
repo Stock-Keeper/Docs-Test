@@ -79,13 +79,14 @@
     font-size: 20px;
 }
 
+/* Logout Button */
 .logout-btn {
     width: 100%;
     padding: 16px;
-    background: var(--error-bg);
-    border: 1px solid rgba(229, 115, 115, 0.3);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    color: var(--error);
+    color: var(--danger);
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
@@ -93,7 +94,8 @@
 }
 
 .logout-btn:hover {
-    background: rgba(229, 115, 115, 0.25);
+    background: var(--danger-bg);
+    border-color: var(--danger);
 }
 
 /* Clickable Styles */
@@ -115,9 +117,9 @@
     width: 100%;
     padding: 14px;
     background: transparent;
-    border: 1px solid var(--error);
+    border: 1px solid var(--danger);
     border-radius: var(--radius-md);
-    color: var(--error);
+    color: var(--danger);
     font-size: 15px;
     font-weight: 500;
     cursor: pointer;
@@ -125,75 +127,10 @@
 }
 
 .delete-account-btn:hover {
-    background: var(--error-bg);
+    background: var(--danger-bg);
 }
 
-/* Confirmation Modal */
-.confirm-modal {
-    background-color: #333333;
-    border-radius: var(--radius-lg);
-    width: 90%;
-    max-width: 320px;
-    text-align: center;
-    border: 1px solid var(--border-color);
-}
-
-[data-mode="light"] .confirm-modal {
-    background-color: #ffffff;
-}
-
-.confirm-modal .modal-body {
-    padding: 30px 20px;
-}
-
-.confirm-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
-}
-
-.confirm-message {
-    color: var(--text-primary);
-    font-size: 17px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.confirm-sub {
-    color: var(--text-tertiary);
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.confirm-modal .modal-footer {
-    display: flex;
-    gap: 12px;
-    padding: 16px 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.confirm-modal .modal-footer button {
-    flex: 1;
-    padding: 12px;
-    border-radius: var(--radius-md);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.confirm-modal.danger .confirm-message {
-    color: var(--error);
-}
-
-/* Danger Button */
-.danger-btn {
-    background: var(--error);
-    border: none;
-    color: #ffffff;
-}
-
-.danger-btn:hover {
-    opacity: 0.9;
-}
+/* Confirmation Modal replaced by common bottom sheet styles in modal.css */
 
 /* Settings Modal Form */
 .settings-modal {

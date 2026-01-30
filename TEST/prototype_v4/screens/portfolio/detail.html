@@ -17,19 +17,19 @@
             <div class="summary-grid">
                 <div class="summary-item">
                     <span class="item-label">총 평가금액</span>
-                    <span class="item-value large" id="detail-total-val">₩0</span>
+                    <span class="item-value large" id="detail-total-val">₩32,450,000</span>
                 </div>
                 <div class="summary-item">
-                    <span class="item-label">현금 비중 (<span id="detail-cash-ratio">0</span>%)</span>
-                    <span class="item-value" id="detail-cash-val">₩0</span>
+                    <span class="item-label">현금 비중 (<span id="detail-cash-ratio">5</span>%)</span>
+                    <span class="item-value" id="detail-cash-val">₩1,622,500</span>
                 </div>
                 <div class="summary-item">
                     <span class="item-label">수익금</span>
-                    <span class="item-value" id="detail-return-val">+₩0</span>
+                    <span class="item-value positive" id="detail-return-val">+₩2,200,000</span>
                 </div>
                 <div class="summary-item">
                     <span class="item-label">수익률</span>
-                    <span class="item-value" id="detail-return-rate">+0.00%</span>
+                    <span class="item-value positive" id="detail-return-rate">+7.27%</span>
                 </div>
             </div>
         </div>
@@ -38,24 +38,156 @@
             <div class="section-header">
                 <h3>보유 종목</h3>
                 <div class="stock-meta">
-                    <span class="stock-count" id="detail-stock-count">0종목</span>
-                    <span class="ratio-sum" id="detail-ratio-sum">비율합계 0%</span>
+                    <span class="stock-count" id="detail-stock-count">5종목</span>
+                    <span class="ratio-sum" id="detail-ratio-sum">비율합계 100%</span>
                 </div>
             </div>
 
             <!-- Rebalance Insight (Conditional) -->
-            <div class="rebalance-insight" id="detail-rebalance-insight" style="display: none;">
+            <div class="rebalance-insight" id="detail-rebalance-insight">
                 <span class="insight-icon">⚠️</span>
                 <div class="insight-text">
                     <span class="insight-title">리밸런싱 필요</span>
-                    <span class="insight-detail" id="detail-insight-msg">0개 종목 비율 조정 필요</span>
+                    <span class="insight-detail" id="detail-insight-msg">삼성전자 +17% 초과 · 카카오 -20% 미달</span>
                 </div>
                 <button class="insight-btn" id="detail-rebalance-btn">분석 →</button>
             </div>
 
             <!-- Stock List -->
             <div class="stocks-cards" id="detail-stock-list">
-                <!-- Stock Cards will be injected here -->
+                <!-- Static Dummy Data -->
+                <div class="stock-card">
+                    <div class="stock-card-header">
+                        <div class="stock-info">
+                            <span class="stock-name">삼성전자</span>
+                            <span class="stock-code">005930</span>
+                        </div>
+                        <div class="stock-value-info">
+                            <span class="value-main">₩11,357,500</span>
+                            <span class="value-change positive">+5.2%</span>
+                        </div>
+                        <button class="delete-stock-btn">×</button>
+                    </div>
+                    <div class="stock-card-ratio">
+                        <div class="ratio-labels">
+                            <span class="ratio-current-label">현재 35%</span>
+                            <span class="ratio-target-label">목표 30%</span>
+                        </div>
+                        <div class="deviation-bar">
+                            <div class="deviation-track">
+                                <div class="deviation-center"></div>
+                                <div class="deviation-fill over" style="width: 34%;"></div>
+                            </div>
+                        </div>
+                        <div class="deviation-tag sell">+17% 초과</div>
+                    </div>
+                </div>
+
+                <div class="stock-card">
+                    <div class="stock-card-header">
+                        <div class="stock-info">
+                            <span class="stock-name">SK하이닉스</span>
+                            <span class="stock-code">000660</span>
+                        </div>
+                        <div class="stock-value-info">
+                            <span class="value-main">₩8,112,500</span>
+                            <span class="value-change positive">+8.1%</span>
+                        </div>
+                        <button class="delete-stock-btn">×</button>
+                    </div>
+                    <div class="stock-card-ratio">
+                        <div class="ratio-labels">
+                            <span class="ratio-current-label">현재 25%</span>
+                            <span class="ratio-target-label">목표 25%</span>
+                        </div>
+                        <div class="deviation-bar">
+                            <div class="deviation-track">
+                                <div class="deviation-center"></div>
+                            </div>
+                        </div>
+                        <div class="deviation-tag ok">적정 범위 ✓</div>
+                    </div>
+                </div>
+
+                <div class="stock-card">
+                    <div class="stock-card-header">
+                        <div class="stock-info">
+                            <span class="stock-name">NAVER</span>
+                            <span class="stock-code">035420</span>
+                        </div>
+                        <div class="stock-value-info">
+                            <span class="value-main">₩6,490,000</span>
+                            <span class="value-change positive">+3.7%</span>
+                        </div>
+                        <button class="delete-stock-btn">×</button>
+                    </div>
+                    <div class="stock-card-ratio">
+                        <div class="ratio-labels">
+                            <span class="ratio-current-label">현재 20%</span>
+                            <span class="ratio-target-label">목표 20%</span>
+                        </div>
+                        <div class="deviation-bar">
+                            <div class="deviation-track">
+                                <div class="deviation-center"></div>
+                            </div>
+                        </div>
+                        <div class="deviation-tag ok">적정 범위 ✓</div>
+                    </div>
+                </div>
+
+                <div class="stock-card">
+                    <div class="stock-card-header">
+                        <div class="stock-info">
+                            <span class="stock-name">카카오</span>
+                            <span class="stock-code">035720</span>
+                        </div>
+                        <div class="stock-value-info">
+                            <span class="value-main">₩3,894,000</span>
+                            <span class="value-change negative">-4.3%</span>
+                        </div>
+                        <button class="delete-stock-btn">×</button>
+                    </div>
+                    <div class="stock-card-ratio">
+                        <div class="ratio-labels">
+                            <span class="ratio-current-label">현재 12%</span>
+                            <span class="ratio-target-label">목표 15%</span>
+                        </div>
+                        <div class="deviation-bar">
+                            <div class="deviation-track">
+                                <div class="deviation-center"></div>
+                                <div class="deviation-fill under" style="width: 50%;"></div>
+                            </div>
+                        </div>
+                        <div class="deviation-tag buy">-20% 미달</div>
+                    </div>
+                </div>
+
+                <div class="stock-card">
+                    <div class="stock-card-header">
+                        <div class="stock-info">
+                            <span class="stock-name">LG에너지솔루션</span>
+                            <span class="stock-code">373220</span>
+                        </div>
+                        <div class="stock-value-info">
+                            <span class="value-main">₩2,596,000</span>
+                            <span class="value-change positive">+12.5%</span>
+                        </div>
+                        <button class="delete-stock-btn">×</button>
+                    </div>
+                    <div class="stock-card-ratio">
+                        <div class="ratio-labels">
+                            <span class="ratio-current-label">현재 8%</span>
+                            <span class="ratio-target-label">목표 10%</span>
+                        </div>
+                        <div class="deviation-bar">
+                            <div class="deviation-track">
+                                <div class="deviation-center"></div>
+                                <div class="deviation-fill under" style="width: 40%;"></div>
+                            </div>
+                        </div>
+                        <div class="deviation-tag buy">-20% 미달</div>
+                    </div>
+                </div>
             </div>
         </div>
 

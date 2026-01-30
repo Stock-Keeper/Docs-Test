@@ -157,41 +157,9 @@
     background: var(--bg-surface);
 }
 
-/* Bottom Sheet Modal - Inside Phone Frame */
-/* NOTE: duplicate modal styles might be removed later, keeping for now for v3 compat */
-.modal.bottom-sheet {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: flex-end;
-    z-index: 100;
-}
+/* Bottom Sheet Modal styles now in modal.css */
 
-.bottom-sheet-content {
-    background-color: #333333;
-    width: 100%;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-[data-mode="light"] .bottom-sheet-content {
-    background-color: #ffffff;
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(100%);
-    }
-
-    to {
-        transform: translateY(0);
-    }
-}
-
+/* Modal Price Styles */
 .stock-modal-price {
     display: flex;
     align-items: center;

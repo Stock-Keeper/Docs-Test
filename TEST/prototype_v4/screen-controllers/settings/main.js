@@ -30,56 +30,94 @@ export function init() {
 
 function attachListeners() {
     // Nav
-    document.getElementById('settings-back-btn')?.addEventListener('click', () => goBack());
+    const backBtn = document.getElementById('settings-back-btn');
+    if (backBtn) backBtn.onclick = () => goBack();
 
     // Links
-    document.getElementById('profile-edit-link')?.addEventListener('click', () => {
-        navigateTo('profile-input'); // Reusing onboarding/profile input as edit page or create new one?
-        // In v3, there was profile-edit.html. In v4 plan, checks screens.json...
-        // screens.json has 'profile-input' (onboarding). 
-        // We might need a separate profile edit screen later or reuse profile-input with 'edit' mode params.
-        // For now, let's navigate to profile-input.
-    });
+    const profileLink = document.getElementById('profile-edit-link');
+    if (profileLink) {
+        profileLink.onclick = () => navigateTo('profile-edit');
+    }
 
     // Logout
-    document.getElementById('logout-btn')?.addEventListener('click', () => {
-        const modal = document.getElementById('logout-confirm-modal');
-        if (modal) modal.style.display = 'flex';
-    });
+    const logoutBtn = document.getElementById('logout-btn');
+    console.log('[SettingsMain] logout-btn element:', logoutBtn);
+    if (logoutBtn) {
+        logoutBtn.onclick = () => {
+            console.log('[SettingsMain] Logout button clicked!');
+            const modal = document.getElementById('logout-confirm-modal');
+            console.log('[SettingsMain] logout-confirm-modal element:', modal);
+            if (modal) {
+                modal.style.display = 'flex';
+                console.log('[SettingsMain] Modal display set to flex');
+            }
+        };
+    } else {
+        console.warn('[SettingsMain] logout-btn NOT FOUND!');
+    }
 
-    document.getElementById('logout-cancel-btn')?.addEventListener('click', () => {
-        document.getElementById('logout-confirm-modal').style.display = 'none';
-    });
+    const logoutCancelBtn = document.getElementById('logout-cancel-btn');
+    if (logoutCancelBtn) {
+        logoutCancelBtn.onclick = () => {
+            document.getElementById('logout-confirm-modal').style.display = 'none';
+        };
+    }
 
-    document.getElementById('logout-confirm-btn')?.addEventListener('click', () => {
-        console.log('Logging out...');
-        navigateTo('login');
-    });
+    const logoutConfirmBtn = document.getElementById('logout-confirm-btn');
+    if (logoutConfirmBtn) {
+        logoutConfirmBtn.onclick = () => {
+            console.log('Logging out...');
+            navigateTo('login');
+        };
+    }
 
     // Delete Account
-    document.getElementById('delete-account-btn')?.addEventListener('click', () => {
-        const modal = document.getElementById('delete-confirm-modal');
-        if (modal) modal.style.display = 'flex';
-    });
+    const deleteBtn = document.getElementById('delete-account-btn');
+    if (deleteBtn) {
+        deleteBtn.onclick = () => {
+            const modal = document.getElementById('delete-confirm-modal');
+            if (modal) modal.style.display = 'flex';
+        };
+    }
 
-    document.getElementById('delete-cancel-btn')?.addEventListener('click', () => {
-        document.getElementById('delete-confirm-modal').style.display = 'none';
-    });
+    const deleteCancelBtn = document.getElementById('delete-cancel-btn');
+    if (deleteCancelBtn) {
+        deleteCancelBtn.onclick = () => {
+            console.log('Cancel delete clicked');
+            document.getElementById('delete-confirm-modal').style.display = 'none';
+        };
+    }
 
-    document.getElementById('delete-confirm-btn')?.addEventListener('click', () => {
-        console.log('Deleting account...');
-        navigateTo('splash');
-    });
+    const deleteConfirmBtn = document.getElementById('delete-confirm-btn');
+    if (deleteConfirmBtn) {
+        deleteConfirmBtn.onclick = () => {
+            console.log('Deleting account...');
+            navigateTo('splash');
+        };
+    }
 
     // Overlay click close
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
-        overlay.addEventListener('click', (e) => {
+        overlay.onclick = (e) => {
             if (e.target === overlay) overlay.style.display = 'none';
-        });
+        };
     });
 }
 
 function setText(id, text) {
     const el = document.getElementById(id);
     if (el) el.textContent = text;
+}
+
+/**
+ * Cleanup function called when leaving the screen.
+ * Closes any open modals to prevent state leakage.
+ */
+export function cleanup() {
+    console.log('[SettingsMain] Cleaning up...');
+    const logoutModal = document.getElementById('logout-confirm-modal');
+    const deleteModal = document.getElementById('delete-confirm-modal');
+
+    if (logoutModal) logoutModal.style.display = 'none';
+    if (deleteModal) deleteModal.style.display = 'none';
 }

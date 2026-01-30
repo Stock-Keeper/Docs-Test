@@ -9,7 +9,7 @@
 #screen-stock-detail .header {
     display: flex;
     align-items: center;
-    padding: 56px 20px 16px;
+    padding: var(--header-padding-top) 20px 16px;
     gap: 12px;
 }
 
@@ -267,23 +267,23 @@
     font-size: 15px;
     font-weight: 600;
     border-radius: var(--radius-lg);
-    background: var(--error-bg);
-    border: 1px solid var(--error);
-    color: var(--error);
+    background: var(--danger-bg);
+    border: 1px solid var(--danger);
+    color: var(--danger);
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .stock-detail-actions .danger-btn:hover {
-    background: rgba(49, 130, 206, 0.3);
-    /* Slightly darker than error-bg */
+    background: rgba(229, 62, 62, 0.3);
 }
 
 /* =============================================
    STOCK EDIT BOTTOM SHEET (Reusing search.css style)
    ============================================= */
 
-#stock-edit-modal.bottom-sheet-overlay {
+#stock-edit-modal.bottom-sheet-overlay,
+#stock-delete-modal.bottom-sheet-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -296,7 +296,8 @@
     z-index: 100;
 }
 
-#stock-edit-modal .bottom-sheet {
+#stock-edit-modal .bottom-sheet,
+#stock-delete-modal .bottom-sheet {
     background-color: var(--bg-modal);
     width: 100%;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
@@ -315,7 +316,8 @@
     }
 }
 
-#stock-edit-modal .bottom-sheet-handle {
+#stock-edit-modal .bottom-sheet-handle,
+#stock-delete-modal .bottom-sheet-handle {
     width: 40px;
     height: 4px;
     background: var(--border-color);
@@ -323,21 +325,24 @@
     margin: 12px auto;
 }
 
-#stock-edit-modal .bottom-sheet-header {
+#stock-edit-modal .bottom-sheet-header,
+#stock-delete-modal .bottom-sheet-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px 16px;
 }
 
-#stock-edit-modal .bottom-sheet-header h3 {
+#stock-edit-modal .bottom-sheet-header h3,
+#stock-delete-modal .bottom-sheet-header h3 {
     font-size: 18px;
     font-weight: 600;
     color: var(--text-primary);
     margin: 0;
 }
 
-#stock-edit-modal .close-btn {
+#stock-edit-modal .close-btn,
+#stock-delete-modal .close-btn {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -348,7 +353,8 @@
     cursor: pointer;
 }
 
-#stock-edit-modal .bottom-sheet-body {
+#stock-edit-modal .bottom-sheet-body,
+#stock-delete-modal .bottom-sheet-body {
     padding: 0 20px 20px;
 }
 
@@ -546,18 +552,21 @@
 }
 
 /* Warning button state */
-#stock-edit-modal .confirm-btn.warning {
-    background: var(--error);
+#stock-edit-modal .confirm-btn.warning,
+#stock-delete-modal .confirm-btn.warning {
+    background: var(--danger);
 }
 
-#stock-edit-modal .bottom-sheet-footer {
+#stock-edit-modal .bottom-sheet-footer,
+#stock-delete-modal .bottom-sheet-footer {
     display: flex;
     gap: 12px;
     padding: 16px 20px;
     border-top: 1px solid var(--border-color);
 }
 
-#stock-edit-modal .cancel-btn {
+#stock-edit-modal .cancel-btn,
+#stock-delete-modal .cancel-btn {
     flex: 1;
     padding: 14px;
     font-size: 15px;
@@ -569,7 +578,8 @@
     cursor: pointer;
 }
 
-#stock-edit-modal .confirm-btn {
+#stock-edit-modal .confirm-btn,
+#stock-delete-modal .confirm-btn {
     flex: 1;
     padding: 14px;
     font-size: 15px;

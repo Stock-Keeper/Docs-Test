@@ -36,10 +36,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         showOffScreen();
 
         console.log('✅ Stock-Keeper V4 initialized');
+
+        // 7. Init Phone Drag
+        initPhoneDrag();
+
     } catch (error) {
         console.error('❌ Initialization failed:', error);
     }
 });
+
+function initPhoneDrag() {
+    import('./utils/draggable.js').then(({ makeDraggable }) => {
+        const phone = document.getElementById('phone-frame');
+        const handle = phone.querySelector('.phone-drag-handle');
+        makeDraggable(phone, handle, 'phone-position');
+    });
+}
 
 // =================================================================
 // APP FLOW CONTROL

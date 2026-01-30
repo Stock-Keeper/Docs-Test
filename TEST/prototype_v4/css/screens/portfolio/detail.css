@@ -13,8 +13,7 @@
 
 /* Portfolio Banner Color Strip */
 .portfolio-banner {
-    height: 6px;
-    width: 100%;
+    display: none;
 }
 
 .detail-summary {
@@ -241,14 +240,48 @@
     transform: scale(1.1);
 }
 
-.delete-stock-btn:active {
-    transform: scale(0.95);
-}
+/* =============================================
+   EDIT MODE STYLES
+   ============================================= */
 
-/* Edit Mode Animation */
-#screen-detail.edit-mode .delete-stock-btn {
+/* Show delete button in edit mode */
+#screen-portfolio-detail.edit-mode .delete-stock-btn {
     display: flex;
     animation: popIn 0.3s forwards;
+}
+
+/* Hide rebalance insight in edit mode */
+#screen-portfolio-detail.edit-mode .rebalance-insight {
+    display: none !important;
+}
+
+/* Hide bottom action buttons in edit mode */
+#screen-portfolio-detail.edit-mode .detail-actions {
+    display: none !important;
+}
+
+/* Edit button transforms to done text (green) */
+#screen-portfolio-detail.edit-mode #detail-edit-btn {
+    background: transparent;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 40px;
+}
+
+/* Trash button press effect - more specific selector */
+#screen-portfolio-detail .delete-stock-btn:active {
+    transform: scale(0.85) !important;
+    box-shadow: 0 1px 4px rgba(229, 62, 62, 0.3);
+}
+
+/* Disable stock card interaction in edit mode */
+#screen-portfolio-detail.edit-mode .stock-card {
+    pointer-events: none;
+}
+
+#screen-portfolio-detail.edit-mode .delete-stock-btn {
+    pointer-events: auto;
 }
 
 @keyframes popIn {

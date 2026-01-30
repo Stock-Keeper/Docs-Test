@@ -112,7 +112,6 @@ function attachListeners() {
     document.getElementById('stock-detail-back-btn')?.addEventListener('click', () => goBack());
 
     // Edit Modal Openers
-    document.getElementById('stock-edit-header-btn')?.addEventListener('click', openEditModal);
     document.getElementById('stock-edit-btn')?.addEventListener('click', openEditModal);
 
     // Delete
@@ -124,6 +123,7 @@ function attachListeners() {
     document.getElementById('edit-save-btn')?.addEventListener('click', saveEdit);
 
     // Modal Controls - Delete
+    document.getElementById('delete-modal-close-btn')?.addEventListener('click', closeDeleteModal);
     document.getElementById('delete-cancel-btn')?.addEventListener('click', closeDeleteModal);
     document.getElementById('delete-confirm-btn')?.addEventListener('click', confirmDelete);
 
@@ -233,7 +233,126 @@ function confirmDelete() {
     goBack();
 }
 
+// =================================================================
+// STATE MANAGEMENT
+// =================================================================
+
+/**
+ * Set screen state (called from control panel)
+ * @param {string} stateId - 'loading', 'delete', 'default'
+ */
+export function setState(stateId) {
+    console.log('[StockDetail] Setting state:', stateId);
+
+    // Elements to toggle
+    const contentSections = document.querySelectorAll('.price-section, .chart-section, .holdings-section, .ratio-section, .stock-detail-actions');
+    const loadingState = getOrCreateStateElement('detail-loading-state', 'loading-state', '⏳', '로딩 중...', '데이터를 불러오고 있습니다');
+
+    // Reset
+    if (loadingState) loadingState.style.display = 'none';
+    closeDeleteModal(); // Reset modal
+
+    switch (stateId) {
+        case 'loading':
+            contentSections.forEach(el => el.style.display = 'none');
+            // Show skeleton UI
+            let skeletonContainer = document.getElementById('detail-skeleton-container');
+            if (!skeletonContainer) {
+                const screen = document.getElementById('screen-stock-detail');
+                const body = screen?.querySelector('.screen-body');
+                if (body) {
+                    skeletonContainer = document.createElement('div');
+                    skeletonContainer.id = 'detail-skeleton-container';
+                    skeletonContainer.style.padding = '0 20px';
+                    skeletonContainer.innerHTML = `
+                        <!-- Price Skeleton -->
+                        <div style="padding: 20px 0; border-bottom: 1px solid var(--border-color);">
+                            <div class="skeleton-text" style="width: 120px; height: 32px; margin-bottom: 8px;"></div>
+                            <div class="skeleton-text" style="width: 100px; height: 16px;"></div>
+                        </div>
+                        <!-- Holdings Skeleton -->
+                        <div style="margin-top: 24px;">
+                            <div class="skeleton-text" style="width: 100px; height: 18px; margin-bottom: 16px;"></div>
+                            <div class="skeleton-text" style="width: 100%; height: 180px; border-radius: 16px;"></div>
+                        </div>
+                        <!-- Ratio Skeleton -->
+                        <div style="margin-top: 24px;">
+                            <div class="skeleton-text" style="width: 80px; height: 18px; margin-bottom: 16px;"></div>
+                            <div class="skeleton-text" style="width: 100%; height: 120px; border-radius: 16px;"></div>
+                        </div>
+                    `;
+                    // Insert after header
+                    const header = body.querySelector('.header');
+                    if (header && header.nextSibling) {
+                        body.insertBefore(skeletonContainer, header.nextSibling);
+                    } else {
+                        body.appendChild(skeletonContainer);
+                    }
+                }
+            }
+            if (skeletonContainer) skeletonContainer.style.display = 'block';
+            break;
+        case 'delete':
+            // Hide skeleton, show content, open modal
+            const skeletonDel = document.getElementById('detail-skeleton-container');
+            if (skeletonDel) skeletonDel.style.display = 'none';
+            contentSections.forEach(el => el.style.display = '');
+            openDeleteModal();
+            break;
+        case 'default':
+        default:
+            // Hide skeleton, show content
+            const skeletonDef = document.getElementById('detail-skeleton-container');
+            if (skeletonDef) skeletonDef.style.display = 'none';
+            contentSections.forEach(el => el.style.display = '');
+            break;
+    }
+}
+
+/**
+ * Helper to get or create a state element dynamically
+ */
+function getOrCreateStateElement(id, className, icon, title, desc) {
+    let el = document.getElementById(id);
+    if (!el) {
+        // Fix: Scope to this specific screen
+        const screen = document.getElementById('screen-stock-detail');
+        if (!screen) return null;
+        const container = screen.querySelector('.screen-body');
+        if (!container) return null;
+
+        // Insert after header
+        const header = container.querySelector('.header');
+
+        el = document.createElement('div');
+        el.id = id;
+        el.className = className;
+        el.style.display = 'none';
+        el.innerHTML = `
+            <div class="empty-icon">${icon}</div>
+            <h3 class="empty-title">${title}</h3>
+            <p class="empty-desc">${desc}</p>
+        `;
+
+        if (header && header.nextSibling) {
+            container.insertBefore(el, header.nextSibling);
+        } else {
+            container.appendChild(el);
+        }
+    }
+    return el;
+}
+
 function setText(id, text) {
     const el = document.getElementById(id);
     if (el) el.textContent = text;
 }
+
+// =================================================================
+// EVENT LISTENERS FOR CONTROL PANEL
+// =================================================================
+window.addEventListener('app-state-change', (e) => {
+    if (e.detail.screenId === 'stock-detail') {
+        setState(e.detail.state);
+    }
+});

@@ -88,10 +88,24 @@ export async function loadAllScreens(screenConfig) {
  * @param {boolean} addToHistory - 히스토리에 추가할지 (기본: true)
  */
 export function navigateTo(screenId, addToHistory = true) {
-    // Hide all screens
+    // 1. Call cleanup on current screen controller if it exists
+    if (currentScreen) {
+        const currentController = loadedControllers.get(currentScreen);
+        if (currentController && typeof currentController.cleanup === 'function') {
+            currentController.cleanup();
+        }
+        // Also reset its state to default
+        updateScreenState(currentScreen, 'default');
+    }
+
+    // 2. Clear all active state buttons in Control Panel
+    // This ensures that when we return or switch, no state buttons are left visually active
+    document.querySelectorAll('.state-btn').forEach(btn => btn.classList.remove('active'));
+
+    // 3. Hide all screens
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
 
-    // Find and show target screen
+    // 4. Find and show target screen
     const targetScreen = document.getElementById(`screen-${screenId}`);
     if (targetScreen) {
         targetScreen.classList.add('active');
@@ -104,6 +118,12 @@ export function navigateTo(screenId, addToHistory = true) {
 
         updateNavButtons();
         updateStateButtons();
+
+        // 5. Reset target screen state (Clear inputs, etc.)
+        const controller = loadedControllers.get(screenId);
+        if (controller && typeof controller.reset === 'function') {
+            controller.reset();
+        }
     }
 }
 

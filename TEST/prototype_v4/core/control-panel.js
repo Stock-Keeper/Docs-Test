@@ -15,24 +15,28 @@ export async function initControlPanel(screenConfig) {
     const panel = document.getElementById('control-panel');
     if (!panel) return;
 
-    // 1. Create Phase Panel (Separated - Added dynamically)
-    let phasePanel = document.getElementById('control-panel-phase');
-    if (!phasePanel) {
-        phasePanel = document.createElement('div');
-        phasePanel.id = 'control-panel-phase';
-        phasePanel.className = 'control-panel-phase';
-        document.body.appendChild(phasePanel);
-    }
+    // Restore Position
 
-    // Render Phase Buttons
-    phasePanel.innerHTML = config.phases.map(p => `
-        <button class="phase-btn ${p === currentPhase ? 'active' : ''}" 
-                data-phase="${p}" 
-                onclick="setPhase('${p}')">${p}</button>
-    `).join('');
 
-    // 2. Render Main Control Panel
+    // Render Unified Control Panel
+    // 1. Drag Handle
+    // 2. Phase Buttons (Now inside)
+    // 3. App Controls
+    // 4. Theme Toggle
+    // 5. Columns
     panel.innerHTML = `
+        <!-- Drag Handle -->
+        <div class="cp-drag-handle" title="Drag to move"></div>
+
+        <!-- Phase Control (Integrated) -->
+        <div id="control-panel-phase" class="control-panel-phase">
+            ${config.phases.map(p => `
+                <button class="phase-btn ${p === currentPhase ? 'active' : ''}" 
+                        data-phase="${p}" 
+                        onclick="setPhase('${p}')">${p}</button>
+            `).join('')}
+        </div>
+
         <!-- App Control -->
         <div class="control-app-row">
             <button class="app-start-btn" id="app-start-btn" onclick="startApp()" data-title="앱 시작">🚀</button>
@@ -58,11 +62,15 @@ export async function initControlPanel(screenConfig) {
 
     renderNavButtons();
     renderStateButtons();
-}
 
-/**
- * Render navigation buttons based on current phase
- */
+    renderStateButtons();
+
+    // Init Draggable
+    import('./utils/draggable.js').then(({ makeDraggable }) => {
+        const handle = panel.querySelector('.cp-drag-handle');
+        makeDraggable(panel, handle, 'cp-position');
+    });
+}
 function renderNavButtons() {
     const navColumn = document.getElementById('nav-column');
     if (!navColumn) return;
@@ -153,5 +161,11 @@ window.toggleState = function (screenId, stateId, btnElement) {
     });
     window.dispatchEvent(event);
 };
+
+// ===================================
+// Draggable Logic
+// ===================================
+
+// Draggable logic moved to core/utils/draggable.js
 
 export { currentPhase };
