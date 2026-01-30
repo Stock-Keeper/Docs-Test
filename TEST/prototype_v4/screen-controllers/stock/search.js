@@ -7,14 +7,18 @@ import { navigateTo, goBack } from '../../core/navigation.js';
 
 // Dummy Data for Search
 const MOCK_STOCKS = [
-    { name: '삼성전자', code: '005930', price: 74500, change: 1200, changeRate: 1.6 },
-    { name: 'SK하이닉스', code: '000660', price: 142000, change: -2500, changeRate: -1.7 },
-    { name: 'NAVER', code: '035420', price: 215000, change: 3000, changeRate: 1.4 },
-    { name: '카카오', code: '035720', price: 54300, change: -500, changeRate: -0.9 },
-    { name: '현대차', code: '005380', price: 186500, change: 2300, changeRate: 1.24 },
-    { name: 'LG에너지솔루션', code: '373220', price: 412000, change: 5000, changeRate: 1.2 },
-    { name: 'POSCO홀딩스', code: '005490', price: 450000, change: 15000, changeRate: 3.4 }
+    { name: '삼성전자', code: '005930', market: 'KOSPI', price: 74500, change: 1200, changeRate: 1.6 },
+    { name: 'SK하이닉스', code: '000660', market: 'KOSPI', price: 142000, change: -2500, changeRate: -1.7 },
+    { name: 'NAVER', code: '035420', market: 'KOSPI', price: 215000, change: 3000, changeRate: 1.4 },
+    { name: '카카오', code: '035720', market: 'KOSPI', price: 54300, change: -500, changeRate: -0.9 },
+    { name: '현대차', code: '005380', market: 'KOSPI', price: 186500, change: 2300, changeRate: 1.24 },
+    { name: 'LG에너지솔루션', code: '373220', market: 'KOSPI', price: 412000, change: 5000, changeRate: 1.2 },
+    { name: 'POSCO홀딩스', code: '005490', market: 'KOSPI', price: 450000, change: 15000, changeRate: 3.4 },
+    { name: '셀트리온', code: '068270', market: 'KOSDAQ', price: 180000, change: 2000, changeRate: 1.1 }
 ];
+
+// 이미 보유 중인 종목 코드 (더미)
+const OWNED_STOCK_CODES = ['005930', '035420'];
 
 let selectedStock = null;
 let addQuantity = 10;
@@ -61,14 +65,26 @@ function attachListeners() {
     }
 
     // Modal Controls
-    const closeBtn = document.getElementById('modal-close-btn');
-    if (closeBtn) closeBtn.addEventListener('click', closeStockModal);
+    const closeBtn = document.getElementById('stock-modal-close-btn');
+    if (closeBtn) {
+        const newBtn = closeBtn.cloneNode(true);
+        closeBtn.parentNode.replaceChild(newBtn, closeBtn);
+        newBtn.addEventListener('click', closeStockModal);
+    }
 
-    const cancelBtn = document.getElementById('modal-cancel-btn');
-    if (cancelBtn) cancelBtn.addEventListener('click', closeStockModal);
+    const cancelBtn = document.getElementById('stock-modal-cancel-btn');
+    if (cancelBtn) {
+        const newBtn = cancelBtn.cloneNode(true);
+        cancelBtn.parentNode.replaceChild(newBtn, cancelBtn);
+        newBtn.addEventListener('click', closeStockModal);
+    }
 
-    const confirmBtn = document.getElementById('confirm-add-btn');
-    if (confirmBtn) confirmBtn.addEventListener('click', confirmAddStock);
+    const confirmBtn = document.getElementById('stock-modal-confirm-btn');
+    if (confirmBtn) {
+        const newBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+        newBtn.addEventListener('click', confirmAddStock);
+    }
 
     // Quantity Controls
     document.getElementById('qty-minus-btn')?.addEventListener('click', () => adjustQuantity(-1));
@@ -126,12 +142,13 @@ function renderResults(results) {
     container.innerHTML = '';
 
     results.forEach(stock => {
+        const isOwned = OWNED_STOCK_CODES.includes(stock.code);
         const item = document.createElement('div');
-        item.className = 'result-item';
+        item.className = `result-item${isOwned ? ' owned' : ''}`;
         item.innerHTML = `
             <div class="result-info">
-                <span class="result-name">${stock.name}</span>
-                <span class="result-code">${stock.code}</span>
+                <span class="result-name">${stock.name}${isOwned ? ' <span class="owned-badge">보유</span>' : ''}</span>
+                <span class="result-code">${stock.code} · ${stock.market}</span>
             </div>
             <div class="result-price">
                 <span class="price">₩${stock.price.toLocaleString()}</span>
@@ -141,7 +158,10 @@ function renderResults(results) {
             </div>
         `;
 
-        item.addEventListener('click', () => openStockModal(stock));
+        // 보유 종목은 클릭 불가
+        if (!isOwned) {
+            item.addEventListener('click', () => openStockModal(stock));
+        }
         container.appendChild(item);
     });
 }

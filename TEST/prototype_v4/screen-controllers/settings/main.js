@@ -8,7 +8,14 @@ import { navigateTo, goBack } from '../../core/navigation.js';
 // Dummy Data
 const USER_PROFILE = {
     nickname: '투자왕김철수',
-    email: 'investor@email.com'
+    email: 'investor@email.com',
+    investmentStyle: 'neutral' // conservative, neutral, aggressive
+};
+
+const STYLE_LABELS = {
+    conservative: '안정형',
+    neutral: '중립형',
+    aggressive: '공격형'
 };
 
 export function init() {
@@ -16,8 +23,7 @@ export function init() {
 
     // Render profile info
     setText('display-nickname', USER_PROFILE.nickname);
-    // email is static in html but if dynamic:
-    // setText('display-email', USER_PROFILE.email); 
+    setText('display-investment-style', STYLE_LABELS[USER_PROFILE.investmentStyle]);
 
     attachListeners();
 }

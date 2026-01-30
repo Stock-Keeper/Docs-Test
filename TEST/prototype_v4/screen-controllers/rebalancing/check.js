@@ -38,19 +38,41 @@ function render(data) {
         setText('total-sell-amount', `₩${data.totalSell.toLocaleString()}`);
         setText('net-amount', `₩${Math.abs(data.netAmount).toLocaleString()}`);
 
-        const netEl = document.querySelector('.summary-value.net-buy'); // Default class
-        if (netEl) {
-            // Logic to switch class if negative? 
-            // In design, netAmount > 0 means "Need to buy more" -> Spend Money. 
-            // Wait, net-buy class color is success(red)? 
-            // Usually "Minus My Money" is bad? Or "Investment Opportunity"?
-            // Let's stick to v3 design: net-buy
-        }
-
-        // Suggestions
-        // For prototype, HTML hardcoded suggestions are fine, or we can dynamic render.
-        // Let's keep hardcoded HTML for now as per v3 copy, but in real app we render 'data.suggestions'
+        // Render Suggestion Cards
+        renderSuggestions(data.suggestions);
     }
+}
+
+function renderSuggestions(suggestions) {
+    const container = document.getElementById('suggestion-list');
+    if (!container) return;
+
+    container.innerHTML = suggestions.map(item => `
+        <div class="suggestion-card ${item.type}">
+            <div class="suggestion-header">
+                <span class="suggestion-type">${item.type === 'buy' ? '매수' : '매도'}</span>
+                <span class="suggestion-stock">${item.name}</span>
+            </div>
+            <div class="suggestion-detail">
+                <div class="detail-row">
+                    <span class="detail-label">현재 비율</span>
+                    <span class="detail-value">${item.current}%</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">목표 비율</span>
+                    <span class="detail-value">${item.target}%</span>
+                </div>
+                <div class="detail-row highlight">
+                    <span class="detail-label">권장 수량</span>
+                    <span class="detail-value">${item.qty > 0 ? '+' : ''}${item.qty}주</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">예상 금액</span>
+                    <span class="detail-value">₩${item.amount.toLocaleString()}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
 }
 
 function attachListeners() {
@@ -61,6 +83,30 @@ function attachListeners() {
     });
 
     document.getElementById('copy-result-btn')?.addEventListener('click', copyResult);
+
+    // 임계값 선택 버튼
+    const thresholdBtns = document.querySelectorAll('.threshold-btn');
+    thresholdBtns.forEach(btn => {
+        btn.addEventListener('click', () => handleThresholdChange(btn));
+    });
+}
+
+function handleThresholdChange(btn) {
+    const value = parseInt(btn.dataset.value);
+    console.log(`[RebalancingCheck] 임계값 변경: ${value}%`);
+
+    // 선택 상태 업데이트
+    document.querySelectorAll('.threshold-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+
+    // 균형 상태 메시지 업데이트
+    const okStateDesc = document.querySelector('#rebalance-ok-state .empty-sub');
+    if (okStateDesc) {
+        okStateDesc.textContent = `임계값: ±${value}%`;
+    }
+
+    // TODO: 실제 앱에서는 여기서 재계산 API 호출
+    // recalculateRebalancing(value);
 }
 
 function copyResult() {

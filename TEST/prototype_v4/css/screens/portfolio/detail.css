@@ -11,6 +11,12 @@
     display: none;
 }
 
+/* Portfolio Banner Color Strip */
+.portfolio-banner {
+    height: 6px;
+    width: 100%;
+}
+
 .detail-summary {
     padding: 24px 24px 20px;
     /* Increased side padding */

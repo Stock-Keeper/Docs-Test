@@ -146,6 +146,17 @@
     margin-left: 8px;
 }
 
+/* Owned Stock Item - Dimmed */
+.result-item.owned {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.result-item.owned:hover {
+    transform: none;
+    background: var(--bg-surface);
+}
+
 /* Bottom Sheet Modal - Inside Phone Frame */
 /* NOTE: duplicate modal styles might be removed later, keeping for now for v3 compat */
 .modal.bottom-sheet {

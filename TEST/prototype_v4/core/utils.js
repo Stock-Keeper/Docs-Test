@@ -50,3 +50,13 @@ export function formatPercent(value, showSign = true) {
 
 // Expose to global for inline handlers
 window.showToast = showToast;
+
+/**
+ * Set text content by element ID
+ * @param {string} id - Element ID
+ * @param {string} text - Text content
+ */
+export function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+}

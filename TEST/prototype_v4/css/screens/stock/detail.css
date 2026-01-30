@@ -3,7 +3,7 @@
    ============================================= */
 
 #screen-stock-detail {
-    background: var(--bg-primary);
+    background: var(--bg-screen);
 }
 
 #screen-stock-detail .header {
@@ -223,12 +223,12 @@
 }
 
 .ratio-deviation.warning {
-    background: rgba(var(--warning-rgb, 255, 152, 0), 0.15);
+    background: var(--warning-bg);
     color: var(--warning);
 }
 
 .ratio-deviation.ok {
-    background: rgba(var(--success-rgb, 76, 175, 80), 0.15);
+    background: var(--success-bg);
     color: var(--success);
 }
 
@@ -267,7 +267,7 @@
     font-size: 15px;
     font-weight: 600;
     border-radius: var(--radius-lg);
-    background: rgba(var(--error-rgb, 239, 83, 80), 0.15);
+    background: var(--error-bg);
     border: 1px solid var(--error);
     color: var(--error);
     cursor: pointer;
@@ -275,7 +275,8 @@
 }
 
 .stock-detail-actions .danger-btn:hover {
-    background: rgba(var(--error-rgb, 239, 83, 80), 0.25);
+    background: rgba(49, 130, 206, 0.3);
+    /* Slightly darker than error-bg */
 }
 
 /* =============================================
@@ -296,15 +297,13 @@
 }
 
 #stock-edit-modal .bottom-sheet {
-    background-color: #333333;
+    background-color: var(--bg-modal);
     width: 100%;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     animation: slideUpEdit 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-[data-mode="light"] #stock-edit-modal .bottom-sheet {
-    background-color: #ffffff;
-}
+/* Light mode handled by CSS variables */
 
 @keyframes slideUpEdit {
     from {
@@ -578,6 +577,6 @@
     border-radius: var(--radius-lg);
     background: var(--gradient-primary);
     border: none;
-    color: #ffffff;
+    color: var(--text-inverse);
     cursor: pointer;
 }

@@ -6,6 +6,7 @@
 let config = null;
 let currentScreen = null;
 const loadedControllers = new Map();
+const historyStack = []; // 네비게이션 히스토리 스택
 
 /**
  * Initialize navigation with config
@@ -20,6 +21,20 @@ export function initNavigation(screenConfig) {
             navigateTo(btn.dataset.screen);
         });
     });
+}
+
+/**
+ * Go back to previous screen
+ */
+export function goBack() {
+    if (historyStack.length > 1) {
+        historyStack.pop(); // 현재 화면 제거
+        const prevScreen = historyStack[historyStack.length - 1];
+        navigateTo(prevScreen, false); // 히스토리에 추가하지 않음
+    } else {
+        // 히스토리가 없으면 포트폴리오 목록으로
+        navigateTo('portfolio-list', false);
+    }
 }
 
 /**
@@ -39,14 +54,14 @@ export async function loadAllScreens(screenConfig) {
             if (response.ok) {
                 const html = await response.text();
                 container.insertAdjacentHTML('beforeend', html);
-                
+
                 // 2. Load Controller (if exists)
                 if (screen.controller) {
                     try {
                         // Dynamic import
                         const module = await import('../' + screen.controller);
                         loadedControllers.set(screen.id, module);
-                        
+
                         // Initialize if init() exists
                         if (module.init) {
                             module.init();
@@ -70,8 +85,9 @@ export async function loadAllScreens(screenConfig) {
 /**
  * Navigate to a screen by ID
  * @param {string} screenId - Screen ID from config
+ * @param {boolean} addToHistory - 히스토리에 추가할지 (기본: true)
  */
-export function navigateTo(screenId) {
+export function navigateTo(screenId, addToHistory = true) {
     // Hide all screens
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
 
@@ -80,6 +96,12 @@ export function navigateTo(screenId) {
     if (targetScreen) {
         targetScreen.classList.add('active');
         currentScreen = screenId;
+
+        // 히스토리 스택에 추가
+        if (addToHistory) {
+            historyStack.push(screenId);
+        }
+
         updateNavButtons();
         updateStateButtons();
     }

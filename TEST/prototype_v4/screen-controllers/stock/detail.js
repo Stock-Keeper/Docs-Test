@@ -116,12 +116,16 @@ function attachListeners() {
     document.getElementById('stock-edit-btn')?.addEventListener('click', openEditModal);
 
     // Delete
-    document.getElementById('stock-delete-btn')?.addEventListener('click', confirmDelete);
+    document.getElementById('stock-delete-btn')?.addEventListener('click', openDeleteModal);
 
-    // Modal Controls
+    // Modal Controls - Edit
     document.getElementById('edit-modal-close-btn')?.addEventListener('click', closeEditModal);
     document.getElementById('edit-cancel-btn')?.addEventListener('click', closeEditModal);
     document.getElementById('edit-save-btn')?.addEventListener('click', saveEdit);
+
+    // Modal Controls - Delete
+    document.getElementById('delete-cancel-btn')?.addEventListener('click', closeDeleteModal);
+    document.getElementById('delete-confirm-btn')?.addEventListener('click', confirmDelete);
 
     // Edit Logic
     document.getElementById('edit-qty-minus-btn')?.addEventListener('click', () => adjustEditQuantity(-1));
@@ -212,11 +216,21 @@ function saveEdit() {
     closeEditModal();
 }
 
+// Delete Modal Functions
+function openDeleteModal() {
+    const modal = document.getElementById('stock-delete-modal');
+    if (modal) modal.style.display = 'flex';
+}
+
+function closeDeleteModal() {
+    const modal = document.getElementById('stock-delete-modal');
+    if (modal) modal.style.display = 'none';
+}
+
 function confirmDelete() {
-    if (confirm('정말로 이 종목을 삭제하시겠습니까?')) {
-        console.log('Stock deleted');
-        goBack();
-    }
+    console.log('Stock deleted');
+    closeDeleteModal();
+    goBack();
 }
 
 function setText(id, text) {

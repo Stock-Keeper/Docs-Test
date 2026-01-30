@@ -19,13 +19,20 @@ export function init() {
     const screen = document.getElementById('screen-portfolio-list');
     if (!screen) return;
 
-    // Attach Event Listeners
-    const addBtn = screen.querySelector('#portfolio-add-btn');
-    if (addBtn) {
-        // Clone to clear listeners
-        const newBtn = addBtn.cloneNode(true);
-        addBtn.parentNode.replaceChild(newBtn, addBtn);
-        newBtn.addEventListener('click', openCreateModal);
+    // Settings Button (헤더)
+    const settingsBtn = screen.querySelector('#settings-btn');
+    if (settingsBtn) {
+        const newBtn = settingsBtn.cloneNode(true);
+        settingsBtn.parentNode.replaceChild(newBtn, settingsBtn);
+        newBtn.addEventListener('click', () => navigateTo('settings-main'));
+    }
+
+    // FAB (포트폴리오 추가)
+    const fab = screen.querySelector('#portfolio-add-fab');
+    if (fab) {
+        const newFab = fab.cloneNode(true);
+        fab.parentNode.replaceChild(newFab, fab);
+        newFab.addEventListener('click', openCreateModal);
     }
 
     // List items click delegation
@@ -58,8 +65,8 @@ function initModalListeners(screen) {
     if (!modal) return;
 
     // Close buttons
-    const closeBtnX = modal.querySelector('#modal-close-x');
-    const cancelBtn = modal.querySelector('#modal-cancel-btn');
+    const closeBtnX = modal.querySelector('#portfolio-modal-close-btn');
+    const cancelBtn = modal.querySelector('#portfolio-modal-cancel-btn');
 
     // Clone to ensure clean listeners
     if (closeBtnX) {
@@ -75,7 +82,7 @@ function initModalListeners(screen) {
     }
 
     // Create button
-    const createBtn = modal.querySelector('#modal-create-btn');
+    const createBtn = modal.querySelector('#portfolio-modal-create-btn');
     if (createBtn) {
         const newBtn = createBtn.cloneNode(true);
         createBtn.parentNode.replaceChild(newBtn, createBtn);

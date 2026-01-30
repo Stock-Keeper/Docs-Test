@@ -48,7 +48,11 @@
         <div class="rebalance-suggestions" id="rebalance-suggestions">
             <div class="section-header">
                 <h3>리밸런싱 제안</h3>
-                <span class="threshold-info">임계값: ±5%</span>
+                <div class="threshold-selector" id="threshold-selector">
+                    <button class="threshold-btn" data-value="3">3%</button>
+                    <button class="threshold-btn selected" data-value="5">5%</button>
+                    <button class="threshold-btn" data-value="10">10%</button>
+                </div>
             </div>
 
             <!-- 총 필요 자금 요약 -->
