@@ -84,9 +84,9 @@ export function init() {
 }
 
 function setupModalListeners(screen) {
-    const cancelBtn = screen.querySelector('#logout-cancel-btn');
-    const confirmBtn = screen.querySelector('#logout-confirm-btn');
-    const modalClose = screen.querySelector('.modal-close');
+    const cancelBtn = screen.querySelector('#profile-back-cancel-btn');
+    const confirmBtn = screen.querySelector('#profile-back-confirm-btn');
+    const modalClose = screen.querySelector('#profile-back-close-btn');
 
     if (cancelBtn) {
         const newBtn = cancelBtn.cloneNode(true);
@@ -187,7 +187,7 @@ async function handleSubmit() {
  * Handle back button click
  */
 function handleBackClick() {
-    const modal = document.getElementById('logout-confirm-modal');
+    const modal = document.getElementById('profile-back-confirm-modal');
     if (modal) {
         modal.classList.add('active');
     }
@@ -197,7 +197,7 @@ function handleBackClick() {
  * Close logout confirmation modal
  */
 function closeModal() {
-    const modal = document.getElementById('logout-confirm-modal');
+    const modal = document.getElementById('profile-back-confirm-modal');
     if (modal) {
         modal.classList.remove('active');
     }

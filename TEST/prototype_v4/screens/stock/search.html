@@ -1,0 +1,93 @@
+<!-- Screen: 종목 검색/추가 -->
+<div id="screen-stock-search" class="screen">
+    <div class="screen-body">
+        <header class="header">
+            <button class="back-btn" id="search-back-btn">←</button>
+            <h2>종목 추가</h2>
+            <div class="header-spacer"></div>
+        </header>
+
+        <!-- 현재 비중 합계 표시 -->
+        <div class="ratio-summary-bar">
+            <span class="ratio-label">현재 목표 비중 합계</span>
+            <span class="ratio-value" id="current-ratio-sum">95%</span>
+        </div>
+
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" class="search-input" placeholder="종목명 또는 종목코드 검색">
+                <button class="clear-search-btn" id="clear-search-btn" style="display:none;">✕</button>
+            </div>
+        </div>
+
+        <div class="search-results" id="search-results">
+            <!-- 검색 결과가 JS로 렌더링됨 -->
+        </div>
+
+        <!-- 검색 결과 없음 Empty State -->
+        <div id="search-empty-state" class="empty-state search-empty" style="display: none;">
+            <div class="empty-icon">🔍</div>
+            <h3 class="empty-title">검색 결과가 없어요</h3>
+            <p class="empty-desc">다른 검색어로 시도해보세요</p>
+        </div>
+
+        <!-- 초기 안내 상태 -->
+        <div id="search-initial-state" class="empty-state search-empty">
+            <div class="empty-icon">📝</div>
+            <h3 class="empty-title">종목을 검색해주세요</h3>
+            <p class="empty-desc">종목명 또는 6자리 종목코드를 입력하세요</p>
+        </div>
+    </div>
+
+    <!-- 종목 추가 바텀시트 -->
+    <div id="stock-add-modal" class="bottom-sheet-overlay" style="display:none;">
+        <div class="bottom-sheet">
+            <div class="bottom-sheet-handle"></div>
+            <div class="bottom-sheet-header">
+                <h3 id="modal-stock-name">현대자동차</h3>
+                <button class="close-btn" id="stock-modal-close-btn">×</button>
+            </div>
+            <div class="bottom-sheet-body">
+                <div class="stock-modal-price">
+                    <span id="modal-stock-price" class="current-price">₩186,500</span>
+                    <span id="modal-stock-change" class="price-change positive">+1.24%</span>
+                </div>
+                <p id="modal-stock-code" class="stock-code-small">005380</p>
+
+                <div class="form-group">
+                    <label>보유 수량</label>
+                    <div class="number-input">
+                        <button class="num-btn" id="qty-minus-btn">-</button>
+                        <input type="number" id="stock-quantity" value="10" min="1">
+                        <button class="num-btn" id="qty-plus-btn">+</button>
+                    </div>
+                    <span class="estimated" id="estimated-amount">예상 금액: ₩1,865,000</span>
+                </div>
+
+                <div class="form-group">
+                    <div class="ratio-label-row">
+                        <label>목표 비중</label>
+                        <span class="ratio-warning-icon" id="ratio-warning-icon">⚠️</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" id="ratio-slider" min="1" max="100" value="10" class="ratio-slider">
+                        <span class="slider-value" id="ratio-display">10%</span>
+                    </div>
+                    <div class="ratio-sum-info" id="ratio-sum-info">
+                        <span>기존 종목: <strong id="base-ratio-display">90%</strong></span>
+                        <span>+ 현재: <strong id="current-add-ratio">10%</strong></span>
+                        <span class="ratio-total">합계: <strong id="total-ratio">100%</strong></span>
+                        <span class="ratio-warning-message" id="ratio-warning-message">
+                            초과분은 포트폴리오 상세 화면에서 조정해주세요
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-sheet-footer">
+                <button class="cancel-btn" id="stock-modal-cancel-btn">취소</button>
+                <button class="confirm-btn" id="stock-modal-confirm-btn">추가</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,27 +19,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         // 1. Load screens configuration
         const config = await fetch('config/screens.json').then(r => r.json());
-        
+
         // 2. Initialize control panel (dynamic from config)
         await initControlPanel(config);
-        
+
         // 3. Load all screen HTML files
         await loadAllScreens(config);
-        
+
         // 4. Initialize navigation
         initNavigation(config);
-        
+
         // 5. Initialize theme
         initTheme();
-        
+
         // 6. Show off screen (powered off state)
         showOffScreen();
-        
+
         console.log('✅ Stock-Keeper V4 initialized');
+
+        // 7. Init Phone Drag
+        initPhoneDrag();
+
     } catch (error) {
         console.error('❌ Initialization failed:', error);
     }
 });
+
+function initPhoneDrag() {
+    import('./utils/draggable.js').then(({ makeDraggable }) => {
+        const phone = document.getElementById('phone-frame');
+        const handle = phone.querySelector('.phone-drag-handle');
+        makeDraggable(phone, handle, 'phone-position');
+    });
+}
 
 // =================================================================
 // APP FLOW CONTROL
@@ -49,29 +61,29 @@ function showOffScreen() {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const container = document.getElementById('screen-container');
     if (container) container.style.background = '#000';
-    
+
     const startBtn = document.getElementById('app-start-btn');
     if (startBtn) startBtn.disabled = false;
-    
+
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 }
 
-window.startApp = function() {
+window.startApp = function () {
     const startBtn = document.getElementById('app-start-btn');
     if (startBtn) startBtn.disabled = true;
-    
+
     navigateTo('splash');
-    
+
     setTimeout(() => {
         if (isFirstVisit) {
-            navigateTo('login');
+            navigateTo('onboarding');
         } else {
             navigateTo('login');
         }
     }, 2000);
 };
 
-window.resetApp = function() {
+window.resetApp = function () {
     isFirstVisit = true;
     showOffScreen();
     showToast('앱이 초기화되었습니다.');

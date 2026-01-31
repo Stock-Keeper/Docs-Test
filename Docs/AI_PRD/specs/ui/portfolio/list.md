@@ -7,6 +7,9 @@ related:
     - specs/api/portfolio/list.md
   ui:
     - specs/ui/portfolio/detail.md
+  shared:
+    - specs/ui/_shared/modal.md
+    - specs/ui/_shared/summary-card.md
 reference: ../../../reference/pages/home.md
 ---
 

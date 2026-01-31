@@ -127,7 +127,7 @@ body {
 
 /* Status Bar */
 .status-bar {
-    height: 44px;
+    height: var(--status-bar-height);
     background: transparent;
     display: flex;
     justify-content: space-between;
@@ -168,14 +168,14 @@ body {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 44px;
-    /* Start below status bar */
+    top: 0;
+    /* Start from very top */
     left: 0;
     width: 100%;
-    height: calc(100% - 44px);
-    /* Full height minus status bar */
+    height: 100%;
+    /* Full height */
     background: var(--bg-screen);
-    /* NO overflow here - handled by .screen-body */
+    z-index: 1;
 }
 
 .screen.active {
@@ -230,10 +230,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 20px;
+    padding: var(--header-padding-top) 20px 12px;
     background: var(--bg-header);
     border-bottom: 1px solid var(--border-color);
-    min-height: 56px;
+    min-height: 100px;
 }
 
 .header h2 {
@@ -282,4 +282,33 @@ body {
 
 .header-spacer {
     width: 40px;
+}
+
+/* Phone Frame Drag Handle */
+.phone-drag-handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 12px 12px;
+    z-index: 1000;
+    cursor: grab;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.phone-drag-handle:active {
+    cursor: grabbing;
+}
+
+.phone-drag-handle::after {
+    content: "";
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
 }

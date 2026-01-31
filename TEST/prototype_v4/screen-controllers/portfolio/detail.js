@@ -17,7 +17,9 @@ const PORTFOLIOS = {
         stocks: [
             { name: '삼성전자', code: '005930', value: 11357500, changeRate: 5.2, currentRatio: 35, targetRatio: 30, deviation: 17, isOver: true },
             { name: 'SK하이닉스', code: '000660', value: 8112500, changeRate: 8.1, currentRatio: 25, targetRatio: 25, deviation: 0, isOk: true },
-            { name: '카카오', code: '035720', value: 3894000, changeRate: -4.3, currentRatio: 12, targetRatio: 15, deviation: -20, isUnder: true }
+            { name: 'NAVER', code: '035420', value: 6490000, changeRate: 3.7, currentRatio: 20, targetRatio: 20, deviation: 0, isOk: true },
+            { name: '카카오', code: '035720', value: 3894000, changeRate: -4.3, currentRatio: 12, targetRatio: 15, deviation: -20, isUnder: true },
+            { name: 'LG에너지솔루션', code: '373220', value: 2596000, changeRate: 12.5, currentRatio: 8, targetRatio: 10, deviation: -20, isUnder: true }
         ],
         needRebalance: true,
         rebalanceMsg: '삼성전자 +17% 초과 · 카카오 -20% 미달'
@@ -63,29 +65,7 @@ function render(data) {
     setText('detail-title', data.name);
 
     // Summary
-    setText('detail-total-val', `₩${data.totalValue.toLocaleString()}`);
-    setText('detail-cash-val', `₩${data.cashValue.toLocaleString()}`);
-    setText('detail-cash-ratio', data.cashRatio);
-    setText('detail-return-val', `${data.returnValue > 0 ? '+' : ''}₩${data.returnValue.toLocaleString()}`);
-    setText('detail-return-rate', `${data.returnRate > 0 ? '+' : ''}${data.returnRate}%`);
-
-    const returnValEl = document.getElementById('detail-return-val');
-    if (returnValEl) {
-        returnValEl.className = `item-value ${data.returnValue >= 0 ? 'positive' : 'negative'}`; // Using base.css utilities if available? No, detail.css defines colors? No, uses vars.
-        // Actually detail.css uses .positive class in summary-change but summary-item uses inheritance?
-        // Wait, v3 detail.css .item-value.positive definitions are missing in the ported CSS?
-        // Let's check detail.css content I wrote.
-        // I copied v3 detail.css... 
-        // v3 detail.css defines .item-value.positive? 
-        // Checking... No, it uses .summary-change.positive in home.css, but detail.css items?
-        // Line 34 in v3 detail.html has class "item-value positive". 
-        // But in v3 detail.css I only saw .item-value, .item-value.large. 
-        // Maybe 'positive' class comes from components.css or base.css?
-        // Yes, components.css defines .positive { color: var(--success); }
-        // So just adding 'positive' class works.
-    }
-    const returnRateEl = document.getElementById('detail-return-rate');
-    if (returnRateEl) returnRateEl.className = `item-value ${data.returnRate >= 0 ? 'positive' : 'negative'}`;
+    renderSummary(data);
 
     // Meta
     setText('detail-stock-count', `${data.stocks.length}종목`);
@@ -111,12 +91,6 @@ function renderStocks(stocks) {
 
     stocks.forEach(stock => {
         // Calculate Deviation Bar Width/Position
-        // range: 0 ~ 100? No, usually -20% ~ +20% deviation.
-        // v3 implementation logic:
-        // .deviation-fill.over { left: 50%; width: X% }
-        // .deviation-fill.under { right: 50%; width: X% }
-        // simple mapping: deviation 20 -> width 40% (scale factor 2)
-
         let barHtml = '';
         let tagHtml = '';
 
@@ -125,7 +99,11 @@ function renderStocks(stocks) {
             barHtml = `<div class="deviation-fill over" style="width: ${width}%;"></div>`;
             tagHtml = `<div class="deviation-tag sell">+${stock.deviation}% 초과</div>`;
         } else if (stock.isUnder) {
-            const width = Math.min(Math.abs(stock.deviation) * 2, 50);
+            // 카카오 case: deviation -20 -> width 50% (visual requirement)
+            // LG Energy case: deviation -20 -> width 40% (calculated)
+            // User requested Kakao bar to be full left (50%). width = abs(deviation) * 2.5?
+            // For now, let's keep logic simple but maximize for specific case or increase scale
+            const width = Math.min(Math.abs(stock.deviation) * 2.5, 50);
             barHtml = `<div class="deviation-fill under" style="width: ${width}%;"></div>`;
             tagHtml = `<div class="deviation-tag buy">${stock.deviation}% 미달</div>`;
         } else {
@@ -161,31 +139,75 @@ function renderStocks(stocks) {
             </div>
         `;
         list.appendChild(card);
+
+        // Click Event for Detail Navigation
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.delete-stock-btn')) return;
+            navigateTo('stock-detail', { id: stock.code, stockData: stock });
+        });
     });
 }
 
 function attachListeners() {
+    // Replace cloneNode with direct onclick assignment for robustness
+
+    // Back Button
     const backBtn = document.getElementById('detail-back-btn');
     if (backBtn) {
-        // Clone to ensure clean listeners
-        const newBtn = backBtn.cloneNode(true);
-        backBtn.parentNode.replaceChild(newBtn, backBtn);
-        newBtn.addEventListener('click', () => {
+        backBtn.onclick = () => {
+            console.log('[PortfolioDetail] Back button clicked');
             navigateTo('portfolio-list');
-        });
+        };
     }
 
+    // Edit Button
     const editBtn = document.getElementById('detail-edit-btn');
     if (editBtn) {
-        const newBtn = editBtn.cloneNode(true);
-        editBtn.parentNode.replaceChild(newBtn, editBtn);
-        newBtn.addEventListener('click', toggleEditMode);
+        editBtn.onclick = toggleEditMode;
+    }
+
+    // Add Stock Button (Bottom Action)
+    const addBtn = document.getElementById('detail-add-stock-btn');
+    if (addBtn) {
+        addBtn.onclick = () => navigateTo('stock-search');
+    }
+
+    // Add Stock Button (Empty State)
+    const emptyAddBtn = document.getElementById('detail-add-stock-empty-btn');
+    if (emptyAddBtn) {
+        emptyAddBtn.onclick = () => navigateTo('stock-search');
+    }
+
+    // Rebalance Action Button (Bottom)
+    const rebalanceBtn = document.getElementById('detail-rebalance-action-btn');
+    if (rebalanceBtn) {
+        rebalanceBtn.onclick = () => navigateTo('rebalancing-check');
+    }
+
+    // Insight Banner Button
+    const insightBtn = document.getElementById('detail-rebalance-btn');
+    if (insightBtn) {
+        insightBtn.onclick = () => {
+            console.log('[PortfolioDetail] Insight button clicked');
+            navigateTo('rebalancing-check');
+        };
     }
 }
 
 function toggleEditMode() {
     const screen = document.getElementById('screen-portfolio-detail');
+    const editBtn = document.getElementById('detail-edit-btn');
+
     screen.classList.toggle('edit-mode');
+
+    // Toggle button text
+    if (screen.classList.contains('edit-mode')) {
+        editBtn.textContent = '완료';
+        console.log('[PortfolioDetail] Entered edit mode');
+    } else {
+        editBtn.textContent = '✏️';
+        console.log('[PortfolioDetail] Exited edit mode');
+    }
 }
 
 function setText(id, text) {
@@ -220,6 +242,9 @@ function renderState(stateId) {
 
     switch (stateId) {
         case 'loading':
+            // Summary Loading State
+            renderSummary(null, 'loading');
+
             if (stocksSection) {
                 stocksSection.innerHTML = `
                     <div class="section-header">
@@ -233,11 +258,17 @@ function renderState(stateId) {
             break;
 
         case 'empty':
+            // Summary Empty State (Zero values)
+            renderSummary(null, 'empty');
+
             if (stocksSection) stocksSection.style.display = 'none';
             injectStateMessage(screen, '📭', '보유한 종목이 없습니다.', '새 종목을 추가해보세요.');
             break;
 
         case 'error':
+            // Summary Error State
+            renderSummary(null, 'error');
+
             if (stocksSection) stocksSection.style.display = 'none';
             injectStateMessage(screen, '⚠️', '정보를 불러올 수 없습니다.', '네트워크 연결을 확인해주세요.');
             break;
@@ -249,26 +280,97 @@ function renderState(stateId) {
         case 'default':
         default:
             // Restore Content
-            if (stocksSection && data) {
-                stocksSection.innerHTML = `
-                   <div class="section-header">
-                        <h3>보유 종목</h3>
-                        <span class="stock-count" id="detail-stock-count">${data.stocks.length}종목</span>
-                    </div>
-                    <div class="rebalance-insight" id="detail-rebalance-insight">
-                        <span class="insight-icon">⚠️</span>
-                        <div class="insight-content">
-                            <span class="insight-title">리밸런싱 필요</span>
-                            <span class="insight-detail" id="detail-insight-msg">${data.rebalanceMsg}</span>
+            if (data) {
+                renderSummary(data);
+                if (stocksSection) {
+                    stocksSection.innerHTML = `
+                       <div class="section-header">
+                            <h3>보유 종목</h3>
+                            <div class="stock-meta">
+                                <span class="stock-count" id="detail-stock-count">${data.stocks.length}종목</span>
+                                <span class="ratio-sum" id="detail-ratio-sum">비율합계 ${data.stocks.reduce((sum, s) => sum + s.currentRatio, 0)}%</span>
+                            </div>
                         </div>
-                        <button class="insight-action-btn">분석 →</button>
-                    </div>
-                    <div id="detail-stock-list"></div> 
-                `;
-                renderStocks(data.stocks); // Re-render logic
+                        <div class="rebalance-insight" id="detail-rebalance-insight" style="display: ${data.needRebalance ? 'flex' : 'none'};">
+                            <span class="insight-icon">⚠️</span>
+                            <div class="insight-text">
+                                <span class="insight-title">리밸런싱 필요</span>
+                                <span class="insight-detail" id="detail-insight-msg">${data.rebalanceMsg}</span>
+                            </div>
+                            <button class="insight-btn" id="detail-rebalance-btn">분석 →</button>
+                        </div>
+                        <div class="stocks-cards" id="detail-stock-list"></div>
+                    `;
+                    renderStocks(data.stocks); // Re-render logic
+
+                    // Re-attach listeners for dynamic content
+                    const rebalanceBtn = document.getElementById('detail-rebalance-btn');
+                    if (rebalanceBtn) {
+                        rebalanceBtn.addEventListener('click', () => navigateTo('rebalancing-check'));
+                    }
+                }
             }
             break;
     }
+}
+
+function renderSummary(data, state = 'default') {
+    if (state === 'loading') {
+        const skeletonHtml = '<span class="skeleton-text" style="width: 80px;"></span>';
+        const skeletonHtmlLarge = '<span class="skeleton-text" style="width: 120px; height: 1.5em;"></span>';
+
+        // Use innerHTML for skeletons
+        document.getElementById('detail-total-val').innerHTML = skeletonHtmlLarge;
+        document.getElementById('detail-cash-val').innerHTML = skeletonHtml;
+        document.getElementById('detail-cash-ratio').innerHTML = '<span class="skeleton-text" style="width: 20px;"></span>';
+        document.getElementById('detail-return-val').innerHTML = skeletonHtml;
+        document.getElementById('detail-return-rate').innerHTML = skeletonHtml;
+        return;
+    }
+
+    if (state === 'empty') {
+        setText('detail-total-val', '₩0');
+        setText('detail-cash-val', '₩0');
+        setText('detail-cash-ratio', '0');
+        setText('detail-return-val', '₩0');
+        setText('detail-return-rate', '0.00%');
+        updateValueColor('detail-return-val', 0);
+        updateValueColor('detail-return-rate', 0);
+        return;
+    }
+
+    if (state === 'error') {
+        setText('detail-total-val', '-');
+        setText('detail-cash-val', '-');
+        setText('detail-cash-ratio', '-');
+        setText('detail-return-val', '-');
+        setText('detail-return-rate', '-');
+        return;
+    }
+
+    // Default: Render Data
+    if (!data) return;
+
+    setText('detail-total-val', `₩${data.totalValue.toLocaleString()}`);
+    setText('detail-cash-val', `₩${data.cashValue.toLocaleString()}`);
+    setText('detail-cash-ratio', data.cashRatio);
+    setText('detail-return-val', `${data.returnValue > 0 ? '+' : ''}₩${data.returnValue.toLocaleString()}`);
+    setText('detail-return-rate', `${data.returnRate > 0 ? '+' : ''}${data.returnRate}%`);
+
+    updateValueColor('detail-return-val', data.returnValue);
+    updateValueColor('detail-return-rate', data.returnRate);
+}
+
+function updateValueColor(elementId, value) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    // Remove old classes
+    el.classList.remove('positive', 'negative');
+
+    // Add new class based on value
+    if (value > 0) el.classList.add('positive');
+    else if (value < 0) el.classList.add('negative');
 }
 
 function injectStateMessage(screen, icon, title, subtitle) {

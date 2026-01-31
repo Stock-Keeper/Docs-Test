@@ -1,8 +1,10 @@
 /* =============================================
    COMMON MODAL STYLES (Bottom Sheet)
    ============================================= */
+
 /* Modal Overlay - Absolute to stay within phone frame */
-.modal-overlay {
+.modal-overlay,
+.bottom-sheet-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -18,8 +20,10 @@
     animation: fadeIn 0.2s;
 }
 
-/* Modal Card - Bottom Sheet Style */
-.modal-card {
+/* Modal Card & Bottom Sheet Style */
+.modal-card,
+.bottom-sheet,
+.confirm-modal {
     background-color: var(--bg-modal, #333333);
     width: 100%;
     /* Full width */
@@ -32,22 +36,88 @@
     overflow: hidden;
     animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Light Mode Override for Modal handled by css variables in variables.css */
+/* Default Confirm Modal Styles (Non-danger) */
+.confirm-modal .confirm-message {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 8px;
+}
 
-.modal-header {
+.confirm-modal .confirm-sub {
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+
+/* Danger Modal Specifics */
+.modal-card.danger .confirm-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    text-align: center;
+    display: block;
+}
+
+.modal-card.danger .confirm-message {
+    color: var(--error);
+}
+
+
+/* Danger Button Style (Migrated from settings/main.css) */
+.bottom-sheet-footer .danger-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    background: var(--danger, #fc8181);
+    /* Fallback color just in case */
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.bottom-sheet-footer .danger-btn:hover {
+    opacity: 0.9;
+}
+
+/* Bottom Sheet Handle */
+.bottom-sheet-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--text-disabled);
+    /* Better visibility than border-color */
+    border-radius: 2px;
+    margin: 12px auto 4px;
+    /* Added spacing */
+    flex-shrink: 0;
+}
+
+/* Light Mode Override handled by css variables */
+
+.modal-header,
+.bottom-sheet-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 24px;
+    padding: 16px 24px;
     border-bottom: 1px solid var(--border-color);
 }
 
-.modal-header h3 {
+.modal-header h3,
+.bottom-sheet-header h3 {
     color: var(--text-primary);
     font-size: 18px;
     font-weight: 700;
+    margin: 0;
 }
 
 .close-btn {
@@ -62,18 +132,76 @@
     justify-content: center;
 }
 
-.modal-body {
+.modal-body,
+.bottom-sheet-body {
     padding: 24px;
+    overflow-y: auto;
+    /* Allow scrolling content */
 }
 
-.modal-footer {
+.modal-footer,
+.bottom-sheet-footer {
     padding: 16px 24px 32px;
     /* Extra padding at bottom for safe area */
     background: var(--bg-surface-hover);
+    border-top: 1px solid var(--border-color);
     display: flex;
     gap: 12px;
     justify-content: flex-end;
 }
+
+/* Common Button Styles for Modals */
+.modal-footer .cancel-btn,
+.modal-footer .secondary-btn,
+.bottom-sheet-footer .cancel-btn,
+.bottom-sheet-footer .secondary-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.modal-footer .confirm-btn,
+.modal-footer .primary-btn,
+.bottom-sheet-footer .confirm-btn,
+.bottom-sheet-footer .primary-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    background: var(--gradient-primary);
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* Danger Button Style (Migrated from settings/main.css) */
+.modal-footer .danger-btn,
+.bottom-sheet-footer .danger-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    background: var(--danger, #fc8181);
+    /* Fallback color just in case */
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.modal-footer .danger-btn:hover,
+.bottom-sheet-footer .danger-btn:hover {
+    opacity: 0.9;
+}
+
 
 /* Animations */
 @keyframes fadeIn {

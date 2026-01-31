@@ -1,0 +1,337 @@
+/* =============================================
+   SCREEN: REBALANCING (Donut Charts)
+   ============================================= */
+.donut-section {
+    padding: 20px;
+}
+
+.donut-container {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.donut-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.donut-chart {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 현재 비율: 삼성35%, SK25%, NAVER20%, 카카오12%, 기타8% */
+/* 색상: 메인 테마색(녹색) → 연한 회색 그라디언트 */
+.current-donut {
+    background: conic-gradient(var(--chart-c1) 0deg 126deg,
+            /* 삼성 35% */
+            var(--chart-c2) 126deg 216deg,
+            /* SK 25% */
+            var(--chart-c3) 216deg 288deg,
+            /* NAVER 20% */
+            var(--chart-c4) 288deg 331.2deg,
+            /* 카카오 12% */
+            var(--chart-c5) 331.2deg 360deg
+            /* 기타 8% */
+        );
+}
+
+/* 목표 비율: 삼성30%, SK25%, NAVER20%, 카카오15%, 기타10% */
+.target-donut {
+    background: conic-gradient(var(--chart-c1) 0deg 108deg,
+            /* 삼성 30% */
+            var(--chart-c2) 108deg 198deg,
+            /* SK 25% */
+            var(--chart-c3) 198deg 270deg,
+            /* NAVER 20% */
+            var(--chart-c4) 270deg 324deg,
+            /* 카카오 15% */
+            var(--chart-c5) 324deg 360deg
+            /* 기타 10% */
+        );
+}
+
+.donut-hole {
+    width: 70px;
+    height: 70px;
+    background: var(--bg-card-solid);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.donut-title {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.legend-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* 차트 색상 클래스 (테마색 → 연한회색 그라데이션) */
+.legend-color.c1 {
+    background: var(--chart-c1);
+}
+
+.legend-color.c2 {
+    background: var(--chart-c2);
+}
+
+.legend-color.c3 {
+    background: var(--chart-c3);
+}
+
+.legend-color.c4 {
+    background: var(--chart-c4);
+}
+
+.legend-color.c5 {
+    background: var(--chart-c5);
+}
+
+.rebalance-suggestions {
+    padding: 20px;
+}
+
+.threshold-info {
+    color: var(--text-tertiary);
+    font-size: 13px;
+}
+
+/* Threshold Selector Buttons */
+.threshold-selector {
+    display: flex;
+    gap: 8px;
+}
+
+.threshold-btn {
+    padding: 6px 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.threshold-btn:hover {
+    background: var(--bg-surface-hover);
+}
+
+.threshold-btn.selected {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #ffffff;
+}
+
+.suggestion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suggestion-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.suggestion-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-surface);
+}
+
+.suggestion-type {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.suggestion-card.sell .suggestion-type {
+    background: var(--error-bg);
+    color: var(--error);
+}
+
+.suggestion-card.buy .suggestion-type {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.suggestion-stock {
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.suggestion-detail {
+    padding: 14px 16px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.detail-label {
+    color: var(--text-tertiary);
+    font-size: 13px;
+}
+
+.detail-value {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.detail-row.highlight {
+    background: rgba(var(--primary-rgb), 0.1);
+    margin: 6px -16px;
+    padding: 10px 16px;
+}
+
+.detail-row.highlight .detail-label,
+.detail-row.highlight .detail-value {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Total Required Summary */
+.total-required-summary {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.total-required-summary .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.total-required-summary .summary-row:last-child {
+    border-bottom: none;
+}
+
+.total-required-summary .summary-row.net {
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 2px solid var(--primary);
+    border-bottom: none;
+}
+
+.total-required-summary .summary-label {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.total-required-summary .summary-value {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.total-required-summary .summary-value.buy {
+    color: var(--success);
+    /* Red in Korean market means buy up */
+}
+
+.total-required-summary .summary-value.sell {
+    color: var(--error);
+    /* Blue in Korean market means sell down */
+}
+
+.total-required-summary .summary-value.net-buy {
+    color: var(--success);
+}
+
+.total-required-summary .summary-value.net-sell {
+    color: var(--error);
+}
+
+/* Copy Result Section */
+.copy-result-section {
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.copy-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.copy-btn:hover {
+    background: var(--bg-surface-hover);
+    transform: translateY(-2px);
+}
+
+.copy-icon {
+    font-size: 18px;
+}
+
+/* Rebalance OK State */
+.rebalance-ok {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.rebalance-ok .empty-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.rebalance-ok .empty-sub {
+    color: var(--text-tertiary);
+    font-size: 13px;
+    margin-top: 8px;
+}

@@ -15,20 +15,32 @@ export async function initControlPanel(screenConfig) {
     const panel = document.getElementById('control-panel');
     if (!panel) return;
 
+    // Restore Position
+
+
+    // Render Unified Control Panel
+    // 1. Drag Handle
+    // 2. Phase Buttons (Now inside)
+    // 3. App Controls
+    // 4. Theme Toggle
+    // 5. Columns
     panel.innerHTML = `
-        <!-- App Control -->
-        <div class="control-app-row">
-            <button class="app-start-btn" id="app-start-btn" onclick="startApp()" data-title="앱 시작">🚀</button>
-            <button class="app-reset-btn" onclick="resetApp()" data-title="초기화">🔄</button>
-        </div>
-        
-        <!-- Phase Toggle -->
-        <div class="control-phase-row">
+        <!-- Drag Handle -->
+        <div class="cp-drag-handle" title="Drag to move"></div>
+
+        <!-- Phase Control (Integrated) -->
+        <div id="control-panel-phase" class="control-panel-phase">
             ${config.phases.map(p => `
                 <button class="phase-btn ${p === currentPhase ? 'active' : ''}" 
                         data-phase="${p}" 
                         onclick="setPhase('${p}')">${p}</button>
             `).join('')}
+        </div>
+
+        <!-- App Control -->
+        <div class="control-app-row">
+            <button class="app-start-btn" id="app-start-btn" onclick="startApp()" data-title="앱 시작">🚀</button>
+            <button class="app-reset-btn" onclick="resetApp()" data-title="초기화">🔄</button>
         </div>
         
         <!-- Theme Toggle -->
@@ -50,11 +62,15 @@ export async function initControlPanel(screenConfig) {
 
     renderNavButtons();
     renderStateButtons();
-}
 
-/**
- * Render navigation buttons based on current phase
- */
+    renderStateButtons();
+
+    // Init Draggable
+    import('./utils/draggable.js').then(({ makeDraggable }) => {
+        const handle = panel.querySelector('.cp-drag-handle');
+        makeDraggable(panel, handle, 'cp-position');
+    });
+}
 function renderNavButtons() {
     const navColumn = document.getElementById('nav-column');
     if (!navColumn) return;
@@ -145,5 +161,11 @@ window.toggleState = function (screenId, stateId, btnElement) {
     });
     window.dispatchEvent(event);
 };
+
+// ===================================
+// Draggable Logic
+// ===================================
+
+// Draggable logic moved to core/utils/draggable.js
 
 export { currentPhase };

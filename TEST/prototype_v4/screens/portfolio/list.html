@@ -1,10 +1,16 @@
 <!-- Screen: Portfolio List -->
 <div id="screen-portfolio-list" class="screen" data-domain="portfolio">
     <div class="screen-body">
-        <!-- Header (Modified for v4 PRD: Simple Title + Add Button) -->
+        <!-- Header (v3 style: Welcome message + Settings button) -->
         <header class="header home-header">
-            <h2>포트폴리오</h2>
-            <button class="icon-btn" id="portfolio-add-btn">➕</button>
+            <div class="user-greeting">
+                <div class="user-avatar" id="user-avatar">김</div>
+                <div class="greeting-text">
+                    <span class="greeting">안녕하세요 👋</span>
+                    <span class="username" id="user-nickname">투자왕김철수 님</span>
+                </div>
+            </div>
+            <button class="icon-btn" id="settings-btn">⚙️</button>
         </header>
 
         <!-- Summary Section (v3 style reused) -->
@@ -103,7 +109,7 @@
         <div class="modal-card">
             <div class="modal-header">
                 <h3>새 포트폴리오 만들기</h3>
-                <button class="close-btn" id="modal-close-x">×</button>
+                <button class="close-btn" id="portfolio-modal-close-btn">×</button>
             </div>
             <div class="modal-body">
                 <!-- Name Input -->
@@ -120,9 +126,14 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="action-btn secondary" id="modal-cancel-btn">취소</button>
-                <button class="action-btn primary" id="modal-create-btn">만들기</button>
+                <button class="action-btn secondary" id="portfolio-modal-cancel-btn">취소</button>
+                <button class="action-btn primary" id="portfolio-modal-create-btn">만들기</button>
             </div>
         </div>
     </div>
+
+    <!-- FAB (Floating Action Button) - 포트폴리오 추가 -->
+    <button class="fab" id="portfolio-add-fab">
+        <span>+</span>
+    </button>
 </div>

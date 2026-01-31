@@ -127,7 +127,7 @@
     background: var(--gradient-primary);
     border: none;
     border-radius: var(--radius-lg);
-    color: var(--text-inverse);
+    color: #ffffff;
     font-size: 28px;
     cursor: pointer;
     box-shadow: 0 6px 30px rgba(var(--primary-rgb), 0.5);
@@ -414,7 +414,7 @@
 
 .modal-btn.primary {
     background: var(--gradient-primary);
-    color: var(--text-inverse);
+    color: #ffffff;
 }
 
 .modal-btn.full-width {
@@ -537,4 +537,26 @@
     100% {
         transform: translateX(100%);
     }
+}
+
+.skeleton-text {
+    display: inline-block;
+    height: 1.2em;
+    width: 60%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.skeleton-text::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    animation: shimmer 1.5s infinite;
 }

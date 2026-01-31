@@ -2,7 +2,43 @@
    SCREEN: PORTFOLIO LIST (Ported from v3 home.css)
    ============================================= */
 .home-header {
-    padding: 16px 20px;
+    padding: var(--header-padding-top) 20px 16px;
+}
+
+/* User Greeting (Welcome Message) */
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-inverse);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.greeting-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.greeting {
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+.username {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .home-summary {

@@ -1,0 +1,142 @@
+/* =============================================
+   SCREEN: ONBOARDING SLIDES
+   ============================================= */
+
+#screen-onboarding {
+    background: var(--bg-screen);
+}
+
+.onboarding-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 40px 24px 30px;
+}
+
+/* Slides Area */
+.slides-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.onboarding-slide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+
+.onboarding-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.slide-icon {
+    font-size: 80px;
+    margin-bottom: 32px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.slide-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.slide-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Indicators */
+.slide-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-disabled);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+.indicator.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: scale(1.2);
+}
+
+/* Navigation Buttons */
+.onboarding-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+    min-height: 50px;
+}
+
+.nav-prev,
+.nav-skip {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.nav-prev:hover,
+.nav-skip:hover {
+    color: var(--text-primary);
+}
+
+/* Start Button (Last Slide) */
+.nav-start {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.4);
+}
