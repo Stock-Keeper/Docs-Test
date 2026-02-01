@@ -119,10 +119,17 @@ export function navigateTo(screenId, addToHistory = true) {
         updateNavButtons();
         updateStateButtons();
 
-        // 5. Reset target screen state (Clear inputs, etc.)
+        // 5. Call controller lifecycle methods
         const controller = loadedControllers.get(screenId);
-        if (controller && typeof controller.reset === 'function') {
-            controller.reset();
+        if (controller) {
+            // Reset first (clear state)
+            if (typeof controller.reset === 'function') {
+                controller.reset();
+            }
+            // Then start (initialize screen)
+            if (typeof controller.start === 'function') {
+                controller.start();
+            }
         }
     }
 }

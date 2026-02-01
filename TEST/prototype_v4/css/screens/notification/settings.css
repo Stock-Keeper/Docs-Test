@@ -1,0 +1,263 @@
+/* =============================================
+   Notification Settings - Scoped CSS
+   ============================================= */
+
+/* Scoped to notification-settings screen only */
+#screen-notification-settings .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--header-padding-top) 20px 12px;
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--border-color);
+    min-height: 100px;
+}
+
+#screen-notification-settings .header-title {
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Reuse Settings Main styles */
+#screen-notification-settings .settings-container {
+    padding: 20px;
+}
+
+#screen-notification-settings .settings-group {
+    margin-bottom: 24px;
+}
+
+#screen-notification-settings .settings-group-title {
+    color: var(--text-tertiary);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+#screen-notification-settings .settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    margin-bottom: 8px;
+}
+
+#screen-notification-settings .settings-item.clickable {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#screen-notification-settings .settings-item.clickable:hover {
+    background: var(--bg-surface-hover);
+}
+
+#screen-notification-settings .settings-label,
+#screen-notification-settings .radio-label {
+    color: var(--text-primary);
+    font-size: 15px;
+}
+
+/* Radio Specifics */
+#screen-notification-settings .radio-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+#screen-notification-settings .radio-wrapper input {
+    display: none;
+}
+
+#screen-notification-settings .radio-check {
+    color: var(--primary);
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+#screen-notification-settings .radio-wrapper input:checked~.radio-check {
+    opacity: 1;
+}
+
+/* Toggle Switch */
+#screen-notification-settings .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 28px;
+}
+
+#screen-notification-settings .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+#screen-notification-settings .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .3s;
+    border-radius: 34px;
+}
+
+#screen-notification-settings .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+#screen-notification-settings input:checked+.toggle-slider {
+    background-color: var(--primary);
+}
+
+#screen-notification-settings input:checked+.toggle-slider:before {
+    transform: translateX(20px);
+}
+
+/* Small toggle for portfolio list */
+#screen-notification-settings .toggle-switch.small {
+    width: 40px;
+    height: 24px;
+}
+
+#screen-notification-settings .toggle-switch.small .toggle-slider:before {
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+}
+
+#screen-notification-settings .toggle-switch.small input:checked+.toggle-slider:before {
+    transform: translateX(16px);
+}
+
+/* Time Picker Value */
+#screen-notification-settings .settings-value-box {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.15);
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+/* Portfolio Settings */
+#screen-notification-settings .pf-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#screen-notification-settings .pf-name {
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+#screen-notification-settings .pf-threshold-btn {
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: none;
+    width: fit-content;
+    cursor: pointer;
+}
+
+/* Modal */
+#screen-notification-settings .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-overlay);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#screen-notification-settings .modal-card.bottom-sheet {
+    width: 100%;
+    background: var(--bg-modal);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+}
+
+#screen-notification-settings .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#screen-notification-settings .modal-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+#screen-notification-settings .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+#screen-notification-settings .modal-body {
+    padding: 30px 24px;
+}
+
+#screen-notification-settings .range-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+#screen-notification-settings .range-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+#screen-notification-settings .modal-footer {
+    padding: 20px 24px 40px;
+}
+
+#screen-notification-settings .primary-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Detail Settings Visibility */
+#screen-notification-settings #noti-detail-settings {
+    transition: opacity 0.3s;
+}

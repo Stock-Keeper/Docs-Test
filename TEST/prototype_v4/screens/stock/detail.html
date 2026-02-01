@@ -20,12 +20,22 @@
             <span class="price-time" id="detail-price-time">15:42 기준</span>
         </section>
 
-        <!-- 차트 영역 (Placeholder) -->
-        <section class="chart-section">
+        <!-- P1용 플레이스홀더 (P2에서 숨김) -->
+        <section class="chart-section chart-placeholder-section" data-phase-placeholder="P2">
             <div class="chart-placeholder">
                 <span class="chart-icon">📈</span>
                 <p>주가 차트</p>
                 <span class="coming-soon">추후 지원 예정</span>
+            </div>
+        </section>
+
+        <!-- P2 실제 차트 (P1에서 숨김) -->
+        <section class="chart-section" data-phase="P2">
+            <div class="chart-header" style="padding: 0 20px 10px;">
+                <h3 class="section-title">주가 차트</h3>
+            </div>
+            <div class="chart-canvas" style="height: 200px; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; border-radius: 16px; margin: 0 20px;">
+                <div class="chart-mock">📊 캔들스틱 차트 영역</div>
             </div>
         </section>
 

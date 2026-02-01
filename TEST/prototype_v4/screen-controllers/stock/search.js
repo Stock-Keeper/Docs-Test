@@ -26,13 +26,20 @@ let addRatio = 10;
 let baseRatioSum = 90; // Mock existing ratio sum
 
 /**
- * Initialize search screen
+ * Initialize search screen (called once on app load)
  */
 export function init() {
     console.log('[StockSearch] Initializing...');
-    reset(); // Call reset on init
     attachListeners();
     updateRatioSummary();
+}
+
+/**
+ * Start screen (called every time screen becomes active)
+ */
+export function start() {
+    console.log('[StockSearch] Starting...');
+    reset();
 }
 
 /**

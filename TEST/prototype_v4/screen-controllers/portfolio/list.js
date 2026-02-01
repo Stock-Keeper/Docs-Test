@@ -27,6 +27,14 @@ export function init() {
         newBtn.addEventListener('click', () => navigateTo('settings-main'));
     }
 
+    // Notification Button (헤더)
+    const notificationBtn = screen.querySelector('#notification-btn');
+    if (notificationBtn) {
+        const newBtn = notificationBtn.cloneNode(true);
+        notificationBtn.parentNode.replaceChild(newBtn, notificationBtn);
+        newBtn.addEventListener('click', () => navigateTo('notification-center'));
+    }
+
     // FAB (포트폴리오 추가)
     const fab = screen.querySelector('#portfolio-add-fab');
     if (fab) {
