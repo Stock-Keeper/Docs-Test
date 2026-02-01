@@ -1,0 +1,61 @@
+<div id="screen-notification-center" class="screen">
+    <div class="screen-body">
+        <!-- Header Style Matched with Profile Input -->
+        <div class="screen-header">
+            <button class="back-btn" id="noti-center-back-btn">←</button>
+            <h1 class="header-title">알림</h1>
+            <button class="text-btn" id="noti-read-all-btn">전체 읽음</button>
+        </div>
+
+        <div class="notification-list-container">
+            <ul class="notification-list" id="notification-list">
+                <!-- Dynamic Content -->
+            </ul>
+
+            <!-- Skeleton Loader (5 items) -->
+            <ul class="skeleton-container" id="noti-skeleton">
+                <li class="skeleton-item">
+                    <div class="skeleton-icon"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line long"></div>
+                        <div class="skeleton-line medium"></div>
+                    </div>
+                </li>
+                <li class="skeleton-item">
+                    <div class="skeleton-icon"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line long"></div>
+                    </div>
+                </li>
+                <li class="skeleton-item">
+                    <div class="skeleton-icon"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line medium"></div>
+                    </div>
+                </li>
+                <li class="skeleton-item">
+                    <div class="skeleton-icon"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line long"></div>
+                    </div>
+                </li>
+                <li class="skeleton-item">
+                    <div class="skeleton-icon"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line medium"></div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="empty-state hidden" id="noti-empty-state">
+                <span class="empty-icon">📭</span>
+                <p>새로운 알림이 없습니다</p>
+            </div>
+        </div>
+    </div>
+</div>

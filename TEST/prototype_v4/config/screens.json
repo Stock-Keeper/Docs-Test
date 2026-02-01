@@ -226,6 +226,56 @@
         "order": 8
       },
       "stateButtons": []
+    },
+    {
+      "id": "notification-center",
+      "phase": "P1",
+      "domain": "notification",
+      "name": "알림 센터",
+      "path": "screens/notification/center.html",
+      "controller": "screen-controllers/notification/center.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/notification/center.md",
+      "navButton": {
+        "icon": "🔔",
+        "order": 9
+      },
+      "stateButtons": [
+        {
+          "id": "empty",
+          "icon": "📭",
+          "title": "알림 없음"
+        },
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "로딩 중"
+        },
+        {
+          "id": "error",
+          "icon": "⚠️",
+          "title": "에러"
+        }
+      ]
+    },
+    {
+      "id": "notification-settings",
+      "phase": "P1",
+      "domain": "notification",
+      "name": "알림 설정",
+      "path": "screens/notification/settings.html",
+      "controller": "screen-controllers/notification/settings.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/notification/settings.md",
+      "navButton": {
+        "icon": "🔕",
+        "order": 10
+      },
+      "stateButtons": [
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "로딩 중"
+        }
+      ]
     }
   ]
 }

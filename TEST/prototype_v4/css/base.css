@@ -312,3 +312,24 @@ body {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 2px;
 }
+
+/* =============================================
+   PHASE-BASED ELEMENT TOGGLE
+   ============================================= */
+
+/* P1 모드: P2/P3 전용 요소 숨김 (단, 페이즈 전환 버튼은 제외) */
+body[data-current-phase="P1"] [data-phase="P2"]:not(.phase-btn),
+body[data-current-phase="P1"] [data-phase="P3"]:not(.phase-btn) {
+    display: none !important;
+}
+
+/* P2 모드: P3 전용 숨김, P2 플레이스홀더 숨김 */
+body[data-current-phase="P2"] [data-phase="P3"]:not(.phase-btn),
+body[data-current-phase="P2"] [data-phase-placeholder="P2"] {
+    display: none !important;
+}
+
+/* P3 모드: 모든 플레이스홀더 숨김 */
+body[data-current-phase="P3"] [data-phase-placeholder] {
+    display: none !important;
+}

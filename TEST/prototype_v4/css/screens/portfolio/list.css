@@ -5,6 +5,12 @@
     padding: var(--header-padding-top) 20px 16px;
 }
 
+.header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
 /* User Greeting (Welcome Message) */
 .user-greeting {
     display: flex;

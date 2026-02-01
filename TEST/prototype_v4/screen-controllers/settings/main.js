@@ -39,6 +39,17 @@ function attachListeners() {
         profileLink.onclick = () => navigateTo('profile-edit');
     }
 
+    // Notification Links
+    const notiSettingsLink = document.getElementById('notification-settings-link');
+    if (notiSettingsLink) {
+        notiSettingsLink.onclick = () => navigateTo('notification-settings');
+    }
+
+    const notiCenterLink = document.getElementById('notification-center-link');
+    if (notiCenterLink) {
+        notiCenterLink.onclick = () => navigateTo('notification-center');
+    }
+
     // Logout
     const logoutBtn = document.getElementById('logout-btn');
     console.log('[SettingsMain] logout-btn element:', logoutBtn);

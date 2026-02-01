@@ -70,6 +70,9 @@ export async function initControlPanel(screenConfig) {
         const handle = panel.querySelector('.cp-drag-handle');
         makeDraggable(panel, handle, 'cp-position');
     });
+
+    // 🆕 초기화 시점 동기화
+    document.body.setAttribute('data-current-phase', currentPhase);
 }
 function renderNavButtons() {
     const navColumn = document.getElementById('nav-column');
@@ -131,6 +134,9 @@ window.setPhase = function (phase) {
             import('./navigation.js').then(nav => nav.navigateTo(btn.dataset.screen));
         });
     });
+
+    // 🆕 신규: 화면 내부 요소 토글용 data 속성
+    document.body.setAttribute('data-current-phase', phase);
 };
 
 /**
@@ -151,8 +157,15 @@ window.toggleState = function (screenId, stateId, btnElement) {
 
     const newState = !wasActive ? stateId : 'default';
 
-    // 2. Dispatch Event for Controllers
+    // 2. Call updateScreenState directly (from navigation.js)
     console.log(`[ControlPanel] State Changed: ${screenId} -> ${newState}`);
+
+    // Use the global function exposed by navigation.js
+    if (window.updateScreenState) {
+        window.updateScreenState(screenId, newState);
+    }
+
+    // Also dispatch event for any other listeners
     const event = new CustomEvent('app-state-change', {
         detail: {
             screenId: screenId,
