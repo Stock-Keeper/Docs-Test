@@ -1,0 +1,70 @@
+<div id="screen-community-feed" class="screen">
+    <div class="screen-body">
+        <!-- Header -->
+        <div class="screen-header">
+            <h1 class="header-title">커뮤니티</h1>
+            <div class="header-spacer"></div>
+            <button class="header-icon-btn" id="feed-search-btn">🔍</button>
+            <button class="header-icon-btn" id="feed-profile-btn">👤</button>
+        </div>
+
+        <!-- Content Tabs -->
+        <div class="feed-tabs">
+            <button class="feed-tab active" data-tab="recommend">추천</button>
+            <button class="feed-tab" data-tab="following">팔로잉</button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="feed-filter-bar">
+            <select class="feed-filter-select" id="feed-category-filter">
+                <option value="all">전체</option>
+                <option value="portfolio">포트폴리오</option>
+                <option value="discussion">토론</option>
+                <option value="question">질문</option>
+                <option value="domestic">국내주식</option>
+                <option value="overseas">해외주식</option>
+                <option value="free">자유</option>
+            </select>
+            <select class="feed-filter-select" id="feed-sort-filter">
+                <option value="latest">최신순</option>
+                <option value="popular">인기순</option>
+            </select>
+        </div>
+
+        <!-- Content Container -->
+        <div class="content-container">
+             <div class="feed-list" id="feed-list">
+                 <!-- Feed Cards will be rendered here -->
+             </div>
+             
+             <!-- Infinite Scroll Placeholder -->
+             <div class="infinite-scroll-trigger" id="feed-infinite-trigger">
+                 <div class="spinner-sm hidden"></div>
+             </div>
+        </div>
+
+        <!-- Skeleton (Loading State) -->
+        <div class="skeleton-container" id="community-feed-skeleton">
+            <div class="skeleton-card">
+                <div class="skeleton-header"></div>
+                <div class="skeleton-body"></div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-header"></div>
+                <div class="skeleton-body"></div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state hidden" id="community-feed-empty-state">
+            <span class="empty-icon">📭</span>
+            <p>아직 게시글이 없습니다</p>
+            <button class="btn-primary" id="feed-empty-write-btn">첫 글 쓰기</button>
+        </div>
+
+        <!-- Floating Action Button -->
+        <button class="fab" id="feed-write-fab">✏️</button>
+    </div>
+    
+    <!-- Bottom Navbar (Global) is outside screen div, handled by index.html -->
+</div>

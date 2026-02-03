@@ -1,0 +1,176 @@
+/* Feed Screen Styles */
+#screen-community-feed {
+    background-color: var(--bg-main);
+}
+
+#screen-community-feed .screen-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    /* For FAB positioning */
+}
+
+/* Header & Icons */
+#screen-community-feed .screen-header {
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#screen-community-feed .header-icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    padding: var(--spacing-xs);
+    margin-left: var(--spacing-sm);
+    cursor: pointer;
+}
+
+/* Tabs */
+#screen-community-feed .feed-tabs {
+    display: flex;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#screen-community-feed .feed-tab {
+    flex: 1;
+    padding: var(--spacing-sm);
+    text-align: center;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#screen-community-feed .feed-tab.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent);
+}
+
+/* Filter Bar */
+#screen-community-feed .feed-filter-bar {
+    padding: var(--spacing-xs) var(--spacing-md);
+    display: flex;
+    gap: var(--spacing-sm);
+    background-color: var(--bg-main);
+    overflow-x: auto;
+}
+
+#screen-community-feed .feed-filter-select {
+    padding: 4px 8px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+}
+
+/* List & Cards */
+#screen-community-feed .content-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    padding-bottom: 80px;
+    /* Space for FAB and potentially Bottom Nav */
+}
+
+#screen-community-feed .feed-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Feed Card Shared Styles */
+.feed-card {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.feed-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-xs);
+}
+
+.feed-card-category {
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 600;
+    background-color: var(--bg-accent-weak);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.feed-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-primary);
+}
+
+.feed-card-preview {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.feed-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+}
+
+.feed-card-stats {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+/* Portfolio Card Specifics */
+.feed-card.portfolio-type {
+    border-left: 4px solid var(--accent);
+}
+
+/* FAB */
+#screen-community-feed .fab {
+    position: absolute;
+    bottom: 2rem;
+    right: 1.5rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    color: white;
+    font-size: 1.5rem;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+/* Skeleton */
+.skeleton-card {
+    background-color: var(--bg-surface);
+    height: 120px;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    /* Add animation logic in component.css or base.css usually, but can add here if missing */
+}

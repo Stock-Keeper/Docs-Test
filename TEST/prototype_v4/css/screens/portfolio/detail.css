@@ -261,7 +261,7 @@
 }
 
 /* Edit button transforms to done text (green) */
-#screen-portfolio-detail.edit-mode #detail-edit-btn {
+#screen-portfolio-detail.edit-mode #detail-menu-btn {
     background: transparent;
     color: var(--primary);
     font-size: 14px;

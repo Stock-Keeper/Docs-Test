@@ -1,0 +1,308 @@
+/* =============================================
+   MODAL & BOTTOM SHEET STYLES (A4)
+   ============================================= */
+
+/* 2.3 Modal/Bottom Sheet Overlay from Style Guide */
+.modal-overlay,
+.bottom-sheet-overlay {
+    position: absolute;
+    /* Absolute to stay within phone frame */
+    inset: 0;
+    /* Top/Left/Right/Bottom: 0 */
+    background: var(--bg-overlay);
+    /* Use variable */
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    /* Default for bottom sheet, center for modal */
+    justify-content: center;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* Center alignment for regular modals */
+.modal-overlay.center-align {
+    align-items: center;
+}
+
+/* Modal Content */
+.modal-card {
+    background-color: var(--bg-modal);
+    width: 90%;
+    max-width: 320px;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-modal);
+    overflow: hidden;
+    animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Bottom Sheet */
+.bottom-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    background: var(--bg-modal);
+    /* Was --bg-surface in Style Guide, checking... Style Guide says --bg-surface but modal.css had bg-modal. Let's use bg-modal for opacity consistency */
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    z-index: 200;
+    border-top: 1px solid var(--border-color);
+    box-shadow: var(--shadow-modal);
+    animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.modal-header,
+.bottom-sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3,
+.bottom-sheet-header h3 {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: var(--text-primary);
+}
+
+/* Body */
+.modal-body,
+.bottom-sheet-body {
+    padding: 24px;
+    overflow-y: auto;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Footer */
+.modal-footer,
+.bottom-sheet-footer {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px 32px;
+    /* Bottom padding for safe area */
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-surface-hover);
+}
+
+/* Buttons */
+.modal-btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-btn.secondary {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.modal-btn.primary {
+    background: var(--gradient-primary);
+    color: #ffffff;
+}
+
+.modal-btn.danger {
+    background: var(--danger);
+    color: #ffffff;
+}
+
+.modal-btn:active {
+    transform: scale(0.98);
+}
+
+/* Handle for Bottom Sheet */
+.bottom-sheet-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--text-disabled);
+    border-radius: 2px;
+    margin: 12px auto 4px;
+    flex-shrink: 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUpSheet {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Confirm Mdoal Special Style */
+.confirm-modal .confirm-message {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.confirm-modal .confirm-sub {
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.confirm-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    text-align: center;
+    display: block;
+}
+
+/* Bottom Sheet Form Elements */
+.threshold-options,
+.notification-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.threshold-options .radio-option,
+.notification-options .settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.threshold-options .radio-option:last-child,
+.notification-options .settings-item:last-child {
+    border-bottom: none;
+}
+
+.radio-option {
+    cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    accent-color: var(--primary);
+}
+
+.radio-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.radio-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* Toggle Switch */
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 28px;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: var(--bg-surface);
+    border-radius: 28px;
+    transition: 0.3s;
+}
+
+.toggle-slider::before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.toggle input:checked+.toggle-slider {
+    background: var(--gradient-primary);
+}
+
+.toggle input:checked+.toggle-slider::before {
+    transform: translateX(20px);
+}

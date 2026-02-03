@@ -160,11 +160,84 @@ function attachListeners() {
         };
     }
 
-    // Edit Button
-    const editBtn = document.getElementById('detail-edit-btn');
-    if (editBtn) {
-        editBtn.onclick = toggleEditMode;
+    // Hamburger Menu Button
+    const menuBtn = document.getElementById('detail-menu-btn');
+    const dropdownMenu = document.getElementById('detail-dropdown-menu');
+    if (menuBtn && dropdownMenu) {
+        menuBtn.onclick = (e) => {
+            e.stopPropagation();
+            const screen = document.getElementById('screen-portfolio-detail');
+
+            // If in edit mode, exit edit mode instead of showing dropdown
+            if (screen && screen.classList.contains('edit-mode')) {
+                toggleEditMode();
+                return;
+            }
+
+            const isVisible = dropdownMenu.style.display === 'block';
+            dropdownMenu.style.display = isVisible ? 'none' : 'block';
+        };
     }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (dropdownMenu && !e.target.closest('#detail-menu-btn') && !e.target.closest('#detail-dropdown-menu')) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+
+    // Dropdown Menu Items
+    const menuThreshold = document.getElementById('menu-threshold');
+    const menuNotification = document.getElementById('menu-notification');
+    const menuEdit = document.getElementById('menu-edit');
+
+    if (menuThreshold) {
+        menuThreshold.onclick = () => {
+            dropdownMenu.style.display = 'none';
+            showModal('threshold-modal');
+        };
+    }
+
+    if (menuNotification) {
+        menuNotification.onclick = () => {
+            dropdownMenu.style.display = 'none';
+            showModal('notification-modal');
+        };
+    }
+
+    if (menuEdit) {
+        menuEdit.onclick = () => {
+            dropdownMenu.style.display = 'none';
+            toggleEditMode();
+        };
+    }
+
+    // Bottom Sheet Close Buttons
+    const thresholdCloseBtn = document.getElementById('threshold-close-btn');
+    const thresholdSaveBtn = document.getElementById('threshold-save-btn');
+    const notificationCloseBtn = document.getElementById('notification-close-btn');
+    const notificationSaveBtn = document.getElementById('notification-save-btn');
+
+    if (thresholdCloseBtn) thresholdCloseBtn.onclick = () => hideModal('threshold-modal');
+    if (thresholdSaveBtn) thresholdSaveBtn.onclick = () => {
+        console.log('[PortfolioDetail] Threshold saved');
+        hideModal('threshold-modal');
+    };
+    if (notificationCloseBtn) notificationCloseBtn.onclick = () => hideModal('notification-modal');
+    if (notificationSaveBtn) notificationSaveBtn.onclick = () => {
+        console.log('[PortfolioDetail] Notification settings saved');
+        hideModal('notification-modal');
+    };
+
+    // Close modals on overlay click
+    ['threshold-modal', 'notification-modal'].forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.onclick = (e) => {
+                if (e.target === modal) hideModal(modalId);
+            };
+        }
+    });
 
     // Add Stock Button (Bottom Action)
     const addBtn = document.getElementById('detail-add-stock-btn');
@@ -196,18 +269,28 @@ function attachListeners() {
 
 function toggleEditMode() {
     const screen = document.getElementById('screen-portfolio-detail');
-    const editBtn = document.getElementById('detail-edit-btn');
+    const menuBtn = document.getElementById('detail-menu-btn');
 
     screen.classList.toggle('edit-mode');
 
     // Toggle button text
     if (screen.classList.contains('edit-mode')) {
-        editBtn.textContent = '완료';
+        if (menuBtn) menuBtn.textContent = '완료';
         console.log('[PortfolioDetail] Entered edit mode');
     } else {
-        editBtn.textContent = '✏️';
+        if (menuBtn) menuBtn.textContent = '☰';
         console.log('[PortfolioDetail] Exited edit mode');
     }
+}
+
+function showModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'flex';
+}
+
+function hideModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'none';
 }
 
 function setText(id, text) {

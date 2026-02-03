@@ -276,6 +276,36 @@
           "title": "로딩 중"
         }
       ]
+    },
+    {
+      "id": "community-feed",
+      "phase": "P2",
+      "domain": "community",
+      "name": "커뮤니티 피드",
+      "path": "screens/community/feed.html",
+      "controller": "screen-controllers/community/feed.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/community/feed.md",
+      "navButton": {
+        "icon": "👥",
+        "order": 11
+      },
+      "stateButtons": [
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "로딩"
+        },
+        {
+          "id": "empty",
+          "icon": "📭",
+          "title": "빈 상태"
+        },
+        {
+          "id": "error",
+          "icon": "❌",
+          "title": "에러"
+        }
+      ]
     }
   ]
 }

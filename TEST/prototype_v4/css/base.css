@@ -1,5 +1,151 @@
 /* =============================================
-   BASE STYLES
+   BASE STYLES & VARIABLES
+   ============================================= */
+:root {
+    /* 1. Layout */
+    --header-height: 56px;
+    --tab-bar-height: 56px;
+    --status-bar-height: 44px;
+    --header-padding-top: calc(var(--status-bar-height) + 12px);
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+
+    /* 2. Spacing (8px Grid) */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* 3. Typography */
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+
+    /* 4. Colors (Semantic) */
+    --primary: #38a169;
+    --primary-dark: #2f855a;
+    --primary-rgb: 56, 161, 105;
+    --gradient-primary: linear-gradient(135deg, #38a169, #48bb78);
+    --gradient-primary-light: linear-gradient(135deg, rgba(56, 161, 105, 0.2), rgba(72, 187, 120, 0.2));
+
+    /* Status Colors */
+    --color-success: #4ade80;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+    --color-info: #60a5fa;
+
+    /* Korean Market Style */
+    --color-up: #ef4444;
+    /* 상승 = 빨강 */
+    --color-down: #3b82f6;
+    /* 하락 = 파랑 */
+
+    /* Legacy Semantic vars (keeping for compatibility) */
+    --success: #E53E3E;
+    /* Note: Legacy success was E53E3E (Red) likely for UP? Need to be careful here. */
+    --success-bg: rgba(229, 62, 62, 0.2);
+    --error: #3182CE;
+    /* Legacy error was 3182CE (Blue) likely for DOWN? */
+    --error-bg: rgba(49, 130, 206, 0.2);
+    --warning: #FFB74D;
+    --warning-bg: rgba(255, 183, 77, 0.2);
+
+    --danger: #E53E3E;
+    --danger-bg: rgba(229, 62, 62, 0.2);
+
+    /* 5. Animation */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+
+    /* Chart Colors */
+    --chart-c1: #38a169;
+    --chart-c2: #68b88a;
+    --chart-c3: #98cfab;
+    --chart-c4: #c8e6cd;
+    --chart-c5: #e8e8e8;
+
+    /* =============================================
+       THEME COLORS (Dark Mode - Default)
+       ============================================= */
+    /* Backgrounds */
+    --bg-body: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    --bg-screen: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+    --bg-card: rgba(255, 255, 255, 0.08);
+    --bg-card-solid: #0a0a0f;
+    --bg-card-hover: rgba(255, 255, 255, 0.12);
+    --bg-surface: rgba(255, 255, 255, 0.05);
+    --bg-surface-hover: rgba(255, 255, 255, 0.1);
+    --bg-input: rgba(255, 255, 255, 0.05);
+    --bg-input-focus: rgba(var(--primary-rgb), 0.1);
+    --bg-header: rgba(15, 15, 26, 0.98);
+    --bg-modal: #1a1a2e;
+    --bg-overlay: rgba(0, 0, 0, 0.7);
+
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-tertiary: rgba(255, 255, 255, 0.4);
+    --text-disabled: rgba(255, 255, 255, 0.3);
+    --text-inverse: #333333;
+
+    /* Border Colors */
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(255, 255, 255, 0.2);
+    --border-focus: var(--primary);
+
+    /* Shadow */
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-modal: 0 25px 80px rgba(0, 0, 0, 0.5);
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 9999px;
+}
+
+/* =============================================
+   LIGHT MODE OVERRIDES
+   ============================================= */
+[data-mode="light"] {
+    /* Backgrounds */
+    --bg-body: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    --bg-screen: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+    --bg-card: #ffffff;
+    --bg-card-solid: #ffffff;
+    --bg-card-hover: #f5f5f5;
+    --bg-surface: #f5f5f5;
+    --bg-surface-hover: rgba(0, 0, 0, 0.08);
+    --bg-input: #f5f5f5;
+    --bg-input-focus: #ffffff;
+    --bg-header: rgba(255, 255, 255, 0.95);
+    --bg-modal: #ffffff;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    /* Text Colors */
+    --text-primary: #212121;
+    --text-secondary: #757575;
+    --text-tertiary: rgba(0, 0, 0, 0.4);
+    --text-disabled: #bdbdbd;
+    --text-inverse: #ffffff;
+
+    /* Border Colors */
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-hover: rgba(0, 0, 0, 0.15);
+    --border-focus: var(--primary);
+
+    /* Shadow */
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --shadow-modal: 0 25px 80px rgba(0, 0, 0, 0.15);
+}
+
+/* =============================================
+   RESET & GLOBAL
    ============================================= */
 * {
     margin: 0;
@@ -18,6 +164,7 @@ body {
     justify-content: flex-start;
     padding: 20px;
     gap: 20px;
+    color: var(--text-primary);
 }
 
 /* =============================================
@@ -265,6 +412,8 @@ body {
     background: none;
     border: none;
     font-size: 20px;
+    color: var(--text-primary);
+    /* Ensure icon color matches theme */
     cursor: pointer;
     width: 40px;
     height: 40px;
@@ -332,4 +481,14 @@ body[data-current-phase="P2"] [data-phase-placeholder="P2"] {
 /* P3 모드: 모든 플레이스홀더 숨김 */
 body[data-current-phase="P3"] [data-phase-placeholder] {
     display: none !important;
+}
+
+/* 3.3 탭바 표시 조건 */
+body[data-show-tabbar="true"] {
+    --tab-bar-height: 56px;
+}
+
+body[data-show-tabbar="false"],
+body:not([data-show-tabbar]) {
+    --tab-bar-height: 0px;
 }

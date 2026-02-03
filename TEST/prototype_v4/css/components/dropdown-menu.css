@@ -1,0 +1,62 @@
+/* =============================================
+   DROPDOWN MENU STYLES
+   ============================================= */
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 56px;
+    /* Below header */
+    right: 20px;
+    background: var(--bg-modal);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-modal);
+    min-width: 200px;
+    z-index: 150;
+    overflow: hidden;
+    animation: dropdownSlide 0.2s ease-out;
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background: var(--bg-surface-hover);
+}
+
+.dropdown-item:active {
+    background: var(--bg-card-hover);
+}
+
+.dropdown-icon {
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}

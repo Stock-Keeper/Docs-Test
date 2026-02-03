@@ -69,29 +69,31 @@
     </div>
 
     <!-- 로그아웃 확인 모달 -->
-    <div id="logout-confirm-modal" class="modal-overlay" style="display:none;">
-        <div class="modal-card confirm-modal">
-            <div class="modal-body">
+    <div id="logout-confirm-modal" class="bottom-sheet-overlay" style="display:none;">
+        <div class="bottom-sheet confirm-modal">
+            <div class="bottom-sheet-handle"></div>
+            <div class="bottom-sheet-body">
                 <p class="confirm-message">정말 로그아웃 하시겠습니까?</p>
             </div>
-            <div class="modal-footer">
-                <button class="secondary-btn" id="logout-cancel-btn">취소</button>
-                <button class="primary-btn" id="logout-confirm-btn">로그아웃</button>
+            <div class="bottom-sheet-footer">
+                <button class="modal-btn secondary" id="logout-cancel-btn">취소</button>
+                <button class="modal-btn primary" id="logout-confirm-btn">로그아웃</button>
             </div>
         </div>
     </div>
 
     <!-- 계정 삭제 확인 모달 -->
-    <div id="delete-confirm-modal" class="modal-overlay" style="display:none;">
-        <div class="modal-card confirm-modal danger">
-            <div class="modal-body">
+    <div id="delete-confirm-modal" class="bottom-sheet-overlay" style="display:none;">
+        <div class="bottom-sheet confirm-modal danger">
+            <div class="bottom-sheet-handle"></div>
+            <div class="bottom-sheet-body">
                 <div class="confirm-icon">⚠️</div>
                 <p class="confirm-message">정말 계정을 삭제하시겠습니까?</p>
                 <p class="confirm-sub">모든 포트폴리오 데이터가 영구적으로 삭제됩니다.<br>이 작업은 되돌릴 수 없습니다.</p>
             </div>
-            <div class="modal-footer">
-                <button class="secondary-btn" id="delete-cancel-btn">취소</button>
-                <button class="danger-btn" id="delete-confirm-btn">계정 삭제</button>
+            <div class="bottom-sheet-footer">
+                <button class="modal-btn secondary" id="delete-cancel-btn">취소</button>
+                <button class="modal-btn danger" id="delete-confirm-btn">계정 삭제</button>
             </div>
         </div>
     </div>

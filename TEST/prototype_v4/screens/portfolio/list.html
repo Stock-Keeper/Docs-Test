@@ -107,14 +107,15 @@
     <!-- Mode Toggle (Optional, maybe in Settings) -->
 
     <!-- Modals will be injected here -->
-    <!-- Create Portfolio Modal -->
-    <div id="create-portfolio-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-card">
-            <div class="modal-header">
+    <!-- Create Portfolio Modal (Bottom Sheet) -->
+    <div id="create-portfolio-modal" class="bottom-sheet-overlay" style="display: none;">
+        <div class="bottom-sheet">
+            <div class="bottom-sheet-handle"></div>
+            <div class="bottom-sheet-header">
                 <h3>새 포트폴리오 만들기</h3>
                 <button class="close-btn" id="portfolio-modal-close-btn">×</button>
             </div>
-            <div class="modal-body">
+            <div class="bottom-sheet-body">
                 <!-- Name Input -->
                 <div class="form-group">
                     <label>이름</label>
@@ -128,9 +129,9 @@
                     <span class="input-hint" id="desc-count">0/100자</span>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="action-btn secondary" id="portfolio-modal-cancel-btn">취소</button>
-                <button class="action-btn primary" id="portfolio-modal-create-btn">만들기</button>
+            <div class="bottom-sheet-footer">
+                <button class="modal-btn secondary" id="portfolio-modal-cancel-btn">취소</button>
+                <button class="modal-btn primary" id="portfolio-modal-create-btn">만들기</button>
             </div>
         </div>
     </div>
