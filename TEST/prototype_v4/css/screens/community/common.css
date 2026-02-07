@@ -1,0 +1,96 @@
+/* =============================================
+   COMMUNITY - SHARED LAYOUT/TYPOGRAPHY
+   ============================================= */
+
+[id^="screen-community-"] {
+    --community-gutter: 20px;
+}
+
+[id^="screen-community-"] .screen-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-bottom: 0 !important;
+}
+
+[id^="screen-community-"] .screen-body::-webkit-scrollbar {
+    display: none;
+}
+
+[id^="screen-community-"] .screen-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: var(--header-padding-top) 16px 12px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-header);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    flex-shrink: 0;
+}
+
+[id^="screen-community-"] .header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+[id^="screen-community-"] .header-spacer {
+    flex: 1;
+    width: auto;
+    min-width: 8px;
+}
+
+[id^="screen-community-"] .header-icon-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+[id^="screen-community-"] .header-icon-btn:hover,
+[id^="screen-community-"] .header-icon-btn:active {
+    background: var(--bg-surface-hover);
+}
+
+[id^="screen-community-"] .content-container,
+[id^="screen-community-"] .post-content-area,
+[id^="screen-community-"] .post-editor,
+[id^="screen-community-"] .profile-tab-content,
+[id^="screen-community-"] .search-content,
+[id^="screen-community-"] .settings-section,
+[id^="screen-community-"] .settings-menu,
+[id^="screen-community-"] .author-posts-carousel,
+[id^="screen-community-"] .image-preview-area,
+[id^="screen-community-"] .stock-autocomplete {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+[id^="screen-community-"] .content-container::-webkit-scrollbar,
+[id^="screen-community-"] .post-content-area::-webkit-scrollbar,
+[id^="screen-community-"] .post-editor::-webkit-scrollbar,
+[id^="screen-community-"] .profile-tab-content::-webkit-scrollbar,
+[id^="screen-community-"] .search-content::-webkit-scrollbar,
+[id^="screen-community-"] .settings-section::-webkit-scrollbar,
+[id^="screen-community-"] .settings-menu::-webkit-scrollbar,
+[id^="screen-community-"] .author-posts-carousel::-webkit-scrollbar,
+[id^="screen-community-"] .image-preview-area::-webkit-scrollbar,
+[id^="screen-community-"] .stock-autocomplete::-webkit-scrollbar {
+    display: none;
+}

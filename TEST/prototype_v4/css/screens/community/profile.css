@@ -1,0 +1,222 @@
+/* Profile Screen Styles */
+#screen-community-profile {
+    background: var(--bg-screen);
+}
+
+#screen-community-profile .screen-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Header */
+#screen-community-profile .profile-header {
+    padding-left: var(--community-gutter);
+    padding-right: var(--community-gutter);
+}
+
+/* Profile Info Section */
+#screen-community-profile .profile-info {
+    padding: var(--spacing-lg) var(--community-gutter);
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#screen-community-profile .profile-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-md);
+}
+
+#screen-community-profile .profile-details {
+    flex: 1;
+}
+
+#screen-community-profile .profile-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+#screen-community-profile .profile-handle {
+    font-size: 0.9rem;
+    color: var(--text-tertiary);
+    margin: 0 0 8px 0;
+}
+
+#screen-community-profile .profile-bio {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+#screen-community-profile .profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background-color: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+/* Profile Stats */
+#screen-community-profile .profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+#screen-community-profile .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 var(--spacing-md);
+}
+
+#screen-community-profile .stat-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+#screen-community-profile .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+}
+
+#screen-community-profile .stat-divider {
+    width: 1px;
+    background-color: var(--border-color);
+}
+
+/* Action Buttons */
+#screen-community-profile .profile-action-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+#screen-community-profile .profile-action-btn.follow-action {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+#screen-community-profile .profile-action-btn.follow-action.following {
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+/* Profile Tabs */
+#screen-community-profile .profile-tabs {
+    display: flex;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#screen-community-profile .profile-tab {
+    flex: 1;
+    padding: var(--spacing-sm);
+    text-align: center;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#screen-community-profile .profile-tab.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--primary);
+}
+
+/* Tab Content */
+#screen-community-profile .profile-tab-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: calc(var(--tab-bar-height, 0px) + var(--spacing-md));
+}
+
+#screen-community-profile .tab-pane {
+    display: block;
+}
+
+#screen-community-profile .tab-pane.hidden {
+    display: none;
+}
+
+/* Activity List */
+#screen-community-profile .activity-list {
+    display: flex;
+    flex-direction: column;
+}
+
+#screen-community-profile .activity-item {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--community-gutter);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#screen-community-profile .activity-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+#screen-community-profile .activity-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+#screen-community-profile .activity-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+#screen-community-profile .activity-title {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+#screen-community-profile .activity-time {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+/* Visibility Notices */
+#screen-community-profile .portfolio-visibility-notice,
+#screen-community-profile .trade-visibility-notice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xl);
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+}
+
+#screen-community-profile .portfolio-visibility-notice span:first-child,
+#screen-community-profile .trade-visibility-notice span:first-child {
+    font-size: 2rem;
+}

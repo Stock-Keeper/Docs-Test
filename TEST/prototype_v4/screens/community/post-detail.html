@@ -1,0 +1,143 @@
+<div id="screen-community-post-detail" class="screen">
+    <div class="screen-body">
+        <!-- Header -->
+        <div class="screen-header post-detail-header">
+            <button class="header-icon-btn" id="post-detail-back-btn">←</button>
+            <span class="header-category" id="post-detail-category">국내주식</span>
+            <div class="header-spacer"></div>
+            <button class="header-icon-btn" id="post-detail-more-btn">⋮</button>
+        </div>
+
+        <!-- Profile Area (Fixed) -->
+        <div class="post-author-section">
+            <div class="author-avatar" id="post-author-avatar">👤</div>
+            <div class="author-info">
+                <div class="author-name" id="post-author-name">투자왕김철수</div>
+                <div class="author-meta">
+                    <span id="post-date">1월 15일</span>
+                    <span class="edited-badge hidden" id="post-edited">(수정됨)</span>
+                    <span class="separator">·</span>
+                    <span>팔로워 <span id="post-follower-count">3K</span></span>
+                </div>
+            </div>
+            <button class="follow-btn" id="post-follow-btn">팔로우</button>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="post-content-area">
+            <!-- Post Body -->
+            <div class="post-body">
+                <h2 class="post-title" id="post-title">삼성전자, 지금 사도 될까요?</h2>
+                <div class="post-text" id="post-text">
+                    안녕하세요. 최근 삼성전자 주가가 많이 올랐는데요. 지금 진입해도 괜찮을지 의견 부탁드립니다.
+                    현재 PER은 12배 수준이고, 반도체 업황이 회복세라는 분석이 많습니다.
+                </div>
+
+                <!-- Images (Optional) -->
+                <div class="post-images hidden" id="post-images">
+                    <!-- Dynamic images will be added here -->
+                </div>
+
+                <!-- Stock Tags -->
+                <div class="stock-tags" id="stock-tags">
+                    <span class="stock-tag">$삼성전자</span>
+                </div>
+            </div>
+
+            <!-- Stats & Actions -->
+            <div class="post-actions">
+                <div class="action-stats">
+                    <button class="action-btn" id="post-like-btn">
+                        <span class="action-icon">❤️</span>
+                        <span class="action-count" id="post-like-count">42</span>
+                    </button>
+                    <button class="action-btn">
+                        <span class="action-icon">💬</span>
+                        <span class="action-count" id="post-comment-count">12</span>
+                    </button>
+                    <button class="action-btn">
+                        <span class="action-icon">🔄</span>
+                        <span class="action-count" id="post-repost-count">5</span>
+                    </button>
+                </div>
+                <button class="share-btn" id="post-share-btn">공유</button>
+            </div>
+
+            <!-- Author's Other Posts (Carousel) -->
+            <div class="author-posts-section">
+                <div class="section-header">
+                    <span>이 사람의 다른 글</span>
+                    <button class="more-link" id="author-posts-more">더보기 ›</button>
+                </div>
+                <div class="author-posts-carousel" id="author-posts-carousel">
+                    <!-- Dynamic cards -->
+                    <div class="mini-post-card">
+                        <div class="mini-post-date">3일 전</div>
+                        <div class="mini-post-title">반도체 사이클 분석...</div>
+                    </div>
+                    <div class="mini-post-card">
+                        <div class="mini-post-date">1월 10일</div>
+                        <div class="mini-post-title">배당주 포트폴리오...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="comments-section">
+                <div class="comments-header">
+                    <select class="comment-sort-select" id="comment-sort">
+                        <option value="latest">최신순</option>
+                        <option value="popular">인기순</option>
+                        <option value="oldest">날짜순</option>
+                    </select>
+                </div>
+
+                <!-- Comments List -->
+                <div class="comments-list" id="comments-list">
+                    <!-- Comment Item -->
+                    <div class="comment-item">
+                        <div class="comment-avatar">👤</div>
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <span class="comment-author">배당러버</span>
+                                <span class="comment-time">5분 전</span>
+                            </div>
+                            <div class="comment-text">좋은 분석이네요! 저도 비슷한 생각입니다.</div>
+                            <div class="comment-actions">
+                                <button class="comment-action-btn">
+                                    <span>❤️</span>
+                                    <span class="comment-like-count">3</span>
+                                </button>
+                                <button class="comment-action-btn reply-btn">↩️</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comment-item">
+                        <div class="comment-avatar">👤</div>
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <span class="comment-author">가치투자자</span>
+                                <span class="comment-time">10분 전</span>
+                            </div>
+                            <div class="comment-text">PER 기준으로는 아직 매력적인 구간 같아요</div>
+                            <div class="comment-actions">
+                                <button class="comment-action-btn">
+                                    <span>❤️</span>
+                                    <span class="comment-like-count">1</span>
+                                </button>
+                                <button class="comment-action-btn reply-btn">↩️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comment Input (Fixed Bottom) -->
+        <div class="comment-input-area">
+            <input type="text" class="comment-input" id="comment-input" placeholder="댓글을 입력하세요...">
+            <button class="comment-submit-btn" id="comment-submit-btn">⬆️</button>
+        </div>
+    </div>
+</div>

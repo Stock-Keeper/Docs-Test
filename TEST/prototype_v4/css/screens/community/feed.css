@@ -1,32 +1,20 @@
 /* Feed Screen Styles */
 #screen-community-feed {
-    background-color: var(--bg-main);
+    background: var(--bg-screen);
 }
 
 #screen-community-feed .screen-body {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
     position: relative;
-    /* For FAB positioning */
 }
 
 /* Header & Icons */
 #screen-community-feed .screen-header {
-    padding: var(--spacing-sm) var(--spacing-md);
-    display: flex;
-    align-items: center;
-    background-color: var(--bg-surface);
-    border-bottom: 1px solid var(--border-color);
+    padding-left: var(--community-gutter);
+    padding-right: var(--community-gutter);
 }
 
-#screen-community-feed .header-icon-btn {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    padding: var(--spacing-xs);
-    margin-left: var(--spacing-sm);
-    cursor: pointer;
+#screen-community-feed .header-title {
+    margin: 0;
 }
 
 /* Tabs */
@@ -34,6 +22,7 @@
     display: flex;
     background-color: var(--bg-surface);
     border-bottom: 1px solid var(--border-color);
+    padding: 0 var(--community-gutter);
 }
 
 #screen-community-feed .feed-tab {
@@ -50,34 +39,74 @@
 
 #screen-community-feed .feed-tab.active {
     color: var(--text-primary);
-    border-bottom-color: var(--accent);
+    border-bottom-color: var(--primary);
 }
 
 /* Filter Bar */
 #screen-community-feed .feed-filter-bar {
-    padding: var(--spacing-xs) var(--spacing-md);
+    padding: var(--spacing-sm) var(--community-gutter);
     display: flex;
     gap: var(--spacing-sm);
-    background-color: var(--bg-main);
+    background: transparent;
     overflow-x: auto;
 }
 
+#screen-community-feed .feed-filter-dropdown {
+    position: relative;
+    flex-shrink: 0;
+}
+
 #screen-community-feed .feed-filter-select {
-    padding: 4px 8px;
-    border-radius: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    min-width: 104px;
+    padding: 8px 34px 8px 12px;
+    border-radius: 999px;
     border: 1px solid var(--border-color);
-    background-color: var(--bg-surface);
+    background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-card) 100%);
     color: var(--text-primary);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+#screen-community-feed .feed-filter-select:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-surface-hover);
+}
+
+#screen-community-feed .feed-filter-select:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+}
+
+#screen-community-feed .feed-filter-select option {
+    background: var(--bg-modal);
+    color: var(--text-primary);
+}
+
+#screen-community-feed .feed-filter-caret {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 10px;
+    line-height: 1;
+    pointer-events: none;
 }
 
 /* List & Cards */
 #screen-community-feed .content-container {
     flex: 1;
     overflow-y: auto;
-    padding: var(--spacing-md);
-    padding-bottom: 80px;
-    /* Space for FAB and potentially Bottom Nav */
+    padding: var(--spacing-md) var(--community-gutter) 0;
+    padding-bottom: calc(var(--tab-bar-height, 0px) + 80px);
+    /* Reserve space for FAB + tab bar (P2+) */
 }
 
 #screen-community-feed .feed-list {
@@ -87,37 +116,45 @@
 }
 
 /* Feed Card Shared Styles */
-.feed-card {
+#screen-community-feed .feed-card {
     background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, background-color 0.2s;
 }
 
-.feed-card-header {
+#screen-community-feed .feed-card:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-surface-hover);
+    transform: translateY(-1px);
+}
+
+#screen-community-feed .feed-card-header {
     display: flex;
     justify-content: space-between;
     margin-bottom: var(--spacing-xs);
 }
 
-.feed-card-category {
+#screen-community-feed .feed-card-category {
     font-size: 0.75rem;
-    color: var(--accent);
+    color: var(--primary);
     font-weight: 600;
-    background-color: var(--bg-accent-weak);
+    background-color: rgba(var(--primary-rgb), 0.15);
     padding: 2px 6px;
     border-radius: 4px;
 }
 
-.feed-card-title {
+#screen-community-feed .feed-card-title {
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: var(--spacing-xs);
     color: var(--text-primary);
 }
 
-.feed-card-preview {
+#screen-community-feed .feed-card-preview {
     font-size: 0.9rem;
     color: var(--text-secondary);
     margin-bottom: var(--spacing-sm);
@@ -128,7 +165,7 @@
     overflow: hidden;
 }
 
-.feed-card-meta {
+#screen-community-feed .feed-card-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -136,25 +173,25 @@
     color: var(--text-tertiary);
 }
 
-.feed-card-stats {
+#screen-community-feed .feed-card-stats {
     display: flex;
     gap: var(--spacing-sm);
 }
 
 /* Portfolio Card Specifics */
-.feed-card.portfolio-type {
-    border-left: 4px solid var(--accent);
+#screen-community-feed .feed-card.portfolio-type {
+    border-left: 4px solid var(--primary);
 }
 
 /* FAB */
 #screen-community-feed .fab {
     position: absolute;
-    bottom: 2rem;
-    right: 1.5rem;
+    bottom: calc(var(--tab-bar-height, 0px) + 2rem);
+    right: var(--community-gutter);
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: var(--accent);
+    background-color: var(--primary);
     color: white;
     font-size: 1.5rem;
     border: none;
@@ -163,14 +200,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
+    z-index: 90;
 }
 
 /* Skeleton */
-.skeleton-card {
+#screen-community-feed .skeleton-card {
     background-color: var(--bg-surface);
     height: 120px;
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-md);
     /* Add animation logic in component.css or base.css usually, but can add here if missing */
 }
+

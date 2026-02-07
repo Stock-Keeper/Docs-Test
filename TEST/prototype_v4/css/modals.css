@@ -42,7 +42,7 @@
 /* Bottom Sheet */
 .bottom-sheet {
     position: absolute;
-    bottom: 0;
+    bottom: var(--tab-bar-height, 0px);
     left: 0;
     right: 0;
     width: 100%;

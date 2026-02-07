@@ -1,0 +1,76 @@
+<div id="screen-community-post-create" class="screen">
+    <div class="screen-body">
+        <!-- Header -->
+        <div class="screen-header post-create-header">
+            <button class="header-text-btn" id="post-create-cancel-btn">← 취소</button>
+            <div class="header-spacer"></div>
+            <button class="header-submit-btn" id="post-create-submit-btn" disabled>게시</button>
+        </div>
+
+        <!-- Category Selection -->
+        <div class="category-selection">
+            <div class="category-toggle-group" id="category-toggle">
+                <button class="category-toggle-btn active" data-category="전체">전체</button>
+                <button class="category-toggle-btn" data-category="국내">국내</button>
+                <button class="category-toggle-btn" data-category="해외">해외</button>
+            </div>
+        </div>
+
+        <!-- Content Editor -->
+        <div class="post-editor">
+            <!-- Title -->
+            <input type="text" class="post-title-input" id="post-title-input" placeholder="제목을 입력하세요">
+
+            <!-- Body -->
+            <textarea class="post-body-input" id="post-body-input"
+                placeholder="내용을 입력하세요.&#10;커뮤니티 이용규칙에 맞지 않는 글은 통보 없이 삭제될 수 있습니다."></textarea>
+
+            <!-- Image Preview -->
+            <div class="image-preview-area hidden" id="image-preview-area">
+                <!-- Dynamic image previews -->
+            </div>
+
+            <!-- Stock Tags Preview -->
+            <div class="stock-tags-preview" id="stock-tags-preview">
+                <!-- Rendered stock tags -->
+            </div>
+        </div>
+
+        <!-- Stock Autocomplete Panel -->
+        <div class="stock-autocomplete hidden" id="stock-autocomplete">
+            <div class="autocomplete-list" id="autocomplete-list">
+                <!-- Dynamic stock suggestions -->
+            </div>
+        </div>
+
+        <!-- Toolbar (Keyboard Top Panel) -->
+        <div class="post-toolbar">
+            <button class="toolbar-btn" id="toolbar-photo-btn">
+                <span>📷</span>
+                <span>사진</span>
+            </button>
+            <button class="toolbar-btn" id="toolbar-gif-btn">
+                <span>GIF</span>
+            </button>
+            <button class="toolbar-btn" id="toolbar-stock-btn">
+                <span>📈</span>
+                <span>종목태그</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Exit Confirm Modal -->
+    <div class="modal-overlay hidden" id="post-create-exit-modal">
+        <div class="modal-card confirm-modal">
+            <div class="modal-body">
+                <span class="confirm-icon">⚠️</span>
+                <p class="confirm-message">작성 중인 글이 저장되지 않아요</p>
+                <p class="confirm-sub">정말 나가시겠어요?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" id="exit-modal-cancel">닫기</button>
+                <button class="modal-btn danger" id="exit-modal-confirm">나가기</button>
+            </div>
+        </div>
+    </div>
+</div>

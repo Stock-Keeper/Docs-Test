@@ -1,0 +1,394 @@
+/* Post Detail Screen Styles */
+#screen-community-post-detail {
+    background: var(--bg-screen);
+}
+
+#screen-community-post-detail .screen-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+/* Header */
+#screen-community-post-detail .post-detail-header {
+    padding-left: var(--community-gutter);
+    padding-right: var(--community-gutter);
+}
+
+#screen-community-post-detail .post-detail-header .header-category {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary);
+    background-color: rgba(var(--primary-rgb), 0.1);
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+/* Author Section (Fixed below header) */
+#screen-community-post-detail .post-author-section {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md) var(--community-gutter);
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    gap: var(--spacing-sm);
+}
+
+#screen-community-post-detail .author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#screen-community-post-detail .author-info {
+    flex: 1;
+}
+
+#screen-community-post-detail .author-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+#screen-community-post-detail .author-meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+#screen-community-post-detail .author-meta .separator {
+    margin: 0 4px;
+}
+
+#screen-community-post-detail .author-meta .edited-badge {
+    color: var(--text-tertiary);
+}
+
+#screen-community-post-detail .follow-btn {
+    padding: 8px 16px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#screen-community-post-detail .follow-btn.following {
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+/* Scrollable Content Area */
+#screen-community-post-detail .post-content-area {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: calc(var(--tab-bar-height, 0px) + 70px);
+}
+
+/* Post Body */
+#screen-community-post-detail .post-body {
+    padding: var(--spacing-md) var(--community-gutter);
+}
+
+#screen-community-post-detail .post-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.4;
+}
+
+#screen-community-post-detail .post-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+#screen-community-post-detail .post-images {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    overflow-x: auto;
+}
+
+#screen-community-post-detail .post-images img {
+    max-width: 100%;
+    border-radius: var(--radius-md);
+}
+
+#screen-community-post-detail .stock-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+
+#screen-community-post-detail .stock-tag {
+    padding: 4px 10px;
+    background-color: rgba(var(--primary-rgb), 0.15);
+    color: var(--primary);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Actions Bar */
+#screen-community-post-detail .post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--community-gutter);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+}
+
+#screen-community-post-detail .action-stats {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+#screen-community-post-detail .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+#screen-community-post-detail .action-btn:hover {
+    background-color: var(--bg-surface-hover);
+}
+
+#screen-community-post-detail .action-btn.liked .action-icon {
+    filter: none;
+}
+
+#screen-community-post-detail .share-btn {
+    padding: 6px 12px;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+/* Author's Other Posts Section */
+#screen-community-post-detail .author-posts-section {
+    padding: var(--spacing-md) var(--community-gutter);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#screen-community-post-detail .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+#screen-community-post-detail .more-link {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+#screen-community-post-detail .author-posts-carousel {
+    display: flex;
+    gap: var(--spacing-sm);
+    overflow-x: auto;
+    padding-bottom: var(--spacing-xs);
+}
+
+#screen-community-post-detail .mini-post-card {
+    min-width: 140px;
+    padding: var(--spacing-sm);
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+#screen-community-post-detail .mini-post-date {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+}
+
+#screen-community-post-detail .mini-post-title {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Comments Section */
+#screen-community-post-detail .comments-section {
+    padding: var(--spacing-md) var(--community-gutter);
+}
+
+#screen-community-post-detail .comments-header {
+    margin-bottom: var(--spacing-md);
+}
+
+#screen-community-post-detail .comment-sort-select {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+}
+
+#screen-community-post-detail .comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Comment Item */
+#screen-community-post-detail .comment-item {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+#screen-community-post-detail .comment-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+#screen-community-post-detail .comment-content {
+    flex: 1;
+}
+
+#screen-community-post-detail .comment-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: 4px;
+}
+
+#screen-community-post-detail .comment-author {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+#screen-community-post-detail .comment-time {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+#screen-community-post-detail .comment-text {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 6px;
+}
+
+#screen-community-post-detail .comment-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+#screen-community-post-detail .comment-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 4px;
+}
+
+#screen-community-post-detail .comment-action-btn:hover {
+    color: var(--text-secondary);
+}
+
+/* Comment Input Area (Fixed Bottom) */
+#screen-community-post-detail .comment-input-area {
+    position: absolute;
+    bottom: var(--tab-bar-height, 0px);
+    left: 0;
+    right: 0;
+    display: flex;
+    padding: var(--spacing-sm) var(--community-gutter);
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    gap: var(--spacing-sm);
+    z-index: 10;
+}
+
+#screen-community-post-detail .comment-input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+#screen-community-post-detail .comment-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+#screen-community-post-detail .comment-submit-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#screen-community-post-detail .comment-submit-btn:disabled {
+    background-color: var(--bg-surface);
+    color: var(--text-disabled);
+}
+
+/* Loading & Empty States */
+#screen-community-post-detail .skeleton-container,
+#screen-community-post-detail .empty-state,
+#screen-community-post-detail .error-state {
+    padding: var(--spacing-xl);
+}

@@ -151,6 +151,7 @@
 #screen-profile-edit .profile-save-section {
     margin-top: auto;
     padding-top: 24px;
+    padding-bottom: calc(var(--tab-bar-height, 0px) + 24px);
 }
 
 #screen-profile-edit .profile-save-section .primary-btn:disabled {

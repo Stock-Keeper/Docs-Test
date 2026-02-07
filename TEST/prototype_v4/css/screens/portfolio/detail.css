@@ -31,7 +31,7 @@
 /* Rebalance Insight Banner */
 .detail-actions {
     position: absolute;
-    bottom: 0;
+    bottom: var(--tab-bar-height, 0px);
     left: 0;
     right: 0;
     display: flex;
@@ -143,7 +143,7 @@
 
 .stocks-section {
     flex: 1;
-    padding: 24px 24px 120px;
+    padding: 24px 24px calc(120px + var(--tab-bar-height, 0px));
     /* Increased side padding & bottom spacing */
 }
 

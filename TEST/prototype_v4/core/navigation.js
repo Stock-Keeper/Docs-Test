@@ -3,6 +3,8 @@
 // Screen loading and navigation with config-based routing
 // =================================================================
 
+import { initTabBar, updateTabBarState, updateTabBarForScreen } from './tab-bar.js';
+
 let config = null;
 let currentScreen = null;
 const loadedControllers = new Map();
@@ -21,20 +23,47 @@ export function initNavigation(screenConfig) {
             navigateTo(btn.dataset.screen);
         });
     });
+
+    // Initialize tab bar
+    initTabBar(navigateTo);
 }
 
 /**
  * Go back to previous screen
  */
-export function goBack() {
+export function goBack(options = {}) {
+    const normalized = typeof options === 'string'
+        ? { fallbackScreenId: options }
+        : (options || {});
+
+    const fallbackScreenId = resolveFallbackScreen(normalized.fallbackScreenId || 'portfolio-list');
+    const requirePrefix = normalized.requirePrefix;
+
     if (historyStack.length > 1) {
-        historyStack.pop(); // 현재 화면 제거
-        const prevScreen = historyStack[historyStack.length - 1];
+        // 현재 화면 제거
+        historyStack.pop();
+
+        // 연속 중복 히스토리 제거
+        while (historyStack.length > 1 && historyStack[historyStack.length - 1] === currentScreen) {
+            historyStack.pop();
+        }
+
+        let prevScreen = historyStack[historyStack.length - 1];
+
+        if (requirePrefix && (!prevScreen || !prevScreen.startsWith(requirePrefix))) {
+            prevScreen = fallbackScreenId;
+        }
+
+        if (!isScreenRegistered(prevScreen)) {
+            prevScreen = fallbackScreenId;
+        }
+
         navigateTo(prevScreen, false); // 히스토리에 추가하지 않음
-    } else {
-        // 히스토리가 없으면 포트폴리오 목록으로
-        navigateTo('portfolio-list', false);
+        return;
     }
+
+    // 히스토리가 없으면 fallback 화면으로
+    navigateTo(fallbackScreenId, false);
 }
 
 /**
@@ -43,6 +72,7 @@ export function goBack() {
  */
 export async function loadAllScreens(screenConfig) {
     const container = document.getElementById('screen-container');
+    const cacheBust = Date.now();
 
     // Load off screen first
     container.innerHTML = '<div id="screen-off" class="screen active"></div>';
@@ -50,7 +80,9 @@ export async function loadAllScreens(screenConfig) {
     for (const screen of screenConfig.screens) {
         try {
             // 1. Load HTML
-            const response = await fetch(screen.path);
+            const response = await fetch(`${screen.path}?v=${cacheBust}`, {
+                cache: 'no-store'
+            });
             if (response.ok) {
                 const html = await response.text();
                 container.insertAdjacentHTML('beforeend', html);
@@ -59,7 +91,7 @@ export async function loadAllScreens(screenConfig) {
                 if (screen.controller) {
                     try {
                         // Dynamic import
-                        const module = await import('../' + screen.controller);
+                        const module = await import(`../${screen.controller}?v=${cacheBust}`);
                         loadedControllers.set(screen.id, module);
 
                         // Initialize if init() exists
@@ -118,6 +150,14 @@ export function navigateTo(screenId, addToHistory = true) {
 
         updateNavButtons();
         updateStateButtons();
+
+        // 탭바 상태 업데이트
+        updateTabBarState(screenId);
+
+        // 화면 설정에 따른 탭바 표시/숨김 처리
+        const screenConfig = config?.screens?.find(s => s.id === screenId);
+        const currentPhase = document.body.getAttribute('data-current-phase') || 'P1';
+        updateTabBarForScreen(screenConfig, currentPhase);
 
         // 5. Call controller lifecycle methods
         const controller = loadedControllers.get(screenId);
@@ -178,6 +218,16 @@ function updateStateButtons() {
  */
 export function getCurrentScreen() {
     return currentScreen;
+}
+
+function isScreenRegistered(screenId) {
+    return !!config?.screens?.some(screen => screen.id === screenId);
+}
+
+function resolveFallbackScreen(preferredFallbackId) {
+    if (isScreenRegistered(preferredFallbackId)) return preferredFallbackId;
+    if (isScreenRegistered('portfolio-list')) return 'portfolio-list';
+    return config?.screens?.[0]?.id || preferredFallbackId;
 }
 
 // Make updateScreenState global for control-panel.js to use if needed

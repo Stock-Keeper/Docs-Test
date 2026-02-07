@@ -19,7 +19,8 @@
         "icon": "S",
         "order": 0
       },
-      "stateButtons": []
+      "stateButtons": [],
+      "hideTabBar": true
     },
     {
       "id": "onboarding",
@@ -33,7 +34,8 @@
         "icon": "📖",
         "order": 0.5
       },
-      "stateButtons": []
+      "stateButtons": [],
+      "hideTabBar": true
     },
     {
       "id": "login",
@@ -58,7 +60,8 @@
           "icon": "❌",
           "title": "로그인 에러"
         }
-      ]
+      ],
+      "hideTabBar": true
     },
     {
       "id": "profile-input",
@@ -78,7 +81,8 @@
           "icon": "⏳",
           "title": "프로필 로딩"
         }
-      ]
+      ],
+      "hideTabBar": true
     },
     {
       "id": "portfolio-list",
@@ -306,6 +310,100 @@
           "title": "에러"
         }
       ]
+    },
+    {
+      "id": "community-post-detail",
+      "phase": "P2",
+      "domain": "community",
+      "name": "게시글 상세",
+      "path": "screens/community/post-detail.html",
+      "controller": "screen-controllers/community/post-detail.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/community/post-detail.md",
+      "navButton": {
+        "icon": "📄",
+        "order": 12
+      },
+      "stateButtons": [
+        {
+          "id": "loading",
+          "icon": "⏳",
+          "title": "로딩"
+        }
+      ],
+      "hideTabBar": false
+    },
+    {
+      "id": "community-post-create",
+      "phase": "P2",
+      "domain": "community",
+      "name": "게시글 작성",
+      "path": "screens/community/post-create.html",
+      "controller": "screen-controllers/community/post-create.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/community/post-create.md",
+      "navButton": {
+        "icon": "✏️",
+        "order": 13
+      },
+      "stateButtons": [],
+      "hideTabBar": true
+    },
+    {
+      "id": "community-profile",
+      "phase": "P2",
+      "domain": "community",
+      "name": "커뮤니티 프로필",
+      "path": "screens/community/profile.html",
+      "controller": "screen-controllers/community/profile.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/community/profile.md",
+      "navButton": {
+        "icon": "👤",
+        "order": 14
+      },
+      "stateButtons": []
+    },
+    {
+      "id": "community-settings",
+      "phase": "P2",
+      "domain": "community",
+      "name": "커뮤니티 설정",
+      "path": "screens/community/settings.html",
+      "controller": "screen-controllers/community/settings.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/community/settings.md",
+      "navButton": {
+        "icon": "⚙️",
+        "order": 15
+      },
+      "stateButtons": [],
+      "hideTabBar": true
+    },
+    {
+      "id": "community-search",
+      "phase": "P2",
+      "domain": "community",
+      "name": "커뮤니티 검색",
+      "path": "screens/community/search.html",
+      "controller": "screen-controllers/community/search.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/community/search.md",
+      "navButton": {
+        "icon": "🔎",
+        "order": 16
+      },
+      "stateButtons": []
+    },
+    {
+      "id": "community-profile-edit",
+      "phase": "P2",
+      "domain": "community",
+      "name": "프로필 편집",
+      "path": "screens/community/profile-edit.html",
+      "controller": "screen-controllers/community/profile-edit.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/community/profile.md",
+      "navButton": {
+        "icon": "✏️",
+        "order": 17
+      },
+      "stateButtons": [],
+      "hideTabBar": true
     }
   ]
 }

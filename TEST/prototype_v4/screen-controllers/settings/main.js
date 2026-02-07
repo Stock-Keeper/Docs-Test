@@ -50,6 +50,11 @@ function attachListeners() {
         notiCenterLink.onclick = () => navigateTo('notification-center');
     }
 
+    const communitySettingsLink = document.getElementById('community-settings-link');
+    if (communitySettingsLink) {
+        communitySettingsLink.onclick = () => navigateTo('community-settings');
+    }
+
     // Logout
     const logoutBtn = document.getElementById('logout-btn');
     console.log('[SettingsMain] logout-btn element:', logoutBtn);

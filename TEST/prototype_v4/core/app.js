@@ -18,7 +18,9 @@ let isFirstVisit = true;
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         // 1. Load screens configuration
-        const config = await fetch('config/screens.json').then(r => r.json());
+        const config = await fetch(`config/screens.json?v=${Date.now()}`, {
+            cache: 'no-store'
+        }).then(r => r.json());
 
         // 2. Initialize control panel (dynamic from config)
         await initControlPanel(config);
