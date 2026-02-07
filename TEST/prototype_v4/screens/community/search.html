@@ -1,0 +1,63 @@
+<div id="screen-community-search" class="screen">
+    <div class="screen-body">
+        <!-- Search Header -->
+        <div class="screen-header search-header">
+            <button class="header-icon-btn" id="community-search-back-btn" type="button">←</button>
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="community-search-input" placeholder="검색어 입력...">
+                <button class="search-clear-btn hidden" id="search-clear-btn" type="button">✕</button>
+            </div>
+        </div>
+
+        <!-- Search Content -->
+        <div class="search-content" id="search-content">
+            <!-- Initial State -->
+            <div class="search-initial" id="search-initial">
+                <p>종목, 게시글, 사용자를 검색해보세요</p>
+            </div>
+
+            <!-- Loading State -->
+            <div class="search-loading hidden" id="search-loading">
+                <span class="spinner">⏳</span>
+                <p>검색 중...</p>
+            </div>
+
+            <!-- Results -->
+            <div class="search-results hidden" id="search-results">
+                <!-- Stocks Section -->
+                <div class="result-section" id="result-stocks">
+                    <div class="section-header">
+                        <span>종목</span>
+                        <button class="more-link" type="button">더보기 →</button>
+                    </div>
+                    <div class="stock-results" id="stock-results-list"></div>
+                </div>
+
+                <!-- Posts Section -->
+                <div class="result-section" id="result-posts">
+                    <div class="section-header">
+                        <span>게시글</span>
+                        <button class="more-link" type="button">더보기 →</button>
+                    </div>
+                    <div class="post-results" id="post-results-list"></div>
+                </div>
+
+                <!-- Users Section -->
+                <div class="result-section" id="result-users">
+                    <div class="section-header">
+                        <span>사용자</span>
+                        <button class="more-link" type="button">더보기 →</button>
+                    </div>
+                    <div class="user-results" id="user-results-list"></div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="search-empty hidden" id="search-empty">
+                <span class="empty-icon">🔍</span>
+                <p>검색 결과가 없습니다</p>
+            </div>
+        </div>
+    </div>
+</div>

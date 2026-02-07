@@ -1,0 +1,73 @@
+<!-- Screen: Community Profile Edit -->
+<div id="screen-community-profile-edit" class="screen" data-domain="community">
+    <!-- Header -->
+    <div class="screen-header">
+        <button class="back-btn" id="community-profile-edit-cancel-btn" type="button">←</button>
+        <h1 class="header-title">프로필 편집</h1>
+        <div class="header-spacer"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="profile-edit-content">
+        <!-- Profile Image -->
+        <div class="profile-image-section">
+            <div class="profile-image-wrapper">
+                <div class="profile-image placeholder">
+                    <span class="profile-placeholder-icon" id="community-profile-avatar">👤</span>
+                </div>
+            </div>
+            <button class="profile-image-hint" id="community-profile-photo-btn" type="button">사진 변경하기</button>
+        </div>
+
+        <!-- Form -->
+        <div class="profile-form">
+            <div class="form-group">
+                <label for="community-nickname-input">닉네임</label>
+                <input
+                    type="text"
+                    id="community-nickname-input"
+                    class="form-input"
+                    placeholder="닉네임을 입력해주세요"
+                    maxlength="20"
+                >
+                <div class="input-info">
+                    <span class="nickname-warning">닉네임은 90일마다 변경 가능합니다</span>
+                    <span class="char-counter"><span id="nickname-char-count">0</span>/20</span>
+                </div>
+                <div class="last-changed-info" id="nickname-last-changed">마지막 변경 2025-12-01</div>
+            </div>
+
+            <div class="form-group">
+                <label for="community-bio-input">자기소개</label>
+                <textarea
+                    id="community-bio-input"
+                    class="form-textarea"
+                    placeholder="자기소개를 입력해주세요"
+                    maxlength="200"
+                    rows="4"
+                ></textarea>
+                <span class="char-counter"><span id="bio-char-count">0</span>/200</span>
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="profile-save-section">
+            <button id="community-profile-edit-save-btn" class="primary-btn" type="button" disabled>저장하기</button>
+        </div>
+    </div>
+
+    <!-- Exit Confirm Modal -->
+    <div class="modal-overlay hidden" id="community-profile-edit-exit-modal">
+        <div class="modal-card confirm-modal">
+            <div class="modal-body">
+                <span class="confirm-icon">⚠️</span>
+                <p class="confirm-message">변경사항이 저장되지 않아요</p>
+                <p class="confirm-sub">정말 나가시겠어요?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" id="profile-edit-exit-cancel" type="button">닫기</button>
+                <button class="modal-btn danger" id="profile-edit-exit-confirm" type="button">나가기</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,6 +11,12 @@
     align-items: center;
 }
 
+/* P2+ uses bottom tab navigation for settings entry. */
+body[data-current-phase="P2"] #screen-portfolio-list #settings-btn,
+body[data-current-phase="P3"] #screen-portfolio-list #settings-btn {
+    display: none;
+}
+
 /* User Greeting (Welcome Message) */
 .user-greeting {
     display: flex;

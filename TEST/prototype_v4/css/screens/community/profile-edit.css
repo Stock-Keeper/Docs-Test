@@ -1,0 +1,174 @@
+/* =============================================
+   Community Domain - Profile Edit Screen Styles
+   (Aligned with Auth Profile Edit layout/style)
+   ============================================= */
+
+/* Header */
+#screen-community-profile-edit .screen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: static;
+    padding: var(--header-padding-top) 16px 12px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-header);
+}
+
+#screen-community-profile-edit .header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+#screen-community-profile-edit .header-spacer {
+    width: 40px;
+}
+
+/* Content */
+#screen-community-profile-edit .profile-edit-content {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 20px;
+    height: calc(100% - 65px);
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#screen-community-profile-edit .profile-edit-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* Profile Image */
+#screen-community-profile-edit .profile-image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+#screen-community-profile-edit .profile-image-wrapper {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+}
+
+#screen-community-profile-edit .profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#screen-community-profile-edit .profile-image.placeholder {
+    background: var(--bg-surface);
+}
+
+#screen-community-profile-edit .profile-placeholder-icon {
+    font-size: 36px;
+    opacity: 0.5;
+}
+
+#screen-community-profile-edit .profile-image-hint {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Form */
+#screen-community-profile-edit .profile-form {
+    flex: 1;
+}
+
+#screen-community-profile-edit .profile-form .form-group {
+    margin-bottom: 28px;
+}
+
+#screen-community-profile-edit .profile-form .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+#screen-community-profile-edit .form-input,
+#screen-community-profile-edit .form-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+#screen-community-profile-edit .form-input:focus,
+#screen-community-profile-edit .form-textarea:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background: var(--bg-input-focus);
+}
+
+#screen-community-profile-edit .form-textarea {
+    resize: none;
+    min-height: 110px;
+    line-height: 1.5;
+}
+
+#screen-community-profile-edit .char-counter {
+    display: block;
+    text-align: right;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+/* Extra Community Info */
+#screen-community-profile-edit .input-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+#screen-community-profile-edit .input-info .char-counter {
+    margin-top: 0;
+}
+
+#screen-community-profile-edit .nickname-warning {
+    font-size: 12px;
+    color: var(--warning, #f59e0b);
+}
+
+#screen-community-profile-edit .last-changed-info {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+/* Save Section */
+#screen-community-profile-edit .profile-save-section {
+    margin-top: auto;
+    padding-top: 24px;
+    padding-bottom: calc(var(--tab-bar-height, 0px) + 24px);
+}
+
+#screen-community-profile-edit .profile-save-section .primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}

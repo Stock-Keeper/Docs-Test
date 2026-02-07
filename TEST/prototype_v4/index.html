@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/components/summary-card.css">
     <link rel="stylesheet" href="css/components/dropdown-menu.css">
     <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/tab-bar.css?v=20260207">
     <link rel="stylesheet" href="css/control-panel.css">
     <link rel="stylesheet" href="css/themes/dark.css">
     <link rel="stylesheet" href="css/themes/light.css">
@@ -27,15 +28,22 @@
     <link rel="stylesheet" href="css/screens/auth/login.css">
     <link rel="stylesheet" href="css/screens/auth/profile-input.css">
     <link rel="stylesheet" href="css/screens/auth/profile-edit.css">
-    <link rel="stylesheet" href="css/screens/portfolio/list.css">
-    <link rel="stylesheet" href="css/screens/portfolio/detail.css">
+    <link rel="stylesheet" href="css/screens/portfolio/list.css?v=20260207">
+    <link rel="stylesheet" href="css/screens/portfolio/detail.css?v=20260207">
     <link rel="stylesheet" href="css/screens/stock/search.css">
     <link rel="stylesheet" href="css/screens/stock/detail.css">
     <link rel="stylesheet" href="css/screens/rebalancing/check.css">
     <link rel="stylesheet" href="css/screens/settings/main.css">
     <link rel="stylesheet" href="css/screens/notification/center.css">
     <link rel="stylesheet" href="css/screens/notification/settings.css">
-    <link rel="stylesheet" href="css/screens/community/feed.css">
+    <link rel="stylesheet" href="css/screens/community/common.css?v=20260207">
+    <link rel="stylesheet" href="css/screens/community/feed.css?v=20260207">
+    <link rel="stylesheet" href="css/screens/community/post-detail.css">
+    <link rel="stylesheet" href="css/screens/community/post-create.css">
+    <link rel="stylesheet" href="css/screens/community/profile.css">
+    <link rel="stylesheet" href="css/screens/community/profile-edit.css">
+    <link rel="stylesheet" href="css/screens/community/settings.css">
+    <link rel="stylesheet" href="css/screens/community/search.css">
 </head>
 
 <body>
@@ -55,6 +63,23 @@
 
         <!-- 모달 컨테이너 -->
         <div id="modal-container"></div>
+
+        <!-- 탭바 (P2+ 전용) -->
+        <nav id="tab-bar" class="tab-bar">
+            <button class="tab-item active" data-screen="portfolio-list">
+                <span class="tab-icon">🏠</span>
+                <span class="tab-label">홈</span>
+            </button>
+
+            <button class="tab-item" data-screen="community-feed">
+                <span class="tab-icon">💬</span>
+                <span class="tab-label">커뮤니티</span>
+            </button>
+            <button class="tab-item" data-screen="settings-main">
+                <span class="tab-icon">⚙️</span>
+                <span class="tab-label">설정</span>
+            </button>
+        </nav>
     </div>
 
     <!-- 컨트롤 패널 (동적 생성) -->

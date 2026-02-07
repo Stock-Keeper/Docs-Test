@@ -16,6 +16,7 @@
 
         <!-- Filter Bar -->
         <div class="feed-filter-bar">
+            <div class="feed-filter-dropdown">
             <select class="feed-filter-select" id="feed-category-filter">
                 <option value="all">전체</option>
                 <option value="portfolio">포트폴리오</option>
@@ -25,10 +26,15 @@
                 <option value="overseas">해외주식</option>
                 <option value="free">자유</option>
             </select>
+            <span class="feed-filter-caret" aria-hidden="true">v</span>
+            </div>
+            <div class="feed-filter-dropdown">
             <select class="feed-filter-select" id="feed-sort-filter">
                 <option value="latest">최신순</option>
                 <option value="popular">인기순</option>
             </select>
+            <span class="feed-filter-caret" aria-hidden="true">v</span>
+            </div>
         </div>
 
         <!-- Content Container -->

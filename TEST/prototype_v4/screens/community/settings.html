@@ -1,0 +1,121 @@
+<div id="screen-community-settings" class="screen">
+    <div class="screen-body">
+        <!-- Header -->
+        <div class="screen-header settings-header">
+            <button class="header-icon-btn" id="community-settings-back-btn">←</button>
+            <span class="header-title">커뮤니티 설정</span>
+            <div class="header-spacer"></div>
+        </div>
+
+        <!-- Settings Menu -->
+        <div class="settings-menu">
+            <div class="settings-item" data-screen="community-notification-settings">
+                <span class="settings-item-icon">🔔</span>
+                <span class="settings-item-label">알림 설정</span>
+                <span class="settings-item-arrow">›</span>
+            </div>
+            <div class="settings-item" data-screen="community-privacy-settings">
+                <span class="settings-item-icon">🔒</span>
+                <span class="settings-item-label">정보 공개 범위</span>
+                <span class="settings-item-arrow">›</span>
+            </div>
+            <div class="settings-item" data-screen="community-lists" data-tab="bookmarks">
+                <span class="settings-item-icon">🔖</span>
+                <span class="settings-item-label">북마크</span>
+                <span class="settings-item-arrow">›</span>
+            </div>
+            <div class="settings-item" data-screen="community-lists" data-tab="blocked">
+                <span class="settings-item-icon">🚫</span>
+                <span class="settings-item-label">차단 계정 관리</span>
+                <span class="settings-item-arrow">›</span>
+            </div>
+            <div class="settings-item" data-action="deleted-posts">
+                <span class="settings-item-icon">🗑️</span>
+                <span class="settings-item-label">신고·삭제된 글</span>
+                <span class="settings-item-arrow">›</span>
+            </div>
+            <div class="settings-item" data-action="community-rules">
+                <span class="settings-item-icon">📋</span>
+                <span class="settings-item-label">커뮤니티 이용규칙</span>
+                <span class="settings-item-arrow">›</span>
+            </div>
+        </div>
+
+        <!-- Notification Settings Section (Inline) -->
+        <div class="settings-section hidden" id="notification-settings-section">
+            <h3 class="section-title">게시글 및 댓글</h3>
+            <div class="toggle-item">
+                <span>내 글에 좋아요</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked data-setting="notify-like">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="toggle-item">
+                <span>내 글에 댓글</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked data-setting="notify-comment">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="toggle-item">
+                <span>내 글 리포스트</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked data-setting="notify-repost">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <h3 class="section-title">팔로우</h3>
+            <div class="toggle-item">
+                <span>새 팔로워</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked data-setting="notify-follower">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <h3 class="section-title">팔로우하는 사람의 활동</h3>
+            <div class="toggle-item">
+                <span>새 글</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked data-setting="notify-following-post">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="toggle-item">
+                <span>거래</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked data-setting="notify-following-trade">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Privacy Settings Section (Inline) -->
+        <div class="settings-section hidden" id="privacy-settings-section">
+            <h3 class="section-title">공개 범위</h3>
+            <div class="toggle-item">
+                <span>최근 활동</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked data-setting="public-activity">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="toggle-item">
+                <span>투자 현황</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" data-setting="public-portfolio">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="toggle-item">
+                <span>거래 내역</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked data-setting="public-trades">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

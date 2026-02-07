@@ -1,0 +1,94 @@
+<div id="screen-community-profile" class="screen">
+    <div class="screen-body">
+        <!-- Header -->
+        <div class="screen-header profile-header">
+            <button class="header-icon-btn" id="community-profile-back-btn">←</button>
+            <div class="header-spacer"></div>
+            <!-- My profile: settings / Other's profile: block -->
+            <button class="header-icon-btn" id="profile-settings-btn">⚙️</button>
+            <button class="header-icon-btn hidden" id="profile-block-btn">🚫</button>
+        </div>
+
+        <!-- Profile Info Section -->
+        <div class="profile-info">
+            <div class="profile-main">
+                <div class="profile-details">
+                    <h2 class="profile-name" id="profile-name">투자왕김철수</h2>
+                    <p class="profile-handle" id="profile-handle">@investking</p>
+                    <p class="profile-bio hidden" id="profile-bio">장기투자를 지향합니다.</p>
+                </div>
+                <div class="profile-avatar" id="profile-avatar">👤</div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-posts">12</span>
+                    <span class="stat-label">게시글</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-followers">156</span>
+                    <span class="stat-label">팔로워</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-following">23</span>
+                    <span class="stat-label">팔로잉</span>
+                </div>
+            </div>
+
+            <!-- My profile: edit / Other's profile: follow -->
+            <button class="profile-action-btn" id="profile-edit-btn">프로필 편집</button>
+            <button class="profile-action-btn follow-action hidden" id="profile-follow-btn">팔로우</button>
+        </div>
+
+        <!-- Profile Tabs -->
+        <div class="profile-tabs">
+            <button class="profile-tab active" data-tab="activity">최근활동</button>
+            <button class="profile-tab" data-tab="portfolio">투자</button>
+            <button class="profile-tab" data-tab="trade">매매내역</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="profile-tab-content" id="profile-tab-content">
+            <!-- Activity Tab (Default) -->
+            <div class="tab-pane active" id="tab-activity">
+                <div class="activity-list" id="activity-list">
+                    <!-- Activity items -->
+                    <div class="activity-item">
+                        <span class="activity-icon">📝</span>
+                        <div class="activity-content">
+                            <span class="activity-text">새 글을 작성했습니다</span>
+                            <span class="activity-title">삼성전자, 지금 사도 될까요?</span>
+                            <span class="activity-time">3일 전</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-icon">❤️</span>
+                        <div class="activity-content">
+                            <span class="activity-text">좋아요를 눌렀습니다</span>
+                            <span class="activity-title">2025 반도체 전망</span>
+                            <span class="activity-time">5일 전</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Tab -->
+            <div class="tab-pane hidden" id="tab-portfolio">
+                <div class="portfolio-visibility-notice">
+                    <span>🔒</span>
+                    <span>투자 정보는 비공개입니다</span>
+                </div>
+            </div>
+
+            <!-- Trade Tab -->
+            <div class="tab-pane hidden" id="tab-trade">
+                <div class="trade-visibility-notice">
+                    <span>🔒</span>
+                    <span>매매내역은 비공개입니다</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+/* =============================================
+   TAB BAR - 하단 네비게이션 바 (P2+)
+   
+   z-index 체계:
+   - 모달/바텀시트: 200
+   - 탭바: 100 (상태바와 동일)
+   - FAB: 90 (탭바 아래에서 위치 조정)
+   - 헤더: 50
+   ============================================= */
+
+/* 기본: 숨김 */
+.tab-bar {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--tab-bar-height, 56px);
+    background: var(--bg-header);
+    border-top: 1px solid var(--border-color);
+    z-index: 100;
+    flex-shrink: 0;
+}
+
+/* 탭바 표시 조건 */
+body[data-show-tabbar="true"] .tab-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* 개별 탭 아이템 */
+.tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex: 1;
+    height: 100%;
+    padding: 8px 0;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tab-item:active {
+    opacity: 0.7;
+}
+
+/* 활성 탭 */
+.tab-item.active {
+    color: var(--primary);
+}
+
+.tab-item.active .tab-icon {
+    transform: scale(1.1);
+}
+
+/* 탭 아이콘 */
+.tab-icon {
+    font-size: 20px;
+    line-height: 1;
+    transition: transform var(--transition-fast);
+}
+
+/* 탭 라벨 */
+.tab-label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+/* =============================================
+   탭바 → 다른 요소 영향 처리
+   ============================================= */
+
+/* 1. FAB 위치 조정 - 탭바 위로 이동 */
+body[data-show-tabbar="true"] .fab {
+    bottom: calc(var(--tab-bar-height, 56px) + 16px);
+}
+
+/* 2. 화면 하단 패딩 - 탭바 높이만큼 여유 */
+body[data-show-tabbar="true"] .screen-body {
+    padding-bottom: calc(var(--tab-bar-height, 56px) + var(--spacing-md, 16px));
+}
+
+/* 3. screen-footer - fixed footer의 경우 탭바 위로 */
+body[data-show-tabbar="true"] .screen-footer {
+    padding-bottom: calc(var(--tab-bar-height, 56px) + 24px);
+}
+
+/* 4. 바텀시트 - 탭바와 관계없이 전체 화면에서 올라옴 (z: 200) */
+/* 이미 z-index: 200으로 탭바 위에 표시됨 */
+
+/* =============================================
+   탭바 숨김 화면 (풀스크린 에디터 등)
+   ============================================= */
+
+/* hideTabBar 속성이 있는 화면이 활성화되면 탭바 숨김 처리
+   → JS에서 body[data-show-tabbar="false"]로 제어 */
