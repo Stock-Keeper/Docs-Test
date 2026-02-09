@@ -212,3 +212,20 @@
     /* Add animation logic in component.css or base.css usually, but can add here if missing */
 }
 
+/* Portfolio Total Change */
+#screen-community-feed .feed-card-change {
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+#screen-community-feed .feed-card-change.positive {
+    color: var(--success);
+    background-color: var(--success-bg);
+}
+
+#screen-community-feed .feed-card-change.negative {
+    color: var(--error);
+    background-color: var(--error-bg);
+}

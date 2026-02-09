@@ -21,7 +21,8 @@ const MOCK_POSTS = [
         author: '배당러버',
         likes: 156,
         copies: 23,
-        time: '1일 전'
+        time: '1일 전',
+        totalChange: 3.5
     },
     {
         id: 3,
@@ -130,9 +131,12 @@ function render(posts) {
         card.onclick = () => navigateTo('community-post-detail');
 
         if (post.type === 'portfolio') {
+            const changeClass = post.totalChange >= 0 ? 'positive' : 'negative';
+            const changeSign = post.totalChange >= 0 ? '+' : '';
             card.innerHTML = `
                 <div class="feed-card-header">
                     <span class="feed-card-category" style="background-color: var(--primary); color: white;">포트폴리오</span>
+                    <span class="feed-card-change ${changeClass}">${changeSign}${post.totalChange}%</span>
                 </div>
                 <div class="feed-card-title">${post.name}</div>
                 <div class="feed-card-preview">${post.stocks}개 종목 포함</div>

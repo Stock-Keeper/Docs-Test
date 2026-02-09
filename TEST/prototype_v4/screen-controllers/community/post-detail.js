@@ -223,9 +223,6 @@ function renderPortfolioSection(stocks) {
                     <span class="portfolio-stock-ticker">${stock.ticker}</span>
                 </div>
                 <div class="portfolio-stock-right">
-                    <span class="portfolio-stock-change ${stock.changeRate >= 0 ? 'positive' : 'negative'}">
-                        ${stock.changeRate >= 0 ? '+' : ''}${stock.changeRate}%
-                    </span>
                     <span class="portfolio-stock-ratio">${stock.targetRatio}%</span>
                 </div>
             </div>
