@@ -1,4 +1,5 @@
 import { navigateTo } from '../../core/navigation.js';
+let feedLoadTimer = null;
 
 const MOCK_POSTS = [
     {
@@ -44,12 +45,21 @@ export function init() {
 
 export function start() {
     bindEvents();
-    render(MOCK_POSTS);
-    setState('default'); // Hide skeleton and show content
+    setState('loading');
+
+    if (feedLoadTimer) clearTimeout(feedLoadTimer);
+    feedLoadTimer = setTimeout(() => {
+        render(MOCK_POSTS);
+        setState('default');
+        feedLoadTimer = null;
+    }, 180);
 }
 
 export function reset() {
-    // No-op for now
+    if (feedLoadTimer) {
+        clearTimeout(feedLoadTimer);
+        feedLoadTimer = null;
+    }
 }
 
 export function setState(stateId) {

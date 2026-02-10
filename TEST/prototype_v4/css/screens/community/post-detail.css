@@ -393,6 +393,26 @@
     padding: var(--spacing-xl);
 }
 
+#screen-community-post-detail #post-detail-loading {
+    height: auto;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--community-gutter);
+}
+
+#screen-community-post-detail .post-detail-loading-card {
+    min-height: 120px;
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+}
+
+#screen-community-post-detail .post-detail-loading-card .skeleton-line:last-child {
+    margin-bottom: 0;
+}
+
 /* =============================================
    PORTFOLIO STOCKS SECTION (카드 내 슬라이드)
    ============================================= */

@@ -133,6 +133,33 @@
     color: var(--text-tertiary);
 }
 
+/* Hide textarea scrollbar */
+#screen-community-post-create .post-body-input {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#screen-community-post-create .post-body-input::-webkit-scrollbar {
+    display: none;
+}
+
+/* Character Count */
+#screen-community-post-create .char-count {
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--text-disabled);
+    padding-top: var(--spacing-xs);
+}
+
+#screen-community-post-create .char-count.near-limit {
+    color: var(--warning, #f59e0b);
+}
+
+#screen-community-post-create .char-count.at-limit {
+    color: var(--error);
+    font-weight: 600;
+}
+
 /* Image Preview */
 #screen-community-post-create .image-preview-area {
     display: flex;
@@ -275,5 +302,191 @@
 }
 
 #screen-community-post-create #post-create-exit-modal .modal-card {
-    margin: var(--spacing-md);
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    margin-bottom: var(--tab-bar-height, 0px);
+    border-radius: 24px 24px 0 0;
+    border-bottom: none;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+}
+
+#screen-community-post-create #post-create-exit-modal .modal-footer {
+    padding: 16px 24px 32px;
+    background: var(--bg-surface-hover);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 12px;
+}
+
+#screen-community-post-create #post-create-exit-modal .modal-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: var(--radius-lg);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+#screen-community-post-create #post-create-exit-modal .modal-btn.secondary {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+#screen-community-post-create #post-create-exit-modal .modal-btn.danger {
+    background: var(--danger);
+    color: #ffffff;
+}
+
+/* ===== Portfolio Preview Card ===== */
+#screen-community-post-create .portfolio-preview-area {
+    margin-top: var(--spacing-md);
+}
+
+#screen-community-post-create .portfolio-preview-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    position: relative;
+}
+
+#screen-community-post-create .portfolio-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+}
+
+#screen-community-post-create .portfolio-preview-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+#screen-community-post-create .portfolio-preview-remove {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-tertiary);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+#screen-community-post-create .portfolio-preview-remove:hover {
+    background: var(--bg-surface-hover);
+    color: var(--text-primary);
+}
+
+#screen-community-post-create .portfolio-preview-info {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    margin-bottom: var(--spacing-sm);
+}
+
+#screen-community-post-create .portfolio-preview-info .change-positive {
+    color: var(--success);
+    font-weight: 600;
+}
+
+#screen-community-post-create .portfolio-preview-info .change-negative {
+    color: var(--error);
+    font-weight: 600;
+}
+
+#screen-community-post-create .portfolio-preview-stocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+#screen-community-post-create .portfolio-preview-stock-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary);
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+#screen-community-post-create .portfolio-preview-more {
+    color: var(--text-tertiary);
+    font-size: 0.78rem;
+    padding: 4px 6px;
+}
+
+/* ===== Portfolio Select List Items ===== */
+#screen-community-post-create .bottom-sheet-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+#screen-community-post-create .portfolio-select-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#screen-community-post-create .portfolio-select-item:hover {
+    border-color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.05);
+}
+
+#screen-community-post-create .portfolio-select-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+#screen-community-post-create .portfolio-select-info {
+    flex: 1;
+    min-width: 0;
+}
+
+#screen-community-post-create .portfolio-select-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+#screen-community-post-create .portfolio-select-meta {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+}
+
+#screen-community-post-create .portfolio-select-meta .change-positive {
+    color: var(--success);
+    font-weight: 600;
+}
+
+#screen-community-post-create .portfolio-select-meta .change-negative {
+    color: var(--error);
+    font-weight: 600;
+}
+
+/* Toolbar active state when portfolio is attached */
+#screen-community-post-create .toolbar-btn.active {
+    background: rgba(var(--primary-rgb), 0.15);
+    border-color: var(--primary);
+    color: var(--primary);
 }

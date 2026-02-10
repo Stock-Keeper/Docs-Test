@@ -22,12 +22,18 @@
             <input type="text" class="post-title-input" id="post-title-input" placeholder="제목을 입력하세요">
 
             <!-- Body -->
-            <textarea class="post-body-input" id="post-body-input"
+            <textarea class="post-body-input" id="post-body-input" maxlength="3000"
                 placeholder="내용을 입력하세요.&#10;커뮤니티 이용규칙에 맞지 않는 글은 통보 없이 삭제될 수 있습니다."></textarea>
+            <div class="char-count" id="char-count"><span id="char-current">0</span> / 3,000</div>
 
             <!-- Image Preview -->
             <div class="image-preview-area hidden" id="image-preview-area">
                 <!-- Dynamic image previews -->
+            </div>
+
+            <!-- Portfolio Preview -->
+            <div class="portfolio-preview-area hidden" id="portfolio-preview-area">
+                <!-- 선택된 포트폴리오 미리보기 카드가 JS로 렌더링됨 -->
             </div>
 
             <!-- Stock Tags Preview -->
@@ -49,12 +55,14 @@
                 <span>📷</span>
                 <span>사진</span>
             </button>
-            <button class="toolbar-btn" id="toolbar-gif-btn">
-                <span>GIF</span>
-            </button>
+
             <button class="toolbar-btn" id="toolbar-stock-btn">
                 <span>📈</span>
                 <span>종목태그</span>
+            </button>
+            <button class="toolbar-btn" id="toolbar-portfolio-btn">
+                <span>📊</span>
+                <span>포폴</span>
             </button>
         </div>
     </div>
@@ -70,6 +78,20 @@
             <div class="modal-footer">
                 <button class="modal-btn secondary" id="exit-modal-cancel">닫기</button>
                 <button class="modal-btn danger" id="exit-modal-confirm">나가기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Select Bottom Sheet -->
+    <div class="bottom-sheet-overlay hidden" id="portfolio-select-overlay">
+        <div class="bottom-sheet" id="portfolio-select-sheet">
+            <div class="bottom-sheet-handle"></div>
+            <div class="bottom-sheet-header">
+                <h3>포트폴리오 선택</h3>
+                <button class="close-btn" id="portfolio-sheet-close">✕</button>
+            </div>
+            <div class="bottom-sheet-body" id="portfolio-select-list">
+                <!-- 포트폴리오 목록이 JS로 렌더링됨 -->
             </div>
         </div>
     </div>

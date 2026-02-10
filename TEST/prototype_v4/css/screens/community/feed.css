@@ -204,12 +204,54 @@
 }
 
 /* Skeleton */
+#screen-community-feed .skeleton-container {
+    display: none;
+    padding: var(--spacing-md) var(--community-gutter) 0;
+}
+
+#screen-community-feed .skeleton-container.visible {
+    display: block;
+}
+
 #screen-community-feed .skeleton-card {
     background-color: var(--bg-surface);
-    height: 120px;
+    min-height: 120px;
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-md);
-    /* Add animation logic in component.css or base.css usually, but can add here if missing */
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+#screen-community-feed .skeleton-header,
+#screen-community-feed .skeleton-body {
+    border-radius: 8px;
+    background: linear-gradient(90deg,
+            var(--bg-surface) 25%,
+            var(--bg-surface-hover) 50%,
+            var(--bg-surface) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+}
+
+#screen-community-feed .skeleton-header {
+    width: 42%;
+    height: 18px;
+}
+
+#screen-community-feed .skeleton-body {
+    width: 100%;
+    height: 56px;
+}
+
+#screen-community-feed #community-feed-empty-state {
+    gap: var(--spacing-sm);
+}
+
+#screen-community-feed #community-feed-empty-state .empty-btn {
+    margin-top: var(--spacing-sm);
 }
 
 /* Portfolio Total Change */
