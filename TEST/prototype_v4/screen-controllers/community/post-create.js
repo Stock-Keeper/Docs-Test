@@ -1,11 +1,13 @@
 /**
  * Post Create Screen Controller
  */
+import { goBack as navGoBack, navigateTo } from '../../core/navigation.js';
 
 // State
 let selectedCategory = '전체';
 let stockTags = [];
 let hasUnsavedChanges = false;
+let selectedPortfolio = null;
 
 // Mock stock data for autocomplete
 const MOCK_STOCKS = [
@@ -15,6 +17,46 @@ const MOCK_STOCKS = [
     { code: '035720', name: '카카오' },
     { code: '051910', name: 'LG화학' },
     { code: '006400', name: '삼성SDI' }
+];
+
+// Mock portfolio data
+const MOCK_PORTFOLIOS = [
+    {
+        id: 1,
+        name: '배당주 중심 포트폴리오',
+        totalChange: 3.5,
+        stocks: [
+            { name: '삼성전자', ticker: '005930', targetRatio: 25 },
+            { name: 'SK하이닉스', ticker: '000660', targetRatio: 20 },
+            { name: 'NAVER', ticker: '035420', targetRatio: 15 },
+            { name: '카카오', ticker: '035720', targetRatio: 10 },
+            { name: 'LG에너지솔루션', ticker: '373220', targetRatio: 10 },
+            { name: '현대차', ticker: '005380', targetRatio: 10 },
+            { name: 'POSCO홀딩스', ticker: '005490', targetRatio: 5 },
+            { name: 'KB금융', ticker: '105560', targetRatio: 5 }
+        ]
+    },
+    {
+        id: 2,
+        name: '성장주 포트폴리오',
+        totalChange: -1.2,
+        stocks: [
+            { name: '에코프로비엠', ticker: '247540', targetRatio: 30 },
+            { name: '포스코퓨처엠', ticker: '003670', targetRatio: 25 },
+            { name: '엘앤에프', ticker: '066970', targetRatio: 25 },
+            { name: '삼성SDI', ticker: '006400', targetRatio: 20 }
+        ]
+    },
+    {
+        id: 3,
+        name: 'ETF 모아가기',
+        totalChange: 0.8,
+        stocks: [
+            { name: 'KODEX 200', ticker: '069500', targetRatio: 40 },
+            { name: 'TIGER 미국S&P500', ticker: '360750', targetRatio: 35 },
+            { name: 'KODEX 미국나스닥100', ticker: '379810', targetRatio: 25 }
+        ]
+    }
 ];
 
 /**
@@ -55,7 +97,12 @@ function bindEvents() {
             input.oninput = () => {
                 hasUnsavedChanges = true;
                 validateForm();
-                checkStockTags(bodyInput?.value || '');
+                if (input === bodyInput) {
+                    updateCharCount();
+                    checkStockTags(bodyInput?.value || '');
+                } else {
+                    checkStockTags(bodyInput?.value || '');
+                }
             };
         }
     });
@@ -68,6 +115,26 @@ function bindEvents() {
     const stockBtn = document.getElementById('toolbar-stock-btn');
     if (stockBtn) {
         stockBtn.onclick = handleAddStockTag;
+    }
+
+    // Portfolio button
+    const portfolioBtn = document.getElementById('toolbar-portfolio-btn');
+    if (portfolioBtn) {
+        portfolioBtn.onclick = handlePortfolioBtn;
+    }
+
+    // Portfolio bottom sheet overlay
+    const overlay = document.getElementById('portfolio-select-overlay');
+    if (overlay) {
+        overlay.onclick = (e) => {
+            if (e.target === overlay) closePortfolioSheet();
+        };
+    }
+
+    // Portfolio sheet close button
+    const sheetCloseBtn = document.getElementById('portfolio-sheet-close');
+    if (sheetCloseBtn) {
+        sheetCloseBtn.onclick = closePortfolioSheet;
     }
 
     const exitCancel = document.getElementById('exit-modal-cancel');
@@ -88,6 +155,7 @@ export function reset() {
     selectedCategory = '전체';
     stockTags = [];
     hasUnsavedChanges = false;
+    selectedPortfolio = null;
 
     const titleInput = document.getElementById('post-title-input');
     const bodyInput = document.getElementById('post-body-input');
@@ -109,8 +177,41 @@ export function reset() {
     const tagsPreview = document.getElementById('stock-tags-preview');
     if (tagsPreview) tagsPreview.innerHTML = '';
 
+    // Clear portfolio preview
+    const portfolioPreview = document.getElementById('portfolio-preview-area');
+    if (portfolioPreview) {
+        portfolioPreview.innerHTML = '';
+        portfolioPreview.classList.add('hidden');
+    }
+
+    // Reset portfolio button state
+    const portfolioBtn = document.getElementById('toolbar-portfolio-btn');
+    if (portfolioBtn) portfolioBtn.classList.remove('active');
+
     hideAutocomplete();
+    closePortfolioSheet();
+    updateCharCount();
     validateForm();
+}
+
+/**
+ * Update character count display
+ */
+function updateCharCount() {
+    const bodyInput = document.getElementById('post-body-input');
+    const charCurrent = document.getElementById('char-current');
+    const charCount = document.getElementById('char-count');
+    if (!bodyInput || !charCurrent || !charCount) return;
+
+    const len = bodyInput.value.length;
+    charCurrent.textContent = len.toLocaleString();
+
+    charCount.classList.remove('near-limit', 'at-limit');
+    if (len >= 3000) {
+        charCount.classList.add('at-limit');
+    } else if (len >= 2700) {
+        charCount.classList.add('near-limit');
+    }
 }
 
 /**
@@ -293,6 +394,159 @@ function handleAddStockTag() {
     }
 }
 
+// ===== Portfolio Functions =====
+
+/**
+ * Handle portfolio toolbar button click
+ */
+function handlePortfolioBtn() {
+    if (selectedPortfolio) {
+        // 이미 선택된 포트폴리오가 있으면 -> 바텀시트를 열어 교체 가능
+        openPortfolioSheet();
+    } else {
+        openPortfolioSheet();
+    }
+}
+
+/**
+ * Open portfolio selection bottom sheet
+ */
+function openPortfolioSheet() {
+    const overlay = document.getElementById('portfolio-select-overlay');
+    if (!overlay) return;
+
+    renderPortfolioList();
+    overlay.classList.remove('hidden');
+}
+
+/**
+ * Close portfolio selection bottom sheet
+ */
+function closePortfolioSheet() {
+    const overlay = document.getElementById('portfolio-select-overlay');
+    if (overlay) overlay.classList.add('hidden');
+}
+
+/**
+ * Render portfolio list in bottom sheet
+ */
+function renderPortfolioList() {
+    const list = document.getElementById('portfolio-select-list');
+    if (!list) return;
+
+    list.innerHTML = MOCK_PORTFOLIOS.map(portfolio => {
+        const changeClass = portfolio.totalChange >= 0 ? 'change-positive' : 'change-negative';
+        const changeSign = portfolio.totalChange >= 0 ? '+' : '';
+
+        return `
+            <div class="portfolio-select-item" data-id="${portfolio.id}">
+                <span class="portfolio-select-icon">📊</span>
+                <div class="portfolio-select-info">
+                    <div class="portfolio-select-name">${portfolio.name}</div>
+                    <div class="portfolio-select-meta">
+                        종목 ${portfolio.stocks.length}개 · <span class="${changeClass}">${changeSign}${portfolio.totalChange}%</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    list.querySelectorAll('.portfolio-select-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const id = parseInt(item.dataset.id);
+            selectPortfolio(id);
+        });
+    });
+}
+
+/**
+ * Select a portfolio
+ */
+function selectPortfolio(id) {
+    const portfolio = MOCK_PORTFOLIOS.find(p => p.id === id);
+    if (!portfolio) return;
+
+    selectedPortfolio = portfolio;
+    hasUnsavedChanges = true;
+
+    renderPortfolioPreview();
+    closePortfolioSheet();
+
+    // Activate toolbar button
+    const portfolioBtn = document.getElementById('toolbar-portfolio-btn');
+    if (portfolioBtn) portfolioBtn.classList.add('active');
+
+    console.log('[PostCreate] 포트폴리오 선택:', portfolio.name);
+}
+
+/**
+ * Render portfolio preview card in editor
+ */
+function renderPortfolioPreview() {
+    const container = document.getElementById('portfolio-preview-area');
+    if (!container || !selectedPortfolio) return;
+
+    const p = selectedPortfolio;
+    const changeClass = p.totalChange >= 0 ? 'change-positive' : 'change-negative';
+    const changeSign = p.totalChange >= 0 ? '+' : '';
+
+    // 상위 3개 종목만 표시
+    const MAX_PREVIEW_STOCKS = 3;
+    const previewStocks = p.stocks.slice(0, MAX_PREVIEW_STOCKS);
+    const remainingCount = p.stocks.length - MAX_PREVIEW_STOCKS;
+
+    const stockChips = previewStocks.map(s =>
+        `<span class="portfolio-preview-stock-chip">${s.name} ${s.targetRatio}%</span>`
+    ).join('');
+
+    const moreChip = remainingCount > 0
+        ? `<span class="portfolio-preview-more">+${remainingCount}개 더</span>`
+        : '';
+
+    container.innerHTML = `
+        <div class="portfolio-preview-card">
+            <div class="portfolio-preview-header">
+                <span class="portfolio-preview-name">📊 ${p.name}</span>
+                <button class="portfolio-preview-remove" id="portfolio-preview-remove-btn">✕</button>
+            </div>
+            <div class="portfolio-preview-info">
+                종목 ${p.stocks.length}개 · 총 변동 <span class="${changeClass}">${changeSign}${p.totalChange}%</span>
+            </div>
+            <div class="portfolio-preview-stocks">
+                ${stockChips}
+                ${moreChip}
+            </div>
+        </div>
+    `;
+
+    container.classList.remove('hidden');
+
+    // Remove button event
+    const removeBtn = document.getElementById('portfolio-preview-remove-btn');
+    if (removeBtn) {
+        removeBtn.addEventListener('click', removePortfolio);
+    }
+}
+
+/**
+ * Remove attached portfolio
+ */
+function removePortfolio() {
+    selectedPortfolio = null;
+
+    const container = document.getElementById('portfolio-preview-area');
+    if (container) {
+        container.innerHTML = '';
+        container.classList.add('hidden');
+    }
+
+    // Deactivate toolbar button
+    const portfolioBtn = document.getElementById('toolbar-portfolio-btn');
+    if (portfolioBtn) portfolioBtn.classList.remove('active');
+
+    console.log('[PostCreate] 포트폴리오 첨부 해제');
+}
+
 /**
  * Handle cancel
  */
@@ -300,7 +554,7 @@ function handleCancel() {
     if (hasUnsavedChanges) {
         showExitModal();
     } else {
-        goBack();
+        navigateBack();
     }
 }
 
@@ -324,18 +578,19 @@ function hideExitModal() {
  * Confirm exit
  */
 function confirmExit() {
+    hasUnsavedChanges = false;
     hideExitModal();
-    goBack();
+    navigateTo('community-feed', false);
 }
 
 /**
  * Go back
  */
-function goBack() {
-    import('../../core/navigation.js').then(nav => nav.goBack({
+function navigateBack() {
+    navGoBack({
         fallbackScreenId: 'community-feed',
         requirePrefix: 'community-'
-    }));
+    });
 }
 
 /**
@@ -346,14 +601,22 @@ function handleSubmit() {
     const bodyInput = document.getElementById('post-body-input');
 
     const post = {
-        category: selectedCategory,
+        type: selectedPortfolio ? 'portfolio' : 'post',
+        category: selectedPortfolio ? '포트폴리오' : selectedCategory,
         title: titleInput?.value.trim(),
         content: bodyInput?.value.trim(),
         stockTags: stockTags
     };
 
+    // 포트폴리오 첨부 시 추가 데이터
+    if (selectedPortfolio) {
+        post.portfolioId = selectedPortfolio.id;
+        post.portfolioName = selectedPortfolio.name;
+        post.portfolioStocks = selectedPortfolio.stocks;
+    }
+
     console.log('[PostCreate] 게시글 작성:', post);
 
     // Navigate to feed
-    import('../../core/navigation.js').then(nav => nav.navigateTo('community-feed'));
+    navigateTo('community-feed');
 }

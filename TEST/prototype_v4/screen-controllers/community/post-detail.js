@@ -66,6 +66,7 @@ let currentPost = MOCK_POST_PORTFOLIO;
 let comments = [...MOCK_COMMENTS];
 let currentSlideIndex = 0;
 const STOCKS_PER_SLIDE = 4;
+let detailLoadTimer = null;
 
 /**
  * Initialize
@@ -139,18 +140,49 @@ export function init() {
  * Start - called when screen becomes active
  */
 export function start() {
-    currentSlideIndex = 0;
-    renderPost();
-    renderComments();
+    setState('loading');
+
+    if (detailLoadTimer) clearTimeout(detailLoadTimer);
+    detailLoadTimer = setTimeout(() => {
+        currentSlideIndex = 0;
+        renderPost();
+        renderComments();
+        setState('default');
+        detailLoadTimer = null;
+    }, 180);
 }
 
 /**
  * Reset
  */
 export function reset() {
+    if (detailLoadTimer) {
+        clearTimeout(detailLoadTimer);
+        detailLoadTimer = null;
+    }
+
     const commentInput = document.getElementById('comment-input');
     if (commentInput) commentInput.value = '';
     currentSlideIndex = 0;
+}
+
+function setState(stateId) {
+    const loading = document.getElementById('post-detail-loading');
+    const sections = [
+        '.post-author-section',
+        '.post-content-area',
+        '.comment-input-area'
+    ];
+
+    sections.forEach(selector => {
+        const node = document.querySelector(`#screen-community-post-detail ${selector}`);
+        if (!node) return;
+        node.classList.toggle('hidden', stateId === 'loading');
+    });
+
+    if (loading) {
+        loading.classList.toggle('hidden', stateId !== 'loading');
+    }
 }
 
 /**
