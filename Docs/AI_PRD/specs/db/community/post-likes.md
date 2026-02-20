@@ -62,5 +62,5 @@ SELECT EXISTS(
 
 ## 관련 스펙
 
-- API: `../api/community/like.md`
+- API: `../../api/community/like.md`
 - DB: `community/community-articles.md`

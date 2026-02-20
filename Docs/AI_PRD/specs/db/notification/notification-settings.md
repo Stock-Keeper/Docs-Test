@@ -3,13 +3,14 @@ type: db
 phase: P1
 table: notification_settings
 related:
-  api:
-    - ../api/notification/settings.md
+    api:
+        - specs/api/notification/settings.md
 ---
 
 # notification_settings 테이블
 
 ## 개요
+
 포트폴리오별 알림 설정 (포트폴리오와 1:1 관계)
 
 > **변경 이력**: 기존 사용자별+포트폴리오별 2테이블 구조에서 포트폴리오별 단일 테이블로 통합  
@@ -35,15 +36,15 @@ CREATE TABLE notification_settings (
 
 ## 컬럼 상세
 
-| 컬럼 | 타입 | 필수 | 설명 | Phase |
-|------|------|------|------|-------|
-| id | INT | Y | PK, AUTO_INCREMENT | P1 |
-| portfolio_id | INT | Y | 포트폴리오 ID (FK, UNIQUE) | P1 |
-| is_enabled | BOOLEAN | Y | 알림 활성화 여부 | P1 |
-| alert_cycle | ENUM | N | 알림 주기 (WEEKLY/MONTHLY) | P1 |
-| alert_time | TIME | N | 알림 발송 시간 | P1 |
-| threshold_percentage | DECIMAL | Y | 리밸런싱 임계값 (%) | P1 |
-| updated_at | TIMESTAMP | N | 수정일 | P1 |
+| 컬럼                 | 타입      | 필수 | 설명                       | Phase |
+| -------------------- | --------- | ---- | -------------------------- | ----- |
+| id                   | INT       | Y    | PK, AUTO_INCREMENT         | P1    |
+| portfolio_id         | INT       | Y    | 포트폴리오 ID (FK, UNIQUE) | P1    |
+| is_enabled           | BOOLEAN   | Y    | 알림 활성화 여부           | P1    |
+| alert_cycle          | ENUM      | N    | 알림 주기 (WEEKLY/MONTHLY) | P1    |
+| alert_time           | TIME      | N    | 알림 발송 시간             | P1    |
+| threshold_percentage | DECIMAL   | Y    | 리밸런싱 임계값 (%)        | P1    |
+| updated_at           | TIMESTAMP | N    | 수정일                     | P1    |
 
 ## 비즈니스 규칙
 
@@ -52,4 +53,5 @@ CREATE TABLE notification_settings (
 - 임계값 기본값 20% (기존 5%에서 변경)
 
 ## 관련 스펙
-- API: `../api/notification/settings.md`
+
+- API: `../../api/notification/settings.md`

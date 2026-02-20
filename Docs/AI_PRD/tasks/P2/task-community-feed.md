@@ -15,10 +15,10 @@ specs:
         - community/comment-delete.md
         - community/like.md
     db:
-        - community/articles.md
-        - community/article-images.md
+        - community/posts.md
+        - community/post-images.md
         - community/comments.md
-        - community/likes.md
+        - community/post-likes.md
         - community/bookmarks.md
         - community/profiles.md
     ui:

@@ -3,15 +3,16 @@ type: ui
 phase: P1
 screen: 관리자 대시보드 화면
 related:
-  api:
-    - ../../api/admin/stats-overview.md
-  ui:
-    - users-list.md
+    api:
+        - ../../api/admin/stats-overview.md
+    ui:
+        - users-list.md
 ---
 
 # 관리자 대시보드 화면 (Admin Dashboard)
 
 ## 개요
+
 관리자 메인 대시보드 - 통계 카드 및 차트
 
 ## 레이아웃
@@ -42,54 +43,58 @@ related:
 ## 컴포넌트
 
 ### 1. 사이드바 네비게이션
+
 - 대시보드 (/) - 현재
 - 사용자 관리 (/users)
 - 모니터링 (/monitoring)
 - 설정 (/settings)
 
 ### 2. 통계 카드 (Stats Card)
-| 카드 | 값 | 부가 정보 |
-|------|-----|----------|
-| 전체 사용자 | totalUsers | 전일 대비 증감 (+n명) |
-| 오늘 신규 가입 | todayNewUsers | - |
-| 활성 사용자 (DAU) | dailyActiveUsers | - |
-| 전체 포트폴리오 | totalPortfolios | - |
+
+| 카드              | 값               | 부가 정보             |
+| ----------------- | ---------------- | --------------------- |
+| 전체 사용자       | totalUsers       | 전일 대비 증감 (+n명) |
+| 오늘 신규 가입    | todayNewUsers    | -                     |
+| 활성 사용자 (DAU) | dailyActiveUsers | -                     |
+| 전체 포트폴리오   | totalPortfolios  | -                     |
 
 ### 3. 차트
-| 차트 | 유형 | 데이터 |
-|------|------|--------|
+
+| 차트        | 유형      | 데이터                   |
+| ----------- | --------- | ------------------------ |
 | 가입자 추이 | 라인 차트 | 최근 30일 일별 신규 가입 |
-| DAU 추이 | 라인 차트 | 최근 30일 DAU |
-| 역할 분포 | 도넛 차트 | USER vs ADMIN |
-| 멤버십 분포 | 도넛 차트 | NOT vs PRO |
+| DAU 추이    | 라인 차트 | 최근 30일 DAU            |
+| 역할 분포   | 도넛 차트 | USER vs ADMIN            |
+| 멤버십 분포 | 도넛 차트 | NOT vs PRO               |
 
 ## 상호작용
 
-| 액션 | 동작 |
-|------|------|
-| 통계 카드 클릭 | 해당 상세 화면 이동 (예: 전체 사용자 → /users) |
-| 차트 호버 | 툴팁으로 상세 수치 표시 |
-| 새로고침 버튼 | 통계 데이터 다시 로드 |
-| 사이드바 메뉴 클릭 | 해당 화면 이동 |
+| 액션               | 동작                                           |
+| ------------------ | ---------------------------------------------- |
+| 통계 카드 클릭     | 해당 상세 화면 이동 (예: 전체 사용자 → /users) |
+| 차트 호버          | 툴팁으로 상세 수치 표시                        |
+| 새로고침 버튼      | 통계 데이터 다시 로드                          |
+| 사이드바 메뉴 클릭 | 해당 화면 이동                                 |
 
 ## 데이터 로딩
 
 ```javascript
 // API 호출
 const { data, isLoading } = useQuery({
-  queryKey: ['admin', 'stats', 'overview'],
-  queryFn: () => fetch('/api/admin/stats/overview').then(res => res.json())
+    queryKey: ['admin', 'stats', 'overview'],
+    queryFn: () => fetch('/api/admin/stats/overview').then((res) => res.json()),
 });
 ```
 
 ## 상태
 
-| 상태 | UI |
-|------|-----|
-| 로딩 중 | 스켈레톤 UI |
-| 에러 | 에러 메시지 + 재시도 버튼 |
-| 성공 | 통계 카드 + 차트 표시 |
+| 상태    | UI                        |
+| ------- | ------------------------- |
+| 로딩 중 | 스켈레톤 UI               |
+| 에러    | 에러 메시지 + 재시도 버튼 |
+| 성공    | 통계 카드 + 차트 표시     |
 
 ## 관련 스펙
-- API: `../api/admin/stats-overview.md`
+
+- API: `../../api/admin/stats-overview.md`
 - UI: `admin-users.md`
