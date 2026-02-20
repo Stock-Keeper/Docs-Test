@@ -7,8 +7,10 @@ endpoint: /api/community/feed
 auth: optional
 related:
     db:
-        - specs/db/community/articles.md
+        - specs/db/community/posts.md
         - specs/db/portfolio/portfolios.md
+    api:
+        - specs/api/community/post-detail.md
     ui:
         - specs/ui/community/feed.md
 ---
@@ -117,6 +119,6 @@ Authorization: Bearer {access_token} (선택)
 
 ## 관련 스펙
 
-- DB: `specs/db/community/articles.md`
+- DB: `specs/db/community/posts.md`
 - DB: `specs/db/portfolio/portfolios.md`
 - UI: `specs/ui/community/feed.md`

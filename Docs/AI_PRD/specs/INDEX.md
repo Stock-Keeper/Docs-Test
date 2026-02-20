@@ -3,11 +3,11 @@ type: index
 description: 모든 API, DB, UI 스펙 문서의 인덱스
 role: 사람이 전체 구조를 파악하고, AI가 스펙 목록을 빠르게 조회하는 데 사용
 spec_count:
-    api: 47
-    db: 39
-    ui: 23
-    total: 109
-last_updated: 2026-01-24
+    api: 53
+    db: 40
+    ui: 24
+    total: 117
+last_updated: 2026-02-20
 ---
 
 # 스펙 인덱스
@@ -65,6 +65,12 @@ last_updated: 2026-01-24
 | [settings.md](api/notification/settings.md)   | 알림 설정      |
 | [fcm-token.md](api/notification/fcm-token.md) | FCM 토큰 등록  |
 
+### 광고 (Ads) - P1
+
+| 파일                           | 설명           |
+| ------------------------------ | -------------- |
+| [config.md](api/ads/config.md) | 광고 설정 조회 |
+
 ### 관리자 (Admin) - P1
 
 | 파일                                                   | 설명             |
@@ -77,6 +83,7 @@ last_updated: 2026-01-24
 | [monitoring-errors.md](api/admin/monitoring-errors.md) | 에러 모니터링    |
 | [stats-users.md](api/admin/stats-users.md)             | 사용자 통계      |
 | [stats-portfolios.md](api/admin/stats-portfolios.md)   | 포트폴리오 통계  |
+| [ads.md](api/admin/ads.md)                             | 광고 단위 관리   |
 
 ### 커뮤니티 (Community) - P2/P3
 
@@ -84,7 +91,11 @@ last_updated: 2026-01-24
 | ---------------------------------------------------- | --------------- | :---: |
 | [feed-list.md](api/community/feed-list.md)           | 피드 목록       |  P2   |
 | [post-create.md](api/community/post-create.md)       | 게시글 작성     |  P2   |
+| [post-detail.md](api/community/post-detail.md)       | 게시글 상세     |  P2   |
+| [post-update.md](api/community/post-update.md)       | 게시글 수정     |  P2   |
 | [comment-create.md](api/community/comment-create.md) | 댓글 작성       |  P2   |
+| [comment-update.md](api/community/comment-update.md) | 댓글 수정       |  P2   |
+| [comment-delete.md](api/community/comment-delete.md) | 댓글 삭제       |  P2   |
 | [like.md](api/community/like.md)                     | 좋아요          |  P2   |
 | [search.md](api/community/search.md)                 | 검색            |  P2   |
 | [reply-create.md](api/community/reply-create.md)     | 대댓글 작성     |  P3   |
@@ -163,6 +174,12 @@ last_updated: 2026-01-24
 | [announcements.md](db/admin/announcements.md) | `announcements` | 공지사항  |  P1   |
 | [error-logs.md](db/admin/error-logs.md)       | `error_logs`    | 에러 로그 |  P1   |
 
+### ads (광고)
+
+| 파일                              | 테이블명   | 설명              | Phase |
+| --------------------------------- | ---------- | ----------------- | :---: |
+| [ad-units.md](db/ads/ad-units.md) | `ad_units` | 광고 단위 및 정책 |  P1   |
+
 ### log (로그)
 
 | 파일                                            | 테이블명          | 설명          | Phase |
@@ -225,6 +242,12 @@ last_updated: 2026-01-24
 | [post-create.md](ui/community/post-create.md) | 게시글 작성 화면 |  P2   |
 | [lists.md](ui/community/lists.md)             | 참조 목록 화면   |  P2   |
 | [settings.md](ui/community/settings.md)       | 커뮤니티 설정    |  P2   |
+
+### 광고 (Ads) - P1
+
+| 파일                                        | 화면          |
+| ------------------------------------------- | ------------- |
+| [ad-components.md](ui/ads/ad-components.md) | 광고 컴포넌트 |
 
 ---
 

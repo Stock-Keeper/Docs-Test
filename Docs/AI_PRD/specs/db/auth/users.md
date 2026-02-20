@@ -4,7 +4,7 @@ phase: P1
 table: users
 related:
     api:
-        - specs/api/auth/google-callback.md
+        - specs/api/auth/auth-google.md
         - specs/api/auth/profile-update.md
     db:
         - specs/db/community/profiles.md

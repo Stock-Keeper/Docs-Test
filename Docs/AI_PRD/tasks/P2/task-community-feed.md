@@ -5,29 +5,35 @@ domain: community
 status: not-started
 
 specs:
-  api:
-    - community/feed-list.md
-    - community/post-create.md
-    - community/comment-create.md
-    - community/like.md
-  db:
-    - community/articles.md
-    - community/article-images.md
-    - community/comments.md
-    - community/likes.md
-    - community/bookmarks.md
-    - community/profiles.md
-  ui:
-    - community/feed.md
+    api:
+        - community/feed-list.md
+        - community/post-create.md
+        - community/post-detail.md
+        - community/post-update.md
+        - community/comment-create.md
+        - community/comment-update.md
+        - community/comment-delete.md
+        - community/like.md
+    db:
+        - community/articles.md
+        - community/article-images.md
+        - community/comments.md
+        - community/likes.md
+        - community/bookmarks.md
+        - community/profiles.md
+    ui:
+        - community/feed.md
+        - community/post-detail.md
 
 tech:
-  backend: spring-boot
-  frontend: react-native
+    backend: spring-boot
+    frontend: react-native
 ---
 
 # Task: 커뮤니티 피드 및 게시글 기능 구현
 
 ## 목표
+
 커뮤니티 피드, 게시글 CRUD, 댓글, 좋아요 기능 구현
 
 ## 구현 체크리스트
@@ -35,18 +41,18 @@ tech:
 ### Backend (Spring Boot)
 
 - [ ] `CommunityController` 생성
-  - [ ] `GET /api/community/feed` - 피드 조회
-  - [ ] `POST /api/community/articles` - 게시글 작성
-  - [ ] `GET /api/community/articles/{id}` - 게시글 상세
-  - [ ] `PUT /api/community/articles/{id}` - 게시글 수정
-  - [ ] `DELETE /api/community/articles/{id}` - 게시글 삭제
+    - [ ] `GET /api/community/feed` - 피드 조회
+    - [ ] `POST /api/community/articles` - 게시글 작성
+    - [ ] `GET /api/community/articles/{id}` - 게시글 상세
+    - [ ] `PUT /api/community/articles/{id}` - 게시글 수정
+    - [ ] `DELETE /api/community/articles/{id}` - 게시글 삭제
 - [ ] `CommentController` 생성
-  - [ ] `GET /api/community/posts/{id}/comments` - 댓글 목록
-  - [ ] `POST /api/community/posts/{id}/comments` - 댓글 작성
-  - [ ] `PUT /api/community/comments/{id}` - 댓글 수정
-  - [ ] `DELETE /api/community/comments/{id}` - 댓글 삭제
+    - [ ] `GET /api/community/posts/{id}/comments` - 댓글 목록
+    - [ ] `POST /api/community/posts/{id}/comments` - 댓글 작성
+    - [ ] `PUT /api/community/comments/{id}` - 댓글 수정
+    - [ ] `DELETE /api/community/comments/{id}` - 댓글 삭제
 - [ ] `LikeController` 생성
-  - [ ] `POST /api/community/likes` - 좋아요 토글
+    - [ ] `POST /api/community/likes` - 좋아요 토글
 - [ ] 본인인증 검증 인터셉터 (`VerificationRequired`)
 - [ ] 이미지 업로드 (S3)
 - [ ] `CommunityArticle`, `Comment`, `ArticleLike` 엔티티 생성
@@ -56,20 +62,20 @@ tech:
 ### Frontend (React Native)
 
 - [ ] 피드 화면 구현
-  - [ ] 피드 리스트 (무한 스크롤)
-  - [ ] 카테고리/정렬 필터
-  - [ ] Pull to Refresh
-  - [ ] 게시글 카드 컴포넌트
-  - [ ] 포트폴리오 카드 컴포넌트
+    - [ ] 피드 리스트 (무한 스크롤)
+    - [ ] 카테고리/정렬 필터
+    - [ ] Pull to Refresh
+    - [ ] 게시글 카드 컴포넌트
+    - [ ] 포트폴리오 카드 컴포넌트
 - [ ] 게시글 작성 화면
-  - [ ] 제목/내용 입력
-  - [ ] 카테고리 선택
-  - [ ] 이미지 첨부 (ImagePicker)
+    - [ ] 제목/내용 입력
+    - [ ] 카테고리 선택
+    - [ ] 이미지 첨부 (ImagePicker)
 - [ ] 게시글 상세 화면
-  - [ ] 게시글 내용 표시
-  - [ ] 좋아요 버튼
-  - [ ] 댓글 목록
-  - [ ] 댓글 작성
+    - [ ] 게시글 내용 표시
+    - [ ] 좋아요 버튼
+    - [ ] 댓글 목록
+    - [ ] 댓글 작성
 - [ ] 본인인증 미완료 시 모달
 
 ### Database
@@ -90,24 +96,24 @@ tech:
 
 ## 테스트 케이스
 
-| 케이스 | 예상 결과 |
-|--------|----------|
-| 피드 조회 (미로그인) | 게시글/포트폴리오 목록, isLiked 항상 false |
-| 피드 조회 (로그인) | 좋아요 여부 반영된 isLiked |
-| 게시글 작성 (본인인증 완료) | 게시글 생성, 피드에 표시 |
-| 게시글 작성 (본인인증 미완료) | 403 에러, 인증 필요 모달 |
-| 댓글 작성 | 댓글 생성, comment_count 증가 |
-| 좋아요 토글 (추가) | like_count 증가, isLiked=true |
-| 좋아요 토글 (취소) | like_count 감소, isLiked=false |
-| 무한 스크롤 | 다음 페이지 로드, 기존 목록에 추가 |
+| 케이스                        | 예상 결과                                  |
+| ----------------------------- | ------------------------------------------ |
+| 피드 조회 (미로그인)          | 게시글/포트폴리오 목록, isLiked 항상 false |
+| 피드 조회 (로그인)            | 좋아요 여부 반영된 isLiked                 |
+| 게시글 작성 (본인인증 완료)   | 게시글 생성, 피드에 표시                   |
+| 게시글 작성 (본인인증 미완료) | 403 에러, 인증 필요 모달                   |
+| 댓글 작성                     | 댓글 생성, comment_count 증가              |
+| 좋아요 토글 (추가)            | like_count 증가, isLiked=true              |
+| 좋아요 토글 (취소)            | like_count 감소, isLiked=false             |
+| 무한 스크롤                   | 다음 페이지 로드, 기존 목록에 추가         |
 
 ## 예상 소요 시간
 
-| 파트 | 예상 시간 |
-|------|----------|
-| Backend API | 4일 |
-| Frontend 피드 | 3일 |
-| Frontend 게시글 | 2일 |
-| Frontend 댓글 | 1일 |
-| 테스트 | 2일 |
-| **총합** | **12일** |
+| 파트            | 예상 시간 |
+| --------------- | --------- |
+| Backend API     | 4일       |
+| Frontend 피드   | 3일       |
+| Frontend 게시글 | 2일       |
+| Frontend 댓글   | 1일       |
+| 테스트          | 2일       |
+| **총합**        | **12일**  |
