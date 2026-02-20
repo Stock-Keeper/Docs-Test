@@ -5,11 +5,13 @@ table: community_articles
 related:
     api:
         - specs/api/community/post-create.md
+        - specs/api/community/post-detail.md
+        - specs/api/community/post-update.md
         - specs/api/community/feed-list.md
     db:
         - specs/db/community/comments.md
-        - specs/db/community/article-images.md
-        - specs/db/community/article-categories.md
+        - specs/db/community/post-images.md
+        - specs/db/community/post-categories.md
         - specs/db/community/bookmarks.md
 ---
 
@@ -79,6 +81,8 @@ CREATE TABLE community_articles (
 
 ## 관련 스펙
 
-- API: `../api/community/post-create.md`
-- API: `../api/community/feed-list.md`
+- API: `../../api/community/post-create.md`
+- API: `../../api/community/post-detail.md`
+- API: `../../api/community/post-update.md`
+- API: `../../api/community/feed-list.md`
 - DB: `comments.md`, `article-images.md`, `article-categories.md`, `bookmarks.md`
