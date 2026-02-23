@@ -6,7 +6,7 @@ related:
     api:
         - specs/api/community/like.md
     db:
-        - specs/db/community/articles.md
+        - specs/db/community/posts.md
 ---
 
 # community_article_likes 테이블

@@ -7,7 +7,7 @@ endpoint: /api/community/posts
 auth: verified
 related:
     db:
-        - specs/db/community/articles.md
+        - specs/db/community/posts.md
     api:
         - specs/api/community/post-detail.md
         - specs/api/community/post-update.md

@@ -7,7 +7,7 @@ endpoint: /api/community/likes
 auth: verified
 related:
     db:
-        - specs/db/community/likes.md
+        - specs/db/community/post-likes.md
 ---
 
 # POST /api/community/likes

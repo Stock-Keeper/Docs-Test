@@ -5,10 +5,12 @@ table: community_article_replies
 related:
     api:
         - specs/api/community/comment-create.md
+        - specs/api/community/comment-update.md
+        - specs/api/community/comment-delete.md
         - specs/api/community/reply-create.md
     db:
-        - specs/db/community/articles.md
-        - specs/db/community/reply-likes.md
+        - specs/db/community/posts.md
+        - specs/db/community/comment-likes.md
 ---
 
 # community_article_replies 테이블
@@ -82,5 +84,5 @@ ORDER BY created_at;
 
 ## 관련 스펙
 
-- API: `../api/community/comment-create.md`, `../api/community/reply-create.md`
-- DB: `community/community-articles.md`, `community/reply-likes.md`
+- API: `../../api/community/comment-create.md`, `../../api/community/comment-update.md`, `../../api/community/comment-delete.md`, `../../api/community/reply-create.md`
+- DB: `posts.md`, `reply-likes.md`
