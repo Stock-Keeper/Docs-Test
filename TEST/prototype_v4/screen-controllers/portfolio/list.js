@@ -228,6 +228,11 @@ function renderState(stateId) {
             if (errorState) errorState.style.display = 'flex';
             break;
 
+        case 'show-splash-ad':
+            // 컨트롤 패널 상태 버튼 클릭 시 수동으로 전면 광고 창 호출
+            navigateTo('ads-splash-interstitial');
+            break;
+
         case 'default':
         default:
             if (container) {

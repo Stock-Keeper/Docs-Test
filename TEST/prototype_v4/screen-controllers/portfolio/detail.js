@@ -360,6 +360,10 @@ function renderState(stateId) {
             toggleEditMode(); // Just toggle, don't replace content
             break;
 
+        case 'show-splash-ad':
+            import('../../core/navigation.js').then(({ navigateTo }) => navigateTo('ads-splash-interstitial'));
+            break;
+
         case 'default':
         default:
             // Restore Content

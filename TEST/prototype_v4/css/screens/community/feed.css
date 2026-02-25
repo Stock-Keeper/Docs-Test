@@ -186,7 +186,7 @@
 /* FAB */
 #screen-community-feed .fab {
     position: absolute;
-    bottom: calc(var(--tab-bar-height, 0px) + 2rem);
+    bottom: calc(var(--tab-bar-height, 0px) + var(--ad-banner-height, 0px) + 1rem);
     right: var(--community-gutter);
     width: 56px;
     height: 56px;

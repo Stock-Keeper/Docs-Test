@@ -12,7 +12,7 @@
 .tab-bar {
     display: none;
     position: absolute;
-    bottom: 0;
+    bottom: var(--ad-banner-height); /* 배너 높이만큼 올라와야 함 */
     left: 0;
     right: 0;
     height: var(--tab-bar-height, 56px);
@@ -78,19 +78,19 @@ body[data-show-tabbar="true"] .tab-bar {
    탭바 → 다른 요소 영향 처리
    ============================================= */
 
-/* 1. FAB 위치 조정 - 탭바 위로 이동 */
+/* 1. FAB 위치 조정 - 탭바 및 배너 위로 이동 */
 body[data-show-tabbar="true"] .fab {
-    bottom: calc(var(--tab-bar-height, 56px) + 16px);
+    bottom: calc(var(--tab-bar-height, 56px) + var(--ad-banner-height) + 12px);
 }
 
-/* 2. 화면 하단 패딩 - 탭바 높이만큼 여유 */
+/* 2. 화면 하단 패딩 - 탭바 및 배너 높이만큼 여유 */
 body[data-show-tabbar="true"] .screen-body {
-    padding-bottom: calc(var(--tab-bar-height, 56px) + var(--spacing-md, 16px));
+    padding-bottom: calc(var(--tab-bar-height, 56px) + var(--ad-banner-height) + var(--spacing-sm, 8px));
 }
 
-/* 3. screen-footer - fixed footer의 경우 탭바 위로 */
+/* 3. screen-footer - fixed footer의 경우 탭바 및 배너 위로 */
 body[data-show-tabbar="true"] .screen-footer {
-    padding-bottom: calc(var(--tab-bar-height, 56px) + 24px);
+    padding-bottom: calc(var(--tab-bar-height, 56px) + var(--ad-banner-height) + 16px);
 }
 
 /* 4. 바텀시트 - 탭바와 관계없이 전체 화면에서 올라옴 (z: 200) */
