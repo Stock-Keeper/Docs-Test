@@ -5,6 +5,7 @@
     /* 1. Layout */
     --header-height: 56px;
     --tab-bar-height: 56px;
+    --ad-banner-height: 50px;
     --status-bar-height: 44px;
     --header-padding-top: calc(var(--status-bar-height) + 12px);
     --safe-area-top: env(safe-area-inset-top, 0px);
@@ -336,19 +337,20 @@ body {
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     /* Smooth scroll for iOS */
+    padding-bottom: var(--ad-banner-height); /* 전역 하단 광고 배너 여백 추가 */
 }
 
 /* Fixed footer for action buttons (e.g., "시작하기") */
 .screen-footer {
     flex-shrink: 0;
-    padding: 16px 20px 24px;
+    padding: 16px 20px calc(16px + var(--ad-banner-height)); /* 배너 여백 변수로 반영 */
     background: transparent;
 }
 
 /* FAB - positioned relative to .screen, outside .screen-body */
 .fab {
     position: absolute;
-    bottom: 24px;
+    bottom: calc(16px + var(--ad-banner-height)); /* 배너 여백 변수로 반영 */
     right: 24px;
     width: 56px;
     height: 56px;

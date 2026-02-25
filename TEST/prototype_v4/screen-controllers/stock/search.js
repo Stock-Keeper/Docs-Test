@@ -366,6 +366,9 @@ export function setState(stateId) {
                 errorState.style.alignItems = 'center';
             }
             break;
+        case 'show-splash-ad':
+            import('../../core/navigation.js').then(({ navigateTo }) => navigateTo('ads-splash-interstitial'));
+            break;
         case 'default':
         default:
             // Show initial state or results if query exists?? 

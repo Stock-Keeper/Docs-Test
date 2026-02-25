@@ -55,6 +55,12 @@ function attachListeners() {
         communitySettingsLink.onclick = () => navigateTo('community-settings');
     }
 
+    // Membership
+    const membershipLink = document.getElementById('membership-plans-link');
+    if (membershipLink) {
+        membershipLink.onclick = () => navigateTo('membership-plans');
+    }
+
     // Logout
     const logoutBtn = document.getElementById('logout-btn');
     console.log('[SettingsMain] logout-btn element:', logoutBtn);

@@ -299,6 +299,9 @@ export function setState(stateId) {
             contentSections.forEach(el => el.style.display = '');
             openDeleteModal();
             break;
+        case 'show-splash-ad':
+            import('../../core/navigation.js').then(({ navigateTo }) => navigateTo('ads-splash-interstitial'));
+            break;
         case 'default':
         default:
             // Hide skeleton, show content

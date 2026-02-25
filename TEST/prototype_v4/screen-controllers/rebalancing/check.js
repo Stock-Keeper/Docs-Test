@@ -126,3 +126,12 @@ function setText(id, text) {
     const el = document.getElementById(id);
     if (el) el.textContent = text;
 }
+
+// State Management Listener
+window.addEventListener('app-state-change', (e) => {
+    if (e.detail.screenId === 'rebalancing-check') {
+        if (e.detail.state === 'show-splash-ad') {
+            import('../../core/navigation.js').then(({ navigateTo }) => navigateTo('ads-splash-interstitial'));
+        }
+    }
+});
