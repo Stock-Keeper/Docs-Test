@@ -9,6 +9,7 @@ related:
     db:
         - specs/db/community/posts.md
         - specs/db/community/comments.md
+        - specs/db/bm/token-histories.md
     api:
         - specs/api/community/post-create.md
         - specs/api/community/post-update.md
@@ -78,7 +79,14 @@ Authorization: Bearer {access_token} (선택)
         }
     ],
     "createdAt": "2026-01-13T10:00:00Z",
-    "updatedAt": null
+    "updatedAt": null,
+    "portfolio": {
+        "id": 12,
+        "returns": "+15.2%",
+        "itemCount": 5,
+        "isDetailUnlocked": false,
+        "premiumStats": null
+    }
 }
 ```
 
@@ -99,13 +107,19 @@ Authorization: Bearer {access_token} (선택)
 6. 로그인 시: 좋아요/북마크/팔로우/본인 여부 확인
 7. 조회수 증가 (view_count += 1)
 8. 최상위 댓글 20건 조회 (최신순)
-9. 응답 반환
+9. 포트폴리오 첨부 시: 프리미엄 상태 판별
+   - Premium/Pro 멤버십 → isDetailUnlocked=true
+   - 기 결제 이력 (token_histories) → isDetailUnlocked=true
+   - 미충족 → isDetailUnlocked=false, premiumStats=null
+   - 한도 차감은 별도 엔드포인트(POST /api/community/posts/{id}/unlock-detail)로 처리
+10. 응답 반환
 ```
 
 ## 관련 스펙
 
 - DB: `../../db/community/posts.md`
 - DB: `../../db/community/comments.md`
+- DB: `../../db/bm/token-histories.md`
 - API: `post-create.md`
 - API: `post-update.md`
 - API: `feed-list.md`

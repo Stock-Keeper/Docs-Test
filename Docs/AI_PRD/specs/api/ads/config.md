@@ -69,6 +69,12 @@ related:
 }
 ```
 
+> **Phase별 반환 placement**
+>
+> - P1: `BANNER_MAIN`
+> - P2 추가: `SPLASH`
+> - P3 추가: `FEED_NATIVE`, `NOTI_STICKY`, `REWARDED_VIDEO`, `VIDEO_BANNER`
+
 ### 에러
 
 | 코드 | 상황                   | 메시지                    |
