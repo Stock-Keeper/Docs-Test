@@ -35,18 +35,18 @@ CREATE TABLE ad_units (
 
 ## 컬럼 상세
 
-| 컬럼           | 타입         | 필수 | 기본값            | 설명                                                                           | Phase |
-| -------------- | ------------ | ---- | ----------------- | ------------------------------------------------------------------------------ | ----- |
-| id             | INT          | Y    | AUTO_INCREMENT    | PK                                                                             | P1    |
-| placement_type | ENUM         | Y    | -                 | SPLASH/BANNER_MAIN/FEED_NATIVE/NOTI_STICKY/REWARDED_VIDEO(P2)/VIDEO_BANNER(P2) | P1    |
-| platform       | ENUM         | Y    | -                 | ANDROID/IOS                                                                    | P1    |
-| provider       | VARCHAR(50)  | N    | 'ADMOB'           | 광고 네트워크 이름                                                             | P1    |
-| unit_id        | VARCHAR(255) | Y    | -                 | 광고 네트워크에서 발급한 ID                                                    | P1    |
-| is_active      | BOOLEAN      | Y    | TRUE              | 활성화 여부                                                                    | P1    |
-| config_json    | JSON         | N    | NULL              | 빈도 제한, 갱신 주기 등 설정                                                   | P1    |
-| description    | VARCHAR(255) | N    | NULL              | 관리자용 메모                                                                  | P1    |
-| created_at     | TIMESTAMP    | Y    | CURRENT_TIMESTAMP | 생성일                                                                         | P1    |
-| updated_at     | TIMESTAMP    | Y    | CURRENT_TIMESTAMP | 수정일                                                                         | P1    |
+| 컬럼           | 타입         | 필수 | 기본값            | 설명                                                                                           | Phase |
+| -------------- | ------------ | ---- | ----------------- | ---------------------------------------------------------------------------------------------- | ----- |
+| id             | INT          | Y    | AUTO_INCREMENT    | PK                                                                                             | P1    |
+| placement_type | ENUM         | Y    | -                 | BANNER_MAIN(P1)/SPLASH(P2)/FEED_NATIVE(P3)/NOTI_STICKY(P3)/REWARDED_VIDEO(P3)/VIDEO_BANNER(P3) | P1    |
+| platform       | ENUM         | Y    | -                 | ANDROID/IOS                                                                                    | P1    |
+| provider       | VARCHAR(50)  | N    | 'ADMOB'           | 광고 네트워크 이름                                                                             | P1    |
+| unit_id        | VARCHAR(255) | Y    | -                 | 광고 네트워크에서 발급한 ID                                                                    | P1    |
+| is_active      | BOOLEAN      | Y    | TRUE              | 활성화 여부                                                                                    | P1    |
+| config_json    | JSON         | N    | NULL              | 빈도 제한, 갱신 주기 등 설정                                                                   | P1    |
+| description    | VARCHAR(255) | N    | NULL              | 관리자용 메모                                                                                  | P1    |
+| created_at     | TIMESTAMP    | Y    | CURRENT_TIMESTAMP | 생성일                                                                                         | P1    |
+| updated_at     | TIMESTAMP    | Y    | CURRENT_TIMESTAMP | 수정일                                                                                         | P1    |
 
 ## 인덱스
 
@@ -64,14 +64,14 @@ CREATE TABLE ad_units (
 }
 ```
 
-| 키                   | 타입    | 설명                  | 적용 배치      |
-| -------------------- | ------- | --------------------- | -------------- |
-| frequency_cap        | INT     | 하루 최대 노출 횟수   | SPLASH         |
-| refresh_interval_sec | INT     | 배너 갱신 주기(초)    | BANNER_MAIN    |
-| feed_interval        | INT     | 게시물 N개당 광고 1개 | FEED_NATIVE    |
-| reward_type          | STRING  | 보상 유형 (P2)        | REWARDED_VIDEO |
-| reward_amount        | INT     | 보상 수량 (P2)        | REWARDED_VIDEO |
-| autoplay             | BOOLEAN | 자동 재생 여부 (P2)   | VIDEO_BANNER   |
+| 키                   | 타입    | 설명                  | 적용 배치           |
+| -------------------- | ------- | --------------------- | ------------------- |
+| frequency_cap        | INT     | 하루 최대 노출 횟수   | SPLASH (P2)         |
+| refresh_interval_sec | INT     | 배너 갱신 주기(초)    | BANNER_MAIN (P1)    |
+| feed_interval        | INT     | 게시물 N개당 광고 1개 | FEED_NATIVE (P3)    |
+| reward_type          | STRING  | 보상 유형             | REWARDED_VIDEO (P3) |
+| reward_amount        | INT     | 보상 수량             | REWARDED_VIDEO (P3) |
+| autoplay             | BOOLEAN | 자동 재생 여부        | VIDEO_BANNER (P3)   |
 
 ## 유용한 쿼리
 

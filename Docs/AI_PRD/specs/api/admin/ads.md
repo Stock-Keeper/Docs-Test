@@ -16,6 +16,12 @@ related:
 
 관리자 전용 광고 단위 관리 API (목록 조회, 생성, 수정)
 
+> **Phase별 관리 가능 placement_type**
+>
+> - P1: `BANNER_MAIN`
+> - P2 추가: `SPLASH`
+> - P3 추가: `FEED_NATIVE`, `NOTI_STICKY`, `REWARDED_VIDEO`, `VIDEO_BANNER`
+
 ## 스펙
 
 ### 1. 광고 단위 목록 조회

@@ -3,11 +3,11 @@ type: index
 description: 모든 API, DB, UI 스펙 문서의 인덱스
 role: 사람이 전체 구조를 파악하고, AI가 스펙 목록을 빠르게 조회하는 데 사용
 spec_count:
-    api: 53
-    db: 40
-    ui: 24
-    total: 117
-last_updated: 2026-02-20
+    api: 59
+    db: 44
+    ui: 26
+    total: 129
+last_updated: 2026-02-25
 ---
 
 # 스펙 인덱스
@@ -31,14 +31,16 @@ last_updated: 2026-02-20
 
 ### 포트폴리오 (Portfolio) - P1
 
-| 파일                                   | 설명                 |
-| -------------------------------------- | -------------------- |
-| [list.md](api/portfolio/list.md)       | 포트폴리오 목록 조회 |
-| [detail.md](api/portfolio/detail.md)   | 포트폴리오 상세 조회 |
-| [create.md](api/portfolio/create.md)   | 포트폴리오 생성      |
-| [update.md](api/portfolio/update.md)   | 포트폴리오 수정      |
-| [delete.md](api/portfolio/delete.md)   | 포트폴리오 삭제      |
-| [reorder.md](api/portfolio/reorder.md) | 포트폴리오 순서 변경 |
+| 파일                                           | 설명                 |
+| ---------------------------------------------- | -------------------- | --- |
+| [list.md](api/portfolio/list.md)               | 포트폴리오 목록 조회 |
+| [detail.md](api/portfolio/detail.md)           | 포트폴리오 상세 조회 |
+| [create.md](api/portfolio/create.md)           | 포트폴리오 생성      |
+| [update.md](api/portfolio/update.md)           | 포트폴리오 수정      |
+| [delete.md](api/portfolio/delete.md)           | 포트폴리오 삭제      |
+| [reorder.md](api/portfolio/reorder.md)         | 포트폴리오 순서 변경 |
+| [ai-optimize.md](api/portfolio/ai-optimize.md) | AI 비중 추천         | P3  |
+| [backtest.md](api/portfolio/backtest.md)       | 백테스팅 실행        | P3  |
 
 ### 종목 (Stock) - P1/P2
 
@@ -65,7 +67,7 @@ last_updated: 2026-02-20
 | [settings.md](api/notification/settings.md)   | 알림 설정      |
 | [fcm-token.md](api/notification/fcm-token.md) | FCM 토큰 등록  |
 
-### 광고 (Ads) - P1
+### 광고 (Ads) - P1/P2/P3
 
 | 파일                           | 설명           |
 | ------------------------------ | -------------- |
@@ -102,6 +104,15 @@ last_updated: 2026-02-20
 | [follow.md](api/community/follow.md)                 | 팔로우          |  P3   |
 | [ranking.md](api/community/ranking.md)               | 랭킹            |  P3   |
 | [portfolio-copy.md](api/community/portfolio-copy.md) | 포트폴리오 복사 |  P3   |
+| [unlock-detail.md](api/community/unlock-detail.md)   | 상세 지표 열람  |  P3   |
+
+### 비즈니스 모델 (BM) - P3
+
+| 파일                                                      | 설명           |
+| --------------------------------------------------------- | -------------- |
+| [products.md](api/bm/products.md)                         | 상품 목록 조회 |
+| [token-buy.md](api/bm/token-buy.md)                       | 토큰 구매      |
+| [membership-subscribe.md](api/bm/membership-subscribe.md) | 멤버십 구독    |
 
 ---
 
@@ -174,7 +185,7 @@ last_updated: 2026-02-20
 | [announcements.md](db/admin/announcements.md) | `announcements` | 공지사항  |  P1   |
 | [error-logs.md](db/admin/error-logs.md)       | `error_logs`    | 에러 로그 |  P1   |
 
-### ads (광고)
+### ads (광고) - P1/P2/P3
 
 | 파일                              | 테이블명   | 설명              | Phase |
 | --------------------------------- | ---------- | ----------------- | :---: |
@@ -188,6 +199,15 @@ last_updated: 2026-02-20
 | [api-call-logs.md](db/log/api-call-logs.md)     | `api_call_logs`   | API 호출 로그 |  P1   |
 | [error-logs.md](db/log/error-logs.md)           | `error_logs`      | 에러 로그     |  P1   |
 | [user-activities.md](db/log/user-activities.md) | `user_activities` | 사용자 활동   |  P1   |
+
+### bm (비즈니스 모델)
+
+| 파일                                                   | 테이블명              | 설명        | Phase |
+| ------------------------------------------------------ | --------------------- | ----------- | :---: |
+| [token-packages.md](db/bm/token-packages.md)           | `token_packages`      | 토큰 패키지 |  P3   |
+| [membership-products.md](db/bm/membership-products.md) | `membership_products` | 멤버십 상품 |  P3   |
+| [token-histories.md](db/bm/token-histories.md)         | `token_histories`     | 토큰 내역   |  P3   |
+| [payment-histories.md](db/bm/payment-histories.md)     | `payment_histories`   | 결제 내역   |  P3   |
 
 ---
 
@@ -204,10 +224,12 @@ last_updated: 2026-02-20
 
 ### 포트폴리오
 
-| 파일                                | 화면            |
-| ----------------------------------- | --------------- |
-| [list.md](ui/portfolio/list.md)     | 포트폴리오 목록 |
-| [detail.md](ui/portfolio/detail.md) | 포트폴리오 상세 |
+| 파일                                    | 화면            |
+| --------------------------------------- | --------------- | --- |
+| [list.md](ui/portfolio/list.md)         | 포트폴리오 목록 |
+| [detail.md](ui/portfolio/detail.md)     | 포트폴리오 상세 |
+| [create.md](ui/portfolio/create.md)     | 포트폴리오 생성 |
+| [backtest.md](ui/portfolio/backtest.md) | 백테스팅        | P3  |
 
 ### 알림
 
@@ -248,6 +270,12 @@ last_updated: 2026-02-20
 | 파일                                        | 화면          |
 | ------------------------------------------- | ------------- |
 | [ad-components.md](ui/ads/ad-components.md) | 광고 컴포넌트 |
+
+### 비즈니스 모델 (BM) - P3
+
+| 파일                     | 화면             |
+| ------------------------ | ---------------- |
+| [shop.md](ui/bm/shop.md) | 토큰/멤버십 상점 |
 
 ---
 
