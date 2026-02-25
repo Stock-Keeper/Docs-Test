@@ -443,6 +443,20 @@
       },
       "stateButtons": [],
       "hideTabBar": true
+    },
+    {
+      "id": "membership-plans",
+      "phase": "P3",
+      "domain": "membership",
+      "name": "멤버십 구독",
+      "path": "screens/membership/plans.html",
+      "controller": "screen-controllers/membership/plans.js",
+      "navButton": {
+        "icon": "💎",
+        "order": 18
+      },
+      "stateButtons": [],
+      "hideTabBar": true
     }
   ]
 }
