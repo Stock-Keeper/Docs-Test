@@ -84,4 +84,4 @@ related:
 ## 관련 스펙
 
 - API: `../../api/admin/users-list.md`
-- UI: `admin-user-detail-modal.md`
+- UI: `users-detail.md`

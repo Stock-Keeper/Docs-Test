@@ -14,6 +14,8 @@ specs:
   db:
     - portfolio/portfolios.md
   ui:
+    - stock/search.md
+    - stock/detail.md
     - stock/add.md
     - rebalancing/check.md
 

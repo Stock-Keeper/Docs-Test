@@ -8,7 +8,10 @@ specs:
   api:
     - admin/stats-overview.md
     - admin/stats-users.md
-  db: []
+    - admin/stats-portfolios.md
+  db:
+    - auth/users.md
+    - portfolio/portfolios.md
   ui:
     - admin/dashboard.md
 
@@ -29,6 +32,7 @@ tech:
 - [ ] `AdminStatsController` 생성
   - [ ] `GET /api/admin/stats/overview` - 전체 통계
   - [ ] `GET /api/admin/stats/users` - 사용자 통계 (차트 데이터)
+  - [ ] `GET /api/admin/stats/portfolios` - 포트폴리오 통계
 - [ ] `AdminStatsService` 생성
   - [ ] 전체 사용자 수 조회
   - [ ] 오늘 신규 가입자 수 조회
