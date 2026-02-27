@@ -69,12 +69,15 @@ related:
 
 ### 1. Splash Interstitial (전면 광고)
 
-| 속성     | 값                                        |
+| 속성 / 요소 | 설명 / ID 및 클래스명 |
 | -------- | ----------------------------------------- |
+| 컨테이너 | `.ad-splash` (`#screen-ads-splash-interstitial`) |
+| 닫기 버튼| 상단 우측 위치 (`.ad-splash-header` > `.ad-splash-close-btn`, `#ad-splash-close-btn`) |
+| 콘텐츠 | `.ad-splash-content`, 광고 라벨(`.ad-label`), 미디어 영역(`.ad-splash-media`) |
 | 위치     | 앱 콜드 스타트 시, 메인 화면 진입 전      |
 | 타임아웃 | 3초 (로드 실패 시 즉시 메인 진입)         |
 | 빈도     | `config.frequency_cap` 준수 (기본 2회/일) |
-| 닫기     | X 버튼 또는 자동 스킵                     |
+| 닫기 액션| X 버튼(`#ad-splash-close-btn`) 호스트 앱 네비게이션 또는 타임아웃 자동 스킵 |
 
 ### 2. Bottom Banner (하단 배너)
 
