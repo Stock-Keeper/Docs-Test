@@ -7,13 +7,20 @@ status: not-started
 specs:
   api:
     - community/reply-create.md
+    - community/reply-update.md
+    - community/reply-delete.md
     - community/follow.md
+    - community/follows-list.md
     - community/ranking.md
+    - community/badges.md
   db:
     - community/follows.md
     - community/rankings.md
     - community/badges.md
-  ui: []
+  ui:
+    - community/ranking.md
+    - community/badges.md
+    - community/follows-list.md
 
 tech:
   backend: spring-boot

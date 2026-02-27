@@ -9,12 +9,21 @@ specs:
         - community/portfolio-copy.md
         - community/post-detail.md
         - community/unlock-detail.md
+        - community/post-share.md
+        - community/events-list.md
+        - community/events-join.md
+        - community/events-leaderboard.md
     db:
         - portfolio/portfolio-copies.md
         - bm/token-histories.md
+        - community/events.md
+        - community/event-participants.md
     ui:
         - community/feed.md
         - community/post-detail.md
+        - community/share-bottom-sheet.md
+        - community/events-list.md
+        - community/events-detail.md
 
 tech:
     backend: spring-boot

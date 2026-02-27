@@ -5,12 +5,18 @@ domain: accounts
 status: not-started
 
 specs:
-  api: []
+  api:
+    - account/cash.md
+    - account/list-create.md
+    - account/stocks.md
+    - account/update-delete.md
   db:
     - account/accounts.md
     - account/account-stock-entries.md
     - account/account-cash-entries.md
-  ui: []
+  ui:
+    - account/create.md
+    - account/list.md
 
 tech:
   backend: spring-boot

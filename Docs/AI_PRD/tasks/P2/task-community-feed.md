@@ -21,9 +21,13 @@ specs:
         - community/post-likes.md
         - community/bookmarks.md
         - community/profiles.md
+        - community/post-categories.md
+        - community/comment-likes.md
     ui:
         - community/feed.md
         - community/post-detail.md
+        - community/post-create.md
+        - community/onboarding.md
 
 tech:
     backend: spring-boot

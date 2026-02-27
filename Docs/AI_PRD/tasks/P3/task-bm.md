@@ -16,6 +16,7 @@ specs:
         - bm/payment-histories.md
     ui:
         - bm/shop.md
+        - _shared/token-modal.md
 
 tech:
     backend: spring-boot
