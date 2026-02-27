@@ -2,21 +2,25 @@
 Table users {
   id integer [primary key, increment]
   email varchar [not null] // 탈퇴 후 재가입자를 고려해 유니크 해제
-  provider enum ('GOOGLE', 'KAKAO', 'NAVER') // 소셜 제공자(현 구글)
-  role enum ('USER', 'ADMIN') // 사용자, 관리자
-  created_at timestamp // 가입 날짜
-  updated_at timestamp // 업데이트 날짜
-  membership_type enum ('FREE', 'PRO', 'EXPERT') // 멤버쉽 여부(free, pro, expert 같은 구분을 위해 enum 사용)
-  is_verified boolean // 본인인증 여부
+  // nickname varchar // 앱 닉네임 (deprecated, 커뮤니티 프로필 권장)
+  // profile_image_url varchar // 프로필 이미지 URL
+  provider enum('GOOGLE', 'KAKAO', 'NAVER') [not null] // 소셜 제공자
+  role enum('USER', 'ADMIN') [default: 'USER'] // 사용자, 관리자
+  membership_tier enum('FREE', 'BASIC', 'PRO', 'PREMIUM') [default: 'FREE'] // 멤버십 등급
+  token_balance integer [default: 0] // 보유 토큰
+  membership_expires_at timestamp // 멤버십 만료일
+  is_verified boolean [default: false] // 본인인증 여부
   last_login_at timestamp // 마지막 로그인 날짜
-  login_count integer // 로그인 횟수 - 비즈니스 로직 관련 테이블로 이동할 수 있음
+  login_count integer [default: 0] // 로그인 횟수
   is_suspended boolean [default: false] // 현재 정지 상태
   suspended_until timestamp // 정지 해제 일시
   is_delete boolean [default: false] // 논리적 삭제 여부
   delete_at timestamp // 논리적 삭제 일시
+  created_at timestamp [default: `now()`] // 가입 날짜
+  updated_at timestamp // 업데이트 날짜
 
   Indexes {
-    email [unique, name: 'idx_users_email']
+    email [name: 'idx_users_email']
     provider [name: 'idx_users_provider']
   }
 }

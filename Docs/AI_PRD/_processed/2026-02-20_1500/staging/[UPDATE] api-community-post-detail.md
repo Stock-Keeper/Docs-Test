@@ -61,6 +61,6 @@ endpoint: /api/community/posts/{postId}
 
 Basic 멤버십 유저가 상세 열람 시 (월 5건 제한) API 요청 한 번에 바로 차감할까요?
 
-- [ ] 옵션 A: 상세 데이터 요청용 별도 엔드포인트(`POST /api/community/posts/{id}/unlock-detail`)를 만들어사용자가 '버튼 클릭' 시에만 차감
+- [x] 옵션 A: 상세 데이터 요청용 별도 엔드포인트(`POST /api/community/posts/{id}/unlock-detail`)를 만들어사용자가 '버튼 클릭' 시에만 차감
 - [ ] 옵션 B: 자동 차감하지만 남은 횟수를 모달로 경고함
 - [ ] 기타: **\*\***\_\_\_\_**\*\***
