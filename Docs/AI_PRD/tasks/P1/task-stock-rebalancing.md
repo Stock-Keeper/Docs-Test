@@ -19,8 +19,11 @@ specs:
         - portfolio/portfolio-cash-entries.md
         - account/account-stock-entries.md
     ui:
-        - stock/add.md
-        - rebalancing/check.md
+     - stock/search.md
+    - stock/detail.md
+    - stock/add.md
+    - rebalancing/check.md
+
 
 tech:
     backend: spring-boot

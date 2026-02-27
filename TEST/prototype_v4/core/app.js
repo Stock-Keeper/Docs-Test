@@ -42,6 +42,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 7. Init Phone Drag
         initPhoneDrag();
 
+        // 8. Load Ads Mock Config (P2 Feature)
+        await import('./mock/ads.js');
+
+        // 9. Init Global Bottom Banner
+        const { initGlobalBanner } = await import('./ads-banner.js');
+        initGlobalBanner();
+
     } catch (error) {
         console.error('❌ Initialization failed:', error);
     }

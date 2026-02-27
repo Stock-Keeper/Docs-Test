@@ -12,7 +12,8 @@ specs:
     db:
         - admin/announcements.md
     ui:
-        - admin/announcements.md
+        - admin/announcements.md # TODO: 누락된 UI 스펙 작성 필요
+        - settings/announcements.md # TODO: 사용자 앱용 누락된 공지사항 UI 스펙 작성 필요
 
 tech:
     backend: spring-boot

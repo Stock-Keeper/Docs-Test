@@ -22,6 +22,9 @@ specs:
     ui:
         - auth/login-screen.md
         - auth/profile-input.md
+        - auth/splash.md
+        - auth/onboarding.md
+        - auth/profile-edit.md
 
 tech:
     backend: spring-boot

@@ -10,10 +10,12 @@ specs:
         - admin/users-detail.md
         - admin/users-role.md
         - admin/users-status.md
+        - admin/users-export.md   # TODO: 누락된 CSV 내보내기 API 스펙 작성 필요
     db:
         - admin/audit-logs.md
     ui:
         - admin/users-list.md
+        - admin/users-detail.md
 
 tech:
     backend: spring-boot

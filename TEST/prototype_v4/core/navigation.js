@@ -143,6 +143,9 @@ export function navigateTo(screenId, addToHistory = true) {
         targetScreen.classList.add('active');
         currentScreen = screenId;
 
+        // body에 현재 화면 id 기록 (광고 배너 예외 처리 등 전역 CSS 제어용)
+        document.body.setAttribute('data-current-screen', screenId);
+
         // 히스토리 스택에 추가
         if (addToHistory) {
             historyStack.push(screenId);

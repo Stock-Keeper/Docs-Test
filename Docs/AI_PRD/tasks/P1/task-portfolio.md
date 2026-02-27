@@ -24,6 +24,7 @@ specs:
         - portfolio/portfolio-snapshots.md
     ui:
         - portfolio/list.md
+        - portfolio/create.md
         - portfolio/detail.md
         - portfolio/backtest.md
 

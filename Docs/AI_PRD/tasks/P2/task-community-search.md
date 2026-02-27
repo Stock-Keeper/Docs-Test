@@ -8,11 +8,13 @@ specs:
   api:
     - community/search.md
     - community/portfolio-copy.md
+    - portfolio/visibility.md
   db:
     - portfolio/portfolio-copies.md
     - community/search-histories.md
   ui:
     - community/search.md
+    - community/portfolio-detail.md
 
 tech:
   backend: spring-boot

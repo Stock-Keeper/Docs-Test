@@ -1,0 +1,372 @@
+/* =================================================================
+ * Stock-Keeper UI Prototype V4 - Membership Plans CSS
+ * ================================================================= */
+
+#screen-membership-plans {
+    background-color: var(--bg-primary);
+}
+
+/* Header Override */
+#screen-membership-plans .plan-header {
+    background: rgba(var(--bg-primary-rgb), 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Base Scroll Area */
+#screen-membership-plans .plans-scroll-content {
+    padding: 16px 20px 120px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* =================================================================
+ * Banner Section
+ * ================================================================= */
+#screen-membership-plans .current-plan-banner {
+    background: var(--gradient-primary-light);
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+#screen-membership-plans .status-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+#screen-membership-plans .status-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+#screen-membership-plans .status-subtitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* =================================================================
+ * Billing Toggle
+ * ================================================================= */
+#screen-membership-plans .billing-toggle-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+#screen-membership-plans .billing-toggle-control {
+    background-color: var(--bg-secondary);
+    border-radius: 100px;
+    padding: 4px;
+    display: inline-flex;
+    position: relative;
+}
+
+#screen-membership-plans .toggle-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 1;
+}
+
+#screen-membership-plans .toggle-btn.active {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* =================================================================
+ * Card Containers
+ * ================================================================= */
+#screen-membership-plans .plan-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* =================================================================
+ * Plan Cards
+ * ================================================================= */
+#screen-membership-plans .plan-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#screen-membership-plans .plan-card.highlight-pro {
+    border: 2px solid var(--primary);
+    box-shadow: 0 8px 24px rgba(var(--primary-rgb), 0.15);
+}
+
+#screen-membership-plans .plan-badge {
+    position: absolute;
+    top: 16px;
+    right: -24px;
+    background: var(--primary);
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 24px;
+    transform: rotate(45deg);
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#screen-membership-plans .plan-badge.vip {
+    background: #d4af37; /* Gold */
+}
+
+#screen-membership-plans .plan-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#screen-membership-plans .plan-icon {
+    font-size: 28px;
+}
+
+#screen-membership-plans .plan-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+#screen-membership-plans .plan-price {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 4px 0;
+}
+
+#screen-membership-plans .plan-period {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+}
+
+#screen-membership-plans .plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#screen-membership-plans .plan-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+#screen-membership-plans .feature-icon {
+    font-size: 14px;
+    width: 16px;
+    text-align: center;
+}
+
+#screen-membership-plans .feature-icon.yes { color: var(--primary); }
+#screen-membership-plans .feature-icon.no { color: var(--text-tertiary); opacity: 0.5; }
+
+#screen-membership-plans .plan-cta {
+    margin-top: 8px;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+#screen-membership-plans .cta-ghost { background: var(--bg-secondary); color: var(--text-tertiary); cursor: default; }
+#screen-membership-plans .cta-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+#screen-membership-plans .cta-gradient { background: var(--gradient-primary); color: white; }
+#screen-membership-plans .cta-gold { background: linear-gradient(135deg, #d4af37 0%, #aa8c2c 100%); color: white; }
+
+/* =================================================================
+ * Comparison Table (Accordion)
+ * ================================================================= */
+#screen-membership-plans .feature-comparison-section {
+    margin-top: 16px;
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    background: var(--bg-card);
+    overflow: hidden;
+}
+
+#screen-membership-plans .comparison-toggle {
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+#screen-membership-plans .comparison-toggle:active {
+    background: var(--bg-secondary);
+}
+
+#screen-membership-plans .comparison-content {
+    padding: 0 16px 16px;
+}
+
+#screen-membership-plans .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: center;
+}
+
+#screen-membership-plans .comparison-table th,
+#screen-membership-plans .comparison-table td {
+    padding: 12px 4px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+}
+
+#screen-membership-plans .comparison-table th {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+#screen-membership-plans .comparison-table th:first-child,
+#screen-membership-plans .comparison-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+}
+
+#screen-membership-plans .comparison-table td.yes { color: var(--primary); font-weight: bold; }
+#screen-membership-plans .comparison-table td.no { color: var(--text-tertiary); opacity: 0.5; }
+
+/* =================================================================
+ * Token Packages Scroll
+ * ================================================================= */
+#screen-membership-plans .token-purchase-section {
+    margin-top: 24px;
+    padding: 24px 0;
+    border-top: 1px dashed var(--border-light);
+}
+
+#screen-membership-plans .section-header {
+    margin-bottom: 16px;
+}
+
+#screen-membership-plans .section-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+#screen-membership-plans .section-header p {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+#screen-membership-plans .token-packages-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 16px; /* for shadow space */
+    scroll-snap-type: x mandatory;
+}
+
+#screen-membership-plans .token-packages-scroll::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+#screen-membership-plans .token-packages-scroll {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#screen-membership-plans .token-card {
+    min-width: 120px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+#screen-membership-plans .token-card-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--system-red);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+#screen-membership-plans .token-amount {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 8px 0 4px;
+}
+
+#screen-membership-plans .token-price {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Modal text tweaks */
+.plan-modal .modal-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.plan-modal .confirm-message {
+    font-size: 18px;
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 12px;
+}

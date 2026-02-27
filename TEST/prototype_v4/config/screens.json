@@ -111,6 +111,11 @@
           "id": "error",
           "icon": "⚠️",
           "title": "에러 상태"
+        },
+        {
+          "id": "show-splash-ad",
+          "icon": "📺",
+          "title": "전면 광고 보기"
         }
       ]
     },
@@ -141,6 +146,11 @@
           "id": "error",
           "icon": "⚠️",
           "title": "에러 상태"
+        },
+        {
+          "id": "show-splash-ad",
+          "icon": "📺",
+          "title": "전면 광고 보기"
         }
       ]
     },
@@ -166,6 +176,11 @@
           "id": "error",
           "icon": "⚠️",
           "title": "에러 발생"
+        },
+        {
+          "id": "show-splash-ad",
+          "icon": "📺",
+          "title": "전면 광고 보기"
         }
       ]
     },
@@ -201,7 +216,13 @@
         "icon": "⚖️",
         "order": 6
       },
-      "stateButtons": []
+      "stateButtons": [
+        {
+          "id": "show-splash-ad",
+          "icon": "📺",
+          "title": "전면 광고 보기"
+        }
+      ]
     },
     {
       "id": "settings-main",
@@ -215,7 +236,8 @@
         "icon": "⚙️",
         "order": 7
       },
-      "stateButtons": []
+      "stateButtons": [],
+      "hideTabBar": true
     },
     {
       "id": "profile-edit",
@@ -229,7 +251,8 @@
         "icon": "👤",
         "order": 8
       },
-      "stateButtons": []
+      "stateButtons": [],
+      "hideTabBar": true
     },
     {
       "id": "notification-center",
@@ -279,7 +302,23 @@
           "icon": "⏳",
           "title": "로딩 중"
         }
-      ]
+      ],
+      "hideTabBar": true
+    },
+    {
+      "id": "ads-splash-interstitial",
+      "phase": "P2",
+      "domain": "ads",
+      "name": "전면 광고",
+      "path": "screens/ads/splash-interstitial.html",
+      "controller": "screen-controllers/ads/splash-interstitial.js",
+      "prd": "../../Docs/AI_PRD/specs/ui/ads/ad-components.md",
+      "navButton": {
+        "icon": "A",
+        "order": 0.1
+      },
+      "stateButtons": [],
+      "hideTabBar": true
     },
     {
       "id": "community-feed",
@@ -401,6 +440,20 @@
       "navButton": {
         "icon": "✏️",
         "order": 17
+      },
+      "stateButtons": [],
+      "hideTabBar": true
+    },
+    {
+      "id": "membership-plans",
+      "phase": "P3",
+      "domain": "membership",
+      "name": "멤버십 구독",
+      "path": "screens/membership/plans.html",
+      "controller": "screen-controllers/membership/plans.js",
+      "navButton": {
+        "icon": "💎",
+        "order": 18
       },
       "stateButtons": [],
       "hideTabBar": true

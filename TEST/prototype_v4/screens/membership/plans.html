@@ -1,0 +1,142 @@
+<!-- Screen: 멤버십 플랜 -->
+<div id="screen-membership-plans" class="screen">
+    <div class="screen-body" style="padding: 0; background-color: var(--bg-primary);">
+        
+        <!-- 커스텀 헤더 (글래스 효과 포함) -->
+        <header class="header plan-header">
+            <button class="back-btn" id="plans-back-btn">←</button>
+            <h2>멤버십 구독</h2>
+            <div class="header-spacer"></div>
+        </header>
+
+        <div class="plans-scroll-content">
+            <!-- 배너 영역 (현재 등급 + 잔여 토큰) -->
+            <section class="current-plan-banner">
+                <div class="status-content">
+                    <span class="status-title">🆓 Free 플랜 이용 중</span>
+                    <span class="status-subtitle">🪙 12 토큰 보유</span>
+                </div>
+            </section>
+
+            <!-- 빌링 토글 영역 -->
+            <section class="billing-toggle-section">
+                <div class="billing-toggle-control">
+                    <button class="toggle-btn active" data-period="monthly">월간</button>
+                    <button class="toggle-btn" data-period="yearly">연간 (16% 할인)</button>
+                </div>
+            </section>
+
+            <!-- 4단계 플랜 카드 컴포넌트 -->
+            <section class="plan-cards-container" id="plan-cards-container">
+                <!-- Data 렌더링 영역 -->
+            </section>
+
+            <!-- 전체 기능 비교표 아코디언 -->
+            <section class="feature-comparison-section">
+                <button class="comparison-toggle" id="comparison-toggle-btn">
+                    <span>▼ 전체 기능 비교</span>
+                </button>
+                <div class="comparison-content" id="comparison-content" style="display: none;">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>기능</th>
+                                <th>Free</th>
+                                <th>Basic</th>
+                                <th>Pro</th>
+                                <th>Prem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>백테스팅</td>
+                                <td class="no">✗</td>
+                                <td>3</td>
+                                <td>15</td>
+                                <td>∞</td>
+                            </tr>
+                            <tr>
+                                <td>비교 분석</td>
+                                <td class="no">✗</td>
+                                <td>1</td>
+                                <td>5</td>
+                                <td>∞</td>
+                            </tr>
+                            <tr>
+                                <td>포트 카피</td>
+                                <td class="no">✗</td>
+                                <td>1</td>
+                                <td>5</td>
+                                <td>∞</td>
+                            </tr>
+                            <tr>
+                                <td>상세 열람</td>
+                                <td class="no">✗</td>
+                                <td>5</td>
+                                <td>20</td>
+                                <td>∞</td>
+                            </tr>
+                            <tr>
+                                <td>AI 추천</td>
+                                <td class="no">✗</td>
+                                <td>2</td>
+                                <td>10</td>
+                                <td>∞</td>
+                            </tr>
+                            <tr>
+                                <td>추가 토큰</td>
+                                <td>0</td>
+                                <td>10</td>
+                                <td>30</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>광고 제거</td>
+                                <td class="no">✗</td>
+                                <td class="no">✗</td>
+                                <td class="yes">✓</td>
+                                <td class="yes">✓</td>
+                            </tr>
+                            <tr>
+                                <td>우선 지원</td>
+                                <td class="no">✗</td>
+                                <td class="no">✗</td>
+                                <td class="no">✗</td>
+                                <td class="yes">✓</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 별도 토큰 구매 안내 섹션 -->
+            <section class="token-purchase-section">
+                <div class="section-header">
+                    <h3>건별로 필요한 만큼만!</h3>
+                    <p>정기 결제가 부담스럽다면 토큰을 충전해 보세요.</p>
+                </div>
+                <!-- 스크롤 가능한 구매 패키지 목록 -->
+                <div class="token-packages-scroll" id="token-packages-container">
+                    <!-- Data 렌더링 영역 -->
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- 하단 모달 (구독 확인 등) -->
+<div id="plan-confirm-modal" class="bottom-sheet-overlay" style="display:none;">
+    <div class="bottom-sheet confirm-modal plan-modal">
+        <div class="bottom-sheet-handle"></div>
+        <div class="bottom-sheet-body">
+            <h3 class="modal-title" id="modal-plan-title">플랜명</h3>
+            <p class="confirm-message" id="modal-plan-price">₩ 가격</p>
+            <p class="confirm-sub">구독을 진행할까요?</p>
+        </div>
+        <div class="bottom-sheet-footer">
+            <button class="modal-btn secondary" id="modal-cancel-btn">취소</button>
+            <button class="modal-btn primary" id="modal-confirm-btn">구독하기</button>
+        </div>
+    </div>
+</div>
+
