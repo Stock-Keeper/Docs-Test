@@ -2,21 +2,25 @@
 Table users {
   id integer [primary key, increment]
   email varchar [not null] // 탈퇴 후 재가입자를 고려해 유니크 해제
-  provider enum ('GOOGLE', 'KAKAO', 'NAVER') // 소셜 제공자(현 구글)
-  role enum ('USER', 'ADMIN') // 사용자, 관리자
-  created_at timestamp // 가입 날짜
-  updated_at timestamp // 업데이트 날짜
-  membership_type enum ('FREE', 'PRO', 'EXPERT') // 멤버쉽 여부(free, pro, expert 같은 구분을 위해 enum 사용)
-  is_verified boolean // 본인인증 여부
+  // nickname varchar // 앱 닉네임 (deprecated, 커뮤니티 프로필 권장)
+  // profile_image_url varchar // 프로필 이미지 URL
+  provider enum('GOOGLE', 'KAKAO', 'NAVER') [not null] // 소셜 제공자
+  role enum('USER', 'ADMIN') [default: 'USER'] // 사용자, 관리자
+  membership_tier enum('FREE', 'BASIC', 'PRO', 'PREMIUM') [default: 'FREE'] // 멤버십 등급
+  token_balance integer [default: 0] // 보유 토큰
+  membership_expires_at timestamp // 멤버십 만료일
+  is_verified boolean [default: false] // 본인인증 여부
   last_login_at timestamp // 마지막 로그인 날짜
-  login_count integer // 로그인 횟수 - 비즈니스 로직 관련 테이블로 이동할 수 있음
+  login_count integer [default: 0] // 로그인 횟수
   is_suspended boolean [default: false] // 현재 정지 상태
   suspended_until timestamp // 정지 해제 일시
   is_delete boolean [default: false] // 논리적 삭제 여부
   delete_at timestamp // 논리적 삭제 일시
+  created_at timestamp [default: `now()`] // 가입 날짜
+  updated_at timestamp // 업데이트 날짜
 
   Indexes {
-    email [unique, name: 'idx_users_email']
+    email [name: 'idx_users_email']
     provider [name: 'idx_users_provider']
   }
 }
@@ -103,6 +107,11 @@ Table portfolios {
   description text // 포폴 설명
   account_id integer [ref: - accounts.id] // 한 계좌의 메인으로 설정된 포트폴리오인지
   banner_color varchar [default: '#4CAF93'] // 포트폴리오 배너 색상
+  is_public boolean [default: false] // 공개 여부
+  like_count integer [default: 0] // 좋아요 수
+  copy_count integer [default: 0] // 복사된 수
+  copied_from_id integer [ref: > portfolios.id] // 원본 포트폴리오 ID
+  is_anonymous boolean [default: false] // 익명 공개 여부
   created_at timestamp // 생성 날짜
   updated_at timestamp // 업데이트 날짜
   is_delete boolean [default: false] // 논리적 삭제 여부
@@ -110,6 +119,8 @@ Table portfolios {
 
   Indexes {
     user_id [name: 'idx_portfolios_user_id']
+    is_public [name: 'idx_portfolios_public']
+    like_count [name: 'idx_portfolios_like']
   }
 }
 
@@ -272,25 +283,26 @@ Table search_histories {
 Table community_profiles {
   id integer [primary key, increment]
   user_id integer [ref: - users.id, unique]
-  nickname varchar [not null, unique] // 커뮤니티 닉네임
+  nickname varchar [not null, unique] // 커뮤니티 닉네임 (최대 20자)
   nickname_changed_at timestamp // 닉네임 변경일 (90일 쿨타임 적용)
   profile_image_url varchar // 커뮤니티 전용 프사
-  bio varchar // 자기소개 (200자)
-  
+  bio varchar // 자기소개 (최대 200자)
+
   // 공개 설정
+  show_trade boolean [default: false] // 거래 공개 여부
   show_recent_activity boolean [default: true] // 최근활동 공개
-  show_portfolio boolean [default: false] // 투자현황 공개 -> 이거 진행할 건가요
-  
+  show_portfolio boolean [default: false] // 투자현황 공개 (P3 연기)
+
   // 카운트 캐시 (성능용 반정규화)
   post_count integer [default: 0]
   follower_count integer [default: 0]
   following_count integer [default: 0]
-  
+
   // 상태
   is_terms_agreed boolean [default: false] // 커뮤니티 약관 동의
   terms_agreed_at timestamp
   is_active boolean [default: true]
-  
+
   created_at timestamp [default: `now()`]
   updated_at timestamp
   is_delete boolean [default: false] // 논리적 삭제 여부
@@ -306,16 +318,18 @@ Table community_profiles {
 Table community_settings {
   id integer [primary key, increment]
   user_id integer [ref: - users.id]
-  
-  // 알림 설정
-  notify_new_follower boolean [default: true]
-  notify_new_like boolean [default: true]
-  notify_new_comment boolean [default: true]
-  notify_following_post boolean [default: true]
-  
+
+  // 알림 설정 (6종)
+  notify_new_follower boolean [default: true] // 새 팔로워 알림
+  notify_new_like boolean [default: true] // 새 좋아요 알림
+  notify_new_comment boolean [default: true] // 새 댓글 알림
+  notify_reply boolean [default: true] // 답글 알림
+  notify_mention boolean [default: true] // 멘션 알림
+  notify_following_post boolean [default: true] // 팔로잉 사용자 새 게시글 알림
+
   // 팔로우 바텀시트 스킵 설정
   skip_follow_confirmation boolean [default: false]
-  
+
   created_at timestamp [default: `now()`]
   updated_at timestamp
 
@@ -397,18 +411,13 @@ Table community_article_likes {
   }
 }
 
-// 커뮤니티 댓글
+// 커뮤니티 댓글 (기존 comments + replies 통합)
 Table community_article_replies {
   id integer [primary key, increment]
   user_id integer [ref: > users.id] // 작성자
   article_id integer [ref: > community_articles.id] // 게시물
   content text [not null] // 댓글 내용
-  parent_reply_id integer [ref: > community_article_replies.id] // 대댓글 자기참조
-
-  // 댓글 성능 강화
-  group_id integer // 최상위 부모 댓글 ID
-  depth integer [default: 0] // 댓글의 깊이 (댓글, 대댓글, 대대댓글...)
-  order_in_group integer [default: 0] // 그룹 내 정렬 순서
+  parent_reply_id integer [ref: > community_article_replies.id] // 대댓글 자기참조 (NULL=최상위 댓글)
 
   created_at timestamp [default: `now()`] // 작성일
   updated_at timestamp // 업뎃일
@@ -419,7 +428,6 @@ Table community_article_replies {
     article_id [name: 'idx_replies_article_id']
     (article_id, is_delete) [name: 'idx_replies_article_delete']
     parent_reply_id [name: 'idx_replies_parent_id'] // 부모 댓글로 자식들 찾을 때 사용
-    (article_id, group_id, order_in_group) [name: 'idx_replies_hierarchy'] // 계층형 댓글 조회 최적화
   }
 }
 
@@ -514,9 +522,15 @@ Table community_copied_portfolio_stock_entries {
 Table nickname_histories {
   id integer [primary key, increment]
   user_id integer [ref: > users.id]
-  old_nickname varchar
-  new_nickname varchar
+  old_nickname varchar // 이전 닉네임 (최대 50자)
+  new_nickname varchar // 새 닉네임 (최대 50자)
   changed_at timestamp [default: `now()`]
+
+  Indexes {
+    user_id [name: 'idx_nickname_histories_user']
+    old_nickname [name: 'idx_nickname_histories_old']
+    new_nickname [name: 'idx_nickname_histories_new']
+  }
 }
 
 // 뱃지 마스터
@@ -645,5 +659,23 @@ Table device_tokens {
   Indexes {
     token [unique, name: 'idx_device_tokens_token']
     (user_id, platform) [name: 'idx_device_tokens_user_platform']
+  }
+}
+
+// 광고 단위 및 노출 정책
+Table ad_units {
+  id integer [primary key, increment]
+  placement_type enum('SPLASH', 'BANNER_MAIN', 'FEED_NATIVE', 'NOTI_STICKY', 'REWARDED_VIDEO', 'VIDEO_BANNER') [not null] // 광고 위치
+  platform enum('ANDROID', 'IOS') [not null] // OS 플랫폼
+  provider varchar [default: 'ADMOB'] // 광고 네트워크
+  unit_id varchar [not null] // 실제 광고 단위 ID
+  is_active boolean [default: true] // 활성화 여부
+  config_json text // 추가 설정 JSON (빈도 제한, 갱신 주기 등)
+  description varchar // 관리용 설명
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+
+  Indexes {
+    (placement_type, platform) [unique, name: 'uk_placement_platform']
   }
 }
