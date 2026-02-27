@@ -1,58 +1,114 @@
 ---
 type: db
 phase: P3
-table: events
+table: events, event_participants
 related:
-  api:
-    - specs/api/community/events-list.md
-    - specs/api/community/events-join.md
-  ui:
-    - specs/ui/community/events-list.md
-    - specs/ui/community/events-detail.md
+    api: []
+    db:
+        - specs/db/auth/users.md
 ---
 
-# events
+# 이벤트 관련 테이블
 
-커뮤니티 내 진행되는 각종 이벤트, 대회(포트폴리오 수익률 대회 등) 정보를 관리하는 테이블.
+커뮤니티 이벤트(출석, 챌린지 등) 관리. P3 신규.
 
-## 스키마
+## 테이블 구성
+
+| 테이블명             | 역할                           |
+| -------------------- | ------------------------------ |
+| `events`             | 이벤트 기본 정보 (관리자 생성) |
+| `event_participants` | 이벤트 참여 기록               |
+
+---
+
+## events 테이블
+
+### 스키마
 
 ```sql
 CREATE TABLE events (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(100) NOT NULL,                    -- 이벤트 제목
-  description TEXT NOT NULL,                      -- 상세 설명
-  banner_image_url VARCHAR(255),                  -- 배너 이미지 URL
-  status ENUM('UPCOMING', 'ONGOING', 'ENDED') DEFAULT 'UPCOMING', -- 진행 상태
-  event_type ENUM('PORTFOLIO_CONTEST', 'ACTIVITY', 'GENERAL') NOT NULL, -- 이벤트 종류
-  start_at DATETIME NOT NULL,                     -- 시작 일시
-  end_at DATETIME NOT NULL,                       -- 종료 일시
-  winner_announced_at DATETIME,                   -- 당첨자 발표일
-  max_participants INT DEFAULT NULL,              -- 최대 참여 인원 (NULL이면 무제한)
+  title VARCHAR(200) NOT NULL,              -- 이벤트 제목
+  description TEXT,                         -- 이벤트 설명
+  start_at TIMESTAMP,                       -- 이벤트 시작 시간
+  end_at TIMESTAMP,                         -- 이벤트 종료 시간
+  is_active BOOLEAN DEFAULT TRUE,           -- 활성화 여부
+  created_by INT NOT NULL,                  -- 생성한 관리자 (FK)
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP,
 
-  INDEX idx_events_status (status),
-  INDEX idx_events_dates (start_at, end_at)
+  FOREIGN KEY (created_by) REFERENCES users(id),
+  INDEX idx_events_period (start_at, end_at),
+  INDEX idx_events_active (is_active)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
-## 컬럼 상세
+### 컬럼 상세
 
-| 컬럼 | 타입 | 필수 | 기본값 | 설명 |
-|------|------|------|--------|------|
-| id | INT | Y | AUTO_INCREMENT | PK |
-| title | VARCHAR(100) | Y | - | 이벤트 타이틀 (예: 제1회 스마일 수익률 대회) |
-| description | TEXT | Y | - | 이벤트 상세 내용, 보상 조건 등 |
-| banner_image_url | VARCHAR(255) | N | NULL | 이벤트 목록/상세에 쓰일 배너 이미지 |
-| status | ENUM | Y | UPCOMING | 상태 (시작전/진행중/종료) |
-| event_type | ENUM | Y | - | 이벤트 종류 (수익률 대회, 단순 활동 등) |
-| start_at | DATETIME | Y | - | 시작 시각 |
-| end_at | DATETIME | Y | - | 종료 시각 |
-| winner_announced_at | DATETIME | N | NULL | 당첨자 발표 예정 시각 |
-| max_participants | INT | N | NULL | 선착순 제한 인원 등 기입용 |
+| 컬럼        | 타입         | 필수 | 기본값            | 설명                  | Phase |
+| ----------- | ------------ | ---- | ----------------- | --------------------- | ----- |
+| id          | INT          | Y    | AUTO_INCREMENT    | PK                    | P3    |
+| title       | VARCHAR(200) | Y    | -                 | 이벤트 제목           | P3    |
+| description | TEXT         | N    | NULL              | 이벤트 설명           | P3    |
+| start_at    | TIMESTAMP    | N    | NULL              | 이벤트 시작 시간      | P3    |
+| end_at      | TIMESTAMP    | N    | NULL              | 이벤트 종료 시간      | P3    |
+| is_active   | BOOLEAN      | Y    | TRUE              | 활성화 여부           | P3    |
+| created_by  | INT          | Y    | -                 | 생성한 관리자 ID (FK) | P3    |
+| created_at  | TIMESTAMP    | Y    | CURRENT_TIMESTAMP | 생성일                | P3    |
+| updated_at  | TIMESTAMP    | N    | NULL              | 수정일                | P3    |
+
+### 인덱스
+
+| 인덱스명          | 컬럼               | 타입  | 용도                  |
+| ----------------- | ------------------ | ----- | --------------------- |
+| idx_events_period | (start_at, end_at) | INDEX | 진행 중인 이벤트 조회 |
+| idx_events_active | is_active          | INDEX | 활성 이벤트 필터링    |
+
+---
+
+## event_participants 테이블
+
+### 스키마
+
+```sql
+CREATE TABLE event_participants (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  event_id INT NOT NULL,                    -- 이벤트 (FK)
+  user_id INT NOT NULL,                     -- 참여 사용자 (FK)
+  joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- 참여 일시
+
+  FOREIGN KEY (event_id) REFERENCES events(id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  UNIQUE INDEX idx_event_participants_event_user (event_id, user_id),
+  INDEX idx_event_participants_event (event_id),
+  INDEX idx_event_participants_user (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+### 컬럼 상세
+
+| 컬럼      | 타입      | 필수 | 기본값            | 설명                | Phase |
+| --------- | --------- | ---- | ----------------- | ------------------- | ----- |
+| id        | INT       | Y    | AUTO_INCREMENT    | PK                  | P3    |
+| event_id  | INT       | Y    | -                 | 이벤트 ID (FK)      | P3    |
+| user_id   | INT       | Y    | -                 | 참여 사용자 ID (FK) | P3    |
+| joined_at | TIMESTAMP | Y    | CURRENT_TIMESTAMP | 참여 일시           | P3    |
+
+### 인덱스
+
+| 인덱스명                          | 컬럼                | 타입   | 용도                    |
+| --------------------------------- | ------------------- | ------ | ----------------------- |
+| idx_event_participants_event_user | (event_id, user_id) | UNIQUE | 중복 참여 방지          |
+| idx_event_participants_event      | event_id            | INDEX  | 이벤트별 참여자 조회    |
+| idx_event_participants_user       | user_id             | INDEX  | 사용자별 참여 이력 조회 |
 
 ## 비즈니스 규칙
 
-- **상태 변경**: 백그라운드 배치 작업 등을 통해 `start_at` 과 `end_at` 시간에 맞춰 `status`가 `UPCOMING` -> `ONGOING` -> `ENDED` 로 변경됩니다.
-- **이벤트 타입**: 시스템 상 자동화된 랭킹 집계나 특성(예: 포트폴리오 첨부 필수 여부) 등을 `event_type`으로 구분합니다.
+- 동일 이벤트에 중복 참여 불가 ((event_id, user_id) UNIQUE)
+- 이벤트 생성/관리는 관리자(ADMIN role)만 가능
+- `is_active = FALSE`인 이벤트는 참여 불가 처리
+
+## 관련 스펙
+
+- DB: `specs/db/auth/users.md`
+- DB: `specs/db/admin/announcements.md` (이벤트 공지는 announcements 테이블 활용)

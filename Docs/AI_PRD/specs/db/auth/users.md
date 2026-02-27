@@ -29,10 +29,8 @@ related:
 CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   email VARCHAR(255) NOT NULL,              -- 소셜 이메일 (UNIQUE 해제 - 탈퇴 후 재가입 허용)
-  nickname VARCHAR(50),                     -- 앱 닉네임 (deprecated, community_profiles.nickname 사용)
   provider ENUM('GOOGLE', 'KAKAO', 'NAVER') NOT NULL,  -- 소셜 로그인 제공자
   role ENUM('USER', 'ADMIN') DEFAULT 'USER',
-  profile_image_url VARCHAR(500),           -- 프로필 이미지 URL
   membership_tier ENUM('FREE', 'BASIC', 'PRO', 'PREMIUM') DEFAULT 'FREE',
   token_balance INT DEFAULT 0,                  -- 보유 토큰
   membership_expires_at TIMESTAMP,              -- 멤버십 만료일 (NULL=Free)
@@ -57,10 +55,8 @@ CREATE TABLE users (
 | --------------------- | ------------ | ---- | ----------------- | ---------------------- |
 | id                    | INTEGER      | Y    | AUTO_INCREMENT    | PK                     |
 | email                 | VARCHAR(255) | Y    | -                 | 소셜 이메일            |
-| nickname              | VARCHAR(50)  | N    | NULL              | 앱 닉네임 (deprecated) |
 | provider              | ENUM         | Y    | -                 | GOOGLE/KAKAO/NAVER     |
 | role                  | ENUM         | Y    | USER              | USER/ADMIN             |
-| profile_image_url     | VARCHAR(500) | N    | NULL              | 프로필 이미지 URL      |
 | membership_tier       | ENUM         | Y    | FREE              | FREE/BASIC/PRO/PREMIUM |
 | token_balance         | INT          | Y    | 0                 | 보유 토큰              |
 | membership_expires_at | TIMESTAMP    | N    | NULL              | 멤버십 만료일          |
@@ -84,7 +80,8 @@ CREATE TABLE users (
 ## 비즈니스 규칙
 
 - **email UNIQUE 해제**: 탈퇴 후 재가입자 허용 (탈퇴 시 is_delete=TRUE)
-- **nickname deprecated**: `community_profiles.nickname` 사용 권장
+- **nickname 제거**: `community_profiles.nickname` 사용. `users.nickname` 컬럼은 P3에서 스키마에서 삭제됨
+- **profile_image_url 제거**: `community_profiles.profile_image_url` 사용. `users.profile_image_url` 컬럼은 P3에서 스키마에서 삭제됨
 - **is_suspended**: 커뮤니티 정지 상태 관리 (user_suspensions 테이블과 연동)
 - **논리적 삭제**: is_delete=TRUE 시 데이터 보존, delete_at에 삭제 시각 기록
 

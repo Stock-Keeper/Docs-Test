@@ -9,6 +9,7 @@ related:
     db:
         - specs/db/bm/membership-products.md
         - specs/db/bm/payment-histories.md
+        - specs/db/bm/token-histories.md
         - specs/db/auth/users.md
     ui:
         - specs/ui/bm/shop.md

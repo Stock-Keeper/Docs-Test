@@ -47,13 +47,14 @@ DBML/
 | 설정       | `settings`                | 사용자 설정값 (투자유형 포함) |
 | 운영       | `announcements`           | 공지사항/패치노트             |
 |            | `device_tokens`           | 푸시 알림 토큰                |
-| **합계**   | **18개**                  |                               |
+| 광고       | `ad_units`                | 인앱 광고 단위 (하단 배너)    |
+| **합계**   | **19개**                  |                               |
 
 ### Phase 2 (커뮤니티) - `sk_p2.dbml`
 
 | 도메인          | 테이블                                     | 설명                           |
 | --------------- | ------------------------------------------ | ------------------------------ |
-| P1 포함         | 17개                                       | Phase 1 (user_activities 제외) |
+| P1 포함         | 18개                                       | Phase 1 (user_activities 제외) |
 | 검색            | `search_histories`                         | 검색 이력                      |
 | 커뮤니티 프로필 | `community_profiles`                       | 커뮤니티 전용 프로필           |
 |                 | `community_settings`                       | 커뮤니티 알림 설정             |
@@ -76,20 +77,24 @@ DBML/
 | 신고/정지       | `reports`                                  | 신고                           |
 |                 | `report_reasons`                           | 신고 사유                      |
 |                 | `user_suspensions`                         | 정지 이력                      |
-| **합계**        | **38개**                                   |                                |
+| **합계**        | **40개**                                   |                                |
 
 ### Phase 3 (결제/AI) - `sk_p3.dbml`
 
-| 도메인   | 테이블               | 설명                  |
-| -------- | -------------------- | --------------------- |
-| P2 포함  | 38개                 | Phase 2 전체 포함     |
-| 결제     | `token_wallet`       | 토큰 지갑 (잔액 관리) |
-|          | `payment_history`    | 결제 내역             |
-|          | `token_transactions` | 토큰 사용/충전 내역   |
-| 예정     | (충전 내역)          | TBD                   |
-|          | (광고 시청 내역)     | TBD                   |
-|          | (리밸런싱 내역)      | TBD                   |
-| **합계** | **41개** (+예정)     |                       |
+| 도메인   | 테이블                | 설명                    |
+| -------- | --------------------- | ----------------------- |
+| P2 포함  | 40개                  | Phase 2 전체 포함       |
+| BM       | `token_packages`      | 토큰 패키지 상품        |
+|          | `membership_products` | 멤버십 구독 상품        |
+|          | `token_histories`     | 토큰 적립/사용 내역     |
+|          | `payment_histories`   | 결제 내역               |
+| 커뮤니티 | `rankings`            | 랭킹 스냅샷 (주간/월간) |
+|          | `post_detail_unlocks` | 게시글 상세 열람 해제   |
+|          | `events`              | 이벤트                  |
+|          | `event_participants`  | 이벤트 참여자           |
+| 로그     | `error_logs`          | 에러 로그               |
+|          | `api_call_logs`       | 외부 API 호출 로그      |
+| **합계** | **50개**              |                         |
 
 ---
 

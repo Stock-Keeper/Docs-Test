@@ -6,12 +6,17 @@ method: GET
 endpoint: /api/portfolios/{portfolioId}/rebalancing
 auth: required
 related:
-  db:
-    - specs/db/portfolio/portfolios.md
-  ui:
-    - specs/ui/rebalancing/check.md
-  api:
-    - specs/api/notification/list.md
+    db:
+        - specs/db/portfolio/portfolios.md
+        - specs/db/portfolio/portfolio-stock-entries.md
+        - specs/db/portfolio/portfolio-cash-entries.md
+        - specs/db/account/account-stock-entries.md
+        - specs/db/account/account-cash-entries.md
+    ui:
+        - specs/ui/rebalancing/check.md
+    api:
+        - specs/api/notification/list.md
+        - specs/api/rebalancing/snapshot.md
 ---
 
 # GET /api/portfolios/{portfolioId}/rebalancing
@@ -36,15 +41,15 @@ Authorization: Bearer {access_token}
 
 ### Path Parameters
 
-| 파라미터 | 타입 | 필수 | 설명 |
-|----------|------|------|------|
-| portfolioId | uuid | Y | 포트폴리오 ID |
+| 파라미터    | 타입 | 필수 | 설명          |
+| ----------- | ---- | ---- | ------------- |
+| portfolioId | int  | Y    | 포트폴리오 ID |
 
 ### Query Parameters
 
-| 파라미터 | 타입 | 필수 | 설명 | 기본값 |
-|----------|------|------|------|--------|
-| threshold | int | N | 임계값 (3, 5, 10) | 5 |
+| 파라미터  | 타입 | 필수 | 설명              | 기본값 |
+| --------- | ---- | ---- | ----------------- | ------ |
+| threshold | int  | N    | 임계값 (3, 5, 10) | 5      |
 
 ## Response
 
@@ -52,66 +57,66 @@ Authorization: Bearer {access_token}
 
 ```json
 {
-  "totalValue": 10000000,
-  "needsRebalancing": true,
-  "threshold": 5,
-  "summary": {
-    "totalSellAmount": 200000,
-    "totalBuyAmount": 200000,
-    "netAmount": 0,
-    "netLabel": "균형 상태"
-  },
-  "suggestions": [
-    {
-      "stockCode": "035720",
-      "stockName": "카카오",
-      "currentRatio": 16.67,
-      "targetRatio": 30.0,
-      "diff": -13.33,
-      "action": "BUY",
-      "quantity": 4,
-      "estimatedAmount": 200000
+    "totalValue": 10000000,
+    "needsRebalancing": true,
+    "threshold": 5,
+    "summary": {
+        "totalSellAmount": 200000,
+        "totalBuyAmount": 200000,
+        "netAmount": 0,
+        "netLabel": "균형 상태"
     },
-    {
-      "stockCode": "035420",
-      "stockName": "NAVER",
-      "currentRatio": 26.67,
-      "targetRatio": 20.0,
-      "diff": 6.67,
-      "action": "SELL",
-      "quantity": 1,
-      "estimatedAmount": 200000
-    }
-  ],
-  "balanced": [
-    {
-      "stockCode": "005930",
-      "stockName": "삼성전자",
-      "currentRatio": 46.67,
-      "targetRatio": 50.0,
-      "diff": -3.33
-    }
-  ]
+    "suggestions": [
+        {
+            "stockCode": "035720",
+            "stockName": "카카오",
+            "currentRatio": 16.67,
+            "targetRatio": 30.0,
+            "diff": -13.33,
+            "action": "BUY",
+            "quantity": 4,
+            "estimatedAmount": 200000
+        },
+        {
+            "stockCode": "035420",
+            "stockName": "NAVER",
+            "currentRatio": 26.67,
+            "targetRatio": 20.0,
+            "diff": 6.67,
+            "action": "SELL",
+            "quantity": 1,
+            "estimatedAmount": 200000
+        }
+    ],
+    "balanced": [
+        {
+            "stockCode": "005930",
+            "stockName": "삼성전자",
+            "currentRatio": 46.67,
+            "targetRatio": 50.0,
+            "diff": -3.33
+        }
+    ]
 }
 ```
 
 ### summary 필드 설명
 
-| 필드 | 타입 | 설명 |
-|------|------|------|
-| totalSellAmount | number | 매도 총액 |
-| totalBuyAmount | number | 매수 총액 |
-| netAmount | number | 순수 필요 자금 (Buy - Sell, 양수=입금 필요, 음수=현금 확보) |
-| netLabel | string | 동적 라벨 ("추가 필요 자금" / "예상 현금 확보" / "균형 상태") |
+| 필드            | 타입   | 설명                                                          |
+| --------------- | ------ | ------------------------------------------------------------- |
+| totalSellAmount | number | 매도 총액                                                     |
+| totalBuyAmount  | number | 매수 총액                                                     |
+| netAmount       | number | 순수 필요 자금 (Buy - Sell, 양수=입금 필요, 음수=현금 확보)   |
+| netLabel        | string | 동적 라벨 ("추가 필요 자금" / "예상 현금 확보" / "균형 상태") |
 
 ### 에러
 
-| 코드 | 상황 | 메시지 |
-|------|------|--------|
-| 400 | 평가금액 0원 | "리밸런싱을 계산할 수 없습니다" |
-| 401 | 인증 실패 | "로그인이 필요합니다" |
-| 403 | 권한 없음 | "접근 권한이 없습니다" |
-| 404 | 포트폴리오 없음 | "포트폴리오를 찾을 수 없습니다" |
+| 코드 | 상황            | 메시지                          |
+| ---- | --------------- | ------------------------------- |
+| 400  | 평가금액 0원    | "리밸런싱을 계산할 수 없습니다" |
+| 401  | 인증 실패       | "로그인이 필요합니다"           |
+| 403  | 권한 없음       | "접근 권한이 없습니다"          |
+| 404  | 포트폴리오 없음 | "포트폴리오를 찾을 수 없습니다" |
 
 ## 구현 로직 (알고리즘)
 

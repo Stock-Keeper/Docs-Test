@@ -7,6 +7,7 @@ endpoint: /api/community/posts/{postId}/unlock-detail
 auth: verified
 related:
     db:
+        - specs/db/community/post-detail-unlocks.md
         - specs/db/bm/token-histories.md
         - specs/db/auth/users.md
     api:
@@ -75,19 +76,23 @@ Authorization: Bearer {access_token}
 ```
 1. JWT 토큰에서 user_id 추출
 2. 게시글 조회 (존재 여부, 포트폴리오 첨부 여부 확인)
-3. 기존 해제 이력 확인 (token_histories에서 feature=DETAIL, reference_id=postId)
+3. post_detail_unlocks에서 (user_id, article_id) 조회
    - 이미 해제됨 → 409 또는 바로 premiumStats 반환
 4. 멤버십 확인
-   - Premium/Pro → 무조건 해제 (한도 차감 불필요)
-   - Basic → 월간 잔여 한도 확인 → 있으면 차감 후 해제
-   - Free/한도초과 → 토큰 잔액 확인 (2개 이상?)
+   - Premium → 토큰/한도 차감 없이 통과 (cost_type = 'MEMBERSHIP')
+   - Basic/Pro → 월간 잔여 열람 한도 확인 → 있으면 차감 후 통과 (cost_type = 'MEMBERSHIP')
+   - Free/한도초과 → users.token_balance 확인 (2개 이상?)
      - 부족하면 402
-     - 충분하면 차감 (token_histories: USE, feature: DETAIL, reference_id: postId)
+     - 충분하면 트랜잭션 시작:
+       1. users.token_balance -= 2
+       2. token_histories INSERT (USE, DETAIL, reference_id=postId)
+       3. post_detail_unlocks INSERT (user_id, article_id, cost_type='TOKEN')
 5. premiumStats 데이터 조회 및 반환
 ```
 
 ## 관련 스펙
 
+- DB: `../../db/community/post-detail-unlocks.md`
 - DB: `../../db/bm/token-histories.md`
 - DB: `../../db/auth/users.md`
 - API: `post-detail.md`

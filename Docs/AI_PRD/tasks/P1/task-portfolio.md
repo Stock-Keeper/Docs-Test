@@ -16,8 +16,7 @@ specs:
         - portfolio/snapshots-detail.md
         - portfolio/snapshots-create.md
         - portfolio/snapshots-compare.md
-        - portfolio/ai-optimize.md
-        - portfolio/backtest.md
+        # ai-optimize.md, backtest.md → P3 태스크로 이동
     db:
         - portfolio/portfolios.md
         - portfolio/portfolio-stock-entries.md
@@ -57,7 +56,8 @@ tech:
     - [ ] 총 평가금액 계산 (종목 + 현금)
     - [ ] 회원가입 시 기본 포트폴리오 생성
 - [ ] `Portfolio` 엔티티 생성
-- [ ] `PortfolioItem` 엔티티 생성
+- [ ] `PortfolioStockEntry` 엔티티 생성 (목표 종목)
+- [ ] `PortfolioCashEntry` 엔티티 생성 (목표 현금 비중)
 - [ ] Repository 생성
 - [ ] 입력 검증 (이름 1~20자, 특수문자 차단)
 
@@ -83,7 +83,8 @@ tech:
 ### Database
 
 - [ ] `portfolios` 테이블 생성
-- [ ] `portfolio_items` 테이블 생성
+- [ ] `portfolio_stock_entries` 테이블 생성
+- [ ] `portfolio_cash_entries` 테이블 생성
 
 ## 완료 조건
 
@@ -96,15 +97,15 @@ tech:
 
 ## 테스트 케이스
 
-| 케이스                      | 예상 결과                             |
-| --------------------------- | ------------------------------------- |
-| 포트폴리오 생성             | 목록에 추가, displayOrder 자동 설정   |
-| 5개 초과 생성 시도          | 400 에러, "최대 5개" 메시지           |
-| 이름 20자 초과              | 400 에러, 검증 실패                   |
-| 특수문자 포함 이름          | 400 에러, 검증 실패                   |
-| 마지막 포트폴리오 삭제      | 기본 포트폴리오 자동 생성             |
-| 순서 변경                   | displayOrder 업데이트, 목록 순서 반영 |
-| 다른 사용자 포트폴리오 접근 | 403 에러                              |
+| 케이스                      | 예상 결과                                   |
+| --------------------------- | ------------------------------------------- |
+| 포트폴리오 생성             | 목록에 추가                                 |
+| 5개 초과 생성 시도          | 400 에러, "최대 5개" 메시지                 |
+| 이름 20자 초과              | 400 에러, 검증 실패                         |
+| 특수문자 포함 이름          | 400 에러, 검증 실패                         |
+| 마지막 포트폴리오 삭제      | 기본 포트폴리오 자동 생성                   |
+| 순서 변경                   | 순서 업데이트, 목록 순서 반영 (reorder API) |
+| 다른 사용자 포트폴리오 접근 | 403 에러                                    |
 
 ## 예상 소요 시간
 

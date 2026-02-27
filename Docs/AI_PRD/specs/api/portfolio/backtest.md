@@ -37,7 +37,7 @@ Authorization: Bearer {access_token}
 
 ```json
 {
-    "portfolioId": "uuid",
+    "portfolioId": 123,
     "items": [
         { "stockCode": "005930", "ratio": 0.5 },
         { "stockCode": "035420", "ratio": 0.5 }

@@ -14,6 +14,7 @@ specs:
         - notification/notifications.md
         - notification/notification-settings.md
         - notification/notification-types.md
+        - auth/device-tokens.md
     ui:
         - notification/center.md
         - notification/settings.md
@@ -54,9 +55,9 @@ tech:
     - [ ] FCM + DB 알림 발송
 - [ ] 엔티티 생성
     - [ ] `Notification`
-    - [ ] `NotificationSetting`
-    - [ ] `PortfolioNotificationSetting`
-    - [ ] `FcmToken`
+    - [ ] `NotificationType`
+    - [ ] `NotificationSetting` (포트폴리오별 알림 설정)
+    - [ ] `DeviceToken` (FCM 토큰)
 - [ ] Repository 생성
 - [ ] FCM 암호화/복호화 유틸
 
@@ -83,9 +84,9 @@ tech:
 ### Database
 
 - [ ] `notifications` 테이블 생성
-- [ ] `notification_settings` 테이블 생성
-- [ ] `portfolio_notification_settings` 테이블 생성
-- [ ] `fcm_tokens` 테이블 생성
+- [ ] `notification_types` 테이블 생성
+- [ ] `notification_settings` 테이블 생성 (포트폴리오별)
+- [ ] `device_tokens` 테이블 생성 (FCM 토큰)
 
 ## 완료 조건
 
