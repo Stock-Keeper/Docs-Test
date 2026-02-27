@@ -40,7 +40,8 @@ CREATE TABLE community_article_replies (
   FOREIGN KEY (article_id) REFERENCES community_articles(id) ON DELETE CASCADE,
   FOREIGN KEY (parent_reply_id) REFERENCES community_article_replies(id) ON DELETE CASCADE,
   INDEX idx_replies_article_id (article_id),
-  INDEX idx_replies_article_delete (article_id, is_delete)
+  INDEX idx_replies_article_delete (article_id, is_delete),
+  INDEX idx_replies_parent_id (parent_reply_id)          -- 자식 댓글 조회용
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 

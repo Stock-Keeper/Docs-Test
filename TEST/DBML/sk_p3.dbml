@@ -69,13 +69,11 @@ Table settings {
   updated_at timestamp // 업데이트 날짜
 }
 
-// ==================== PORTFOLIO ====================
-
 // 포트폴리오
 Table portfolios {
   id integer [primary key, increment]
   user_id integer [ref: > users.id] // 어떤 사용자의 포트폴리오인지
-  name varchar // 포트폴리오명
+  name varchar [not null] // 포트폴리오명
   description text // 포폴 설명
   account_id integer [ref: - accounts.id] // 한 계좌의 메인으로 설정된 포트폴리오인지
   banner_color varchar [default: '#4CAF93'] // 포트폴리오 배너 색상
@@ -147,8 +145,6 @@ Table portfolio_snapshots {
   created_at timestamp [default: `now()`]
 }
 
-// ==================== ACCOUNT ====================
-
 // 연동 계좌
 Table accounts {
   id integer [primary key, increment]
@@ -204,8 +200,6 @@ Table account_cash_entries {
     (account_id, currency) [unique, name: 'idx_ace_account_currency']
   }
 }
-
-// ==================== NOTIFICATION ====================
 
 // 포트폴리오 개별 알림 설정
 Table notification_settings {
@@ -263,8 +257,6 @@ Table device_tokens {
   }
 }
 
-// ==================== ADMIN ====================
-
 // 감사 추적 (보안 로그)
 Table audit_logs {
   id integer [primary key, increment]
@@ -309,8 +301,6 @@ Table announcements {
   delete_at timestamp
 }
 
-// ==================== ADS ====================
-
 // 광고 단위 및 노출 정책
 Table ad_units {
   id integer [primary key, increment]
@@ -328,8 +318,6 @@ Table ad_units {
     (placement_type, platform) [unique, name: 'uk_placement_platform']
   }
 }
-
-// ==================== COMMUNITY ====================
 
 // 검색 이력
 Table search_histories {
@@ -719,8 +707,6 @@ Table rankings {
   }
 }
 
-// ==================== BM (P3 신규) ====================
-
 // 토큰 패키지 상품
 Table token_packages {
   id integer [primary key, increment]
@@ -796,7 +782,19 @@ Table payment_histories {
   }
 }
 
-// ==================== COMMUNITY EVENTS (P3 신규) ====================
+// 게시글 상세 열람 해제 이력 (P3)
+Table post_detail_unlocks {
+  id integer [primary key, increment]
+  user_id integer [not null, ref: > users.id] // 해제한 사용자
+  article_id integer [not null, ref: > community_articles.id] // 해제된 게시글
+  cost_type enum('TOKEN', 'MEMBERSHIP') [not null] // 소모 방식
+  unlocked_at timestamp [default: `now()`] // 해제 일시
+
+  Indexes {
+    (user_id, article_id) [unique, name: 'uk_unlock_user_article'] // 중복 해제 방지
+    article_id [name: 'idx_unlock_article'] // 게시글별 집계용
+  }
+}
 
 // 이벤트
 Table events {
@@ -827,5 +825,43 @@ Table event_participants {
     (event_id, user_id) [unique, name: 'idx_event_participants_event_user']
     event_id [name: 'idx_event_participants_event']
     user_id [name: 'idx_event_participants_user']
+  }
+}
+
+// 에러 로그 (모니터링용)
+Table error_logs {
+  id integer [primary key, increment]
+  level enum('ERROR', 'WARN', 'INFO') [not null] // 로그 레벨
+  error_code varchar // HTTP 상태 코드 또는 커스텀 코드
+  message text [not null] // 에러 메시지
+  stack_trace text // 스택 트레이스 (ERROR 레벨)
+  request_path varchar // 요청 API 경로
+  request_method varchar // GET, POST, PUT, DELETE 등
+  request_body text // 요청 바디 JSON (민감 정보 제외)
+  user_id integer // 에러 발생 사용자 ID
+  ip_address varchar // 요청 IP 주소
+  created_at timestamp [default: `now()`]
+
+  Indexes {
+    level [name: 'idx_error_logs_level']
+    created_at [name: 'idx_error_logs_created_at']
+    (level, created_at) [name: 'idx_error_logs_level_date']
+  }
+}
+
+// 외부 API 호출 로그 (한투 API 모니터링용)
+Table api_call_logs {
+  id integer [primary key, increment]
+  api_type varchar [not null] // API 유형 (HANTOO_PRICE, HANTOO_SEARCH, HANTOO_ACCOUNT 등)
+  endpoint varchar // 호출 엔드포인트
+  status_code integer // HTTP 응답 코드
+  response_time_ms integer // 응답 시간 (밀리초)
+  user_id integer // 호출한 사용자 ID
+  created_at timestamp [default: `now()`]
+
+  Indexes {
+    (api_type, created_at) [name: 'idx_api_logs_type_date']
+    user_id [name: 'idx_api_logs_user']
+    created_at [name: 'idx_api_logs_date']
   }
 }

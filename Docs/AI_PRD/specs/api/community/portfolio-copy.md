@@ -91,10 +91,10 @@ related:
 5. portfolios 테이블에서 portfolioId 조회
    - 없으면 404
    - is_public = false면 403
-6. 새 포트폴리오 생성
-7. 원본의 portfolio_items 복사
+6. 새 포트폴리오 생성 (portfolios INSERT, copied_from_id = 원본 portfolioId)
+7. 원본의 portfolio_stock_entries, portfolio_cash_entries 복사
 8. 원본의 copy_count += 1
-9. portfolio_copies 테이블에 기록
+9. portfolio_copy_history 테이블에 복사 이력 기록
 10. 원본 작성자에게 알림 발송
 11. 응답 반환
 ```

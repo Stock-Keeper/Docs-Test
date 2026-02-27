@@ -2,13 +2,11 @@
 Table users {
   id integer [primary key, increment]
   email varchar [not null] // 탈퇴 후 재가입자를 고려해 유니크 해제
-  // nickname varchar // 앱 닉네임 (deprecated, 커뮤니티 프로필 권장)
-  // profile_image_url varchar // 프로필 이미지 URL
+  nickname varchar // 앱 닉네임 (커뮤니티 도입 전 프로필)
+  profile_image_url varchar // 프로필 이미지 URL
   provider enum('GOOGLE', 'KAKAO', 'NAVER') [not null] // 소셜 제공자
   role enum('USER', 'ADMIN') [default: 'USER'] // 사용자, 관리자
   membership_tier enum('FREE', 'BASIC', 'PRO', 'PREMIUM') [default: 'FREE'] // 멤버십 등급
-  token_balance integer [default: 0] // 보유 토큰
-  membership_expires_at timestamp // 멤버십 만료일
   is_verified boolean [default: false] // 본인인증 여부
   last_login_at timestamp // 마지막 로그인 날짜
   login_count integer [default: 0] // 로그인 횟수
@@ -290,5 +288,23 @@ Table device_tokens {
   Indexes {
     token [unique, name: 'idx_device_tokens_token']
     (user_id, platform) [name: 'idx_device_tokens_user_platform']
+  }
+}
+
+// 인앱 광고 단위 관리 (P1: 하단 배너)
+Table ad_units {
+  id integer [primary key, increment]
+  platform enum('IOS', 'ANDROID', 'WEB') [not null] // 플랫폼
+  placement_type enum('BANNER_MAIN', 'BANNER_PORTFOLIO', 'SPLASH') [not null] // 지면 유형
+  provider enum('ADMOB', 'FACEBOOK', 'CUSTOM') [not null, default: 'ADMOB'] // 광고 제공자
+  unit_id varchar [not null] // 광고 단위 ID
+  is_active boolean [default: true] // 활성화 여부
+  refresh_interval integer // 배너 갱신 주기 (초)
+  config_json text // 추가 설정 정보
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+
+  Indexes {
+    (platform, placement_type, is_active) [name: 'idx_ad_units_lookup']
   }
 }

@@ -6,9 +6,9 @@ method: GET
 endpoint: /api/community/rankings
 auth: none
 related:
-  db:
-    - specs/db/community/rankings.md
-    - specs/db/community/badges.md
+    db:
+        - specs/db/community/rankings.md
+        - specs/db/community/badges.md
 ---
 
 # GET /api/community/rankings
@@ -27,12 +27,12 @@ related:
 
 ### Query Parameters
 
-| 파라미터 | 타입 | 필수 | 설명 | 기본값 |
-|----------|------|------|------|--------|
-| type | enum | N | WEEKLY, MONTHLY, ALL_TIME | WEEKLY |
-| category | enum | N | LIKE, COPY, OVERALL | OVERALL |
-| page | int | N | 페이지 번호 | 1 |
-| limit | int | N | 페이지당 건수 | 20 |
+| 파라미터 | 타입 | 필수 | 설명                      | 기본값  |
+| -------- | ---- | ---- | ------------------------- | ------- |
+| type     | enum | N    | WEEKLY, MONTHLY, ALL_TIME | WEEKLY  |
+| category | enum | N    | LIKE, COPY, OVERALL       | OVERALL |
+| page     | int  | N    | 페이지 번호               | 1       |
+| limit    | int  | N    | 페이지당 건수             | 20      |
 
 ## Response
 
@@ -40,41 +40,41 @@ related:
 
 ```json
 {
-  "period": {
-    "type": "WEEKLY",
-    "startDate": "2026-01-06",
-    "endDate": "2026-01-13"
-  },
-  "rankings": [
-    {
-      "rank": 1,
-      "user": {
-        "id": "uuid",
-        "nickname": "투자왕",
-        "profileCharacter": 1,
-        "badges": ["LIKE_100", "COPY_50"]
-      },
-      "stats": {
-        "likeCount": 1234,
-        "copyCount": 567,
-        "followerCount": 890
-      },
-      "topPortfolio": {
-        "id": "uuid",
-        "name": "배당주 포트폴리오"
-      }
+    "period": {
+        "type": "WEEKLY",
+        "startDate": "2026-01-06",
+        "endDate": "2026-01-13"
+    },
+    "rankings": [
+        {
+            "rank": 1,
+            "user": {
+                "id": 1,
+                "nickname": "투자왕",
+                "profileImageUrl": "https://cdn.example.com/profiles/1.jpg",
+                "badges": ["LIKE_100", "COPY_50"]
+            },
+            "stats": {
+                "likeCount": 1234,
+                "copyCount": 567,
+                "followerCount": 890
+            },
+            "topPortfolio": {
+                "id": "uuid",
+                "name": "배당주 포트폴리오"
+            }
+        }
+    ],
+    "myRank": {
+        "rank": 42,
+        "likeCount": 56,
+        "copyCount": 12
+    },
+    "pagination": {
+        "currentPage": 1,
+        "totalPages": 5,
+        "totalItems": 100
     }
-  ],
-  "myRank": {
-    "rank": 42,
-    "likeCount": 56,
-    "copyCount": 12
-  },
-  "pagination": {
-    "currentPage": 1,
-    "totalPages": 5,
-    "totalItems": 100
-  }
 }
 ```
 
@@ -84,11 +84,11 @@ related:
 점수 = (좋아요 수 × 1) + (복사 수 × 3) + (팔로워 수 × 2)
 ```
 
-| 지표 | 가중치 | 비고 |
-|------|--------|------|
-| 좋아요 수 | ×1 | 포트폴리오 + 게시글 합산 |
-| 복사 수 | ×3 | 실질적 참여 가치 높음 |
-| 팔로워 수 | ×2 | 영향력 지표 |
+| 지표      | 가중치 | 비고                     |
+| --------- | ------ | ------------------------ |
+| 좋아요 수 | ×1     | 포트폴리오 + 게시글 합산 |
+| 복사 수   | ×3     | 실질적 참여 가치 높음    |
+| 팔로워 수 | ×2     | 영향력 지표              |
 
 ## 구현 로직
 
@@ -110,7 +110,7 @@ related:
 ```sql
 -- 주간 랭킹 집계 (매주 월요일 00:00)
 INSERT INTO rankings (user_id, period_type, period_start, period_end, like_count, copy_count, follower_count, score)
-SELECT 
+SELECT
   u.id,
   'WEEKLY',
   DATE_SUB(CURDATE(), INTERVAL 7 DAY),

@@ -58,8 +58,8 @@ Google OAuth 2.0 로그인 + JWT 토큰 기반 인증 시스템 구현
     - [ ] 페이로드 추출
 - [ ] `User` 엔티티 생성
 - [ ] `UserRepository` 생성
-- [ ] `RefreshToken` 엔티티 생성
-- [ ] `RefreshTokenRepository` 생성
+- [ ] `TokenVault` 엔티티 생성 (AES-256-GCM 암호화 저장)
+- [ ] `TokenVaultRepository` 생성
 - [ ] JWT 인증 필터 (`JwtAuthenticationFilter`)
 - [ ] Rate Limiting 설정 (10회/분 per IP)
 
@@ -87,7 +87,7 @@ Google OAuth 2.0 로그인 + JWT 토큰 기반 인증 시스템 구현
 ### Database
 
 - [ ] `users` 테이블 생성
-- [ ] `refresh_tokens` 테이블 생성
+- [ ] `token_vault` 테이블 생성 (Access/Refresh 토큰 암호화 저장)
 
 ## 완료 조건
 
@@ -100,14 +100,14 @@ Google OAuth 2.0 로그인 + JWT 토큰 기반 인증 시스템 구현
 
 ## 테스트 케이스
 
-| 케이스             | 예상 결과                                      |
-| ------------------ | ---------------------------------------------- |
-| 신규 사용자 로그인 | users 생성, is_new_user=true, 프로필 화면      |
-| 기존 사용자 로그인 | last_login_at 업데이트, is_new_user=false, 홈  |
-| 프로필 입력 완료   | is_profile_complete=true, 기본 포트폴리오 생성 |
-| Access Token 만료  | Refresh로 자동 갱신                            |
-| Refresh Token 만료 | 로그아웃 + 로그인 화면                         |
-| 로그아웃           | refresh_tokens 삭제, 로그인 화면               |
+| 케이스             | 예상 결과                                             |
+| ------------------ | ----------------------------------------------------- |
+| 신규 사용자 로그인 | users 생성, is_new_user=true, 프로필 화면             |
+| 기존 사용자 로그인 | last_login_at 업데이트, is_new_user=false, 홈         |
+| 프로필 입력 완료   | 기본 포트폴리오 생성                                  |
+| Access Token 만료  | Refresh로 자동 갱신                                   |
+| Refresh Token 만료 | 로그아웃 + 로그인 화면                                |
+| 로그아웃           | token_vault 레코드 폐기(is_revoked=true), 로그인 화면 |
 
 ## 예상 소요 시간
 
